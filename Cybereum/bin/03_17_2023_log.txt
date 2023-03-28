@@ -1,0 +1,16 @@
+03/17/2023 03:28:32 PM Invalid length for a Base-64 char array or string.
+03/17/2023 03:28:32 PM System.Collections.ListDictionaryInternal
+03/17/2023 03:30:41 PM Object reference not set to an instance of an object.
+03/17/2023 03:30:41 PM System.Collections.ListDictionaryInternal
+03/17/2023 03:30:54 PM Invalid length for a Base-64 char array or string.
+03/17/2023 03:30:54 PM System.Collections.ListDictionaryInternal
+03/17/2023 06:16:16 PM The underlying provider failed on Open.
+03/17/2023 06:16:16 PM System.Collections.ListDictionaryInternal
+03/17/2023 06:16:16 PM Unable to connect to any of the specified MySQL hosts.
+03/17/2023 06:16:16 PM Void Open()
+03/17/2023 06:17:05 PM Object reference not set to an instance of an object.
+03/17/2023 06:17:05 PM System.Collections.ListDictionaryInternal
+03/17/2023 06:27:04 PM The underlying provider failed on Open.
+03/17/2023 06:27:04 PM System.Collections.ListDictionaryInternal
+03/17/2023 06:27:04 PM Unable to connect to any of the specified MySQL hosts.
+03/17/2023 06:27:04 PM Void Open()
