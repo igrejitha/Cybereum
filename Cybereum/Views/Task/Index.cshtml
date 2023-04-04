@@ -74,7 +74,8 @@
     <h4>Task List</h4>
     <hr />
 </div>
-<p><button type="button" class="btn btn-info pull-left" onclick="location.href='@Url.Action("Create", "Task")?projectid=@ViewBag.projectid'" >Add New</button></p>
+<p><button type="button" class="btn btn-info pull-left" onclick="location.href='@Url.Action("Create", "Task")?milestoneid=@ViewBag.milestoneid'" >Add New</button></p>
+
     &nbsp;
 <div>
     &nbsp;
@@ -84,7 +85,7 @@
                 <thead style="width:100%">
                     <tr>
                         <th>Task Name</th>
-                        <th>Project Name</th>
+                        <th>Milestone Name</th>
                         <th>Start Date</th>
                         <th>End Date</th>
                         <th>Assigned To</th>
@@ -119,11 +120,12 @@
         //var reset = 0;
         var value = '@Request.RequestContext.HttpContext.Session["LoggedInUserId"]';
         var value1 = '@Request.RequestContext.HttpContext.Session["RoleId"]';
+        var value2 = '@ViewBag.milestoneid';
         var objFilter = {
             userid: value,
             roleid: value1,
-            projectid: 0
-        }
+            milestoneid: value2
+            }
 
         $("#tblTask").DataTable(
         {
@@ -149,7 +151,7 @@
             "info": true,
             columns: [
                 { 'data': 'taskname', 'name': 'Task Name' },
-                { 'data': 'projectname', 'name': 'Project Name' },
+                { 'data': 'milestonename', 'name': 'Milestone Name' },
                 {
                     'data': 'startdate', 'name': 'Start Date',
                     'render': function (jsonDate) {
@@ -178,7 +180,7 @@
                         }
                     }
                 },
-                { 'data': 'assignedusername', 'name': 'Assigned To' },                
+                { 'data': 'assignedusername', 'name': 'Assigned To' },
                 //{
                 //    'data': 'createddate', 'name': 'Created Date',
                 //    'render': function (jsonDate) {
@@ -200,7 +202,7 @@
                 ,
                 {
                     data: 'taskname', render: function (data, type, row) {
-                        return "<button type='submit' onclick=GetSubTask('" + encodeURIComponent(row.taskid) + "'); class='btn btn-info'>Task</button>";
+                        return "<button type='submit' onclick=GetSubTask('" + encodeURIComponent(row.taskid) + "'); class='btn btn-info'>Sub-Task</button>";
                     }
                 }
             ],
@@ -228,7 +230,7 @@
             }],
             columns: [
                 { 'data': 'taskname', 'name': 'Task Name' },
-                { 'data': 'projectname', 'name': 'Project Name' },
+                { 'data': 'milestonename', 'name': 'Milestone Name' },
                 { 'data': 'startdate', 'name': 'Start Date' },
                 { 'data': 'enddate', 'name': 'End Date' },
                 { 'data': 'assignedusername', 'name': 'Assigned To' },
@@ -238,7 +240,7 @@
                 },
             {
                 data: 'projectname', render: function (data, type, row) {
-                    return "<button type='submit' onclick=GetSubTask('" + encodeURIComponent(row.taskid) + "'); class='btn btn-info'>Task</button>";
+                    return "<button type='submit' onclick=GetSubTask('" + encodeURIComponent(row.taskid) + "'); class='btn btn-info'>Sub-Task</button>";
                 }
             }
             ],
@@ -249,31 +251,16 @@
         });
     };
 
-    function getProject(id) {
+    function getTask(id) {
         debugger;
-        location.href = '@Url.Action("Addrecord", "Task", new { id = "id" })'.replace('id', id);
+        var value = '@Url.Action("Addrecord", "Task", new { id = "id"})'.replace('id', id);
+        location.href = '@Url.Action("Addrecord", "Task", new { id = "id"})'.replace('id', id);
+
     }
 
-    function GetTask(taskid) {
+    function GetSubTask(taskid) {
         debugger;
-        $.ajax(
-        {
-            url: '@Url.Action("Index", "Task")?Id=' + taskid,
-            contentType: 'application/json; charset=utf-8',
-            datatype: 'json',
-            async: true,
-            data: {
-                taskid: taskid
-            },
-            type: "GET",
-            success: function (response) {
-                $("#overlay").fadeOut(300);
-                debugger;
-                if (response == "Success") {
-                    window.location.reload();
-                }
-            }
-        });
+        location.href = '@Url.Action("Index", "SubTask")?taskid=' + taskid + '';
     }
 
     function EditData(taskid) {
@@ -308,7 +295,7 @@
                 type: "GET",
                 dataType: "JSON",
                 data: {
-                    datprojectid: projectid
+                    datmilestoneid: milestoneid
                 },
                 success: function (response) {
                     msg("Record deleted successfully", "info");
@@ -319,7 +306,7 @@
         return false;
     }
 
-    function OnSuccess(objFilter) {
+    @*function OnSuccess(objFilter) {
         $("#overlay").fadeOut(300);
 
         debugger;
@@ -339,7 +326,7 @@
                 url: '@Url.Action("GetTask", "Task")',
                 type: 'POST',
                 data: {
-                    datprojectid: projectid
+                    datmilestoneid: milestoneid
                 }
             },
             aLengthMenu: [[75, 100, 500, 1000, -1], [75, 100, 500, 1000, "All"]],
@@ -355,7 +342,7 @@
                 { 'data': 'projectname', 'name': 'Project Name' },
                 { 'data': 'startdate', 'name': 'Start Date' },
                 { 'data': 'enddate', 'name': 'End Date' },
-                { 'data': 'assignedusername', 'name': 'Assigned To' },                
+                { 'data': 'assignedusername', 'name': 'Assigned To' },
                 {
                     data: 'taskname', render: function (data, type, row) {
                         return "<button type='submit' onclick=EditData('" + encodeURIComponent(row.taskid) + "'); class='btn btn-info'>Edit</button>";
@@ -366,7 +353,7 @@
                 selector: 'td:first-child'
             },
         });
-    };
+    };*@
 
     function msg(strMsg, mode) {
         $.notify(strMsg, mode, { globalPosition: 'top center', clickToHide: true, autoHide: false });

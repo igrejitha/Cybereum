@@ -26,7 +26,7 @@
         <span class="text-danger" style="align-items:center;">
             @ViewBag.Message
             @Html.HiddenFor(model => model.projectid, htmlAttributes: new { @class = "control-label col-md-2" })
-            @Html.HiddenFor(model => model.createdby)
+            @*@Html.HiddenFor(model => model.createdby)*@
             @Html.HiddenFor(model => model.createdon)
             @Html.HiddenFor(model => model.modifiedby)
             @Html.HiddenFor(model => model.modifiedon)
@@ -44,7 +44,7 @@
                 @Html.LabelFor(model => model.startdate, "StartDate", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @*@Html.EditorFor(model => model.startdate, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })*@
-                    @*@Html.TextBoxFor(model => model.startdate, "{0:MM/dd/yyyy}", new { @class = "form-control mb-2 mr-sm-2 datepicker", @type = "date", @placeholder = "MM/dd/yyyy", autocomplete = "off" })*@                    
+                    @*@Html.TextBoxFor(model => model.startdate, "{0:MM/dd/yyyy}", new { @class = "form-control mb-2 mr-sm-2 datepicker", @type = "date", @placeholder = "MM/dd/yyyy", autocomplete = "off" })*@
                     @Html.TextBoxFor(model => model.startdate, new { @type = "date", @class = "form-control datepicker", @Value = Model.startdate.ToString("yyyy-MM-dd") })
                     @Html.ValidationMessageFor(model => model.startdate, "", new { @class = "text-danger" })
                 </div>
@@ -66,6 +66,8 @@
                     @Html.ValidationMessageFor(model => model.projectcost, "", new { @class = "text-danger" })
                 </div>
             </div>
+        </div>
+        <div class="form-row">
             <div class="form-group col-md-6">
                 @Html.LabelFor(model => model.noofresource, "No. of Resource", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -73,6 +75,20 @@
                     @Html.ValidationMessageFor(model => model.noofresource, "", new { @class = "text-danger" })
                 </div>
             </div>
+            @if (Convert.ToInt32(Session["RoleId"]) == 1)
+            {
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(model => model.createdby, "Project Manager", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">                        
+                        @Html.DropDownList("createdby", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.createdby, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            }
+            else
+            {
+                @Html.HiddenFor(model => model.createdby)
+            }
         </div>
         <div class="modal-footer">
             <div class="form-group">
@@ -101,7 +117,7 @@
         $(function () {
             //$("#startdate").datepicker();
             $("#startdate").on('change', function () {
-                debugger;                
+                debugger;
                 var startdate = $("#startdate").val();
                 var date = $("#enddate").val();
                 if (date != "") {
@@ -123,7 +139,7 @@
         //        }
         //    });
         //});
-        
+
         $(function () {
             //$("#enddate").datepicker();
             $("#enddate").on('change', function () {
@@ -138,7 +154,7 @@
                 }
             });
         });
-        
+
         //$.validator.addMethod("enddate", function (value, element) {
         //    var startDate = $('.startdate').val();
         //    return Date.parse(startDate) <= Date.parse(value) || value == "";
@@ -158,7 +174,7 @@
         $("#btnSubmit").click(function () {
             //var txtStartVal = $('#startdate').val();
             //var txtEndVal = $('#enddate').val();
-            //if (isDate(txtEndVal)>isDate(txtStartVal)) {                
+            //if (isDate(txtEndVal)>isDate(txtStartVal)) {
             //    return true;
             //}
             //else {

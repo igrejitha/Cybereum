@@ -14,6 +14,12 @@ namespace Cybereum.Models
     
     public partial class tbl_status
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tbl_status()
+        {
+            this.tbl_subtask = new HashSet<tbl_subtask>();
+        }
+    
         public int statusid { get; set; }
         public string statusname { get; set; }
         public int isactive { get; set; }
@@ -21,5 +27,8 @@ namespace Cybereum.Models
         public System.DateTime createdon { get; set; }
         public Nullable<int> modifiedby { get; set; }
         public Nullable<System.DateTime> modifiedon { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbl_subtask> tbl_subtask { get; set; }
     }
 }

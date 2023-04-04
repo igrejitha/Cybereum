@@ -75,7 +75,8 @@
     <hr />
 </div>
 <p><button type="button" class="btn btn-info pull-left" onclick="location.href='@Url.Action("Create", "Project")'">Add New</button></p>
-    &nbsp;
+&nbsp;
+
 <div>
     &nbsp;
     <div class="col-xs-12">
@@ -91,7 +92,8 @@
                         <th>Created By</th>
                         <th>Created Date</th>
                         <th>Edit</th>
-                        <th>Task</th>
+                        <th>Milestone</th>
+                        <th>GANTT Chart</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -222,7 +224,15 @@
                 ,
                 {
                     data: 'projectname', render: function (data, type, row) {
-                        return "<button type='submit' onclick=GetTask('" + encodeURIComponent(row.projectid) + "'); class='btn btn-info'>Task</button>";
+                        //return "<button type='submit' onclick=GetTask('" + encodeURIComponent(row.projectid) + "'); class='btn btn-info'>Task</button>";
+                        return "<button type='submit' onclick=GetMilestone('" + encodeURIComponent(row.projectid) + "'); class='btn btn-info'>Milestone</button>";
+                    }
+                }
+                ,
+                {
+                    data: 'projectname', render: function (data, type, row) {
+                        //return "<button type='submit' onclick=GetTask('" + encodeURIComponent(row.projectid) + "'); class='btn btn-info'>Task</button>";
+                        return "<button type='submit' onclick=GetChart('" + encodeURIComponent(row.projectid) + "'); class='btn btn-info'>GANTT Chart</button>";
                     }
                 }
             ],
@@ -279,9 +289,16 @@
                 },
             {
                 data: 'projectname', render: function (data, type, row) {
-                    return "<button type='submit' onclick=GetTask('" + encodeURIComponent(row.projectid) + "'); class='btn btn-info'>Task</button>";
+                    //return "<button type='submit' onclick=GetTask('" + encodeURIComponent(row.projectid) + "'); class='btn btn-info'>Task</button>";
+                    return "<button type='submit' onclick=GetMilestone('" + encodeURIComponent(row.projectid) + "'); class='btn btn-info'>Milestone</button>";
                 }
-            }
+            },
+                {
+                    data: 'projectname', render: function (data, type, row) {
+                        //return "<button type='submit' onclick=GetTask('" + encodeURIComponent(row.projectid) + "'); class='btn btn-info'>Task</button>";
+                        return "<button type='submit' onclick=GetChart('" + encodeURIComponent(row.projectid) + "'); class='btn btn-info'>GANTT Chart</button>";
+                    }
+                }
             ],
             select: {
                 style: 'multi',
@@ -296,9 +313,19 @@
         @*location.href = '@Url.Action("Index", "Task")?projectid='+ projectid);*@
     }
 
+    function GetMilestone(projectid) {
+        debugger;
+        location.href = '@Url.Action("Index", "Milestone")?projectid=' + projectid + '';
+    }
+
+    function GetChart(projectid) {
+        debugger;
+        location.href = '@Url.Action("GANTTChart", "Home")?projectid=' + projectid + '';
+    }
+
     function GetTask(projectid) {
         debugger;
-        location.href = '@Url.Action("Index", "Task")?projectid='+ projectid+'';        
+        location.href = '@Url.Action("Index", "Task")?projectid='+ projectid+'';
     }
 
     function EditData(projectid) {

@@ -9,7 +9,7 @@ using System.Globalization;
 using System.Net.Mail;
 using System.Configuration;
 using System.Net;
-
+using System.DirectoryServices;
 
 public static class IGUtilities
 {
@@ -545,5 +545,23 @@ public static class IGUtilities
             OTP = NewOTP;
         }
         return OTP;
+    }
+
+    public static bool AuthenticateUser(string path, string user, string pass)
+    {
+        DirectoryEntry de = new DirectoryEntry(path, user, pass, AuthenticationTypes.Secure);
+        try
+        {
+            // run a search using those credentials.  
+            // If it returns anything, then you're authenticated
+            DirectorySearcher ds = new DirectorySearcher(de);
+            ds.FindOne();
+            return true;
+        }
+        catch
+        {
+            // otherwise, it will crash out so return false
+            return false;
+        }
     }
 }

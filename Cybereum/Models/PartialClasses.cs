@@ -10,9 +10,5 @@ namespace Cybereum.Models
     public partial class tbllogin
     {
     }
-
-    [MetadataType(typeof(leveloneMetaData))]
-    public partial class levelone
-    {
-    }
+    
 }

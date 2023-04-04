@@ -18,7 +18,6 @@ namespace Cybereum.Models
         public tbl_project()
         {
             this.tbl_milestone = new HashSet<tbl_milestone>();
-            this.tbl_task = new HashSet<tbl_task>();
         }
     
         public int projectid { get; set; }
@@ -36,8 +35,6 @@ namespace Cybereum.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_milestone> tbl_milestone { get; set; }
         public virtual tbl_user tbl_user { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tbl_task> tbl_task { get; set; }
         public virtual tbl_user tbl_user1 { get; set; }
     }
 }

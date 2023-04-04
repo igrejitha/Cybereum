@@ -45,9 +45,9 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-sm-left dropdown-menu-right">
                         <div class="dropdown-divider"></div>
-                        @*<a asp-action="Setup" asp-controller="Admin" asp-route-id="1" class="dropdown-item">
-                                <i class="fas fa-user mr-2"></i> Admin
-                            </a>*@
+                        <a asp-action="Setup" asp-controller="Admin" asp-route-id="1" class="dropdown-item">
+                                 @Session["RoleName"]
+                            </a>
                         @if (User.Identity.IsAuthenticated)
                         {
                             <i class="fas fa-sign-out-alt"></i>
@@ -112,7 +112,7 @@
                                     </li>
                                 </ul>
                             }
-                            
+
                             @if (Convert.ToInt32(Session["RoleId"]) == 2)
                             {
                                 <ul class="nav nav-treeview">
@@ -131,24 +131,36 @@
                                 <p>Project Management<i class="right fas fa-angle-left"></i></p>
                             </a>
                             <ul class="nav nav-treeview">
-                                <li class="nav-item">                                    
-                                    <a href="@Url.Action("Index", "Project")" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Project</p>
-                                    </a>
-                                </li>
-                                @*<li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Milestone</p>
-                                    </a>
-                                </li>*@
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Task</p>
-                                    </a>
-                                </li>
+                                @if (Convert.ToInt32(Session["RoleId"]) == 2 || Convert.ToInt32(Session["RoleId"]) == 1)
+                                {
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("Index", "Project")" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Project</p>
+                                        </a>
+                                    </li>
+                                    @*<li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Milestone</p>
+                                            </a>
+                                        </li>*@
+                                    @*<li class="nav-item">
+                                            <a href="#" class="nav-link">
+                                                <i class="far fa-circle nav-icon"></i>
+                                                <p>Task</p>
+                                            </a>
+                                        </li>*@
+                                }
+                                @*@if (Convert.ToInt32(Session["RoleId"]) == 2 || Convert.ToInt32(Session["RoleId"]) == 3)
+    {
+        <li class="nav-item">
+            <a href="@Url.Action("Index", "Task")" class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Task</p>
+            </a>
+        </li>
+    }*@
                             </ul>
                         </li>
                     </ul>

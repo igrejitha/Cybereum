@@ -26,7 +26,8 @@
         <span class="text-danger" style="align-items:center;">
             @ViewBag.Message
             @Html.HiddenFor(model => model.taskid, htmlAttributes: new { @class = "control-label col-md-2" })
-            @Html.HiddenFor(model => model.projectid)
+            @Html.HiddenFor(model => model.milestoneid)
+            @Html.HiddenFor(model => model.milestonename)
             @Html.HiddenFor(model => model.createdby)
             @Html.HiddenFor(model => model.createddate)
             @Html.HiddenFor(model => model.modifiedby)
@@ -105,7 +106,9 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index", new{
+    // routeValues
+    milestoneid = ViewBag.milestoneid })
 </div>
 
 <script type="text/javascript">
