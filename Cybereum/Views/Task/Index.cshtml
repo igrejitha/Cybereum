@@ -74,9 +74,13 @@
     <h4>Task List</h4>
     <hr />
 </div>
-<p><button type="button" class="btn btn-info pull-left" onclick="location.href='@Url.Action("Create", "Task")?milestoneid=@ViewBag.milestoneid'" >Add New</button></p>
 
-    &nbsp;
+@if (Convert.ToInt32(Session["RoleId"]) != 3)
+{
+    <p><button type="button" class="btn btn-info pull-left" onclick="location.href='@Url.Action("Create", "Task")?milestoneid=@ViewBag.milestoneid'">Add New</button></p>
+}
+
+&nbsp;
 <div>
     &nbsp;
     <div class="col-xs-12">
@@ -125,7 +129,7 @@
             userid: value,
             roleid: value1,
             milestoneid: value2
-            }
+        }
 
         $("#tblTask").DataTable(
         {
@@ -196,8 +200,17 @@
                 //    }
                 //},
                 {
-                    "render": function (data, type, full, meta)
-                    { return '<button class="btn btn-info" onclick=getTask("' + full.taskid + '"); >Edit</button>'; }
+                    "render": function (data, type, full, meta) {
+                        debugger;
+                        var value1 = '@Request.RequestContext.HttpContext.Session["RoleId"]';
+                        if (value1 == '3') {
+                            return '<button class="btn btn-info" id="btnedit" disabled="disabled" onclick=getTask("' + full.taskid + '"); >Edit</button>';
+                        }
+                        else {                            
+                            return '<button class="btn btn-info" id="btnedit" onclick=getTask("' + full.taskid + '"); >Edit</button>';
+                        }
+                    }
+
                 }
                 ,
                 {
@@ -213,6 +226,16 @@
         });
     });
 
+
+    @*$(function () {
+        debugger;
+        var value1 = '@Request.RequestContext.HttpContext.Session["RoleId"]';
+        if (value1 == '3') {
+            $('.enableOnInput').prop('disabled', true);
+        } else {
+            $('.enableOnInput').prop('disabled', false);
+        }
+    });*@
 
     function OnSuccess(response) {
         $("#tblTask").dataTable(
@@ -235,8 +258,16 @@
                 { 'data': 'enddate', 'name': 'End Date' },
                 { 'data': 'assignedusername', 'name': 'Assigned To' },
                 {
-                    "render": function (data, type, full, meta)
-                    { return '<button class="btn btn-info" onclick=getTask("' + full.taskid + '"); >Edit</button>'; }
+                    "render": function (data, type, full, meta) {
+                        debugger;
+                        var value1 = '@Request.RequestContext.HttpContext.Session["RoleId"]';
+                        if (value1 == '3') {
+                            return '<button class="btn btn-info" id="btnedit" disabled="disabled" onclick=getTask("' + full.taskid + '"); >Edit</button>';
+                        }
+                        else {
+                            return '<button class="btn btn-info" id="btnedit" onclick=getTask("' + full.taskid + '"); >Edit</button>';
+                        }
+                    }
                 },
             {
                 data: 'projectname', render: function (data, type, row) {
@@ -305,55 +336,6 @@
         }
         return false;
     }
-
-    @*function OnSuccess(objFilter) {
-        $("#overlay").fadeOut(300);
-
-        debugger;
-        $("#tblTask").DataTable(
-        {
-            processing: true,
-            serverSide: true,
-            filter: true,
-            orderMulti: false,
-            destroy: true,
-            //ordering: true,
-            pageLength: 75,
-            //LengthChange: true,
-            //Filter: true,
-            Sort: true,
-            "ajax": {
-                url: '@Url.Action("GetTask", "Task")',
-                type: 'POST',
-                data: {
-                    datmilestoneid: milestoneid
-                }
-            },
-            aLengthMenu: [[75, 100, 500, 1000, -1], [75, 100, 500, 1000, "All"]],
-            iDisplayLength: 75,
-            scrollY: 400,
-            scrollCollapse: false,
-            aoColumnDefs: [{
-                bSortable: false,
-                aTargets: [-1, -2]
-            }],
-            columns: [
-                { 'data': 'taskname', 'name': 'Task Name' },
-                { 'data': 'projectname', 'name': 'Project Name' },
-                { 'data': 'startdate', 'name': 'Start Date' },
-                { 'data': 'enddate', 'name': 'End Date' },
-                { 'data': 'assignedusername', 'name': 'Assigned To' },
-                {
-                    data: 'taskname', render: function (data, type, row) {
-                        return "<button type='submit' onclick=EditData('" + encodeURIComponent(row.taskid) + "'); class='btn btn-info'>Edit</button>";
-                    }
-                }],
-            select: {
-                style: 'multi',
-                selector: 'td:first-child'
-            },
-        });
-    };*@
 
     function msg(strMsg, mode) {
         $.notify(strMsg, mode, { globalPosition: 'top center', clickToHide: true, autoHide: false });

@@ -42,9 +42,13 @@ namespace Cybereum.Controllers
 
         [Authorize]
         public ActionResult Logout()
-        {            
+        {
             FormsAuthentication.SignOut();
-            return RedirectToAction("Login");
+
+            if (Convert.ToInt32(Session["RoleId"]) == 3)
+                return RedirectToAction("UserLogin");
+            else
+                return RedirectToAction("Login");
         }
 
         [HttpPost]
@@ -77,22 +81,22 @@ namespace Cybereum.Controllers
                                 break;
                             case -2:
                                 message = "Account has not been activated.";
-                                break;                            
+                                break;
                             default:
                                 FormsAuthentication.SetAuthCookie(user.Email, true);
                                 //Session.Timeout = 90;                                    
                                 Session["LoggedInUserId"] = objList.userid;
                                 Session["RoleId"] = objList.roleid;
                                 AuthorizeAttribute objAuth = new AuthorizeAttribute();
-                                if (objList.roleid == (int) Role.Admin)
+                                if (objList.roleid == (int)Role.Admin)
                                 {
                                     objAuth.Roles = Role.Admin.ToString();
                                     Session["RoleName"] = Role.Admin.ToString();
-                                    return RedirectToAction("Index", "Home");                                    
+                                    return RedirectToAction("Index", "Home");
                                 }
                                 else
                                 {
-                                    objAuth.Roles =  Role.User.ToString();
+                                    objAuth.Roles = Role.User.ToString();
                                     Session["RoleName"] = (Role)objList.roleid;
                                     return RedirectToAction("Dashboard", "Home");
                                 }
@@ -136,17 +140,12 @@ namespace Cybereum.Controllers
 
                         EncryptDecrypt encrypt = new EncryptDecrypt();
                         string password = encrypt.Encrypt(user.password);
-                        //var objList = objdmsEntities.tbl_user.Where(x => x.emailid == user.Email && x.password == password).FirstOrDefault();                        
-                        var objList = objdmsEntities.sp_FetchLoginDetails(user.Email, password).FirstOrDefault();
-                        switch (objList.userid)
+                        var objList = objdmsEntities.tbl_user.Where(x => x.emailid == user.Email && x.password == password && x.isactive == 1 && x.roleid == 3).FirstOrDefault();
+                        //var objList = objdmsEntities.sp_FetchLoginDetails(user.Email, password).FirstOrDefault();
+                        if (objList != null)
                         {
-                            case -1:
-                                message = "Username and/or password is incorrect.";
-                                break;
-                            case -2:
-                                message = "Account has not been activated.";
-                                break;
-                            default:
+                            if (objList.userid > 0)
+                            {
                                 FormsAuthentication.SetAuthCookie(user.Email, true);
                                 //Session.Timeout = 90;                                    
                                 Session["LoggedInUserId"] = objList.userid;
@@ -164,6 +163,11 @@ namespace Cybereum.Controllers
                                     Session["RoleName"] = (Role)objList.roleid;
                                     return RedirectToAction("Dashboard", "Home");
                                 }
+                            }
+                        }
+                        else
+                        {
+                            message = "Username and/or password is incorrect.";
                         }
                     }
                     ViewBag.Message = message;
@@ -195,7 +199,7 @@ namespace Cybereum.Controllers
                     {
                         int? userId = 0; // objdmsEntities.ValidateUsers(user.email, user.password).FirstOrDefault();
 
-                        var objList = objdmsEntities.tbl_user.Where(x => x.emailid == user.email && x.isactive !=2).FirstOrDefault();
+                        var objList = objdmsEntities.tbl_user.Where(x => x.emailid == user.email && x.isactive != 2).FirstOrDefault();
 
                         if (objList == null)
                         {
@@ -205,7 +209,7 @@ namespace Cybereum.Controllers
                                 tbl_user usertbl = new tbl_user();
                                 usertbl.firstname = user.firstname;
                                 usertbl.lastname = user.lastname;
-                                usertbl.username  = "";
+                                usertbl.username = "";
                                 usertbl.emailid = user.email;
                                 usertbl.password = encrypt.Encrypt(user.Password);
                                 usertbl.createddate = DateTime.Now;
@@ -229,7 +233,7 @@ namespace Cybereum.Controllers
                                 var GenarateUserVerificationLink = "/Account/UserVerification/" + usertbl.activationcode;
                                 var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, GenarateUserVerificationLink);
                                 IGUtilities.SendRegisterEmailToUser(link, usertbl.emailid, usertbl.activationcode, usertbl.firstname + " " + usertbl.lastname);
-                                message = "Verification mail sent to registered mail id";                                
+                                message = "Verification mail sent to registered mail id";
                                 ViewBag.Message = message;
                                 //user = new RegisterViewModel();
                                 return View(user);
@@ -239,7 +243,7 @@ namespace Cybereum.Controllers
                         {
                             message = "Email already exists. Yet to be verified by the user.";
                         }
-                        else if (objList.isactive == 0 && objList.emailverification==true)
+                        else if (objList.isactive == 0 && objList.emailverification == true)
                         {
                             message = "Email already exists. Yet to be approved by admin.";
                         }
@@ -302,17 +306,20 @@ namespace Cybereum.Controllers
                                     string strSubject = "Password Reset Link for Cybereum";
                                     string strSignature = "<br/>Best regards, <br/>The cybereum team.";
                                     string strResetLink = "<a href='" + Url.Action("RecoverPassword", "Account", new { email = objList.emailid, code = Convert.ToString(Codeid) }, "http") + "'>Reset Password</a>";
-                                    string strMessage = "<html><body><span style='font-family:Calibri;font-size: 11pt;'>Hi " + objList.firstname + ",<br><br>" + "Please click below link to reset the password<br>" + strResetLink + "<br>" + strSignature + "</span></body></html>";
+                                    string strMessage = "<html><body><span style='font-family:Calibri;font-size: 11pt;'>Hi " + objList.firstname 
+                                                        + ",<br><br> You recently requested to reset your password for your Cybereum account. " +
+                                                        " <br> Please click below link to reset the password <br>" + strResetLink + "<br>" 
+                                                        + strSignature + "</span></body></html>";
                                     message = "Please check your mail to reset the password.";
                                     IGUtilities.SendEmail(strFromMailId, strToMailId, strSubject, strAttachmentFile, strMessage);
-
+                                                                        
                                     using (cybereumEntities objEnt = new cybereumEntities())
                                     {
                                         tbl_user tbluser = objEnt.tbl_user.Find(objList.userid);
                                         tbluser.GUID = Convert.ToString(Codeid);
                                         objEnt.Entry(tbluser).State = EntityState.Modified;
                                         objEnt.SaveChanges();
-                                    }                                    
+                                    }
                                 }
                                 catch (DbEntityValidationException e)
                                 {
@@ -363,7 +370,7 @@ namespace Cybereum.Controllers
         public ActionResult RecoverPassword(string email, string code)
         {
             cybereumEntities objEntities = new cybereumEntities();
-            var objList = objEntities.tbl_user.FirstOrDefault(l => l.emailid == email && l.isactive ==1 && l.GUID == code);
+            var objList = objEntities.tbl_user.FirstOrDefault(l => l.emailid == email && l.isactive == 1 && l.GUID == code);
 
             if (objList == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -383,9 +390,13 @@ namespace Cybereum.Controllers
             if (ModelState.IsValid)
             {
                 cybereumEntities objEntities = new cybereumEntities();
+                EncryptDecrypt encrypt = new EncryptDecrypt();
+
                 var mailId = Request.Form["email"];
                 var code = Request.Form["code"];
                 var objList = objEntities.tbl_user.FirstOrDefault(l => l.emailid == mailId && l.GUID == code);
+
+                int roleid = 0;
 
                 if (objList != null)
                 {
@@ -396,16 +407,32 @@ namespace Cybereum.Controllers
                             break;
                         case 1:
                             tbl_user tbluser = objEntities.tbl_user.Find(objList.userid);
-                            tbluser.password = pwd.ConfirmPassword;
+                            tbluser.password = encrypt.Encrypt(pwd.ConfirmPassword);
                             tbluser.GUID = "";
                             objEntities.Entry(tbluser).State = EntityState.Modified;
                             objEntities.SaveChanges();
+
+                            roleid = tbluser.roleid;
                             break;
                         default:
-                            return RedirectToAction("Index");
+                            if (roleid == 3)
+                            {
+                                return RedirectToAction("UserLogin");
+                            }
+                            else
+                            {
+                                return RedirectToAction("Login");
+                            }
                     }
                 }
-                return RedirectToAction("Login");
+                if (roleid == 3)
+                {
+                    return RedirectToAction("UserLogin");
+                }
+                else
+                {
+                    return RedirectToAction("Login");
+                }
             }
             return View(pwd);
         }
@@ -466,7 +493,7 @@ namespace Cybereum.Controllers
                 var IsVerify = objEnt.tbl_user.Where(u => u.activationcode == new Guid(id).ToString()).FirstOrDefault();
                 if (IsVerify != null)
                 {
-                    if (IsVerify.emailverification == true && IsVerify.isactive !=2)
+                    if (IsVerify.emailverification == true && IsVerify.isactive != 2)
                     {
                         ViewBag.Message = "Email already verified";
                         ViewBag.Status = true;

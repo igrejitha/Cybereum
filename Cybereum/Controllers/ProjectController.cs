@@ -22,6 +22,8 @@ namespace Cybereum.Controllers
     {
         private cybereumEntities db = new cybereumEntities();
 
+        [Authorize]
+        [SessionTimeout]        
         // GET: Project
         public ActionResult Index()
         {

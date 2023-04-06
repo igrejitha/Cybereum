@@ -65,6 +65,15 @@ namespace Cybereum.Controllers
                              where p.isactive == 1 && b.createdby == pmuserid
                              select p.taskid).Count();
 
+            if (Convert.ToInt16(Session["RoleId"]) ==(int) Role.User)
+            {
+                countTask = (from p in entities.tbl_task
+                             join a in entities.tbl_milestone on p.milestoneid equals a.milestoneid
+                             join b in entities.tbl_project on a.projectid equals b.projectid
+                             where p.isactive == 1 && p.assignedto == pmuserid
+                             select p.taskid).Count();
+            }
+
             ViewBag.countUser = countUser;
             ViewBag.countProject = countProject;
             ViewBag.countTask = countTask;
