@@ -81,7 +81,8 @@ namespace Cybereum.Controllers
             }
 
             int pmuserid = Convert.ToInt32(Session["LoggedInUserId"]);
-            List<SelectListItem> user = Filluser(pmuserid);
+            int roleid = Convert.ToInt16(Session["RoleId"]);
+            List<SelectListItem> user = Filluser(pmuserid,roleid);
             ViewBag.assignedto = user;
 
             List<SelectListItem> tasktype = (from b in db.tbl_tasktype
@@ -110,15 +111,29 @@ namespace Cybereum.Controllers
             return View(Tasks);
         }
 
-        public List<SelectListItem> Filluser(int? pmuserid)
+        public List<SelectListItem> Filluser(int? pmuserid, int? roleid)
         {
-            List<SelectListItem> user = (from b in db.tbl_user
-                                         where b.pmuserid == pmuserid && b.isactive == 1 && b.roleid==3
-                                         select new SelectListItem
-                                         {
-                                             Text = b.firstname + " " + b.lastname,
-                                             Value = b.userid.ToString()
-                                         }).Distinct().OrderBy(x => x.Text).ToList();
+            List<SelectListItem> user = new List<SelectListItem>();
+            if (roleid == (int)Role.ProjectManager)
+            {
+                user = (from b in db.tbl_user
+                        where b.pmuserid == pmuserid && b.isactive == 1 && b.roleid == 3
+                        select new SelectListItem
+                        {
+                            Text = b.firstname + " " + b.lastname,
+                            Value = b.userid.ToString()
+                        }).Distinct().OrderBy(x => x.Text).ToList();
+            }
+            else if (roleid == (int)Role.Admin)
+            {
+                user = (from b in db.tbl_user
+                        where b.roleid == 3 && b.isactive == 1
+                        select new SelectListItem
+                        {
+                            Text = b.firstname + " " + b.lastname,
+                            Value = b.userid.ToString()
+                        }).Distinct().OrderBy(x => x.Text).ToList();
+            }
             //user.Insert(0, new SelectListItem { Text = "<-- Select -->", Value = "" });
             return user;
         }
@@ -203,7 +218,8 @@ namespace Cybereum.Controllers
                 return RedirectToAction("Create", "Task", new { milestoneid = tbl_task.milestoneid });
             }
             int pmuserid = Convert.ToInt32(Session["LoggedInUserId"]);
-            List<SelectListItem> user = Filluser(pmuserid);
+            int roleid = Convert.ToInt16(Session["RoleId"]);
+            List<SelectListItem> user = Filluser(pmuserid,roleid);
             ViewBag.assignedto = user;
 
             List<SelectListItem> tasktype = (from b in db.tbl_tasktype

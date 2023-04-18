@@ -4,16 +4,16 @@
     ViewBag.Title = "User List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<script src="~/Scripts/jquery-2.1.1.min.js"></script>
+@*<script src="~/Scripts/jquery-2.1.1.min.js"></script>*@
 
 @*<link rel="stylesheet" href="~/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>*@
 
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" />
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css" />
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.bootstrap4.min.css" />
+@*<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.bootstrap4.min.css" />
 
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.css" />*@
 
 @*
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>*@
@@ -65,35 +65,39 @@
     }
 </style>
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
-<script src="~/Scripts/notify.min.js"></script>
+@*<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Scripts/notify.min.js"></script>*@
 
-<div class=" form-horizontal">
+<div class="form-horizontal">
     <h4>Users List</h4>
-    <hr />    
+    <hr />
 </div>
-<p><button type="button" class="btn btn-info pull-left" onclick="location.href='@Url.Action("AddUsers", "User")'">Add New</button></p>
-@*<p><button type="button" class="btn btn-info pull-left" onclick="location.href='@Url.Action("Create", "User")'">Create</button></p>*@
-    &nbsp;    
-<div>
-    &nbsp;    
-    <div class="col-xs-12">
-        <div class="table-responsive pts-table-des">            
-            <table id="tblUser" class="table table-bordered table-striped dataTable" style="width:100%!important;">
-                <thead style="width:100%">
-                    <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>E-mail Id</th>
-                        <th>Role Name</th>
-                        <th>Organization</th>
-                        <th>Edit</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+<p><button type="button" class="btn btn" style='background-color: #0D2136; color: white;' onclick="location.href='@Url.Action("AddUsers", "User")'">Add New</button></p>
+
+    &nbsp;
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="tblUser" class="display min-w850">
+                        <thead>
+                            <tr>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>E-mail Id</th>
+                                <th>Role Name</th>
+                                <th>Organization</th>
+                                <th>Edit</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -107,6 +111,8 @@
         </div>
     </div>
 </div>
+
+@Scripts.Render("~/bundles/jquery")
 <script type="text/javascript">
     $(document).ajaxSend(function () {
         //$("#overlay").fadeIn(300);
@@ -189,7 +195,7 @@
         {
             processing: true,
             serverSide: true,
-            filter: true,
+            filter: false,
             orderMulti: false,
             pageLength: 75,
             Sort: true,
@@ -200,7 +206,7 @@
             },
             aLengthMenu: [[75, 100, 500, 1000, -1], [75, 100, 500, 1000, "All"]],
             iDisplayLength: 75,
-            scrollY: 400,
+            //scrollY: 400,
             aoColumnDefs: [{
                 bSortable: false,
                 aTargets: [-1, -2]
@@ -230,7 +236,7 @@
                 //},
                 {
                     "render": function (data, type, full, meta)
-                    { return '<button class="btn btn-info" onclick=getClient("' + full.userid + '"); >Edit</button>'; }
+                    { return '<button class="btn btn" style="background-color: #0D2136; color: white;" onclick=getClient("' + full.userid + '"); >Edit</button>'; }
                 }],
             select: {
                 style: 'multi',
@@ -244,7 +250,7 @@
         $("#tblUser").dataTable(
         {
             bLengthChange: true,
-            bFilter: true,
+            bFilter: false,
             bSort: true,
             bPaginate: true,
             data: response,
@@ -313,10 +319,10 @@
                     @*window.location = '@Url.Action("Users", "User")?userid=' + userid;
                 else
                     msg(response, 'info');*@
-        msg("Record edited successfully", "info");
-        window.location.reload();
-    }
-    });
+                    msg("Record edited successfully", "info");
+                window.location.reload();
+            }
+        });
     }
 
     function DeleteData(id) {
@@ -333,53 +339,7 @@
             });
         }
         return false;
-    }
-
-    function OnSuccess(objFilter) {
-        $("#overlay").fadeOut(300);
-
-        debugger;
-        $("#tblUser").DataTable(
-        {
-            processing: true,
-            serverSide: true,
-            filter: true,
-            orderMulti: false,
-            destroy: true,
-            //ordering: true,
-            pageLength: 75,
-            //LengthChange: true,
-            //Filter: true,
-            Sort: true,
-            "ajax": {
-                url: '@Url.Action("GetUser", "User")',
-                type: 'POST'
-
-            },
-            aLengthMenu: [[75, 100, 500, 1000, -1], [75, 100, 500, 1000, "All"]],
-            iDisplayLength: 75,
-            scrollY: 400,
-            scrollCollapse: false,
-            aoColumnDefs: [{
-                bSortable: false,
-                aTargets: [-1, -2]
-            }],
-            columns: [
-                { 'data': 'firstname', 'name': 'First Name' },
-                { 'data': 'lastname', 'name': 'Last Name' },
-                { 'data': 'emailid', 'name': 'Email ID' },
-                { 'data': 'rolename', 'name': 'Role Name' },
-                { 'data': 'organization', 'name': 'Organization' },
-                {
-                    "render": function (data, type, full, meta)
-                    { return '<button class="btn btn-success" onclick=getClient("' + full.userid + '"); >Edit</button>'; }
-                }],
-            select: {
-                style: 'multi',
-                selector: 'td:first-child'
-            },
-        });
-    };
+    }    
 
     function msg(strMsg, mode) {
         $.notify(strMsg, mode, { globalPosition: 'top center', clickToHide: true, autoHide: false });

@@ -1,13 +1,13 @@
 ﻿@model Cybereum.Models.SubTaskViewModel
 
 @{
-    ViewBag.Title = "Add/Edit SubTasks";
+    ViewBag.Title = "Add/Edit SubTask";
 }
 
-<script src="~/Scripts/jquery-2.1.1.min.js"></script>
+@*<script src="~/Scripts/jquery-2.1.1.min.js"></script>
 
-<link rel="stylesheet" href="~/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="~/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">*@
 <style type="text/css">
     .error {
         color: red;
@@ -15,104 +15,135 @@
     }
 </style>
 
-<h2>Add/Edit Tasks</h2>
+<div class="row">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Add/Edit Sub-Task</h4>
+            </div>
+            <div class="card-body">
+                <div class="basic-form">
+                    @using (Html.BeginForm("Create", "SubTask", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
 
-@using (Html.BeginForm("Create", "SubTask", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
+                        @*<div class="form-horizontal">
+                            <hr />*@
+                        <span class="text-danger" style="align-items:center;">
+                            @ViewBag.Message
+                            @Html.HiddenFor(model => model.subtaskid, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.HiddenFor(model => model.taskid)
+                            @Html.HiddenFor(model => model.taskname)
+                            @Html.HiddenFor(model => model.createdby)
+                            @Html.HiddenFor(model => model.createddate)
+                            @Html.HiddenFor(model => model.modifiedby)
+                            @Html.HiddenFor(model => model.modifieddate)
+                            @Html.HiddenFor(model => model.isactive)
+                        </span>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(model => model.subtaskname, "Sub-Task Name", htmlAttributes: new { @class = "" })
+                                @*<div class="col-md-10">*@
+                                    @Html.EditorFor(model => model.subtaskname, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                                    @Html.ValidationMessageFor(model => model.subtaskname, "", new { @class = "text-danger" })
+                                @*</div>*@
+                            </div>
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(model => model.startdate, "Start Date", htmlAttributes: new { @class = "" })
+                                @*<div class="col-md-10">*@
+                                    @*@Html.EditorFor(model => model.startdate, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })*@
+                                    @*@Html.TextBoxFor(model => model.startdate, "{0:MM/dd/yyyy}", new { @class = "form-control mb-2 mr-sm-2 datepicker", @type = "date", @placeholder = "MM/dd/yyyy", autocomplete = "off" })*@
+                                    @Html.TextBoxFor(model => model.startdate, new { @type = "date", @class = "form-control datepicker", @Value = Model.startdate.ToString("yyyy-MM-dd") })
+                                    @Html.ValidationMessageFor(model => model.startdate, "", new { @class = "text-danger" })
+                                @*</div>*@
+                            </div>
+                        </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    @Html.LabelFor(model => model.enddate, "End Date", htmlAttributes: new { @class = "" })
+                                    @*<div class="col-md-10">*@
+                                        @*@Html.EditorFor(model => model.enddate, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })*@
+                                        @Html.TextBoxFor(model => model.enddate, new { @type = "date", @class = "form-control datepicker", @Value = Model.enddate.ToString("yyyy-MM-dd") })
+                                        @Html.ValidationMessageFor(model => model.enddate, "", new { @class = "text-danger" })
+                                    @*</div>*@
+                                </div>
+                                <div class="form-group col-md-6">
+                                    @Html.LabelFor(model => model.statusid,"Status", htmlAttributes: new { @class = "" })
+                                    @*<div class="col-md-10">*@
+                                        @Html.DropDownList("statusid", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.statusid, "", new { @class = "text-danger" })
+                                    @*</div>*@
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    @Html.LabelFor(model => model.tasktypeid,"Task Type", htmlAttributes: new { @class = "" })
+                                    @*<div class="col-md-10">*@
+                                        @Html.DropDownList("tasktypeid", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.tasktypeid, "", new { @class = "text-danger" })
+                                    @*</div>*@
+                                </div>
+                                <div class="form-group col-md-6">
+                                    @Html.LabelFor(model => model.priority,"Priority", htmlAttributes: new { @class = "" })
+                                    @*<div class="col-md-10">*@
+                                        @Html.EditorFor(model => model.priority, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.priority, "", new { @class = "text-danger" })
+                                    @*</div>*@
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    @Html.LabelFor(model => model.assignedto, "Assigned To", htmlAttributes: new { @class = "" })
+                                    @*<div class="col-md-10">*@
+                                        @Html.DropDownList("assignedto", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.assignedto, "", new { @class = "text-danger" })
+                                    @*</div>*@
+                                </div>
+                            </div>
+                            @*<div class="modal-footer">
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-12">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal" onclick="history.go(-1); return false;">Close</button>
+                                            <input type="submit" name="btnSubmit" value="Save" class="btnConfirm btn btn-primary" />
+                                        </div>
+                                    </div>
+                                </div>*@
 
-    <div class="form-horizontal">
-        <hr />
-        <span class="text-danger" style="align-items:center;">
-            @ViewBag.Message
-            @Html.HiddenFor(model => model.subtaskid, htmlAttributes: new { @class = "control-label col-md-2" })
-            @Html.HiddenFor(model => model.taskid)
-            @Html.HiddenFor(model => model.taskname)
-            @Html.HiddenFor(model => model.createdby)
-            @Html.HiddenFor(model => model.createddate)
-            @Html.HiddenFor(model => model.modifiedby)
-            @Html.HiddenFor(model => model.modifieddate)
-            @Html.HiddenFor(model => model.isactive)
-        </span>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                @Html.LabelFor(model => model.subtaskname, "SubTaskName", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.subtaskname, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                    @Html.ValidationMessageFor(model => model.subtaskname, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group col-md-6">
-                @Html.LabelFor(model => model.startdate, "StartDate", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @*@Html.EditorFor(model => model.startdate, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })*@
-                    @*@Html.TextBoxFor(model => model.startdate, "{0:MM/dd/yyyy}", new { @class = "form-control mb-2 mr-sm-2 datepicker", @type = "date", @placeholder = "MM/dd/yyyy", autocomplete = "off" })*@
-                    @Html.TextBoxFor(model => model.startdate, new { @type = "date", @class = "form-control datepicker", @Value = Model.startdate.ToString("yyyy-MM-dd") })
-                    @Html.ValidationMessageFor(model => model.startdate, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                @Html.LabelFor(model => model.enddate, "EndDate", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @*@Html.EditorFor(model => model.enddate, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })*@
-                    @Html.TextBoxFor(model => model.enddate, new { @type = "date", @class = "form-control datepicker", @Value = Model.enddate.ToString("yyyy-MM-dd") })
-                    @Html.ValidationMessageFor(model => model.enddate, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group col-md-6">
-                @Html.LabelFor(model => model.statusid, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("statusid", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.statusid, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                @Html.LabelFor(model => model.tasktypeid, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("tasktypeid", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.tasktypeid, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group col-md-6">
-                @Html.LabelFor(model => model.priority, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.priority, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.priority, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                @Html.LabelFor(model => model.assignedto, "assignedto", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("assignedto", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.assignedto, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-12">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="history.go(-1); return false;">Close</button>
-                    <input type="submit" name="btnSubmit" value="Save" class="btnConfirm btn btn-primary" />
+                            <div class="row" style="padding-top: 30px;">
+                                <div class="col-6">
+                                    @*<a href="@Url.Action("ApprovedUsers", "User")"><h4>Back To List</h4></a>*@
+                                    <h4>
+                                        @Html.ActionLink("Back to List", "Index", new
+                                   {
+                                       // routeValues
+                                       taskid = ViewBag.taskid
+                                   })
+                                    </h4>
+                                </div>
+                                <div class="col-6">
+                                    <button type="button" class="btn btn" style="background-color: #0D2136; color: white;" data-dismiss="modal" onclick="history.go(-1); return false;">Close</button>
+                                    <input type="submit" name="btnSubmit" value="Save" class="btn btn" style="background-color: #0D2136; color: white;" />
+                                </div>
+
+                            </div>
+                            @*</div>*@
+                    }
+
                 </div>
             </div>
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index", new
-{
-    // routeValues
-    taskid = ViewBag.taskid
-})
 </div>
 
+@*<div>
+                            @Html.ActionLink("Back to List", "Index", new
+    {
+        // routeValues
+        taskid = ViewBag.taskid
+    })
+                        </div>*@
+
+@Scripts.Render("~/bundles/jquery")
 <script type="text/javascript">
     $(document).ajaxSend(function () {
         //$("#overlay").fadeIn(300);
@@ -151,7 +182,7 @@
                 }
             });
         });
-                
+
 
         //$('#DataTable').DataTable();
         $('#checkBoxAll').click(function () {

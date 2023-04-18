@@ -267,7 +267,7 @@ namespace Cybereum.Controllers
 
                 //var RecCount = entities.tblfiles.Count();
                 // Initialization.  
-                var search = Request.Form.GetValues("search[value]")[0];
+               var search = Request.Form.GetValues("search[value]")[0];
                 var draw = Request.Form.GetValues("draw").FirstOrDefault();
                 var start = Request.Form.GetValues("start").FirstOrDefault();
                 //var length = Request.Form.GetValues("length").FirstOrDefault() == "-1" ? RecCount.ToString() : Request.Form.GetValues("length").FirstOrDefault();

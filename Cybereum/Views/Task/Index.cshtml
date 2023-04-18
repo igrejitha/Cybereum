@@ -4,16 +4,16 @@
     ViewBag.Title = "Task List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<script src="~/Scripts/jquery-2.1.1.min.js"></script>
+@*<script src="~/Scripts/jquery-2.1.1.min.js"></script>
 
-<link rel="stylesheet" href="~/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-<script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="~/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
 
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" />
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css" />
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.bootstrap4.min.css" />
 
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.css" />*@
 
 @*
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>*@
@@ -65,53 +65,45 @@
     }
 </style>
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
-<script src="~/Scripts/notify.min.js"></script>
+@*<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Scripts/notify.min.js"></script>*@
 
-<div class=" form-horizontal">
+<div class="form-horizontal">
     <h4>Task List</h4>
     <hr />
 </div>
 
 @if (Convert.ToInt32(Session["RoleId"]) != 3)
 {
-    <p><button type="button" class="btn btn-info pull-left" onclick="location.href='@Url.Action("Create", "Task")?milestoneid=@ViewBag.milestoneid'">Add New</button></p>
+    <p><button type="button" class="btn btn" style="background-color: #0D2136; color: white;" onclick="location.href='@Url.Action("Create", "Task")?milestoneid=@ViewBag.milestoneid'">Add New</button></p>
 }
 
-&nbsp;
-<div>
-    &nbsp;
-    <div class="col-xs-12">
-        <div class="table-responsive pts-table-des">
-            <table id="tblTask" class="table table-bordered table-striped dataTable" style="width:100%!important;">
-                <thead style="width:100%">
-                    <tr>
-                        <th>Task Name</th>
-                        <th>Milestone Name</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Assigned To</th>
-                        <th>Edit</th>
-                        <th>Sub Task</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+<div class="col-12">
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="tblTask" class="display min-w850">
+                    <thead>
+                        <tr>
+                            <th>Task Name</th>
+                            <th>Activity Name</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Assigned To</th>
+                            <th>Edit</th>
+                            <th>Sub Task</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
-@*<div id="msg">
 
-    </div>*@
-<div class="modal fade" id="msg" role="dialog" aria-labelledby="clientModal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" id="clientmodalbody">
-
-        </div>
-    </div>
-</div>
+@Scripts.Render("~/bundles/jquery")
 <script type="text/javascript">
     $(document).ajaxSend(function () {
         //$("#overlay").fadeIn(300);
@@ -135,7 +127,7 @@
         {
             processing: true,
             serverSide: true,
-            filter: true,
+            filter: false,
             orderMulti: false,
             pageLength: 75,
             Sort: true,
@@ -146,7 +138,7 @@
             },
             aLengthMenu: [[75, 100, 500, 1000, -1], [75, 100, 500, 1000, "All"]],
             iDisplayLength: 75,
-            scrollY: 400,
+            //scrollY: 400,
             aoColumnDefs: [{
                 bSortable: false,
                 aTargets: [-1, -2]
@@ -155,7 +147,7 @@
             "info": true,
             columns: [
                 { 'data': 'taskname', 'name': 'Task Name' },
-                { 'data': 'milestonename', 'name': 'Milestone Name' },
+                { 'data': 'milestonename', 'name': 'Activity Name' },
                 {
                     'data': 'startdate', 'name': 'Start Date',
                     'render': function (jsonDate) {
@@ -204,10 +196,10 @@
                         debugger;
                         var value1 = '@Request.RequestContext.HttpContext.Session["RoleId"]';
                         if (value1 == '3') {
-                            return '<button class="btn btn-info" id="btnedit" disabled="disabled" onclick=getTask("' + full.taskid + '"); >Edit</button>';
+                            return '<button class="btn btn" style="background-color: #0D2136; color: white;" id="btnedit" disabled="disabled" onclick=getTask("' + full.taskid + '"); >Edit</button>';
                         }
-                        else {                            
-                            return '<button class="btn btn-info" id="btnedit" onclick=getTask("' + full.taskid + '"); >Edit</button>';
+                        else {
+                            return '<button class="btn btn" style="background-color: #0D2136; color: white;" id="btnedit" onclick=getTask("' + full.taskid + '"); >Edit</button>';
                         }
                     }
 
@@ -215,7 +207,7 @@
                 ,
                 {
                     data: 'taskname', render: function (data, type, row) {
-                        return "<button type='submit' onclick=GetSubTask('" + encodeURIComponent(row.taskid) + "'); class='btn btn-info'>Sub-Task</button>";
+                        return "<button type='submit' onclick=GetSubTask('" + encodeURIComponent(row.taskid) + "'); class='btn btn' style='background-color: #0D2136; color: white;'>Sub-Task</button>";
                     }
                 }
             ],
@@ -241,7 +233,7 @@
         $("#tblTask").dataTable(
         {
             bLengthChange: true,
-            bFilter: true,
+            bFilter: false,
             bSort: true,
             bPaginate: true,
             data: response,
@@ -253,7 +245,7 @@
             }],
             columns: [
                 { 'data': 'taskname', 'name': 'Task Name' },
-                { 'data': 'milestonename', 'name': 'Milestone Name' },
+                { 'data': 'milestonename', 'name': 'Activity Name' },
                 { 'data': 'startdate', 'name': 'Start Date' },
                 { 'data': 'enddate', 'name': 'End Date' },
                 { 'data': 'assignedusername', 'name': 'Assigned To' },
@@ -262,16 +254,16 @@
                         debugger;
                         var value1 = '@Request.RequestContext.HttpContext.Session["RoleId"]';
                         if (value1 == '3') {
-                            return '<button class="btn btn-info" id="btnedit" disabled="disabled" onclick=getTask("' + full.taskid + '"); >Edit</button>';
+                            return '<button class="btn btn" style="background-color: #0D2136; color: white;" id="btnedit" disabled="disabled" onclick=getTask("' + full.taskid + '"); >Edit</button>';
                         }
                         else {
-                            return '<button class="btn btn-info" id="btnedit" onclick=getTask("' + full.taskid + '"); >Edit</button>';
+                            return '<button class="btn btn" style="background-color: #0D2136; color: white;" id="btnedit" onclick=getTask("' + full.taskid + '"); >Edit</button>';
                         }
                     }
                 },
             {
                 data: 'projectname', render: function (data, type, row) {
-                    return "<button type='submit' onclick=GetSubTask('" + encodeURIComponent(row.taskid) + "'); class='btn btn-info'>Sub-Task</button>";
+                    return "<button type='submit' onclick=GetSubTask('" + encodeURIComponent(row.taskid) + "'); class='btn btn' style='background-color: #0D2136; color: white;'>Sub-Task</button>";
                 }
             }
             ],

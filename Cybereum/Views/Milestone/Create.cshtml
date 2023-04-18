@@ -1,13 +1,13 @@
 ﻿@model Cybereum.Models.MilestoneViewModel
 
 @{
-    ViewBag.Title = "Add/Edit Milestone";
+    ViewBag.Title = "Add/Edit Activity";
 }
 
-<script src="~/Scripts/jquery-2.1.1.min.js"></script>
+@*<script src="~/Scripts/jquery-2.1.1.min.js"></script>
 
-<link rel="stylesheet" href="~/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="~/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">*@
 <style type="text/css">
     .error {
         color: red;
@@ -15,69 +15,94 @@
     }
 </style>
 
-<h2>Add/Edit Milestone</h2>
-
-@using (Html.BeginForm("Create", "Milestone", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <hr />
-        <span class="text-danger" style="align-items:center;">
-            @ViewBag.Message
-            @Html.HiddenFor(model => model.milestoneid, htmlAttributes: new { @class = "control-label col-md-2" })
-            @Html.HiddenFor(model => model.projectid)
-            @Html.HiddenFor(model => model.projectname)
-            @Html.HiddenFor(model => model.createdby)
-            @Html.HiddenFor(model => model.createddate)
-            @Html.HiddenFor(model => model.modifiedby)
-            @Html.HiddenFor(model => model.modifieddate)
-            @Html.HiddenFor(model => model.isactive)
-        </span>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                @Html.LabelFor(model => model.milestonename, "MilestoneName", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.milestonename, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                    @Html.ValidationMessageFor(model => model.milestonename, "", new { @class = "text-danger" })
-                </div>
+<div class="row">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Add/Edit Activity</h4>
             </div>
-            <div class="form-group col-md-6">
-                @Html.LabelFor(model => model.startdate, "StartDate", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(model => model.startdate, new { @type = "date", @class = "form-control datepicker", @Value = Model.startdate.ToString("yyyy-MM-dd") })
-                    @Html.ValidationMessageFor(model => model.startdate, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                @Html.LabelFor(model => model.enddate, "EndDate", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.TextBoxFor(model => model.enddate, new { @type = "date", @class = "form-control datepicker", @Value = Model.enddate.ToString("yyyy-MM-dd") })
-                    @Html.ValidationMessageFor(model => model.enddate, "", new { @class = "text-danger" })
-                </div>
-            </div>            
-        </div>                
-        <div class="modal-footer">
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-12">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="history.go(-1); return false;">Close</button>
-                    <input type="submit" name="btnSubmit" value="Save" class="btnConfirm btn btn-primary" />
+            <div class="card-body">
+                <div class="basic-form">
+                    @using (Html.BeginForm("Create", "Milestone", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        @*<div class="form-horizontal">
+                            <hr />*@
+                        <span class="text-danger" style="align-items:center;">
+                            @ViewBag.Message
+                            @Html.HiddenFor(model => model.milestoneid, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.HiddenFor(model => model.projectid)
+                            @Html.HiddenFor(model => model.projectname)
+                            @Html.HiddenFor(model => model.createdby)
+                            @Html.HiddenFor(model => model.createddate)
+                            @Html.HiddenFor(model => model.modifiedby)
+                            @Html.HiddenFor(model => model.modifieddate)
+                            @Html.HiddenFor(model => model.isactive)
+                        </span>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(model => model.milestonename, "MilestoneName", htmlAttributes: new { @class = "" })
+                                @Html.EditorFor(model => model.milestonename, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.milestonename, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(model => model.startdate, "StartDate", htmlAttributes: new { @class = "" })
+
+                                @Html.TextBoxFor(model => model.startdate, new { @type = "date", @class = "form-control datepicker", @Value = Model.startdate.ToString("yyyy-MM-dd") })
+                                @Html.ValidationMessageFor(model => model.startdate, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(model => model.enddate, "EndDate", htmlAttributes: new { @class = "" })
+
+                                @Html.TextBoxFor(model => model.enddate, new { @type = "date", @class = "form-control datepicker", @Value = Model.enddate.ToString("yyyy-MM-dd") })
+                                @Html.ValidationMessageFor(model => model.enddate, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                        @*<div class="modal-footer">
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-12">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="history.go(-1); return false;">Close</button>
+                                        <input type="submit" name="btnSubmit" value="Save" class="btnConfirm btn btn-primary" />
+                                    </div>
+                                </div>
+                            </div>*@
+                        <div class="row" style="padding-top: 30px;">
+                            <div class="col-6">
+                                @*<a href="@Url.Action("ApprovedUsers", "User")"><h4>Back To List</h4></a>*@
+                                <h4>
+                                    @Html.ActionLink("Back to List", "Index", new
+                                   {
+                                       projectid = ViewBag.projectid
+                                   })
+                                </h4>
+                            </div>
+                            <div class="col-6">
+                                <button type="button" class="btn btn" style="background-color: #0D2136; color: white;" data-dismiss="modal" onclick="history.go(-1); return false;">Close</button>
+                                <input type="submit" name="btnSubmit" value="Save" class="btn btn" style="background-color: #0D2136; color: white;" />
+                            </div>
+
+                        </div>
+                            @*</div>*@
+                    }
                 </div>
             </div>
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index", new
-{
-    // routeValues
-    projectid = ViewBag.projectid
-})
 </div>
 
+
+@*<div>
+    @Html.ActionLink("Back to List", "Index", new
+{
+    projectid = ViewBag.projectid
+})
+</div>*@
+@Scripts.Render("~/bundles/jquery")
 <script type="text/javascript">
     $(document).ajaxSend(function () {
         //$("#overlay").fadeIn(300);
@@ -103,7 +128,7 @@
         });
 
 
-        $(function () {            
+        $(function () {
             $("#enddate").on('change', function () {
                 debugger;
                 var date = $("#enddate").val();
@@ -124,7 +149,7 @@
             else {
                 $(".chkCheckBoxId").prop("checked", false)
             }
-        });       
+        });
 
         function onSubmit() {
 

@@ -125,6 +125,16 @@ namespace Cybereum.Controllers
                             Value = b.userid.ToString()
                         }).Distinct().OrderBy(x => x.Text).ToList();
             }
+            else if(roleid==(int)Role.Admin)
+            {
+                user = (from b in db.tbl_user
+                        where b.roleid == 3 && b.isactive == 1
+                        select new SelectListItem
+                        {
+                            Text = b.firstname + " " + b.lastname,
+                            Value = b.userid.ToString()
+                        }).Distinct().OrderBy(x => x.Text).ToList();
+            }
             else
             {
                 user = (from b in db.tbl_user
