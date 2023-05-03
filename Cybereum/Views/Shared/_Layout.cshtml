@@ -69,9 +69,11 @@
                                 <a class="nav-link" href="#" role="button" data-toggle="dropdown">
                                     @*<i class="fas fa-user mr-2"></i>*@
 
-                                    <b style="color:white">@HttpContext.Current.User.Identity.Name</b>
-                                    @*@Session["RoleName"]*@
-                                    <img src="~/images/cyber/profile-user.png" width="20" alt="" />
+                                    <b style="color:white">@HttpContext.Current.User.Identity.Name
+                                    <br />
+                                        <span style="color:white">@Session["RoleName"]</span>
+                                    </b>                                    
+                                    <img src="~/images/cyber/profile-user.png" width="20" alt="" />                                    
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     @*<a class="dropdown-item ai-icon">*@
@@ -151,7 +153,7 @@
                             </a>
                             <ul aria-expanded="false">
 
-                                <li><a href="@Url.Action("Index", "Project")">Project</a></li>
+                                <li><a href="@Url.Action("List", "Project")">Project</a></li>
                             </ul>
                         </li>
                     }

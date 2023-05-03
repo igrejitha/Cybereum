@@ -8,12 +8,31 @@ using System.Web;
 using System.Web.Mvc;
 using Cybereum.Models;
 using Cybereum.Filters;
+using System.Threading.Tasks;
+using Gremlin.Net.Driver;
+using Gremlin.Net.Structure.IO.GraphSON;
 
 namespace Cybereum.Controllers
 {
     public class TaskController : Controller
     {
         private cybereumEntities db = new cybereumEntities();
+
+        private const string hostname = "gremtest1.gremlin.cosmos.azure.com";
+        private const int port = 443;
+        private const string authKey = "lja6Gkeuf5nsnEg9TYyC79N1fvt4v1ZBb9JwkbWPNiNC1tEeBOSVu8vBHQZeKnSFguIKz9ziKjVEiPAjRAuf3w==";
+        private const string database = "graphdb";
+        private const string collection = "ProjectGraph";
+
+        ConnectionPoolSettings connectionPoolSettings = new ConnectionPoolSettings()
+        {
+            MaxInProcessPerConnection = 10,
+            PoolSize = 4,
+            ReconnectionAttempts = 3,
+            ReconnectionBaseDelay = TimeSpan.FromMilliseconds(100)
+        };
+
+        //string containerLink = "/dbs/" + database + "/colls/" + collection;
 
         // GET: Task
         [Authorize]
@@ -29,7 +48,7 @@ namespace Cybereum.Controllers
             if (milestoneid == 0)
             {
                 ViewBag.milestoneid = Convert.ToInt32(Session["MilestoneId"]);
-                Session["MilestoneId"] = ViewBag.projectid;
+                Session["MilestoneId"] = ViewBag.milestoneid;
             }
             else
             {
@@ -38,6 +57,102 @@ namespace Cybereum.Controllers
             }
             GetTask(Convert.ToInt32(System.Web.HttpContext.Current.Session["LoggedInUserId"]), Convert.ToInt32(System.Web.HttpContext.Current.Session["RoleId"]), milestoneid);
             return View();
+        }
+
+        // GET: Task
+        [Authorize]
+        [SessionTimeout]
+        public ActionResult List(string activityid)
+        {
+            TempData["ActivityId"] = activityid;
+            ViewBag.activityid = TempData["ActivityId"];
+            TempData.Keep();
+            if (activityid == null)
+            {
+                ViewBag.activityid = Convert.ToInt32(Session["ActivityId"]);
+                Session["ActivityId"] = ViewBag.activityid;
+            }
+            else
+            {
+                ViewBag.activityid = activityid;
+                Session["ActivityId"] = activityid;
+            }
+            return View();
+        }
+
+        public async Task<JsonResult> tasklist(string activityid)
+        {
+            List<ProjectTask> list = new List<ProjectTask>();
+            try
+            {
+                int pmuserid = Convert.ToInt16(Session["LoggedInUserId"]);
+
+                var gremlinServer = new GremlinServer(hostname, port, enableSsl: true, username: "/dbs/" + HttpUtility.UrlEncode(database) + "/colls/" + HttpUtility.UrlEncode(collection), password: authKey);
+                using (var gremlinClient = new GremlinClient(
+                    gremlinServer,
+                    new GraphSON2Reader(),
+                    new GraphSON2Writer(),
+                    GremlinClient.GraphSON2MimeType,
+                    connectionPoolSettings))
+                {
+                    var gremlinScript = "g.V().has('task','activityid','" + activityid + "').project('id','taskname','startdate','enddate','durations','tasktype','taskstatus','assignedto','createdby','createdusername','createdon','activityid')" +
+                                        ".by(id()).by(values('taskname')).by(values('startdate')).by(values('enddate')).by(values('durations')).by(values('tasktype')).by(values('taskstatus')).by(values('assignedto')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('activityid'))";
+                    if (Convert.ToInt16(Session["RoleId"]) == (int)Role.User)
+                    {
+                        gremlinScript = "g.V().has('task','assignedto','" + pmuserid + "').project('id','taskname','startdate','enddate','durations','tasktype','taskstatus','assignedto','createdby','createdusername','createdon','activityid')" +
+                                        ".by(id()).by(values('taskname')).by(values('startdate')).by(values('enddate')).by(values('durations')).by(values('tasktype')).by(values('taskstatus')).by(values('assignedto')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('activityid'))";
+                    }
+                    try
+                    {
+                        var results = await gremlinClient.SubmitAsync<dynamic>(gremlinScript).ConfigureAwait(false);
+
+                        foreach (var result in results)
+                        {
+                            ProjectTask task = new ProjectTask();
+                            task.taskid = result["id"].ToString();
+                            task.taskname = result["taskname"].ToString();
+                            task.startdate = Convert.ToDateTime(result["startdate"]);
+                            task.enddate = Convert.ToDateTime(result["enddate"]);
+                            //task.tasktype = result["tasktype"];
+                            //task.taskstatus = result["taskstatus"];
+                            task.durations = Convert.ToInt64(result["durations"]);
+                            task.activityid = result["activityid"].ToString();
+
+                            gremlinScript = "g.V().has('activity','id','" + result["activityid"] + "').project('activityname').by(values('activityname'))";
+                            var results1 = await gremlinClient.SubmitAsync<dynamic>(gremlinScript).ConfigureAwait(false);
+                            foreach (var result1 in results1)
+                            {
+                                task.activityname = result1["activityname"];
+                            }
+
+                            task.assignedto = result["assignedto"].ToString();
+
+                            int userid = Convert.ToInt32(result["assignedto"]);
+                            var username = db.tbl_user.Where(x => x.userid == userid).FirstOrDefault();
+
+                            if (username != null)
+                            {
+                                task.assignedusername = username.firstname + ' ' + username.lastname;
+                            }
+
+                            task.createdon = Convert.ToDateTime(result["createdon"]);
+
+                            list.Add(task);
+                        }
+                        var taskresult = this.Json(new { data = list, recordsTotal = list.Count(), recordsFiltered = list.Count() }, JsonRequestBehavior.AllowGet);
+                        return taskresult;
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return null;
         }
 
         // GET: Task/Details/5
@@ -64,6 +179,360 @@ namespace Cybereum.Controllers
             return RedirectToAction("Create", task);
         }
 
+        public ActionResult AddEditrecord(string Id)
+        {
+            ViewBag.Message = "Edit Task";
+
+            var task = gettaskbyid(Id);
+            return RedirectToAction("AddEditTask", task.Result);
+        }
+
+        public async Task<ProjectTask> gettaskbyid(string id)
+        {
+            ProjectTask projecttask = new ProjectTask();
+            try
+            {
+                var gremlinServer = new GremlinServer(hostname, port, enableSsl: true, username: "/dbs/" + HttpUtility.UrlEncode(database) + "/colls/" + HttpUtility.UrlEncode(collection), password: authKey);
+                using (var gremlinClient = new GremlinClient(
+                    gremlinServer,
+                    new GraphSON2Reader(),
+                    new GraphSON2Writer(),
+                    GremlinClient.GraphSON2MimeType,
+                    connectionPoolSettings))
+                {
+                    var gremlinScript = "g.V().has('task','id','" + id + "').project('id','taskname','startdate','enddate','durations','tasktype','taskstatus','assignedto','createdby','createdusername','createdon','activityid')" +
+                        ".by(id()).by(values('taskname')).by(values('startdate')).by(values('enddate')).by(values('durations')).by(values('tasktype')).by(values('taskstatus')).by(values('assignedto')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('activityid'))";
+                    try
+                    {
+                        //var results = await gremlinClient.SubmitAsync<dynamic>(gremlinScript).ConfigureAwait(false);
+                        var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
+                        task.Wait();
+                        var results = task.Result;
+
+                        foreach (var result in results)
+                        {
+                            projecttask.taskid = result["id"].ToString();
+                            projecttask.activityid = result["activityid"].ToString();
+                            projecttask.taskname = result["taskname"].ToString();
+                            projecttask.startdate = Convert.ToDateTime(result["startdate"]);
+                            projecttask.enddate = Convert.ToDateTime(result["enddate"]);
+                            projecttask.tasktype = Convert.ToInt16(result["tasktype"]);
+                            projecttask.taskstatus = Convert.ToInt16(result["taskstatus"]);
+                            projecttask.assignedto = result["assignedto"];
+                            projecttask.durations = Convert.ToInt64(result["durations"]);
+                            //activity.Predecessors = result["predecessors"].ToString();
+                            projecttask.createdby = result["createdby"].ToString();
+                            projecttask.createdusername = result["createdusername"].ToString();
+                            projecttask.createdon = Convert.ToDateTime(result["createdon"]);
+                        }
+                        return projecttask;
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return null;
+        }
+
+
+
+        [Authorize]
+        [SessionTimeout]
+        public ActionResult AddEditTask(int? taskid, string activityid, ProjectTask projecttask)
+        {
+            if (activityid == null)
+            {
+                ViewBag.activityid = Convert.ToInt32(Session["ActivityId"]);
+                Session["ActivityId"] = ViewBag.activityid;
+            }
+            else
+            {
+                ViewBag.activityid = projecttask.activityid;
+                Session["ActivityId"] = activityid;
+            }
+
+            if (projecttask.taskid == null)
+            {
+                var gremlinScript = "g.V().has('task','activityid','" + activityid + "').order().by('createdon',decr).limit(1).project('startdate','enddate').by(values('startdate')).by(values('enddate'))";
+                var gremlinServer = new GremlinServer(hostname, port, enableSsl: true, username: "/dbs/" + database + "/colls/" + collection, password: authKey);
+                using (var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType))
+                {
+                    var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
+                    task.Wait();
+                    var result = task.Result;
+                    if (result.Count > 0)
+                    {
+                        foreach (var item in result)
+                        {
+                            projecttask.startdate = Convert.ToDateTime(item["enddate"]);
+                            projecttask.enddate = Convert.ToDateTime(item["enddate"]);
+                        }
+                    }
+                    else
+                    {
+                        projecttask.startdate = DateTime.Today;
+                        projecttask.enddate = DateTime.Today;
+                    }
+                }                
+            }
+
+            int pmuserid = Convert.ToInt32(Session["LoggedInUserId"]);
+            int roleid = Convert.ToInt16(Session["RoleId"]);
+            List<SelectListItem> user = Filluser(pmuserid, roleid);
+            ViewBag.assignedto = user;
+
+            List<SelectListItem> tasktype = (from b in db.tbl_tasktype
+                                             where b.isactive == 1
+                                             select new SelectListItem
+                                             {
+                                                 Text = b.tasktypename,
+                                                 Value = b.tasktypeid.ToString()
+                                             }).Distinct().OrderBy(x => x.Text).ToList();
+            ViewBag.tasktype = tasktype;
+
+            List<SelectListItem> status = (from b in db.tbl_status
+                                           where b.isactive == 1
+                                           select new SelectListItem
+                                           {
+                                               Text = b.statusname,
+                                               Value = b.statusid.ToString()
+                                           }).Distinct().OrderBy(x => x.Text).ToList();
+            ViewBag.taskstatus = status;
+
+            return View(projecttask);
+        }
+
+
+        [Authorize]
+        [SessionTimeout]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddEditTask([Bind(Include = "taskid,taskname,startdate,enddate,durations,tasktype,taskstatus,assignedto,createdby,createdon,activityid")] ProjectTask tbl_task)
+        {
+            string message = string.Empty;
+            if (ModelState.IsValid)
+            {
+                long duration = 0;
+                if (DateTime.Now.Date < tbl_task.startdate.Date)
+                {
+                    duration = 0;
+                }
+                else if (DateTime.Now.Date > tbl_task.enddate.Date)
+                {
+                    duration = 100;
+                }
+                else
+                {
+                    double dt1 = (DateTime.Now.Date - tbl_task.startdate.Date).TotalDays + 1;
+                    double dt2 = (tbl_task.enddate.Date - tbl_task.startdate.Date).TotalDays + 1;
+                    if (dt2 != 0)
+                        duration = Convert.ToInt64((dt1 / dt2) * 100);
+                }
+
+                var gremlinServer = new GremlinServer(hostname, port, enableSsl: true, username: "/dbs/" + database + "/colls/" + collection, password: authKey);
+                long count = 0;
+                if (tbl_task.taskid == null)
+                {
+                    using (var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType))
+                    {
+                        var gremlinScript = "g.V().has('task','taskname','" + tbl_task.taskname + "').has('task','activityid','" + tbl_task.activityid + "').count()";
+                        var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
+                        task.Wait();
+                        var objList = task.Result;
+                        count = objList.ToList()[0];
+                    }
+                    if (count > 0)
+                    {
+                        message = "Task name already exists.";
+                        goto endloop;
+                    }
+                }
+                else
+                {
+                    using (var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType))
+                    {
+                        var gremlinScript = "g.V().has('task','taskname','" + tbl_task.taskname + "').has('task','activityid','" + tbl_task.activityid + "')";
+                        var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
+                        task.Wait();
+                        var objList = task.Result;
+                        foreach (var result in objList)
+                        {
+                            if (result["id"] != tbl_task.taskid)
+                            {
+                                message = "Task name already exists.";
+                                goto endloop;
+                            }
+                        }
+                    }
+                }
+
+                if (tbl_task.taskid == null)
+                {
+                    tbl_task.createdby = Session["LoggedInUserId"].ToString();
+
+                    string gremlinScript = $"g.addV('task').property('pk', '{tbl_task.taskname}')" +
+                            $".property('taskname', '{tbl_task.taskname}')" +
+                            $".property('startdate', '{tbl_task.startdate.ToString("yyyy-MM-dd")}')" +
+                            $".property('enddate', '{tbl_task.enddate.ToString("yyyy-MM-dd")}')" +
+                            $".property('activityid', '{tbl_task.activityid}')" +
+                            $".property('durations', '{duration}')" +
+                            $".property('assignedto', '{tbl_task.assignedto}')" +
+                            $".property('tasktype', '{tbl_task.tasktype}')" +
+                            $".property('taskstatus', '{tbl_task.taskstatus}')" +
+                            $".property('createdby', '{Convert.ToInt32(tbl_task.createdby)}')" +
+                            $".property('createdusername', '')" +
+                            $".property('createdon', '{DateTime.Now}')" +
+                            $".property('type', 'task')";
+
+                    // Execute the Gremlin script
+                    //var gremlinServer = new GremlinServer(hostname, port, enableSsl: true, username: "/dbs/" + database + "/colls/" + collection, password: authKey);
+                    using (var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType))
+                    {
+                        var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
+                        task.Wait();
+                        var result = task.Result;
+                        message = "Added Successfully";
+                    }
+
+
+                    gremlinScript = "g.V().has('task','taskname','" + tbl_task.taskname + "').project('id').by(values('id'))";
+                    using (var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType))
+                    {
+                        var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
+                        task.Wait();
+                        var result = task.Result;
+                        foreach (var result1 in result)
+                        {
+                            tbl_task.taskid = Convert.ToString(result1["id"]);
+                        }
+                    }
+
+                    //Remove connection the activity to task
+                    gremlinScript = $"\ng.V().has('task', 'id', '{tbl_task.taskid}').bothE().drop()";
+                    // Execute the Gremlin script
+                    using (var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType))
+                    {
+                        var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
+                        task.Wait();
+                        var result = task.Result;
+                        message = "Gremlin script executed successfully";
+                    }
+
+                    //connect the project to activity
+                    gremlinScript = $"\ng.V('{tbl_task.activityid}').addE('contains').to(g.V('{tbl_task.taskid}'))";
+                    // Execute the Gremlin script
+                    using (var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType))
+                    {
+                        var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
+                        task.Wait();
+                        var result = task.Result;
+                        message = "Gremlin script executed successfully";
+                    }
+
+                    //Connect the predeccesors to succesors
+                    //foreach (var predecessor in tbl_activity.Predecessors)
+                    //{
+                    gremlinScript = $"\ng.V('{tbl_task.activityid}').addE('precedes').property('duration', '{tbl_task.durations}').to(g.V('{tbl_task.taskid}'))";
+                    using (var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType))
+                    {
+                        var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
+                        task.Wait();
+                        var result = task.Result;
+                        message = "Gremlin script executed successfully";
+                    }
+                    //}
+                }
+                else
+                {
+                    string gremlinScript = $"g.V('{tbl_task.taskid}').property('taskname', '{tbl_task.taskname}')" +
+                                            $".property('startdate', '{tbl_task.startdate.ToString("yyyy-MM-dd")}')" +
+                                            $".property('enddate', '{tbl_task.enddate.ToString("yyyy-MM-dd")}')" +
+                                            $".property('activityid', '{tbl_task.activityid}')" +
+                                            $".property('durations', '{duration}')" +
+                                            $".property('assignedto', '{tbl_task.assignedto}')" +
+                                            $".property('tasktype', '{tbl_task.tasktype}')" +
+                                            $".property('taskstatus', '{tbl_task.taskstatus}')" +
+                                            $".property('updatedon', '{DateTime.Now}')" +
+                                            $".property('type', 'task')";
+
+                    // Execute the Gremlin script
+                    //var gremlinServer = new GremlinServer(hostname, port, enableSsl: true, username: "/dbs/" + database + "/colls/" + collection, password: authKey);
+                    using (var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType))
+                    {
+                        var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
+                        task.Wait();
+                        var result = task.Result;
+                        message = "Updated Successfully";
+                    }
+
+                    //connect the activity to task
+                    gremlinScript = $"\ng.V('{tbl_task.activityid}').addE('contains').to(g.V('{tbl_task.taskid}'))";
+                    // Execute the Gremlin script
+                    using (var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType))
+                    {
+                        var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
+                        task.Wait();
+                        var result = task.Result;
+                        message = "Gremlin script executed successfully";
+                    }
+
+                    //Connect the predeccesors to succesors
+                    //foreach (var predecessor in tbl_activity.Predecessors)
+                    //{
+                    gremlinScript = $"\ng.V('{tbl_task.activityid}').addE('precedes').property('duration', '{tbl_task.durations}').to(g.V('{tbl_task.taskid}'))";
+                    using (var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType))
+                    {
+                        var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
+                        task.Wait();
+                        var result = task.Result;
+                        message = "Gremlin script executed successfully";
+                    }
+                    //}
+                }
+                return RedirectToAction("List", new { activityid = tbl_task.activityid });
+
+            }
+            endloop:
+            ViewBag.Message = message;
+            ViewBag.Activityid = tbl_task.activityid;
+            int pmuserid1 = Convert.ToInt32(Session["LoggedInUserId"]);
+            int roleid1 = Convert.ToInt32(Session["RoleId"]);
+            if (tbl_task.taskid == null)
+            {
+                return RedirectToAction("AddEditTask", new { activityid = tbl_task.activityid });
+            }
+            else
+            {
+                List<SelectListItem> user = Filluser(pmuserid1, roleid1);
+                ViewBag.assignedto = user;
+
+                List<SelectListItem> tasktype = (from b in db.tbl_tasktype
+                                                 where b.isactive == 1
+                                                 select new SelectListItem
+                                                 {
+                                                     Text = b.tasktypename,
+                                                     Value = b.tasktypeid.ToString()
+                                                 }).Distinct().OrderBy(x => x.Text).ToList();
+                ViewBag.tasktype = tasktype;
+
+                List<SelectListItem> status = (from b in db.tbl_status
+                                               where b.isactive == 1
+                                               select new SelectListItem
+                                               {
+                                                   Text = b.statusname,
+                                                   Value = b.statusid.ToString()
+                                               }).Distinct().OrderBy(x => x.Text).ToList();
+                ViewBag.taskstatus = status;
+            }
+            return View(tbl_task);
+        }
+
         // GET: Task/Create
         [Authorize]
         [SessionTimeout]
@@ -82,7 +551,7 @@ namespace Cybereum.Controllers
 
             int pmuserid = Convert.ToInt32(Session["LoggedInUserId"]);
             int roleid = Convert.ToInt16(Session["RoleId"]);
-            List<SelectListItem> user = Filluser(pmuserid,roleid);
+            List<SelectListItem> user = Filluser(pmuserid, roleid);
             ViewBag.assignedto = user;
 
             List<SelectListItem> tasktype = (from b in db.tbl_tasktype
@@ -207,7 +676,7 @@ namespace Cybereum.Controllers
                         taskedit.modifieddate = DateTime.Now;
                         taskedit.modifiedby = Convert.ToInt16(Session["LoggedInUserId"]);
                         taskedit.isactive = 1;
-                        db.Entry(taskedit).State = EntityState.Modified;                        
+                        db.Entry(taskedit).State = EntityState.Modified;
                         db.SaveChanges();
                         message = "Modified Successfully";
                     }
@@ -219,7 +688,7 @@ namespace Cybereum.Controllers
             }
             int pmuserid = Convert.ToInt32(Session["LoggedInUserId"]);
             int roleid = Convert.ToInt16(Session["RoleId"]);
-            List<SelectListItem> user = Filluser(pmuserid,roleid);
+            List<SelectListItem> user = Filluser(pmuserid, roleid);
             ViewBag.assignedto = user;
 
             List<SelectListItem> tasktype = (from b in db.tbl_tasktype

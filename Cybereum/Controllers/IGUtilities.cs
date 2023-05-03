@@ -440,7 +440,7 @@ public static class IGUtilities
             var Message = new MailMessage(fromMail, toEmail);
             Message.Subject = "Welcome to Cybereum Project Management - Confirm Your email for Registration";
             Message.Body = "Dear " + name + "," +
-                           "< br/> We're thrilled to have you on board the cybereum project management platform! " +
+                           "<br/> We're thrilled to have you on board the cybereum project management platform! " +
                            " We're excited to help you streamline your project management process with our cutting-edge data analytics and ML integration." +
                            "<br/> To complete your registration, we need you to confirm your email address. Simply click on the link below to verify your email:" +
                            "<br/><br/><a href=" + link + ">" + link + "</a>";

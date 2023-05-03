@@ -1,33 +1,25 @@
 ﻿@model Cybereum.Models.ProjectActivity
+
 @{
-    ViewBag.Title = "GANTT Chart";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Add/Edit Activity";
 }
 
-@*<html>
-    <head>*@
-<script src="https://cdn.anychart.com/releases/8.6.0/js/anychart-core.min.js"> </script>
-<script src="https://cdn.anychart.com/releases/8.6.0/js/anychart-gantt.min.js"></script>
-@*</head>
-    <body>*@
-<div class=" form-horizontal">
-    <h4>GANTT Chart</h4>
-    <hr />
-</div>
-<div class="col-6">
-    <a href="@Url.Action("List", "Project")"><h4>Back To List</h4></a>
-</div>
-<div id="container" style="height:450px"> </div>
-<br />
+<style type="text/css">
+    .error {
+        color: red;
+        display: none;
+    }
+</style>
+
 <div class="row">
     <div class="col-xl-12 col-lg-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Add Activity</h4>
+                <h4 class="card-title">Add/Edit Activity</h4>
             </div>
             <div class="card-body">
                 <div class="basic-form">
-                    @using (Html.BeginForm("GANTTChart", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    @using (Html.BeginForm("Create", "Activity", FormMethod.Post, new { enctype = "multipart/form-data" }))
                     {
                         @Html.AntiForgeryToken()
 
@@ -36,9 +28,9 @@
                         <span class="text-danger" style="align-items:center;">
                             @ViewBag.Message
                             @Html.HiddenFor(model => model.id)
-                            @Html.HiddenFor(model => model.projectid)
+                            @Html.HiddenFor(model => model.projectid)                            
                             @*@Html.HiddenFor(model => model.createdby)*@
-                            @Html.HiddenFor(model => model.createdon)
+                            @Html.HiddenFor(model => model.createdon)                            
                         </span>
                         <div class="form-row">
                             <div class="form-group col-md-6">
@@ -69,15 +61,38 @@
 
                             </div>
                         </div>
+                        <div class="form-group col-md-6">
+                            @if (Convert.ToInt32(Session["RoleId"]) == 1)
+                            {
+                                <div class="form-group col-md-6">
+                                    @Html.LabelFor(model => model.createdby, "Project Manager", htmlAttributes: new { @class = "" })
+                                    @*<div class="col-md-10">*@
+                                    @Html.DropDownList("createdby", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.createdby, "", new { @class = "text-danger" })
+                                    @*</div>*@
+                                </div>
+                            }
+                            else
+                            {
+                                @Html.HiddenFor(model => model.createdby)
+                            }
+                        </div>
                         <div class="row" style="padding-top: 30px;">
-                            <div class="col-6">                               
-                            </div>
                             <div class="col-6">                                
+                                <h4>
+                                    @Html.ActionLink("Back to List", "Index", new
+                                   {
+                                       projectid = ViewBag.projectid
+                                   })
+                                </h4>
+                            </div>
+                            <div class="col-6">
+                                @*<button type="button" class="btn btn" style="background-color: #0D2136; color: white;" data-dismiss="modal" onclick="history.go(-1); return false;">Close</button>*@
                                 <input type="submit" name="btnSubmit" value="Save" class="btn btn" style="background-color: #0D2136; color: white;" />
                             </div>
 
                         </div>
-                        @*</div>*@
+                            @*</div>*@
                     }
                 </div>
             </div>
@@ -85,9 +100,7 @@
     </div>
 </div>
 
-@*<div>
-    @{Html.RenderAction("Create", "Activity",new { projectid=@ViewBag.projectid });} 
-</div>*@
+
 @Scripts.Render("~/bundles/jquery")
 <script type="text/javascript">
     $(document).ajaxSend(function () {
@@ -127,85 +140,14 @@
                 }
             });
         });
-    });
-</script>
-<script>
-    anychart.onDocumentReady(function () {
-        // create data
-        var projectid = "@ViewBag.projectid";
-        $.ajax({
-            type: 'GET',
-            url: '@Url.Action("getgannchart")?projectid=' + projectid,
-            datatype: JSON,
-            data: {
-            },
-            contentType: "text/json",
-            success: function (data) {
-                debugger;
-                data = $.parseJSON(data);
-                // set the input date/time format
-                anychart.format.inputDateTimeFormat("yyyy-MM-dd");
-                // create a data tree
-                var treeData = anychart.data.tree(data, "as-tree");
 
-                // create a chart
-                var chart = anychart.ganttProject();
-
-                var header = chart.getTimeline().header();
-                //header.level(0).format("{%tickValue}{dateTimeFormat:dd-MMM}");
-                //chart.dataGrid().column(0).enabled(false);
-                //header.level(1).format("{%value}");
-
-                header.level(0).format("{%tickValue}{dateTimeFormat:dd MMM}");
-                header.level(1).format("{%value}");
-                header.level(2).format("{%value}-{%endValue}");
-                //header.level(0).format("{%value}-{%endValue}");
-
-                // disable the first data grid column
-                chart.dataGrid().column(0).enabled(false);
-                chart.dataGrid().column(1).width(300);
-
-                //var header = chart.getTimeline().header();
-                //header.level(0).format(function () {
-                //    var duration = (this.end - this.tickValue) / 1000 / 3600 / 24;
-                //    return this.value + ": " + duration + " days"
-                //});
-
-                // set the data
-                chart.data(treeData);
-
-                //// set the position of the splitter
-                //chart.splitterPosition("30%");
-
-
-                //// configure the scale
-                //chart.getTimeline().scale().maximum(Date.UTC(2023, 06, 30));
-                // set the container id
-                chart.container("container");
-                // initiate drawing the chart
-                chart.draw();
-                // fit elements to the width of the timeline
-                chart.fitAll();
-                //chart.fitToTask("1");
-
-
-                /* listen to the rowDblClick event
-                    and update the chart title */
-                @*chart.listen("rowDblClick", function (e) {
-                    debugger;
-                    var taskid = e.item.get("taskid");
-                    var projectid = "@ViewBag.projectid";
-                    var link = '@Url.Action("Create", "Activity", new { projectid = "rowid"})'.replace('rowid', projectid);
-                    //location.href = '@Url.Action("Create", "Activity", new { projectid = "rowid",})'.replace('rowid', projectid);
-                    window.open(link, '_blank');                    
-                    return false;
-                });*@
-
+        $('#checkBoxAll').click(function () {
+            if ($(this).is(":checked")) {
+                $(".chkCheckBoxId").prop("checked", true)
+            }
+            else {
+                $(".chkCheckBoxId").prop("checked", false)
             }
         });
-
     });
-
 </script>
-@*</body>
-    </html>*@

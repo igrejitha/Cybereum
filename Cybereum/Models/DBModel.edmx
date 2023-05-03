@@ -671,6 +671,7 @@
           <Property Type="String" Name="emailid" Nullable="false" />
           <Property Type="Int32" Name="userid" Nullable="false" />
           <Property Type="Int32" Name="roleid" Nullable="false" />
+          <Property Type="String" Name="username" Nullable="true" />
         </ComplexType>
         <ComplexType Name="sp_FetchApprovedUsers_Result" >
           <Property Type="String" Name="firstname" Nullable="false" />

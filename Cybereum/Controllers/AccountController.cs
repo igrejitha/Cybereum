@@ -87,6 +87,7 @@ namespace Cybereum.Controllers
                                 //Session.Timeout = 90;                                    
                                 Session["LoggedInUserId"] = objList.userid;
                                 Session["RoleId"] = objList.roleid;
+                                Session["Username"] = objList.username;
                                 AuthorizeAttribute objAuth = new AuthorizeAttribute();
                                 if (objList.roleid == (int)Role.Admin)
                                 {
