@@ -4,10 +4,10 @@
     ViewBag.Title = "Add/Edit Projects";
 }
 
-<script src="~/Scripts/jquery-2.1.1.min.js"></script>
+@*<script src="~/Scripts/jquery-2.1.1.min.js"></script>
 
-<link rel="stylesheet" href="~/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="~/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">*@
 <style type="text/css">
     .error {
         color: red;
@@ -15,80 +15,118 @@
     }
 </style>
 
-<h2>Add/Edit Projects</h2>
+@*<h2>Add/Edit Projects</h2>*@
 
-@using (Html.BeginForm("Create", "Project", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
+<div class="row">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Add/Edit Projects</h4>
+            </div>
+            <div class="card-body">
+                <div class="basic-form">
+                    @using (Html.BeginForm("Create", "Project", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <hr />
-        <span class="text-danger" style="align-items:center;">
-            @ViewBag.Message
-            @Html.HiddenFor(model => model.projectid, htmlAttributes: new { @class = "control-label col-md-2" })
-            @Html.HiddenFor(model => model.createdby)
-            @Html.HiddenFor(model => model.createdon)
-            @Html.HiddenFor(model => model.modifiedby)
-            @Html.HiddenFor(model => model.modifiedon)
-            @Html.HiddenFor(model => model.isactive)
-        </span>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                @Html.LabelFor(model => model.projectname, "ProjectName", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.projectname, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                    @Html.ValidationMessageFor(model => model.projectname, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group col-md-6">
-                @Html.LabelFor(model => model.startdate, "StartDate", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @*@Html.EditorFor(model => model.startdate, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })*@
-                    @*@Html.TextBoxFor(model => model.startdate, "{0:MM/dd/yyyy}", new { @class = "form-control mb-2 mr-sm-2 datepicker", @type = "date", @placeholder = "MM/dd/yyyy", autocomplete = "off" })*@                    
-                    @Html.TextBoxFor(model => model.startdate, new { @type = "date", @class = "form-control datepicker", @Value = Model.startdate.ToString("yyyy-MM-dd") })
-                    @Html.ValidationMessageFor(model => model.startdate, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                @Html.LabelFor(model => model.enddate, "EndDate", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @*@Html.EditorFor(model => model.enddate, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })*@
-                    @Html.TextBoxFor(model => model.enddate, new { @type = "date", @class = "form-control datepicker", @Value = Model.enddate.ToString("yyyy-MM-dd") })
-                    @Html.ValidationMessageFor(model => model.enddate, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group col-md-6">
-                @Html.LabelFor(model => model.projectcost, "Cost", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.projectcost, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                    @Html.ValidationMessageFor(model => model.projectcost, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group col-md-6">
-                @Html.LabelFor(model => model.noofresource, "No. of Resource", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.noofresource, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                    @Html.ValidationMessageFor(model => model.noofresource, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-12">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="history.go(-1); return false;">Close</button>
-                    <input type="submit" name="btnSubmit" value="Save" class="btnConfirm btn btn-primary" />
+                        @*<div class="form-horizontal">
+                            <hr />*@
+                            <span class="text-danger" style="align-items:center;">
+                                @ViewBag.Message
+                                @Html.HiddenFor(model => model.projectid, htmlAttributes: new { @class = "" })
+                                @*@Html.HiddenFor(model => model.createdby)*@
+                                @Html.HiddenFor(model => model.createdon)
+                                @Html.HiddenFor(model => model.modifiedby)
+                                @Html.HiddenFor(model => model.modifiedon)
+                                @Html.HiddenFor(model => model.isactive)
+                            </span>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    @Html.LabelFor(model => model.projectname, "Project Name", htmlAttributes: new { @class = "" })
+                                    @*<div class="col-md-10">*@
+                                        @Html.EditorFor(model => model.projectname, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                                        @Html.ValidationMessageFor(model => model.projectname, "", new { @class = "text-danger" })
+                                    @*</div>*@
+                                </div>
+                                <div class="form-group col-md-6">
+                                    @Html.LabelFor(model => model.startdate, "Start Date", htmlAttributes: new { @class = "" })
+                                    @*<div class="col-md-10">*@
+                                        @Html.TextBoxFor(model => model.startdate, new { @type = "date", @class = "form-control datepicker", @Value = Model.startdate.ToString("yyyy-MM-dd") })
+                                        @Html.ValidationMessageFor(model => model.startdate, "", new { @class = "text-danger" })
+                                    @*</div>*@
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    @Html.LabelFor(model => model.enddate, "End Date", htmlAttributes: new { @class = "" })
+                                    @*<div class="col-md-10">*@
+                                        @*@Html.EditorFor(model => model.enddate, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })*@
+                                        @Html.TextBoxFor(model => model.enddate, new { @type = "date", @class = "form-control datepicker", @Value = Model.enddate.ToString("yyyy-MM-dd") })
+                                        @Html.ValidationMessageFor(model => model.enddate, "", new { @class = "text-danger" })
+                                    @*</div>*@
+                                </div>
+                                <div class="form-group col-md-6">
+                                    @Html.LabelFor(model => model.projectcost, "Cost", htmlAttributes: new { @class = "" })
+                                    @*<div class="col-md-10">*@
+                                        @Html.EditorFor(model => model.projectcost, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                                        @Html.ValidationMessageFor(model => model.projectcost, "", new { @class = "text-danger" })
+                                    @*</div>*@
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    @Html.LabelFor(model => model.noofresource, "No. of Resource", htmlAttributes: new { @class = "" })
+                                    @*<div class="col-md-10">*@
+                                        @Html.EditorFor(model => model.noofresource, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                                        @Html.ValidationMessageFor(model => model.noofresource, "", new { @class = "text-danger" })
+                                    @*</div>*@
+                                </div>
+                                @if (Convert.ToInt32(Session["RoleId"]) == 1)
+                                {
+                                    <div class="form-group col-md-6">
+                                        @Html.LabelFor(model => model.createdby, "Project Manager", htmlAttributes: new { @class = "" })
+                                        @*<div class="col-md-10">*@
+                                            @Html.DropDownList("createdby", null, htmlAttributes: new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.createdby, "", new { @class = "text-danger" })
+                                        @*</div>*@
+                                    </div>
+                                }
+                                else
+                                {
+                                    @Html.HiddenFor(model => model.createdby)
+                                }
+                            </div>
+                            <div class="row" style="padding-top: 30px;">
+                                <div class="col-6">
+                                    <a href="@Url.Action("Index", "Project")"><h4>Back To List</h4></a>
+
+                                </div>
+                                <div class="col-6">
+                                    <button type="button" class="btn btn" style="background-color: #0D2136; color: white;" data-dismiss="modal" onclick="history.go(-1); return false;">Close</button>
+                                    <input type="submit" name="btnSubmit" value="Save" class="btn btn" style="background-color: #0D2136; color: white;" />
+                                </div>
+
+                            </div>
+                            @*<div class="modal-footer">
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-12">
+                                            <button type="button" class="btn btn" style="background-color: #0D2136; color: white;" data-dismiss="modal" onclick="history.go(-1); return false;">Close</button>
+                                            <input type="submit" name="btnSubmit" value="Save" class="btn btn" style="background-color: #0D2136; color: white;" />
+                                        </div>
+                                    </div>
+                                </div>*@
+                        @*</div>*@
+                    }
                 </div>
             </div>
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
+@*<div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
 
+@Scripts.Render("~/bundles/jquery")
 <script type="text/javascript">
     $(document).ajaxSend(function () {
         //$("#overlay").fadeIn(300);
@@ -101,7 +139,7 @@
         $(function () {
             //$("#startdate").datepicker();
             $("#startdate").on('change', function () {
-                debugger;                
+                debugger;
                 var startdate = $("#startdate").val();
                 var date = $("#enddate").val();
                 if (date != "") {
@@ -112,18 +150,8 @@
                 }
             });
         });
+                
 
-        //$(function () {
-        //    $("#startdate").datepicker();
-        //    $("#startdate").on('change', function () {
-        //        var date = Date.parse($(this).val());
-        //        if (date < Date.now()) {
-        //            alert('Selected date must be greater than today date');
-        //            $(this).val('');
-        //        }
-        //    });
-        //});
-        
         $(function () {
             //$("#enddate").datepicker();
             $("#enddate").on('change', function () {
@@ -138,14 +166,7 @@
                 }
             });
         });
-        
-        //$.validator.addMethod("enddate", function (value, element) {
-        //    var startDate = $('.startdate').val();
-        //    return Date.parse(startDate) <= Date.parse(value) || value == "";
-        //}, "* End date must be after start date");
-        //$('#formId').validate();
 
-        //$('#DataTable').DataTable();
         $('#checkBoxAll').click(function () {
             if ($(this).is(":checked")) {
                 $(".chkCheckBoxId").prop("checked", true)
@@ -154,22 +175,7 @@
                 $(".chkCheckBoxId").prop("checked", false)
             }
         });
-
-        $("#btnSubmit").click(function () {
-            //var txtStartVal = $('#startdate').val();
-            //var txtEndVal = $('#enddate').val();
-            //if (isDate(txtEndVal)>isDate(txtStartVal)) {                
-            //    return true;
-            //}
-            //else {
-            //    alert('End date must be greater than Start date');
-            //    return false;
-            //}
-        });
-
-        function onSubmit() {
-
-        }
+                
 
         // register event on form, not submit button
         $('#subscribeForm').submit(onSubmit)

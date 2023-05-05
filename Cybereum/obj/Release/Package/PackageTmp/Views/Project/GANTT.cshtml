@@ -1,0 +1,536 @@
+﻿@model Cybereum.Models.DashTest2Model
+@{
+    ViewBag.Title = "GANTT Chart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/jquery-2.1.1.min.js"></script>
+
+<link rel="stylesheet" href="~/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.bootstrap4.min.css" />
+
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.css" />
+
+@*
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>*@
+
+@*<style>
+    #button {
+        display: block;
+        margin: 20px auto;
+        padding: 10px 30px;
+        background-color: #eee;
+        border: solid #ccc 1px;
+        cursor: pointer;
+    }
+
+    #overlay {
+        position: fixed;
+        top: 0;
+        z-index: 100;
+        width: 100%;
+        height: 100%;
+        display: none;
+        background: rgba(0,0,0,0.6);
+    }
+
+    .cv-spinner {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px #ddd solid;
+        border-top: 4px #2e93e6 solid;
+        border-radius: 50%;
+        animation: sp-anime 0.8s infinite linear;
+    }
+
+    @@keyframes sp-anime {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .is-hide {
+        display: none;
+    }
+</style>*@
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+<script src="~/Scripts/notify.min.js"></script>
+
+<script src="https://d3js.org/d3-selection-multi.v1.min.js"></script>
+<style>
+    /* Custom CSS to retain thickness of progress bars */
+    .progress {
+        height: 20px;
+        line-height: 20px;
+    }
+
+        .progress .progress-bar {
+            height: 20px;
+        }
+
+    select {
+        display: block;
+    }
+
+    #gantt-chart {
+    flex: 1;
+}
+</style>
+
+<script src="https://d3js.org/d3.v5.min.js"></script>
+
+@*<!-- Header -->
+<header id="page-header">
+    <div class="h3 text-right pull-right hidden-xs">
+        <div class="text-crystal font-w300">GANTT CHART</div>
+    </div>
+    <h1 class="h3 font-w200">
+        <span class="text-crystal">//</span> <a class="link-sf font-w300" href="index.html">PROJECT_DASHBOARD</a>
+    </h1>
+    <div class="logo-container"><img src="https://cybereum.io/wp-content/uploads/2018/08/cropped-cropped-cropped-top-logo-2-4-300x300.png" alt="cybereum" width="100" height="100"></div>
+</header>
+<!-- END Header -->
+<!-- File input element -->*@
+
+<div class=" form-horizontal">
+    <h4>GANTT Chart</h4>
+    <hr />
+</div>
+<div>
+    &nbsp;
+    <div class="col-xs-12">
+        <div id="gantt-chart"></div>
+        <div class="table-responsive pts-table-des">
+            <table class="dashboard-table">
+                <thead>
+                </thead>
+                <tbody id="activities"></tbody>
+            </table>
+        </div>
+    </div>
+    <!-- Use the FileReader API to read the contents of the selected file -->
+    <script type="text/javascript">
+
+            function formatDate(date) {
+                var d = new Date(date),
+                    month = '' + (d.getMonth() + 1),
+                    day = '' + d.getDate(),
+                    year = d.getFullYear();
+
+                if (month.length < 2) month = '0' + month;
+                if (day.length < 2) day = '0' + day;
+
+                return [year, month, day].join('-');
+            }
+
+            $(document).ready(function () {
+                debugger;
+                const Model = {
+                    Activities: {}
+                };
+
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("getchartvalue")',
+                    datatype: JSON,
+                    data: {
+                        //'categoryId': $("#CategoryList").val()
+                    },
+                    contentType: "text/json",
+                    success: function (data) {
+                        debugger;
+
+                        data.forEach(activity => {
+                            if (!Model.Activities.hasOwnProperty(activity.id)) {
+                                Model.Activities[activity.id] = { "name": activity.name, "predecessors": activity.predecessors, "successors": activity.successors };
+
+                            }
+                        });
+                        const row = `
+                                          <tr class="title-row">
+                                            <th contentEditable="false">Id</th>
+                                            <th contentEditable="false">Activity</th>
+                                            <th contentEditable="false">Start Date</th>
+                                            <th contentEditable="false">End Date</th>
+                                            <th contentEditable="false">Predecessors</th>
+                                            <th contentEditable="false">Successors</th>
+                                            <th style="width: 600px">Progress</th>
+                                          </tr>
+                                        `;
+                        document.querySelector("#activities").innerHTML += row;
+
+                        // Set the start and end dates for the x-axis
+                        const startDate = d3.min(data, d => new Date(d.start));
+                        const endDate = d3.max(data, d => new Date(d.end));
+
+                        // Set the dimensions of the chart
+                        var width = 600;
+                        var height = 50;
+                        var margin = { top: 20, right: 20, bottom: 20, left: 400 };
+
+                        // Create a time scale to map the duration of each activity to a length in pixels
+                        xScale = d3.scaleTime().domain([startDate, endDate]).range([0, width]);
+                        // Set the length of each progress bar to be proportional to its duration
+                        debugger;
+                        const xAxis = d3.axisBottom(xScale).ticks(d3.timeDay.every(1)).tickFormat(d3.timeFormat("%m/%d/%Y"));
+                        const xAxisElement = d3.select("#x-axis").call(xAxis);
+                        //This will create tick marks for every day and label them with the date in the format MM/DD/YYYY. You can adjust the tick interval and formatting as needed.
+
+                        // Create the SVG element and append it to the #gantt-chart div
+                        var svg = d3.select("#gantt-chart")
+                            .append("svg")
+                            .attr("width", width + margin.left + margin.right)
+                            .attr("height", height + margin.top + margin.bottom)
+                            .append("g")
+                            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+                        // Add the x-axis to the chart
+                        svg.append("g")
+                            .attr("transform", "translate(0," + height + ")")
+                            .call(d3.axisBottom(xScale));
+
+                        // Use the data to update the progress bars
+                        data.forEach(activity => {
+                            debugger;
+                            const startDate = new Date(activity.start);
+                            const endDate = new Date(activity.end);
+                            const currentDate = new Date();  // use actual current date
+                            let completionPercentage;
+                            if (currentDate < startDate) {
+                                completionPercentage = 0;
+                            } else if (currentDate > endDate) {
+                                completionPercentage = 100;
+                            } else {
+                                const totalTime = endDate - startDate;
+                                const elapsedTime = currentDate - startDate;
+                                completionPercentage = (elapsedTime / totalTime) * 100;
+                            }
+                            const startPos = xScale(new Date(activity.start));
+                            const endPos = xScale(new Date(activity.end));
+                            const barLength1 = endPos - startPos;
+                            const barLength = 200;
+                            // Set the width of the progress bar element
+                            //d3.select(`#pb-${activity.id}`).style("width", `${barLength}px`);
+
+                            //offset each progress bar to start at its start date, you will need to use the xScale to calculate the position of the start date and set it as the left margin of the progress bar element.
+                            // Set the left margin of the progress bar element
+                            //d3.select(`#pb-${activity.id}`).style("margin-left", `${startPos}px`);
+
+                            const progressBar = `
+                                                    <div id="pb-${activity.id}" class="font-w600 text-white-op push-5 visibility-hidden" data-toggle="appear" data-class="animated fadeInRight" data-timeout="100">${activity.name}: ${completionPercentage}%</div>
+                                                    <div id="pb-${activity.id}" class="progress visibility-hidden" data-toggle="appear" data-class="animated fadeInLeft" data-timeout="100" style="left: ${startPos}px; width: ${barLength1}px">
+                                                    <div class="progress-bar progress-bar-sf progress-bar-striped active" role="progressbar" aria-valuenow="${completionPercentage}" aria-valuemin="0" aria-valuemax="100" style="width: ${completionPercentage}%"></div>
+                                                    </div>
+                                            `;
+                            const row = `
+                                          <tr>
+                                            <td contentEditable="true">${activity.id}</td>
+                                            <td contentEditable="true">${activity.name}</td>
+                                            <td contentEditable="true">${activity.start}</td>
+                                            <td contentEditable="true">${activity.end}</td>
+                                            <td contentEditable="true">${activity.predecessors.join(", ")}</td>
+                                            <td contentEditable="true">${activity.successors.join(", ")}</td>
+                                            <td style="width: 600px" data-progress-bar="${activity.id}">${progressBar}</td>
+                                          </tr>
+                                        `;
+                            document.querySelector("#activities").innerHTML += row;
+
+                        });
+                        debugger;
+                        data.forEach(activity => activity.predecessors.forEach(predecessorId => {
+                            const predecessorProgressBar = document.querySelector(`#pb-${predecessorId}`);
+                            predecessorProgressBar.style.marginLeft = "20px";
+                        }));
+
+                        // Add lines connecting progress bars of predecessor activities
+                        data.forEach(activity => {
+                            debugger;
+                            const predecessorIds = activity.predecessors;
+                            predecessorIds.forEach(predecessorId => {
+                                // Get the predecessor progress bar element
+                                const predecessorProgressBar = document.querySelector(`#pb-${predecessorId}`);
+                                // Get the current progress bar element
+                                const currentProgressBar = document.querySelector(`#pb-${activity.id}`);
+                                // Create the line element
+                                const line = document.createElement("div");
+                                line.style.height = "2px";
+                                line.style.width = "100%";
+                                line.style.backgroundColor = "black";
+                                line.style.position = "absolute";
+                                line.style.top = "50%";
+                                // Append the line element to the predecessor progress bar element
+                                predecessorProgressBar.appendChild(line);
+                            });
+                        });
+                    },
+                    error: function (data) { }
+                });
+            });
+    </script>
+</div>
+
+<div class="block-dark">    
+    <div>
+        <!-- Add a file input element to your HTML page -->
+        @*<input type="file" id="file-input">*@
+
+        <table class="dashboard-table">
+            <thead>
+            </thead>
+            <tbody id="activities"></tbody>
+        </table>
+
+
+        
+
+        @*<script>
+            // Select the file input element
+            const fileInput = document.querySelector("#file-input");
+
+            fileInput.addEventListener("change", () => {
+                // Get the selected file
+                const file = fileInput.files[0];
+
+                // Create a new FileReader object
+                const reader = new FileReader();
+                const Model = {
+                    Activities: {}
+                };
+
+                // Set the onload event handler for the reader
+                reader.onload = () => {
+                    debugger;
+                    // Parse the contents of the file as JSON
+                    const data = JSON.parse(reader.result);
+                    // Add existing activity ids to the Model.Activities object
+                    data.forEach(activity => {
+                        if (!Model.Activities.hasOwnProperty(activity.id)) {
+                            Model.Activities[activity.id] = { "name": activity.name, "predecessors": activity.predecessors, "successors": activity.successors };
+
+                        }
+                    });
+                    const row = `
+                                          <tr class="title-row">
+                                            <th contentEditable="true">Id</th>
+                                            <th contentEditable="true">Activity</th>
+                                            <th contentEditable="true">Start Date</th>
+                                            <th contentEditable="true">End Date</th>
+                                            <th contentEditable="true">Predecessors</th>
+                                            <th contentEditable="true">Successors</th>
+                                            <th style="width: 600px">Progress</th>
+                                          </tr>
+                                        `;
+                    document.querySelector("#activities").innerHTML += row;
+
+                    // Set the start and end dates for the x-axis
+                    const startDate = d3.min(data, d => new Date(d.start));
+                    const endDate = d3.max(data, d => new Date(d.end));
+
+                    // Set the dimensions of the chart
+                    var width = 600;
+                    var height = 50;
+                    var margin = { top: 20, right: 20, bottom: 20, left: 400 };
+
+                    // Create a time scale to map the duration of each activity to a length in pixels
+                    xScale = d3.scaleTime().domain([startDate, endDate]).range([0, width]);
+                    // Set the length of each progress bar to be proportional to its duration
+
+                    const xAxis = d3.axisBottom(xScale).ticks(d3.timeDay.every(1)).tickFormat(d3.timeFormat("%m/%d/%Y"));
+                    const xAxisElement = d3.select("#x-axis").call(xAxis);
+                    //This will create tick marks for every day and label them with the date in the format MM/DD/YYYY. You can adjust the tick interval and formatting as needed.
+
+                    // Create the SVG element and append it to the #gantt-chart div
+                    var svg = d3.select("#gantt-chart")
+                        .append("svg")
+                        .attr("width", width + margin.left + margin.right)
+                        .attr("height", height + margin.top + margin.bottom)
+                        .append("g")
+                        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+                    // Add the x-axis to the chart
+                    svg.append("g")
+                        .attr("transform", "translate(0," + height + ")")
+                        .call(d3.axisBottom(xScale));
+
+                    // Use the data to update the progress bars
+                    data.forEach(activity => {
+                        debugger;
+                        const startDate = new Date(activity.start);
+                        const endDate = new Date(activity.end);
+                        const currentDate = new Date();  // use actual current date
+                        let completionPercentage;
+                        if (currentDate < startDate) {
+                            completionPercentage = 0;
+                        } else if (currentDate > endDate) {
+                            completionPercentage = 100;
+                        } else {
+                            const totalTime = endDate - startDate;
+                            const elapsedTime = currentDate - startDate;
+                            completionPercentage = (elapsedTime / totalTime) * 100;
+                        }
+                        const startPos = xScale(new Date(activity.start));
+                        const endPos = xScale(new Date(activity.end));
+                        const barLength1 = endPos - startPos;
+                        const barLength = 200;
+                        // Set the width of the progress bar element
+                        //d3.select(`#pb-${activity.id}`).style("width", `${barLength}px`);
+
+                        //offset each progress bar to start at its start date, you will need to use the xScale to calculate the position of the start date and set it as the left margin of the progress bar element.
+                        // Set the left margin of the progress bar element
+                        //d3.select(`#pb-${activity.id}`).style("margin-left", `${startPos}px`);
+
+                        const progressBar = `
+                                                    <div id="pb-${activity.id}" class="font-w600 text-white-op push-5 visibility-hidden" data-toggle="appear" data-class="animated fadeInRight" data-timeout="100">${activity.name}: ${completionPercentage}%</div>
+                                                    <div id="pb-${activity.id}" class="progress visibility-hidden" data-toggle="appear" data-class="animated fadeInLeft" data-timeout="100" style="left: ${startPos}px; width: ${barLength1}px">
+                                                    <div class="progress-bar progress-bar-sf progress-bar-striped active" role="progressbar" aria-valuenow="${completionPercentage}" aria-valuemin="0" aria-valuemax="100" style="width: ${completionPercentage}%"></div>
+                                                    </div>
+                                            `;
+                        const row = `
+                                          <tr>
+                                            <td contentEditable="true">${activity.id}</td>
+                                            <td contentEditable="true">${activity.name}</td>
+                                            <td contentEditable="true">${activity.start}</td>
+                                            <td contentEditable="true">${activity.end}</td>
+                                            <td contentEditable="true">${activity.predecessors.join(", ")}</td>
+                                            <td contentEditable="true">${activity.successors.join(", ")}</td>
+                                            <td style="width: 600px" data-progress-bar="${activity.id}">${progressBar}</td>
+                                          </tr>
+                                        `;
+                        document.querySelector("#activities").innerHTML += row;
+
+                    });
+                    debugger;
+                    activity.predecessors.forEach(predecessorId => {
+                        const predecessorProgressBar = document.querySelector(`#pb-${predecessorId}`);
+                        predecessorProgressBar.style.marginLeft = "20px";
+                    });
+
+                    // Add lines connecting progress bars of predecessor activities
+                    data.forEach(activity => {
+                        debugger;
+                        const predecessorIds = activity.predecessors;
+                        predecessorIds.forEach(predecessorId => {
+                            // Get the predecessor progress bar element
+                            const predecessorProgressBar = document.querySelector(`#pb-${predecessorId}`);
+                            // Get the current progress bar element
+                            const currentProgressBar = document.querySelector(`#pb-${activity.id}`);
+                            // Create the line element
+                            const line = document.createElement("div");
+                            line.style.height = "2px";
+                            line.style.width = "100%";
+                            line.style.backgroundColor = "black";
+                            line.style.position = "absolute";
+                            line.style.top = "50%";
+                            // Append the line element to the predecessor progress bar element
+                            predecessorProgressBar.appendChild(line);
+                        });
+                    });
+
+                }
+                // Read the contents of the file as text
+                reader.readAsText(file);
+            });
+        </script>*@       
+
+        @*<form id="add-activity-form">
+            <label for="activity-name">Activity Name:</label>
+            <input type="text" id="activity-name" required>
+            <br>
+            <label for="activity-start">Start Date:</label>
+            <input type="date" id="activity-start" required>
+            <br>
+            <label for="activity-end">End Date:</label>
+            <input type="date" id="activity-end" required>
+            <br>
+            <label for="activity-predecessors">Predecessors:</label>
+            <select id="activity-predecessors" multiple>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <!-- Add options for numbers 4-30 as needed -->
+            </select>
+            <br>
+            <label for="activity-successors">Successors:</label>
+            <select id="activity-successors" multiple>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <!-- Add options for numbers 4-30 as needed -->
+            </select>
+        </form>*@
+
+
+        @*<button type="button" id="add-activity-button">Add Activity</button>
+        <script>
+            const addActivityButton = document.querySelector("#add-activity-button");
+            addActivityButton.addEventListener("click", () => {
+                // Get the data from the form input elements
+                const name = document.querySelector("#activity-name").value;
+                const start = document.querySelector("#activity-start").value;
+                const end = document.querySelector("#activity-end").value;
+                const predecessors = document.querySelector("#activity-predecessors").value.split(", ");
+                const successors = document.querySelector("#activity-successors").value.split(", ");
+
+                // Create a new activity object
+                const activity = {
+                    id: 301,  // assign a unique id to the new activity
+                    name: name,
+                    start: start,
+                    end: end,
+                    predecessors: predecessors,
+                    successors: successors
+                };
+
+                // Add the new activity to the data array
+                // Use the data to update the progress bars
+                const startDate = new Date(activity.start);
+                const endDate = new Date(activity.end);
+                const currentDate = new Date();  // use actual current date
+                let completionPercentage;
+                if (currentDate < startDate) {
+                    completionPercentage = 0;
+                } else if (currentDate > endDate) {
+                    completionPercentage = 100;
+                } else {
+                    const totalTime = endDate - startDate;
+                    const elapsedTime = currentDate - startDate;
+                    completionPercentage = (elapsedTime / totalTime) * 100;
+                }
+                const startPos = xScale(new Date(activity.start));
+                const endPos = xScale(new Date(activity.end));
+                const barLength1 = endPos - startPos;
+                const progressBar = `
+                                  <div id="pb-${activity.id}" class="font-w600 text-white-op push-5 visibility-hidden" data-toggle="appear" data-class="animated fadeInRight" data-timeout="100">${activity.name}: ${completionPercentage}%</div>
+                                  <div id="pb-${activity.id}"  class="progress visibility-hidden" data-toggle="appear" data-class="animated fadeInLeft" data-timeout="100" style="left: ${startPos}px; width: ${barLength1}px">
+                                  <div class="progress-bar progress-bar-sf progress-bar-striped active" role="progressbar" aria-valuenow="${completionPercentage}" aria-valuemin="0" aria-valuemax="100" style="width: ${completionPercentage}%"></div>
+                                </div>
+                              `;
+                // Add the new activity to the table
+                const tableBody = document.querySelector("#activities");
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                                  <td>${activity.id}</td>
+                                  <td>${activity.name}</td>
+                                  <td>${activity.start}</td>
+                                  <td>${activity.end}</td>
+                                  <td>${activity.predecessors.join(", ")}</td>
+                                  <td>${activity.successors.join(", ")}</td>
+                                  <td style="width: 600px">${progressBar}</td>
+                                `;
+                tableBody.appendChild(row);
+            });
+        </script>*@
+    </div>
+</div>

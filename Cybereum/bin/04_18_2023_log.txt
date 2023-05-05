@@ -1,0 +1,19 @@
+04/18/2023 02:18:43 PM An error occurred while executing the command. See the inner exception for details.
+04/18/2023 02:18:43 PM System.Collections.ListDictionaryInternal
+04/18/2023 02:18:43 PM Attempt by method 'MySql.Data.Entity.EFMySqlCommand.set_DbConnection(System.Data.Common.DbConnection)' to access method 'MySql.Data.MySqlClient.MySqlConnection.get_Settings()' failed.
+04/18/2023 02:18:43 PM System.Collections.ListDictionaryInternal
+04/18/2023 02:18:43 PM Attempt by method 'MySql.Data.Entity.EFMySqlCommand.set_DbConnection(System.Data.Common.DbConnection)' to access method 'MySql.Data.MySqlClient.MySqlConnection.get_Settings()' failed.
+04/18/2023 02:18:43 PM System.Data.Entity.Core.Objects.ObjectResult`1[TElement] CreateFunctionObjectResult[TElement](System.Data.Entity.Core.EntityClient.EntityCommand, System.Collections.ObjectModel.ReadOnlyCollection`1[System.Data.Entity.Core.Metadata.Edm.EntitySet], System.Data.Entity.Core.Metadata.Edm.EdmType[], System.Data.Entity.Core.Objects.ExecutionOptions)
+04/18/2023 02:18:43 PM System.Data.Entity.Core.Objects.ObjectResult`1[TElement] CreateFunctionObjectResult[TElement](System.Data.Entity.Core.EntityClient.EntityCommand, System.Collections.ObjectModel.ReadOnlyCollection`1[System.Data.Entity.Core.Metadata.Edm.EntitySet], System.Data.Entity.Core.Metadata.Edm.EdmType[], System.Data.Entity.Core.Objects.ExecutionOptions)
+04/18/2023 03:30:31 PM The underlying provider failed on Open.
+04/18/2023 03:30:31 PM System.Collections.ListDictionaryInternal
+04/18/2023 03:30:31 PM Unable to connect to any of the specified MySQL hosts.
+04/18/2023 03:30:31 PM Void Open()
+04/18/2023 06:43:15 PM The underlying provider failed on Open.
+04/18/2023 06:43:15 PM System.Collections.ListDictionaryInternal
+04/18/2023 06:43:15 PM Unable to connect to any of the specified MySQL hosts.
+04/18/2023 06:43:15 PM Void Open()
+04/18/2023 06:43:59 PM The underlying provider failed on Open.
+04/18/2023 06:43:59 PM System.Collections.ListDictionaryInternal
+04/18/2023 06:43:59 PM Unable to connect to any of the specified MySQL hosts.
+04/18/2023 06:43:59 PM Void Open()

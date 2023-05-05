@@ -9,7 +9,7 @@ using System.Globalization;
 using System.Net.Mail;
 using System.Configuration;
 using System.Net;
-
+using System.DirectoryServices;
 
 public static class IGUtilities
 {
@@ -440,7 +440,7 @@ public static class IGUtilities
             var Message = new MailMessage(fromMail, toEmail);
             Message.Subject = "Welcome to Cybereum Project Management - Confirm Your email for Registration";
             Message.Body = "Dear " + name + "," +
-                           "< br/> We're thrilled to have you on board the cybereum project management platform! " +
+                           "<br/> We're thrilled to have you on board the cybereum project management platform! " +
                            " We're excited to help you streamline your project management process with our cutting-edge data analytics and ML integration." +
                            "<br/> To complete your registration, we need you to confirm your email address. Simply click on the link below to verify your email:" +
                            "<br/><br/><a href=" + link + ">" + link + "</a>";
@@ -525,6 +525,37 @@ public static class IGUtilities
 
     #endregion
 
+    public static int CalculateDays(DateTime startDate, DateTime endDate)
+    {
+        DateTime[] arrayOfOrgHolidays = new DateTime[] { };//new DateTime(2023, 05, 01)
+
+        int noOfDays = 0;
+        int count = 0;
+        if (DateTime.Compare(startDate, endDate) == 1)
+        {
+            return 0;
+        }
+
+        while (DateTime.Compare(startDate, endDate) <= 0)
+        {
+            if (startDate.DayOfWeek != DayOfWeek.Saturday && startDate.DayOfWeek != DayOfWeek.Sunday)
+            {
+                string holiday = (from date in arrayOfOrgHolidays where DateTime.Compare(startDate, date) == 0 select "Holiday").FirstOrDefault();
+
+                if (holiday != "Holiday")
+                {
+                    noOfDays += 1; 
+                    count++;
+                }
+                startDate = startDate.AddDays(1);
+            }
+            else
+                startDate = startDate.AddDays(1);
+        }
+
+        return noOfDays;
+    }
+
     public static string GeneratePassword()
     {
         string OTPLength = "4";
@@ -545,5 +576,23 @@ public static class IGUtilities
             OTP = NewOTP;
         }
         return OTP;
+    }
+
+    public static bool AuthenticateUser(string path, string user, string pass)
+    {
+        DirectoryEntry de = new DirectoryEntry(path, user, pass, AuthenticationTypes.Secure);
+        try
+        {
+            // run a search using those credentials.  
+            // If it returns anything, then you're authenticated
+            DirectorySearcher ds = new DirectorySearcher(de);
+            ds.FindOne();
+            return true;
+        }
+        catch
+        {
+            // otherwise, it will crash out so return false
+            return false;
+        }
     }
 }

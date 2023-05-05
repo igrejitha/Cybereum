@@ -1,0 +1,16 @@
+04/02/2023 07:04:12 PM The underlying provider failed on Open.
+04/02/2023 07:04:12 PM System.Collections.ListDictionaryInternal
+04/02/2023 07:04:12 PM Unable to connect to any of the specified MySQL hosts.
+04/02/2023 07:04:12 PM Void Open()
+04/02/2023 08:10:19 PM An error occurred while executing the command. See the inner exception for details.
+04/02/2023 08:10:19 PM System.Collections.ListDictionaryInternal
+04/02/2023 08:10:19 PM Attempt by method 'MySql.Data.Entity.EFMySqlCommand.set_DbConnection(System.Data.Common.DbConnection)' to access method 'MySql.Data.MySqlClient.MySqlConnection.get_Settings()' failed.
+04/02/2023 08:10:19 PM System.Data.Entity.Core.Objects.ObjectResult`1[TElement] CreateFunctionObjectResult[TElement](System.Data.Entity.Core.EntityClient.EntityCommand, System.Collections.ObjectModel.ReadOnlyCollection`1[System.Data.Entity.Core.Metadata.Edm.EntitySet], System.Data.Entity.Core.Metadata.Edm.EdmType[], System.Data.Entity.Core.Objects.ExecutionOptions)
+04/02/2023 08:11:34 PM An error occurred while executing the command. See the inner exception for details.
+04/02/2023 08:11:34 PM System.Collections.ListDictionaryInternal
+04/02/2023 08:11:34 PM Attempt by method 'MySql.Data.Entity.EFMySqlCommand.set_DbConnection(System.Data.Common.DbConnection)' to access method 'MySql.Data.MySqlClient.MySqlConnection.get_Settings()' failed.
+04/02/2023 08:11:34 PM System.Data.Entity.Core.Objects.ObjectResult`1[TElement] CreateFunctionObjectResult[TElement](System.Data.Entity.Core.EntityClient.EntityCommand, System.Collections.ObjectModel.ReadOnlyCollection`1[System.Data.Entity.Core.Metadata.Edm.EntitySet], System.Data.Entity.Core.Metadata.Edm.EdmType[], System.Data.Entity.Core.Objects.ExecutionOptions)
+04/02/2023 08:13:00 PM An error occurred while executing the command. See the inner exception for details.
+04/02/2023 08:13:00 PM System.Collections.ListDictionaryInternal
+04/02/2023 08:13:00 PM Attempt by method 'MySql.Data.Entity.EFMySqlCommand.set_DbConnection(System.Data.Common.DbConnection)' to access method 'MySql.Data.MySqlClient.MySqlConnection.get_Settings()' failed.
+04/02/2023 08:13:00 PM System.Data.Entity.Core.Objects.ObjectResult`1[TElement] CreateFunctionObjectResult[TElement](System.Data.Entity.Core.EntityClient.EntityCommand, System.Collections.ObjectModel.ReadOnlyCollection`1[System.Data.Entity.Core.Metadata.Edm.EntitySet], System.Data.Entity.Core.Metadata.Edm.EdmType[], System.Data.Entity.Core.Objects.ExecutionOptions)

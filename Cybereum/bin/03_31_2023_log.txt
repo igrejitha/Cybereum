@@ -1,0 +1,8 @@
+03/31/2023 07:36:48 PM The underlying provider failed on Open.
+03/31/2023 07:36:48 PM System.Collections.ListDictionaryInternal
+03/31/2023 07:36:48 PM Unable to connect to any of the specified MySQL hosts.
+03/31/2023 07:36:48 PM Void Open()
+03/31/2023 10:13:57 PM The underlying provider failed on Open.
+03/31/2023 10:13:57 PM System.Collections.ListDictionaryInternal
+03/31/2023 10:13:57 PM Unable to connect to any of the specified MySQL hosts.
+03/31/2023 10:13:57 PM Void Open()

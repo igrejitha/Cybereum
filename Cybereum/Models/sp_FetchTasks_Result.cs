@@ -15,19 +15,19 @@ namespace Cybereum.Models
     {
         public int taskid { get; set; }
         public string taskname { get; set; }
-        public int projectid { get; set; }
-        public string projectname { get; set; }
         public System.DateTime startdate { get; set; }
         public System.DateTime enddate { get; set; }
         public int isactive { get; set; }
         public int createdby { get; set; }
-        public int modifiedby { get; set; }
+        public Nullable<int> modifiedby { get; set; }
         public int assignedto { get; set; }
         public string assignedusername { get; set; }
         public string createdusername { get; set; }
         public string modifiedusername { get; set; }
         public int TotalRecordCount { get; set; }
         public System.DateTime createddate { get; set; }
-        public System.DateTime modifieddate { get; set; }
+        public Nullable<System.DateTime> modifieddate { get; set; }
+        public int milestoneid { get; set; }
+        public string milestonename { get; set; }
     }
 }

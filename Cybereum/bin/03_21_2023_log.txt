@@ -1,0 +1,18 @@
+03/21/2023 03:45:14 PM The data reader is incompatible with the specified 'cybereumModel.sp_FetchLoginDetails_Result'. A member of the type, 'emailid', does not have a corresponding column in the data reader with the same name.
+03/21/2023 03:45:14 PM System.Collections.ListDictionaryInternal
+03/21/2023 03:52:07 PM The data reader is incompatible with the specified 'cybereumModel.sp_FetchLoginDetails_Result'. A member of the type, 'emailid', does not have a corresponding column in the data reader with the same name.
+03/21/2023 03:52:07 PM System.Collections.ListDictionaryInternal
+03/21/2023 03:54:20 PM The data reader is incompatible with the specified 'cybereumModel.sp_FetchLoginDetails_Result'. A member of the type, 'emailid', does not have a corresponding column in the data reader with the same name.
+03/21/2023 03:54:20 PM System.Collections.ListDictionaryInternal
+03/21/2023 03:58:40 PM Object reference not set to an instance of an object.
+03/21/2023 03:58:40 PM System.Collections.ListDictionaryInternal
+03/21/2023 04:34:38 PM Guid should contain 32 digits with 4 dashes (xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx).
+03/21/2023 04:34:38 PM System.Collections.ListDictionaryInternal
+03/21/2023 04:38:04 PM Guid should contain 32 digits with 4 dashes (xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx).
+03/21/2023 04:38:04 PM System.Collections.ListDictionaryInternal
+03/21/2023 04:52:03 PM Guid should contain 32 digits with 4 dashes (xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx).
+03/21/2023 04:52:03 PM System.Collections.ListDictionaryInternal
+03/21/2023 09:38:20 PM The underlying provider failed on Open.
+03/21/2023 09:38:20 PM System.Collections.ListDictionaryInternal
+03/21/2023 09:38:20 PM Unable to connect to any of the specified MySQL hosts.
+03/21/2023 09:38:20 PM Void Open()

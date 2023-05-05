@@ -1,0 +1,210 @@
+﻿@model Cybereum.Models.Project
+
+@{
+    ViewBag.Title = "Add/Edit Projects";
+}
+
+<style type="text/css">
+    .error {
+        color: red;
+        display: none;
+    }
+</style>
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Add/Edit Projects</h4>
+            </div>
+            <div class="card-body">
+                <div class="basic-form">
+                    @using (Html.BeginForm("AddEditProject", "Project", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <span class="text-danger" style="align-items:center;">
+                            @ViewBag.Message
+                            @Html.HiddenFor(model => model.projectid)
+                            @*@Html.HiddenFor(model => model.createdby)*@
+                            @Html.HiddenFor(model => model.createdon)
+                            @*@Html.HiddenFor(model => model.modifiedby)
+                                @Html.HiddenFor(model => model.modifiedon)
+                                @Html.HiddenFor(model => model.isactive)*@
+                        </span>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(model => model.projectname, "Project Name", htmlAttributes: new { @class = "" })
+                                @*<div class="col-md-10">*@
+                                @Html.EditorFor(model => model.projectname, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.projectname, "", new { @class = "text-danger" })
+                                @*</div>*@
+                            </div>
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(model => model.startdate, "Start Date", htmlAttributes: new { @class = "" })
+                                @*<div class="col-md-10">*@
+                                @Html.TextBoxFor(model => model.startdate, new { @type = "date", @class = "form-control datepicker", @Value = Model.startdate.ToString("yyyy-MM-dd") })
+                                @Html.ValidationMessageFor(model => model.startdate, "", new { @class = "text-danger" })
+                                @*</div>*@
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(model => model.enddate, "End Date", htmlAttributes: new { @class = "" })
+                                @*<div class="col-md-10">*@
+                                @*@Html.EditorFor(model => model.enddate, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })*@
+                                @Html.TextBoxFor(model => model.enddate, new { @type = "date", @class = "form-control datepicker", @Value = Model.enddate.ToString("yyyy-MM-dd") })
+                                @Html.ValidationMessageFor(model => model.enddate, "", new { @class = "text-danger" })
+                                @*</div>*@
+                            </div>
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(model => model.projectstatus, "Project Status", htmlAttributes: new { @class = "" })
+                                @Html.DropDownList("projectstatus", new List<SelectListItem>
+                            {
+                            new SelectListItem{ Text="Open", Value = "Open" },
+                            new SelectListItem{ Text="In Progress", Value = "In Progress" },
+                            new SelectListItem{ Text="Completed", Value = "Completed" },
+                            new SelectListItem{ Text="Cancelled", Value = "Cancelled" }
+                            }, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.projectstatus, "", new { @class = "text-danger" })
+                            </div>
+                            @*<div class="form-group col-md-6">
+                                    @Html.LabelFor(model => model.projectcost, "Cost", htmlAttributes: new { @class = "" })
+                                    @Html.EditorFor(model => model.projectcost, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                                    @Html.ValidationMessageFor(model => model.projectcost, "", new { @class = "text-danger" })
+                                </div>*@                            
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(model => model.projecttype, "Project Type", htmlAttributes: new { @class = "" })
+                                @Html.DropDownList("projecttype", new List<SelectListItem>
+                            {
+                            new SelectListItem{ Text="Nuclear Power Station", Value = "Nuclear Power Station" },
+                            new SelectListItem{ Text="Solar Power Station", Value = "Solar Power Station" },
+                            new SelectListItem{ Text="Wind Power Station", Value = "Wind Power Station" },
+                            new SelectListItem{ Text="Hydro Power Station", Value = "Hydro Power Station" },
+                            new SelectListItem{ Text="Thermal Power Station", Value = "Thermal Power Station" }
+                            }, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.projecttype, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-6">
+                                @Html.Label("Project Members", htmlAttributes: new { @class = "" })
+                                <div class="col-md-10">
+                                    @if (ViewBag.projectmembers != null)
+                                    {
+                                        foreach (var item in ViewBag.projectmembers)
+                                        {
+                                            <input id="@item.Value" type="checkbox" name="projectmembers" value="@item.Value" checked="@item.Selected" class="checkbox" />
+                                            <label for="@item.Value">
+                                                @item.Text
+                                            </label>
+                                            <br />
+                                        }
+                                    }
+                                </div>
+                            </div>
+                            @*<div class="form-group col-md-6">
+                                    @Html.LabelFor(model => model.noofresource, "No. of Resource", htmlAttributes: new { @class = "" })
+
+                                    @Html.EditorFor(model => model.noofresource, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                                    @Html.ValidationMessageFor(model => model.noofresource, "", new { @class = "text-danger" })
+
+                                </div>*@
+                            @*@if (Convert.ToInt32(Session["RoleId"]) == 1)
+                            {
+                                <div class="form-group col-md-6">
+                                    @Html.LabelFor(model => model.createdby, "Project Manager", htmlAttributes: new { @class = "" })                                    
+                                    @Html.DropDownList("createdby", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.createdby, "", new { @class = "text-danger" })                                    
+                                </div>
+                            }
+                            else
+                            {*@
+                                @Html.HiddenFor(model => model.createdby)
+                            @*}*@
+                        </div>
+                        <div class="row" style="padding-top: 30px;">
+                            <div class="col-6">
+                                <a href="@Url.Action("List", "Project")"><h4>Back To List</h4></a>
+                            </div>
+                            <div class="col-6">
+                                @*<button type="button" class="btn btn" style="background-color: #0D2136; color: white;" data-dismiss="modal" onclick="history.go(-1); return false;">Close</button>*@
+                                <input type="submit" name="btnSubmit" value="Save" class="btn btn" style="background-color: #0D2136; color: white;" onclick="updatemark()" />
+                            </div>
+
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+
+<script type="text/javascript">
+    $(document).ajaxSend(function () {
+        //$("#overlay").fadeIn(300);
+    });
+
+
+    $(document).ready(function () {
+        debugger;
+
+        $(function () {
+            $("#startdate").on('change', function () {
+                debugger;
+                var startdate = $("#startdate").val();
+                var date = $("#enddate").val();
+                if (date != "") {
+                    if (date < startdate) {
+                        alert('End date must be greater than Start date');
+                        $(this).val('');
+                    }
+                }
+            });
+        });
+
+
+        $(function () {
+            $("#enddate").on('change', function () {
+                debugger;
+                var date = $("#enddate").val();
+                var startdate = $("#startdate").val();
+                if (date != "") {
+                    if (date < startdate) {
+                        alert('End date must be greater than Start date');
+                        $(this).val('');
+                    }
+                }
+            });
+        });
+
+        function updatemark(arg) {
+            debugger;
+            var abc = ""
+            //Iterating the collection of checkboxes which checked marked
+            $('input[type=checkbox]').each(function () {
+                if (this.checked) {
+                    abc = abc + $(this).val() + ","
+                    //assign set value to hidden field
+                    $('#projectmembers').val(abc);
+                }
+            });
+
+        }
+
+
+        $(function () {
+            $("#btnSubmit").on('click', function () {
+                debugger;
+                var checked_checkboxes = $("#checkboxContainer input[type=checkbox]:checked");
+                if (checked_checkboxes.length == 0) {
+                    $(".error").show();
+                    return false;
+                }
+                return true;
+            });
+        });
+    });
+</script>
