@@ -1,0 +1,20 @@
+04/20/2023 11:48:20 AM The underlying provider failed on Open.
+04/20/2023 11:48:20 AM System.Collections.ListDictionaryInternal
+04/20/2023 11:48:20 AM Unable to connect to any of the specified MySQL hosts.
+04/20/2023 11:48:20 AM Void Open()
+04/20/2023 11:56:13 AM The underlying provider failed on Open.
+04/20/2023 11:56:13 AM System.Collections.ListDictionaryInternal
+04/20/2023 11:56:13 AM Unable to connect to any of the specified MySQL hosts.
+04/20/2023 11:56:13 AM Void Open()
+04/20/2023 11:56:56 AM The underlying provider failed on Open.
+04/20/2023 11:56:56 AM System.Collections.ListDictionaryInternal
+04/20/2023 11:56:56 AM Unable to connect to any of the specified MySQL hosts.
+04/20/2023 11:56:56 AM Void Open()
+04/20/2023 03:48:42 PM The underlying provider failed on Open.
+04/20/2023 03:48:42 PM System.Collections.ListDictionaryInternal
+04/20/2023 03:48:42 PM Unable to connect to any of the specified MySQL hosts.
+04/20/2023 03:48:42 PM Void Open()
+04/20/2023 03:57:12 PM The underlying provider failed on Open.
+04/20/2023 03:57:12 PM System.Collections.ListDictionaryInternal
+04/20/2023 03:57:12 PM Unable to connect to any of the specified MySQL hosts.
+04/20/2023 03:57:12 PM Void Open()

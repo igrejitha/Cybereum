@@ -16,5 +16,6 @@ namespace Cybereum.Models
         public string emailid { get; set; }
         public int userid { get; set; }
         public int roleid { get; set; }
+        public string username { get; set; }
     }
 }

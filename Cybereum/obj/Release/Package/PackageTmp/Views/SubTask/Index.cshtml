@@ -1,0 +1,274 @@
+﻿@model List<SelectListItem>
+
+@{
+    ViewBag.Title = "SubTask List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*<script src="~/Scripts/jquery-2.1.1.min.js"></script>
+
+    <link rel="stylesheet" href="~/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.bootstrap4.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.css" />*@
+
+@*
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>*@
+
+<style>
+    #button {
+        display: block;
+        margin: 20px auto;
+        padding: 10px 30px;
+        background-color: #eee;
+        border: solid #ccc 1px;
+        cursor: pointer;
+    }
+
+    #overlay {
+        position: fixed;
+        top: 0;
+        z-index: 100;
+        width: 100%;
+        height: 100%;
+        display: none;
+        background: rgba(0,0,0,0.6);
+    }
+
+    .cv-spinner {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px #ddd solid;
+        border-top: 4px #2e93e6 solid;
+        border-radius: 50%;
+        animation: sp-anime 0.8s infinite linear;
+    }
+
+    @@keyframes sp-anime {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .is-hide {
+        display: none;
+    }
+</style>
+
+@*<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Scripts/notify.min.js"></script>*@
+
+<div class="form-horizontal">
+    <h4>SubTask List</h4>
+    <hr />
+</div>
+<p><button type="button" class="btn btn" style="background-color: #0D2136; color: white;" onclick="location.href='@Url.Action("Create", "SubTask")?taskid=@ViewBag.taskid'">Add New</button></p>
+    
+<div class="col-12">
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="tblSubTask" class="display min-w850">
+                    <thead>
+                        <tr>
+                            <th>SubTask Name</th>
+                            <th>Task Name</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Assigned To</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+    @Scripts.Render("~/bundles/jquery")
+    <script type="text/javascript">
+        $(document).ajaxSend(function () {
+            //$("#overlay").fadeIn(300);
+        });
+
+        $(document).ready(function () {
+            $('#liUsers').addClass("active");
+
+            debugger;
+            //var reset = 0;
+            var value = '@Request.RequestContext.HttpContext.Session["LoggedInUserId"]';
+            var value1 = '@Request.RequestContext.HttpContext.Session["RoleId"]';
+            var value2 = '@ViewBag.taskid';
+            var objFilter = {
+                userid: value,
+                roleid: value1,
+                taskid: value2
+            }
+
+            $("#tblSubTask").DataTable(
+            {
+                processing: true,
+                serverSide: true,
+                filter: false,
+                orderMulti: false,
+                pageLength: 75,
+                Sort: true,
+                "ajax": {
+                    url: '@Url.Action("GetSubTask", "SubTask")',
+                    type: 'POST',
+                    data: objFilter
+                },
+                aLengthMenu: [[75, 100, 500, 1000, -1], [75, 100, 500, 1000, "All"]],
+                iDisplayLength: 75,
+                //scrollY: 400,
+                aoColumnDefs: [{
+                    bSortable: false,
+                    aTargets: [-1, -2]
+                }],
+                "bAutoWidth": false,
+                "info": true,
+                columns: [
+                    { 'data': 'subtaskname', 'name': 'SubTask Name' },
+                    { 'data': 'taskname', 'name': 'Task Name' },
+                    {
+                        'data': 'startdate', 'name': 'Start Date',
+                        'render': function (jsonDate) {
+                            debugger;
+                            if (jsonDate != null) {
+                                var date = new Date(parseInt(jsonDate.substr(6)));
+                                var month = ("0" + (date.getMonth() + 1)).slice(-2);
+                                return month + '-' + ("0" + date.getDate()).slice(-2) + '-' + date.getFullYear();
+                            }
+                            else {
+                                return "";
+                            }
+                        }
+                    },
+                    {
+                        'data': 'enddate', 'name': 'End Date',
+                        'render': function (jsonDate) {
+                            debugger;
+                            if (jsonDate != null) {
+                                var date = new Date(parseInt(jsonDate.substr(6)));
+                                var month = ("0" + (date.getMonth() + 1)).slice(-2);
+                                return month + '-' + ("0" + date.getDate()).slice(-2) + '-' + date.getFullYear();
+                            }
+                            else {
+                                return "";
+                            }
+                        }
+                    },
+                    { 'data': 'assignedusername', 'name': 'Assigned To' },
+                    {
+                        "render": function (data, type, full, meta)
+                        { return '<button class="btn btn" style="background-color: #0D2136; color: white;" onclick=getSubTask("' + full.subtaskid + '"); >Edit</button>'; }
+                    }
+                ],
+                select: {
+                    style: 'multi',
+                    selector: 'td:first-child'
+                },
+            });
+        });
+
+
+        function OnSuccess(response) {
+            $("#tblSubTask").dataTable(
+            {
+                bLengthChange: true,
+                bFilter: false,
+                bSort: true,
+                bPaginate: true,
+                data: response,
+                bresponsive: true,
+                scrollX: false,
+                aoColumnDefs: [{
+                    bSortable: false,
+                    aTargets: [-1, -2]
+                }],
+                columns: [
+                    { 'data': 'subtaskname', 'name': 'SubTask Name' },
+                    { 'data': 'taskname', 'name': 'Task Name' },
+                    { 'data': 'startdate', 'name': 'Start Date' },
+                    { 'data': 'enddate', 'name': 'End Date' },
+                    { 'data': 'assignedusername', 'name': 'Assigned To' },
+                    {
+                        "render": function (data, type, full, meta)
+                        { return '<button class="btn btn" style="background-color: #0D2136; color: white;" onclick=getSubTask("' + full.subtaskid + '"); >Edit</button>'; }
+                    }
+                ],
+                select: {
+                    style: 'multi',
+                    selector: 'td:first-child'
+                },
+            });
+        };
+
+        function getSubTask(id) {
+            debugger;
+            var value = '@Url.Action("Addrecord", "SubTask", new { id = "id"})'.replace('id', id);
+            location.href = '@Url.Action("Addrecord", "SubTask", new { id = "id"})'.replace('id', id);
+
+        }
+
+
+        function EditData(taskid) {
+            debugger;
+            $.ajax(
+            {
+                url: '@Url.Action("Create", "Task")?taskid=' + taskid,
+                contentType: 'application/json; charset=utf-8',
+                datatype: 'json',
+                async: true,
+                data: {
+                    dattaskid: taskid
+                },
+                type: "GET",
+                success: function (response) {
+                    $("#overlay").fadeOut(300);
+                    debugger;
+                    if (response == "Success")
+                        @*window.location = '@Url.Action("Users", "User")?userid=' + userid;
+                else
+                    msg(response, 'info');*@
+                        msg("Record edited successfully", "info");
+                    window.location.reload();
+                }
+            });
+        }
+
+        function DeleteData(id) {
+            if (confirm("Are you sure you want to delete this record?")) {
+                $.ajax({
+                    url: '@Url.Action("DeleteTask", "Task")?id=' + id,
+                    type: "GET",
+                    dataType: "JSON",
+                    data: {
+                        datmilestoneid: milestoneid
+                    },
+                    success: function (response) {
+                        msg("Record deleted successfully", "info");
+                        window.location.reload();
+                    }
+                });
+            }
+            return false;
+        }
+
+        function msg(strMsg, mode) {
+            $.notify(strMsg, mode, { globalPosition: 'top center', clickToHide: true, autoHide: false });
+        }
+    </script>

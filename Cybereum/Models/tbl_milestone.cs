@@ -14,23 +14,31 @@ namespace Cybereum.Models
     
     public partial class tbl_milestone
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tbl_milestone()
+        {
+            this.tbl_task = new HashSet<tbl_task>();
+        }
+    
         public int milestoneid { get; set; }
         public string milestonename { get; set; }
         public int isactive { get; set; }
         public System.DateTime startdate { get; set; }
         public System.DateTime enddate { get; set; }
-        public int statusid { get; set; }
+        public Nullable<int> statusid { get; set; }
         public int createdby { get; set; }
         public System.DateTime createddate { get; set; }
         public Nullable<int> modifiedby { get; set; }
         public Nullable<System.DateTime> modifieddate { get; set; }
         public int projectid { get; set; }
-        public int priority { get; set; }
+        public Nullable<int> priority { get; set; }
         public Nullable<int> tasktypeid { get; set; }
-        public int assignedto { get; set; }
+        public Nullable<int> assignedto { get; set; }
     
         public virtual tbl_user tbl_user { get; set; }
         public virtual tbl_project tbl_project { get; set; }
         public virtual tbl_tasktype tbl_tasktype { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbl_task> tbl_task { get; set; }
     }
 }

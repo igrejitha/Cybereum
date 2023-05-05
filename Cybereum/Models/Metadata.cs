@@ -6,6 +6,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 //using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Gremlin.Net.Driver;
 
 namespace Cybereum.Models
 {
@@ -77,42 +79,7 @@ namespace Cybereum.Models
         public string password { get; set; }
     }
 
-    public class leveloneMetaData
-    {
 
-        [Required(ErrorMessage = "Name is required")]
-        public string Name { get; set; }
-
-        public string Desc { get; set; }
-    }
-
-    public class leveltwoMetaData
-    {
-        public int idLeveltwo { get; set; }
-
-        [Required(ErrorMessage = "Level one is required")]
-        public Nullable<int> idlevelone { get; set; }
-
-        [Required(ErrorMessage = "Name is required")]
-        public string Name { get; set; }
-
-        public string Desc { get; set; }
-    }
-
-    public class levelthreeMetaData
-    {
-        public int idLevelthree { get; set; }
-
-        [Required(ErrorMessage = "Level two is required")]
-        public Nullable<int> idleveltwo { get; set; }
-
-        [Required(ErrorMessage = "Name is required")]
-        public string Name { get; set; }
-
-        public string Desc { get; set; }
-
-        public string LevelTwoName { get; set; }
-    }
 
     public class RecoverPasswordViewModel
     {
@@ -232,14 +199,17 @@ namespace Cybereum.Models
         public Nullable<int> pmuserid { get; set; }
         public string username { get; set; }
         public Nullable<int> isactive { get; set; }
-        
+
     }
 
 
     public class ProjectViewModel
-    {        
+    {
         [Required]
         public int projectid { get; set; }
+
+        [Required]
+        public string id { get; set; }
 
         [Required(ErrorMessage = "Please enter Project name")]
         [Display(Name = "Project Name")]
@@ -273,11 +243,11 @@ namespace Cybereum.Models
         public int taskid { get; set; }
 
         [Required]
-        public int projectid { get; set; }
+        public int milestoneid { get; set; }
 
-        [Required(ErrorMessage = "Please enter Project name")]
-        [Display(Name = "Project Name")]
-        public string projectname { get; set; }
+        //[Required(ErrorMessage = "Please enter Project name")]
+        [Display(Name = "Milestone Name")]
+        public string milestonename { get; set; }
 
         [Required(ErrorMessage = "Please enter Task name")]
         [Display(Name = "Task Name")]
@@ -290,7 +260,7 @@ namespace Cybereum.Models
         [Required(ErrorMessage = "Please enter End Date")]
         [Display(Name = "End Date")]
         public DateTime enddate { get; set; }
-        
+
 
         public Nullable<System.DateTime> createddate { get; set; }
         public int createdby { get; set; }
@@ -307,9 +277,90 @@ namespace Cybereum.Models
         [Required(ErrorMessage = "Please enter Task Type")]
         [Display(Name = "Task Type")]
         public int tasktypeid { get; set; }
-        public int assignedto { get; set; }        
+
+        [Required(ErrorMessage = "Please select Assigned To")]
+        public int assignedto { get; set; }
 
     }
+
+    public class MilestoneViewModel
+    {
+        [Required]
+        public int milestoneid { get; set; }
+
+        [Required]
+        public int projectid { get; set; }
+
+        //[Required(ErrorMessage = "Please enter Project name")]
+        [Display(Name = "Project Name")]
+        public string projectname { get; set; }
+
+        [Required(ErrorMessage = "Please enter Milestone name")]
+        [Display(Name = "Milestone Name")]
+        public string milestonename { get; set; }
+
+        [Required(ErrorMessage = "Please enter Start Date")]
+        [Display(Name = "Start Date")]
+        public DateTime startdate { get; set; }
+
+        [Required(ErrorMessage = "Please enter End Date")]
+        [Display(Name = "End Date")]
+        public DateTime enddate { get; set; }
+
+
+        public Nullable<System.DateTime> createddate { get; set; }
+        public int createdby { get; set; }
+        public Nullable<System.DateTime> modifieddate { get; set; }
+        public Nullable<int> modifiedby { get; set; }
+        public Nullable<int> isactive { get; set; }
+    }
+
+
+    public class SubTaskViewModel
+    {
+        [Required]
+        public int subtaskid { get; set; }
+
+        [Required]
+        public int taskid { get; set; }
+
+        //[Required(ErrorMessage = "Please enter Project name")]
+        [Display(Name = "Task Name")]
+        public string taskname { get; set; }
+
+        [Required(ErrorMessage = "Please enter SubTask name")]
+        [Display(Name = "SubTask Name")]
+        public string subtaskname { get; set; }
+
+        [Required(ErrorMessage = "Please enter Start Date")]
+        [Display(Name = "Start Date")]
+        public DateTime startdate { get; set; }
+
+        [Required(ErrorMessage = "Please enter End Date")]
+        [Display(Name = "End Date")]
+        public DateTime enddate { get; set; }
+
+
+        public Nullable<System.DateTime> createddate { get; set; }
+        public int createdby { get; set; }
+        public Nullable<System.DateTime> modifieddate { get; set; }
+        public Nullable<int> modifiedby { get; set; }
+        public Nullable<int> isactive { get; set; }
+
+        [Required(ErrorMessage = "Please enter status")]
+        [Display(Name = "Status")]
+        public int statusid { get; set; }
+
+        public int priority { get; set; }
+
+        [Required(ErrorMessage = "Please enter Task Type")]
+        [Display(Name = "Task Type")]
+        public int tasktypeid { get; set; }
+        public int assignedto { get; set; }
+
+    }
+
+
     public class Activity
     {
         public string Id { get; set; }
@@ -351,6 +402,47 @@ namespace Cybereum.Models
 
     }
 
+    public class ganttchartmodel
+    {
+        public string id { get; set; }
+        public string taskid { get; set; }
+        public string name { get; set; }
+        public string actualStart { get; set; }
+        public string actualEnd { get; set; }
+        public string connectTo { get; set; }
+        public string connecterType { get; set; }
+        public string progressValue { get; set; }
+        public List<Children> children { get; set; }
+    }
+
+    public class Children
+    {
+        public string id { get; set; }
+        public string taskid { get; set; }
+        public string name { get; set; }
+        public string actualStart { get; set; }
+        public string actualEnd { get; set; }
+        public string connectTo { get; set; }
+        public string connecterType { get; set; }
+        public string progressValue { get; set; }
+        public List<Children> children { get; set; }
+    }
+
+    public class TestModel
+    {
+        public string task { get; set; }
+        public string type { get; set; }
+        public string startTime { get; set; }
+        public string endTime { get; set; }
+    }
+
+    public class d3_GANTT_ChartModel
+    {
+        public void OnGet()
+        {
+        }
+    }
+
     public class DashTest2Model
     {
         public List<Activity> Activities { get; set; } = new List<Activity>();
@@ -362,20 +454,230 @@ namespace Cybereum.Models
 
         public class Activity
         {
-            public int Id { get; set; }
-            public string Name { get; set; }
-            public DateTime Start { get; set; }
-            public DateTime End { get; set; }
-            public List<int> Predecessors { get; set; }
-            public List<int> Successors { get; set; }
+            public int id { get; set; }
+            public string name { get; set; }
+
+            //[DataType(DataType.Date)]
+            //[JsonConverter(typeof(JsonDateConverter))]
+            public String start { get; set; }
+
+            //[DataType(DataType.Date)]
+            //[JsonConverter(typeof(JsonDateConverter))]
+            public String end { get; set; }
+            public List<int> predecessors { get; set; }
+            public List<int> successors { get; set; }
+
+            public int parentid { get; set; }
+            public string parentname { get; set; }
+        }
+
+        public class Milestone
+        {
+            public string id { get; set; }
+            public string Number { get; set; }
+            public string name { get; set; }
+            public string Start_Date { get; set; }
+            public string Finish_Date { get; set; }
+            public List<string> Predecessors { get; set; }
+            public string Durations { get; set; }
         }
     }
 
+    public class Project
+    {
+        public string projectid { get; set; }
+
+        [Required(ErrorMessage = "Please enter Project name")]
+        [Display(Name = "Project Name")]
+        public string projectname { get; set; }
+
+        [Required(ErrorMessage = "Please enter Start Date")]
+        [Display(Name = "Start Date")]
+        public DateTime startdate { get; set; }
+
+        [Required(ErrorMessage = "Please enter End Date")]
+        [Display(Name = "End Date")]
+        public DateTime enddate { get; set; }
+        public string type { get; set; }
+
+        [Display(Name = "No. of Resource")]
+        public string noofresource { get; set; }
+
+        [Display(Name = "Cost")]
+        public string projectcost { get; set; }
+        public string createdby { get; set; }
+        public string createdusername { get; set; }
+        public DateTime createdon { get; set; }
+        public List<ProjectActivity> activities { get; set; }
+
+        public int[] projectmembers { get; set; }        
+        public string organization { get; set; }
+
+        public string projectstatus { get; set; }
+        public string projecttype { get; set; }
+    }
+
+    public class ProjectMembers
+    {
+        public int userid { get; set; }
+        public string username { get; set; }
+        public string userrole { get; set; }
+        public string organization { get; set; }
+        public int[] Members { get; set; }
+    }
+
+    public class ProjectActivity
+    {
+        public string id { get; set; }
+        //public string activityid { get; set; }
+
+        [Required(ErrorMessage = "Please enter Activity name")]
+        [Display(Name = "Activity Name")]
+        public string activityname { get; set; }
+
+        [Required(ErrorMessage = "Please enter Start Date")]
+        [Display(Name = "Start Date")]
+        public DateTime startdate { get; set; }
+
+        [Required(ErrorMessage = "Please enter End Date")]
+        [Display(Name = "End Date")]
+        public DateTime enddate { get; set; }
+
+
+        public bool ismilestone { get; set; }
+        public long durations { get; set; }
+        public string Predecessors { get; set; }
+        public string projectid { get; set; }
+        public string projectname { get; set; }
+        public string createdby { get; set; }
+        public string createdusername { get; set; }
+        public DateTime createdon { get; set; }
+        public List<ProjectTask> tasks { get; set; }
+    }
+
+    public class ProjectTask
+    {
+        public string taskid { get; set; }
+
+        [Required(ErrorMessage = "Please enter Task name")]
+        [Display(Name = "Task Name")]
+        public string taskname { get; set; }
+
+        [Required(ErrorMessage = "Please enter Start Date")]
+        [Display(Name = "Start Date")]
+        public DateTime startdate { get; set; }
+
+        [Required(ErrorMessage = "Please enter End Date")]
+        [Display(Name = "End Date")]
+        public DateTime enddate { get; set; }
+
+
+        public string assignedto { get; set; }
+        public string assignedusername { get; set; }
+
+        public int tasktype { get; set; }
+        public int taskstatus { get; set; }
+        //public string priority { get; set; }        
+        public long durations { get; set; }
+        public List<string> Predecessors { get; set; }
+        public string activityid { get; set; }
+        public string activityname { get; set; }
+
+        public string createdby { get; set; }
+        public string createdusername { get; set; }
+        public DateTime createdon { get; set; }
+
+        public List<ProjectSubTask> subtasks { get; set; }
+    }
+
+    public class ProjectSubTask
+    {
+        public string subtaskid { get; set; }
+
+        [Required(ErrorMessage = "Please enter SubTask name")]
+        [Display(Name = "SubTask Name")]
+        public string subtaskname { get; set; }
+
+        [Required(ErrorMessage = "Please enter Start Date")]
+        [Display(Name = "Start Date")]
+        public DateTime startdate { get; set; }
+
+        [Required(ErrorMessage = "Please enter End Date")]
+        [Display(Name = "End Date")]
+        public DateTime enddate { get; set; }
+
+
+        public string assignedto { get; set; }
+        public string assignedusername { get; set; }
+
+        public int tasktype { get; set; }
+        public int taskstatus { get; set; }
+        //public string priority { get; set; }        
+        public long durations { get; set; }
+        public List<string> Predecessors { get; set; }
+        public string taskid { get; set; }
+        public string taskname { get; set; }
+
+        public string createdby { get; set; }
+        public string createdusername { get; set; }
+        public DateTime createdon { get; set; }
+    }
+
+    public class gremlinvariables
+    {
+        //private static string hostname = "gremtest1.gremlin.cosmos.azure.com";
+        public static string hostname
+        {
+            get
+            {
+                return "gremtest1.gremlin.cosmos.azure.com";
+            }
+        }
+
+        public static int port { get { return 443; } }
+        public static string authKey
+        {
+            get
+            {
+                return "lja6Gkeuf5nsnEg9TYyC79N1fvt4v1ZBb9JwkbWPNiNC1tEeBOSVu8vBHQZeKnSFguIKz9ziKjVEiPAjRAuf3w==";
+            }
+        }
+        public static string database
+        {
+            get
+            {
+                return "graphdb";
+            }
+        }
+        public static string collection
+        {
+            get
+            {
+                return "ProjectGraph";
+            }
+        }
+
+        public static ConnectionPoolSettings connectionPoolSettings = new ConnectionPoolSettings()
+        {
+            MaxInProcessPerConnection = 10,
+            PoolSize = 4,
+            ReconnectionAttempts = 3,
+            ReconnectionBaseDelay = TimeSpan.FromMilliseconds(100)
+        };
+
+        public static string containerLink
+        {
+            get
+            {
+                return "/dbs/" + database + "/colls/" + collection;                       
+            }
+        }
+    }
 
     public enum Role
     {
         Admin = 1,
         ProjectManager,
         User
-    }    
+    }
 }

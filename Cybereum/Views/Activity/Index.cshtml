@@ -1,0 +1,314 @@
+﻿@model List<SelectListItem>
+
+@{
+    ViewBag.Title = "Activity List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    #button {
+        display: block;
+        margin: 20px auto;
+        padding: 10px 30px;
+        background-color: #eee;
+        border: solid #ccc 1px;
+        cursor: pointer;
+    }
+
+    #overlay {
+        position: fixed;
+        top: 0;
+        z-index: 100;
+        width: 100%;
+        height: 100%;
+        display: none;
+        background: rgba(0,0,0,0.6);
+    }
+
+    .cv-spinner {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px #ddd solid;
+        border-top: 4px #2e93e6 solid;
+        border-radius: 50%;
+        animation: sp-anime 0.8s infinite linear;
+    }
+
+    @@keyframes sp-anime {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .is-hide {
+        display: none;
+    }
+</style>
+
+<div class="form-horizontal">
+    <h4>Activity List</h4>
+    <hr />
+</div>
+@if (Convert.ToInt32(Session["RoleId"]) == 2)
+{
+<p>
+    @*<button id="btncreate" type="button" class="btn btn" style="background-color: #0D2136; color: white;" 
+            onclick="location.href='@Url.Action("Create", "Activity")?activityid=null&projectid=@ViewBag.projectid '">Add New</button>*@
+    <button id="btncreate" type="button" class="btn btn" style="background-color: #0D2136; color: white;">
+        Add New
+    </button>
+</p>
+}
+
+
+<div class="col-12">
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="tblActivity" class="display min-w850">
+                    <thead>
+                        <tr>
+                            <th>Activity Name</th>
+                            @*<th>Project Name</th>*@
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Edit</th>
+                            <th>Task</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@*<div id="msg">
+
+    </div>*@
+
+@Scripts.Render("~/bundles/jquery")
+<script type="text/javascript">
+    $(document).ajaxSend(function () {
+        $("#overlay").fadeIn(300);
+    });
+
+    $(document).ready(function () {
+        $('#liUsers').addClass("active");
+
+        $("#btncreate").click(function(){
+            debugger;
+            var taskid = null;
+            var projectid = "@ViewBag.projectid";
+            var link = '@Url.Action("Create", "Activity", new { projectid = "rowid", activityid = "taskid"})'.replace('rowid', projectid).replace('taskid', taskid);
+            window.open(link, '_self');
+            return false;
+        });
+
+        debugger;
+        //var reset = 0;
+        var value = '@Request.RequestContext.HttpContext.Session["LoggedInUserId"]';
+        var value1 = '@Request.RequestContext.HttpContext.Session["RoleId"]';
+        var value2 = '@ViewBag.projectid';
+        var objFilter = {
+            userid: value,
+            roleid: value1,
+            projectid: value2
+        }
+
+        $("#tblActivity").DataTable(
+        {
+            processing: true,
+            serverSide: true,
+            filter: false,
+            orderMulti: false,
+            pageLength: 75,
+            Sort: true,
+            "ajax": {
+                url: '@Url.Action("activitylist", "Activity")',
+                type: 'POST',
+                data: objFilter
+            },
+            aLengthMenu: [[75, 100, 500, 1000, -1], [75, 100, 500, 1000, "All"]],
+            iDisplayLength: 75,
+            scrollY: 400,
+            aoColumnDefs: [{
+                bSortable: false,
+                aTargets: [-1, -2]
+            }],
+            "bAutoWidth": false,
+            "info": true,
+            columns: [
+                { 'data': 'activityname', 'name': 'Activity Name' },
+                //{ 'data': 'projectname', 'name': 'Project Name' },
+                {
+                    'data': 'startdate', 'name': 'Start Date',
+                    'render': function (jsonDate) {
+                        debugger;
+                        if (jsonDate != null) {
+                            var date = new Date(parseInt(jsonDate.substr(6)));
+                            var month = ("0" + (date.getMonth() + 1)).slice(-2);
+                            return month + '-' + ("0" + date.getDate()).slice(-2) + '-' + date.getFullYear();
+                        }
+                        else {
+                            return "";
+                        }
+                    }
+                },
+                {
+                    'data': 'enddate', 'name': 'End Date',
+                    'render': function (jsonDate) {
+                        debugger;
+                        if (jsonDate != null) {
+                            var date = new Date(parseInt(jsonDate.substr(6)));
+                            var month = ("0" + (date.getMonth() + 1)).slice(-2);
+                            return month + '-' + ("0" + date.getDate()).slice(-2) + '-' + date.getFullYear();
+                        }
+                        else {
+                            return "";
+                        }
+                    }
+                },
+                {
+                    "render": function (data, type, full, meta)
+                    {
+                        //return '<button class="btn btn" style="background-color: #0D2136; color: white;" onclick=getActivity("' + full.activityid + '"); >Edit</button>';
+                        var value1 = '@Request.RequestContext.HttpContext.Session["RoleId"]';
+                        if (value1 == '2') {
+                            return '<button class="btn btn" style="background-color: #0D2136; color: white;" onclick=getActivity("' + full.id + '"); >Edit</button>';
+                        }
+                        else {
+                            return '<button class="btn btn" style="background-color: #0D2136; color: white;" disabled="disabled" onclick=getActivity("' + full.id + '"); >Edit</button>';
+                        }
+                    }
+                }
+                ,
+                {
+                    data: 'activityname', render: function (data, type, row) {
+                        return "<button type='submit' onclick=GetTask('" + encodeURIComponent(row.id) + "'); class='btn btn' style='background-color: #0D2136; color: white;'>Task</button>";
+                    }
+                }
+            ],
+            select: {
+                style: 'multi',
+                selector: 'td:first-child'
+            },
+        });
+    });
+
+
+    function OnSuccess(response) {
+        $("#tblActivity").dataTable(
+        {
+            bLengthChange: true,
+            bFilter: false,
+            bSort: true,
+            bPaginate: true,
+            data: response,
+            bresponsive: true,
+            scrollX: false,
+            aoColumnDefs: [{
+                bSortable: false,
+                aTargets: [-1, -2]
+            }],
+            columns: [
+                { 'data': 'activityname', 'name': 'Activity Name' },
+                //{ 'data': 'projectname', 'name': 'Project Name' },
+                { 'data': 'startdate', 'name': 'Start Date' },
+                { 'data': 'enddate', 'name': 'End Date' },
+                {
+                    "render": function (data, type, full, meta)
+                    {
+                        //return '<button class="btn btn" style="background-color: #0D2136; color: white;" onclick=getActivity("' + full.activityid + '"); >Edit</button>';
+                        var value1 = '@Request.RequestContext.HttpContext.Session["RoleId"]';
+                        if (value1 == '2') {
+                            return '<button class="btn btn" style="background-color: #0D2136; color: white;" onclick=getActivity("' + full.id + '"); >Edit</button>';
+                        }
+                        else {
+                            return '<button class="btn btn" style="background-color: #0D2136; color: white;" disabled="disabled" onclick=getActivity("' + full.id + '"); >Edit</button>';
+                        }
+                    }
+                },
+            {
+                data: 'activityname', render: function (data, type, row) {
+                    return "<button type='submit' onclick=GetTask('" + encodeURIComponent(row.id) + "'); class='btn btn' style='background-color: #0D2136; color: white;'>Task</button>";
+                }
+            }
+            ],
+            select: {
+                style: 'multi',
+                selector: 'td:first-child'
+            },
+        });
+    };
+
+    function getActivity(id) {
+        debugger;
+        var value = '@Url.Action("Addrecord", "Activity", new { id = "id"})'.replace('id', id);
+        location.href = '@Url.Action("Addrecord", "Activity", new { id = "id"})'.replace('id', id);
+
+    }
+
+    function GetTask(activityid) {
+        debugger;
+        location.href = '@Url.Action("List", "Task")?activityid=' + activityid + '';
+    }
+
+    @*function OnSuccess(objFilter) {
+        $("#overlay").fadeOut(300);
+
+        debugger;
+        $("#tblActivity").DataTable(
+        {
+            processing: true,
+            serverSide: true,
+            filter: false,
+            orderMulti: false,
+            destroy: true,
+            //ordering: true,
+            pageLength: 75,
+            //LengthChange: true,
+            //Filter: true,
+            Sort: true,
+            "ajax": {
+                url: '@Url.Action("activitylist", "Activity")',
+                type: 'POST',
+                data: {
+                    datprojectid: projectid
+                }
+            },
+            aLengthMenu: [[75, 100, 500, 1000, -1], [75, 100, 500, 1000, "All"]],
+            iDisplayLength: 75,
+            //scrollY: 400,
+            scrollCollapse: false,
+            aoColumnDefs: [{
+                bSortable: false,
+                aTargets: [-1, -2]
+            }],
+            columns: [
+                { 'data': 'activityname', 'name': 'Activity Name' },
+                { 'data': 'projectname', 'name': 'Project Name' },
+                { 'data': 'startdate', 'name': 'Start Date' },
+                { 'data': 'enddate', 'name': 'End Date' },
+                {
+                    data: 'milestonename', render: function (data, type, row) {
+                        return "<button type='submit' onclick=EditData('" + encodeURIComponent(row.taskid) + "'); class='btn btn-info'>Edit</button>";
+                    }
+                }],
+            select: {
+                style: 'multi',
+                selector: 'td:first-child'
+            },
+        });
+    };*@
+
+    function msg(strMsg, mode) {
+        $.notify(strMsg, mode, { globalPosition: 'top center', clickToHide: true, autoHide: false });
+    }
+</script>

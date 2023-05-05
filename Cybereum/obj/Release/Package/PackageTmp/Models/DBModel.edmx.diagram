@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d67b9241cf6b4a1285f6d9dfa31ea15e" Name="Diagram1">
+        <EntityTypeShape EntityType="cybereumModel.tbl_milestone" Width="1.5" PointX="7.5" PointY="8.375" />
+        <EntityTypeShape EntityType="cybereumModel.tbl_project" Width="1.5" PointX="5.25" PointY="13.25" />
+        <EntityTypeShape EntityType="cybereumModel.tbl_projectdet" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="cybereumModel.tbl_status" Width="1.5" PointX="9.75" PointY="2.25" />
+        <EntityTypeShape EntityType="cybereumModel.tbl_subtask" Width="1.5" PointX="12" PointY="5.25" />
+        <EntityTypeShape EntityType="cybereumModel.tbl_task" Width="1.5" PointX="9.75" PointY="6.125" />
+        <EntityTypeShape EntityType="cybereumModel.tbl_tasktype" Width="1.5" PointX="5.25" PointY="4.125" />
+        <EntityTypeShape EntityType="cybereumModel.tbl_user" Width="1.5" PointX="3" PointY="5.125" />
+        <EntityTypeShape EntityType="cybereumModel.tbl_userrole" Width="1.5" PointX="0.75" PointY="7.125" />
+        <AssociationConnector Association="cybereumModel.FK_milestoneassignedto" />
+        <AssociationConnector Association="cybereumModel.FK_milestoneprojectid" />
+        <AssociationConnector Association="cybereumModel.FK_milestonetasktype" />
+        <AssociationConnector Association="cybereumModel.FK_Task_milestone" />
+        <AssociationConnector Association="cybereumModel.FK_createdby" />
+        <AssociationConnector Association="cybereumModel.FK_updatedby" />
+        <AssociationConnector Association="cybereumModel.tbl_subtask_status" />
+        <AssociationConnector Association="cybereumModel.FK__subtask_assignedto" />
+        <AssociationConnector Association="cybereumModel.FK_SubTask_Task" />
+        <AssociationConnector Association="cybereumModel.tbl_subtask_tasktype" />
+        <AssociationConnector Association="cybereumModel.FK_assignedto" />
+        <AssociationConnector Association="cybereumModel.tbl_task_ibfk_1" />
+        <AssociationConnector Association="cybereumModel.FK_modifiedby" />
+        <AssociationConnector Association="cybereumModel.fk_pmuser" />
+        <AssociationConnector Association="cybereumModel.FK_userrole" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

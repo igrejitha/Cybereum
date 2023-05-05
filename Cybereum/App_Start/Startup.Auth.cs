@@ -6,6 +6,8 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using Cybereum.Models;
+//using Gremlin.Net;
+//using Microsoft.Extensions.DependencyInjection;
 
 namespace Cybereum
 {
@@ -64,5 +66,46 @@ namespace Cybereum
             //    ClientSecret = ""
             //});
         }
+
+
+        //public void ConfigureServices(IServiceCollection services)
+        //{
+        //    services.AddSingleton<GremlinClient>(
+        //        (serviceProvider) =>
+        //        {
+        //            var gremlinServer = new GremlinServer(
+        //                hostname: "localhost",
+        //                port: 8182,
+        //                enableSsl: false,
+        //                username: null,
+        //                password: null
+        //            );
+
+        //            var connectionPoolSettings = new ConnectionPoolSettings
+        //            {
+        //                MaxInProcessPerConnection = 32,
+        //                PoolSize = 4,
+        //                ReconnectionAttempts = 4,
+        //                ReconnectionBaseDelay = TimeSpan.FromSeconds(1)
+        //            };
+
+        //            return new GremlinClient(
+        //                gremlinServer: gremlinServer,
+        //                connectionPoolSettings: connectionPoolSettings
+        //            );
+        //        }
+        //    );
+
+        //    services.AddSingleton<GraphTraversalSource>(
+        //        (serviceProvider) =>
+        //        {
+        //            GremlinClient gremlinClient = serviceProvider.GetService<GremlinClient>();
+        //            var driverRemoteConnection = new DriverRemoteConnection(gremlinClient, "g");
+        //            return AnonymousTraversalSource.Traversal().WithRemote(driverRemoteConnection);
+        //        }
+        //    );
+
+        //    services.AddRazorPages();
+        //}
     }
 }

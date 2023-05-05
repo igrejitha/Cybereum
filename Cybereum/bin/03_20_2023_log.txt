@@ -1,0 +1,10 @@
+03/20/2023 10:07:00 AM The underlying provider failed on Open.
+03/20/2023 10:07:00 AM System.Collections.ListDictionaryInternal
+03/20/2023 10:07:00 AM Unable to connect to any of the specified MySQL hosts.
+03/20/2023 10:07:00 AM Void Open()
+03/20/2023 06:12:53 PM Object reference not set to an instance of an object.
+03/20/2023 06:12:53 PM System.Collections.ListDictionaryInternal
+03/20/2023 06:23:01 PM An error occurred while executing the command definition. See the inner exception for details.
+03/20/2023 06:23:01 PM System.Collections.ListDictionaryInternal
+03/20/2023 06:23:01 PM Unknown column 'email' in 'field list'
+03/20/2023 06:23:01 PM System.Data.Common.DbDataReader ExecuteStoreCommands(System.Data.Entity.Core.EntityClient.EntityCommand, System.Data.CommandBehavior)

@@ -1,14 +1,14 @@
 ﻿@model Cybereum.Models.tbl_user
 
 @{
-    ViewBag.Title = "Add/Edit Users";
+    ViewBag.Title = "Add/Edit User";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<script src="~/Scripts/jquery-2.1.1.min.js"></script>
+@*<script src="~/Scripts/jquery-2.1.1.min.js"></script>
 
-<link rel="stylesheet" href="~/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="~/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="~/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">*@
 <style type="text/css">
     .error {
         color: red;
@@ -16,89 +16,104 @@
     }
 </style>
 
-<h2>Add/Edit Users</h2>
+<div class="row">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Add/Edit User</h4>
+            </div>
+            <div class="card-body">
+                <div class="basic-form">
 
-@using (Html.BeginForm("AddUsers", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
+                    @using (Html.BeginForm("AddUsers", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">        
-        <hr />
-        <span class="text-danger" style="align-items:center;">
-            @ViewBag.Message
-            @Html.HiddenFor(model => model.userid, htmlAttributes: new { @class = "control-label col-md-2" })            
-            @Html.HiddenFor(model => model.emailverification)
-            @Html.HiddenFor(model => model.otp)
-            @Html.HiddenFor(model => model.createddate)
-            @Html.HiddenFor(model => model.activationcode)
-            @Html.HiddenFor(model => model.isactive)
-            @Html.HiddenFor(model => model.roleid)
-            @Html.HiddenFor(model => model.pmuserid)
-        </span>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                @Html.LabelFor(model => model.emailid, "E-mail ID", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.emailid, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                    @Html.ValidationMessageFor(model => model.emailid, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group col-md-6">
-                @Html.LabelFor(model => model.password, "Password", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control", autocomplete = "off",placeholder = "Password", @type = "Password" } })
-                    @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                @Html.LabelFor(model => model.firstname, "FirstName", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.firstname, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                    @Html.ValidationMessageFor(model => model.firstname, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group col-md-6">
-                @Html.LabelFor(model => model.lastname, "LastName", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.lastname, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                    @Html.ValidationMessageFor(model => model.lastname, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
+                        <span class="text-danger" style="align-items:center;">
+                            @ViewBag.Message
+                            @Html.HiddenFor(model => model.userid, htmlAttributes: new { @class = "control-label col-md-2" })
+                            @Html.HiddenFor(model => model.emailverification)
+                            @Html.HiddenFor(model => model.otp)
+                            @Html.HiddenFor(model => model.createddate)
+                            @Html.HiddenFor(model => model.activationcode)
+                            @Html.HiddenFor(model => model.isactive)
+                            @Html.HiddenFor(model => model.roleid)
+                            @Html.HiddenFor(model => model.pmuserid)
+                        </span>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(model => model.emailid, "E-mail ID", htmlAttributes: new { @class = "" })
 
-        <div class="form-row">
-            @*<div class="form-group col-md-6">
-                @Html.LabelFor(model => model.roleid, "Role", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("roleid", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.roleid, "", new { @class = "text-danger" })
-                </div>
-            </div>*@            
-            <div class="form-group col-md-6">
-                @Html.LabelFor(model => model.organization, "Organization", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.organization, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.organization, "", new { @class = "text-danger" })
-                </div>
-            </div>            
-        </div>        
-        <div class="modal-footer">
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-12">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="history.go(-1); return false;">Close</button>
-                    <input type="submit" name="btnSubmit" value="Save" class="btnConfirm btn btn-primary" />                    
+                                @Html.EditorFor(model => model.emailid, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.emailid, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(model => model.password, "Password", htmlAttributes: new { @class = "" })
+
+                                @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", placeholder = "Password", @type = "Password" } })
+                                @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(model => model.firstname, "First Name", htmlAttributes: new { @class = "" })
+
+                                @Html.EditorFor(model => model.firstname, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.firstname, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(model => model.lastname, "Last Name", htmlAttributes: new { @class = "" })
+
+                                @Html.EditorFor(model => model.lastname, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.lastname, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+
+                            <div class="form-row">
+                                @*<div class="form-group col-md-6">
+                                        @Html.LabelFor(model => model.roleid, "Role", htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.DropDownList("roleid", null, htmlAttributes: new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.roleid, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>*@
+                                <div class="form-group col-md-6">
+                                    @Html.LabelFor(model => model.organization, "Organization", htmlAttributes: new { @class = "" })
+
+                                    @Html.EditorFor(model => model.organization, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.organization, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>                            
+                            <div class="row" style="padding-top: 30px;">
+                                <div class="col-6">
+                                    @*<a href="@Url.Action("ApprovedUsers", "User")"><h4>Back To List</h4></a>*@
+                                    <h4>
+                                        @Html.ActionLink("Back to List", "Index", new
+                               {
+                                   // routeValues
+                                   milestoneid = ViewBag.milestoneid
+                               })
+                                    </h4>
+                                </div>
+                                <div class="col-6">
+                                    @*<button type="button" class="btn btn" style="background-color: #0D2136; color: white;" data-dismiss="modal" onclick="history.go(-1); return false;">Close</button>*@
+                                    <input type="submit" name="btnSubmit" value="Save" class="btn btn" style="background-color: #0D2136; color: white;" />
+                                </div>
+
+                            </div>
+                    }
                 </div>
             </div>
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
 
+@Scripts.Render("~/bundles/jquery")
 <script type="text/javascript">
     $(document).ajaxSend(function () {
         //$("#overlay").fadeIn(300);
@@ -107,19 +122,19 @@
 
     $(document).ready(function () {
         debugger;
-        //FillLevelOne();       
+        //FillLevelOne();
 
         $("#btnSubmit").click(function () {
             return true;
         });
 
         function onSubmit() {
-            
+
         }
 
         // register event on form, not submit button
         $('#subscribeForm').submit(onSubmit)
-      
+
 
 
     });

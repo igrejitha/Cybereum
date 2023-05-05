@@ -1,0 +1,179 @@
+﻿@model Cybereum.Models.ProjectActivity
+
+@{
+    ViewBag.Title = "Add/Edit Activity";
+}
+
+<style type="text/css">
+    .error {
+        color: red;
+        display: none;
+    }
+</style>
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Add/Edit Activity</h4>
+            </div>
+            <div class="card-body">
+                <div class="basic-form">
+                    @using (Html.BeginForm("Create", "Activity", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        @*<div class="form-horizontal">
+                            <hr />*@
+                        <span class="text-danger" style="align-items:center;">
+                            @ViewBag.Message
+                            @Html.HiddenFor(model => model.id)
+                            @Html.HiddenFor(model => model.projectid)
+                            @*@Html.HiddenFor(model => model.createdby)*@
+                            @Html.HiddenFor(model => model.createdon)
+                            @Html.HiddenFor(model => model.Predecessors)
+                        </span>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(model => model.activityname, "Activity Name", htmlAttributes: new { @class = "" })
+                                @Html.EditorFor(model => model.activityname, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.activityname, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(model => model.startdate, "Start Date", htmlAttributes: new { @class = "" })
+                                @if (Convert.ToBoolean(ViewBag.HasDate))
+                                {
+                                    @Html.TextBoxFor(model => model.startdate, new { @type = "date", @class = "form-control datepicker", @Value = Model.startdate.ToString("yyyy-MM-dd"), @disabled = "disabled" })
+                                }
+                                else
+                                {
+                                    @Html.TextBoxFor(model => model.startdate, new { @type = "date", @class = "form-control datepicker", @Value = Model.startdate.ToString("yyyy-MM-dd") })
+                                }
+                                @Html.ValidationMessageFor(model => model.startdate, "", new { @class = "text-danger" })
+
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(model => model.enddate, "End Date", htmlAttributes: new { @class = "" })
+
+                                @Html.TextBoxFor(model => model.enddate, new { @type = "date", @class = "form-control datepicker", @Value = Model.enddate.ToString("yyyy-MM-dd") })
+                                @Html.ValidationMessageFor(model => model.enddate, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(model => model.ismilestone, "Is Milestone?", htmlAttributes: new { @class = "" })
+
+                                @Html.CheckBoxFor(model => model.ismilestone)
+
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                @Html.Label("Predecessors", htmlAttributes: new { @class = "" })
+                                @Html.DropDownList("Predecessors", null, htmlAttributes: new { @class = "form-control" })
+                                @*<div style="height: 300px; overflow-y: scroll;">
+                                        @if (ViewBag.predecessors != null)
+                                        {
+                                            foreach (var item in ViewBag.predecessors)
+                                            {
+                                                <input id="@item.Value" type="checkbox" name="predecessors" value="@item.Value" checked="@item.Selected" class="checkbox" />
+                                                <label for="@item.Value">
+                                                    @item.Text
+                                                </label>
+                                                <br />
+                                            }
+                                        }
+                                    </div>*@
+                            </div>
+                        </div>
+                        <div class="form-group col-md-6">
+                            @if (Convert.ToInt32(Session["RoleId"]) == 1)
+                            {
+                                <div class="form-group col-md-6">
+                                    @Html.LabelFor(model => model.createdby, "Project Manager", htmlAttributes: new { @class = "" })
+                                    @*<div class="col-md-10">*@
+                                    @Html.DropDownList("createdby", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.createdby, "", new { @class = "text-danger" })
+                                    @*</div>*@
+                                </div>
+                            }
+                            else
+                            {
+                                @Html.HiddenFor(model => model.createdby)
+                            }
+                        </div>
+                        <div class="row" style="padding-top: 30px;">
+                            <div class="col-6">
+                                <h4>
+                                    @Html.ActionLink("Back to List", "Index", new
+                               {
+                                   projectid = ViewBag.projectid
+                               })
+                                </h4>
+                            </div>
+                            <div class="col-6">
+                                @*<button type="button" class="btn btn" style="background-color: #0D2136; color: white;" data-dismiss="modal" onclick="history.go(-1); return false;">Close</button>*@
+                                <input type="submit" name="btnSubmit" value="Save" class="btn btn" style="background-color: #0D2136; color: white;" />
+                            </div>
+
+                        </div>
+                        @*</div>*@
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@Scripts.Render("~/bundles/jquery")
+<script type="text/javascript">
+    $(document).ajaxSend(function () {
+        //$("#overlay").fadeIn(300);
+    });
+
+
+    $(document).ready(function () {
+        debugger;
+
+        $(function () {
+            //$("#startdate").datepicker();
+            $("#startdate").on('change', function () {
+                debugger;
+                var startdate = $("#startdate").val();
+                var date = $("#enddate").val();
+                if (date != "") {
+                    if (date < startdate) {
+                        alert('End date must be greater than Start date');
+                        $(this).val('');
+                    }
+                }
+            });
+        });
+
+
+        $(function () {
+            $("#enddate").on('change', function () {
+                debugger;
+                var date = $("#enddate").val();
+                var startdate = $("#startdate").val();
+                if (date != "") {
+                    if (date < startdate) {
+                        alert('End date must be greater than Start date');
+                        $(this).val('');
+                    }
+                }
+            });
+        });
+
+        $('#checkBoxAll').click(function () {
+            if ($(this).is(":checked")) {
+                $(".chkCheckBoxId").prop("checked", true)
+            }
+            else {
+                $(".chkCheckBoxId").prop("checked", false)
+            }
+        });
+    });
+</script>

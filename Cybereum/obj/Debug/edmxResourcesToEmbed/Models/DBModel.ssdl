@@ -1,0 +1,495 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="cybereumModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="tbl_milestone">
+    <Key>
+      <PropertyRef Name="milestoneid" />
+    </Key>
+    <Property Name="milestoneid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="milestonename" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="isactive" Type="int" Nullable="false" />
+    <Property Name="startdate" Type="datetime" Precision="0" Nullable="false" />
+    <Property Name="enddate" Type="datetime" Precision="0" Nullable="false" />
+    <Property Name="statusid" Type="int" />
+    <Property Name="createdby" Type="int" Nullable="false" />
+    <Property Name="createddate" Type="datetime" Precision="0" Nullable="false" />
+    <Property Name="modifiedby" Type="int" />
+    <Property Name="modifieddate" Type="datetime" Precision="0" />
+    <Property Name="projectid" Type="int" Nullable="false" />
+    <Property Name="priority" Type="int" />
+    <Property Name="tasktypeid" Type="int" />
+    <Property Name="assignedto" Type="int" />
+  </EntityType>
+  <EntityType Name="tbl_project">
+    <Key>
+      <PropertyRef Name="projectid" />
+    </Key>
+    <Property Name="projectid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="projectname" Type="varchar" MaxLength="1000" Nullable="false" />
+    <Property Name="startdate" Type="datetime" Precision="0" Nullable="false" />
+    <Property Name="enddate" Type="datetime" Precision="0" Nullable="false" />
+    <Property Name="createdon" Type="datetime" Precision="0" Nullable="false" />
+    <Property Name="modifiedon" Type="datetime" Precision="0" />
+    <Property Name="createdby" Type="int" Nullable="false" />
+    <Property Name="modifiedby" Type="int" />
+    <Property Name="projectcost" Type="int" />
+    <Property Name="noofresource" Type="int" />
+    <Property Name="isactive" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_projectdet">
+    <Key>
+      <PropertyRef Name="projectdetid" />
+    </Key>
+    <Property Name="projectdetid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="projectid" Type="int" Nullable="false" />
+    <Property Name="userid" Type="int" Nullable="false" />
+    <Property Name="createdby" Type="int" />
+    <Property Name="createdon" Type="datetime" Precision="0" />
+    <Property Name="modifiedby" Type="int" />
+    <Property Name="modifiedon" Type="datetime" Precision="0" />
+  </EntityType>
+  <EntityType Name="tbl_status">
+    <Key>
+      <PropertyRef Name="statusid" />
+    </Key>
+    <Property Name="statusid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="statusname" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="isactive" Type="int" Nullable="false" />
+    <Property Name="createdby" Type="int" Nullable="false" />
+    <Property Name="createdon" Type="datetime" Precision="0" Nullable="false" />
+    <Property Name="modifiedby" Type="int" />
+    <Property Name="modifiedon" Type="datetime" Precision="0" />
+  </EntityType>
+  <EntityType Name="tbl_subtask">
+    <Key>
+      <PropertyRef Name="subtaskid" />
+    </Key>
+    <Property Name="subtaskid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="subtaskname" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="isactive" Type="int" Nullable="false" />
+    <Property Name="startdate" Type="datetime" Precision="0" Nullable="false" />
+    <Property Name="enddate" Type="datetime" Precision="0" Nullable="false" />
+    <Property Name="statusid" Type="int" Nullable="false" />
+    <Property Name="createdby" Type="int" Nullable="false" />
+    <Property Name="createddate" Type="datetime" Precision="0" Nullable="false" />
+    <Property Name="modifiedby" Type="int" />
+    <Property Name="modifieddate" Type="datetime" Precision="0" />
+    <Property Name="taskid" Type="int" Nullable="false" />
+    <Property Name="priority" Type="int" Nullable="false" />
+    <Property Name="tasktypeid" Type="int" />
+    <Property Name="assignedto" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_task">
+    <Key>
+      <PropertyRef Name="taskid" />
+    </Key>
+    <Property Name="taskid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="taskname" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="isactive" Type="int" Nullable="false" />
+    <Property Name="startdate" Type="datetime" Precision="0" Nullable="false" />
+    <Property Name="enddate" Type="datetime" Precision="0" Nullable="false" />
+    <Property Name="statusid" Type="int" Nullable="false" />
+    <Property Name="createdby" Type="int" Nullable="false" />
+    <Property Name="createddate" Type="datetime" Precision="0" Nullable="false" />
+    <Property Name="modifiedby" Type="int" />
+    <Property Name="modifieddate" Type="datetime" Precision="0" />
+    <Property Name="projectid" Type="int" Nullable="false" />
+    <Property Name="priority" Type="int" Nullable="false" />
+    <Property Name="tasktypeid" Type="int" />
+    <Property Name="assignedto" Type="int" Nullable="false" />
+    <Property Name="milestoneid" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tbl_tasktype">
+    <Key>
+      <PropertyRef Name="tasktypeid" />
+    </Key>
+    <Property Name="tasktypeid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="tasktypename" Type="varchar" MaxLength="250" Nullable="false" />
+    <Property Name="isactive" Type="int" Nullable="false" />
+    <Property Name="createdby" Type="int" Nullable="false" />
+    <Property Name="createdon" Type="datetime" Precision="0" Nullable="false" />
+    <Property Name="modifiedby" Type="int" />
+    <Property Name="modifiedon" Type="datetime" Precision="0" />
+  </EntityType>
+  <EntityType Name="tbl_user">
+    <Key>
+      <PropertyRef Name="userid" />
+    </Key>
+    <Property Name="userid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="username" Type="varchar" MaxLength="100" />
+    <Property Name="password" Type="varchar" MaxLength="5000" Nullable="false" />
+    <Property Name="roleid" Type="int" Nullable="false" />
+    <Property Name="firstname" Type="varchar" MaxLength="100" />
+    <Property Name="lastname" Type="varchar" MaxLength="100" />
+    <Property Name="isactive" Type="int" />
+    <Property Name="emailid" Type="varchar" MaxLength="500" />
+    <Property Name="organization" Type="varchar" MaxLength="500" />
+    <Property Name="createddate" Type="datetime" Precision="0" />
+    <Property Name="emailverification" Type="bit" />
+    <Property Name="otp" Type="varchar" MaxLength="4" />
+    <Property Name="activationcode" Type="varchar" MaxLength="5000" />
+    <Property Name="pmuserid" Type="int" />
+    <Property Name="GUID" Type="varchar" MaxLength="500" />
+  </EntityType>
+  <EntityType Name="tbl_userrole">
+    <Key>
+      <PropertyRef Name="roleid" />
+    </Key>
+    <Property Name="roleid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="rolename" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="isactive" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_assignedto">
+    <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="1" />
+    <End Role="tbl_task" Type="Self.tbl_task" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_user">
+        <PropertyRef Name="userid" />
+      </Principal>
+      <Dependent Role="tbl_task">
+        <PropertyRef Name="assignedto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_createdby">
+    <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="1" />
+    <End Role="tbl_project" Type="Self.tbl_project" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_user">
+        <PropertyRef Name="userid" />
+      </Principal>
+      <Dependent Role="tbl_project">
+        <PropertyRef Name="createdby" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_milestoneassignedto">
+    <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="0..1" />
+    <End Role="tbl_milestone" Type="Self.tbl_milestone" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_user">
+        <PropertyRef Name="userid" />
+      </Principal>
+      <Dependent Role="tbl_milestone">
+        <PropertyRef Name="assignedto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_milestoneprojectid">
+    <End Role="tbl_project" Type="Self.tbl_project" Multiplicity="1" />
+    <End Role="tbl_milestone" Type="Self.tbl_milestone" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_project">
+        <PropertyRef Name="projectid" />
+      </Principal>
+      <Dependent Role="tbl_milestone">
+        <PropertyRef Name="projectid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_milestonetasktype">
+    <End Role="tbl_tasktype" Type="Self.tbl_tasktype" Multiplicity="0..1" />
+    <End Role="tbl_milestone" Type="Self.tbl_milestone" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_tasktype">
+        <PropertyRef Name="tasktypeid" />
+      </Principal>
+      <Dependent Role="tbl_milestone">
+        <PropertyRef Name="tasktypeid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_modifiedby">
+    <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="0..1" />
+    <End Role="tbl_tasktype" Type="Self.tbl_tasktype" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_user">
+        <PropertyRef Name="userid" />
+      </Principal>
+      <Dependent Role="tbl_tasktype">
+        <PropertyRef Name="modifiedby" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_pmuser">
+    <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="0..1" />
+    <End Role="tbl_user1" Type="Self.tbl_user" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_user">
+        <PropertyRef Name="userid" />
+      </Principal>
+      <Dependent Role="tbl_user1">
+        <PropertyRef Name="pmuserid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_-subtask_assignedto">
+    <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="1" />
+    <End Role="tbl_subtask" Type="Self.tbl_subtask" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_user">
+        <PropertyRef Name="userid" />
+      </Principal>
+      <Dependent Role="tbl_subtask">
+        <PropertyRef Name="assignedto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SubTask_Task">
+    <End Role="tbl_task" Type="Self.tbl_task" Multiplicity="1" />
+    <End Role="tbl_subtask" Type="Self.tbl_subtask" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_task">
+        <PropertyRef Name="taskid" />
+      </Principal>
+      <Dependent Role="tbl_subtask">
+        <PropertyRef Name="taskid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Task_milestone">
+    <End Role="tbl_milestone" Type="Self.tbl_milestone" Multiplicity="1" />
+    <End Role="tbl_task" Type="Self.tbl_task" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_milestone">
+        <PropertyRef Name="milestoneid" />
+      </Principal>
+      <Dependent Role="tbl_task">
+        <PropertyRef Name="milestoneid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_updatedby">
+    <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="0..1" />
+    <End Role="tbl_project" Type="Self.tbl_project" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_user">
+        <PropertyRef Name="userid" />
+      </Principal>
+      <Dependent Role="tbl_project">
+        <PropertyRef Name="modifiedby" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_userrole">
+    <End Role="tbl_userrole" Type="Self.tbl_userrole" Multiplicity="1" />
+    <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_userrole">
+        <PropertyRef Name="roleid" />
+      </Principal>
+      <Dependent Role="tbl_user">
+        <PropertyRef Name="roleid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="tbl_subtask_status">
+    <End Role="tbl_status" Type="Self.tbl_status" Multiplicity="1" />
+    <End Role="tbl_subtask" Type="Self.tbl_subtask" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_status">
+        <PropertyRef Name="statusid" />
+      </Principal>
+      <Dependent Role="tbl_subtask">
+        <PropertyRef Name="statusid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="tbl_subtask_tasktype">
+    <End Role="tbl_tasktype" Type="Self.tbl_tasktype" Multiplicity="0..1" />
+    <End Role="tbl_subtask" Type="Self.tbl_subtask" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_tasktype">
+        <PropertyRef Name="tasktypeid" />
+      </Principal>
+      <Dependent Role="tbl_subtask">
+        <PropertyRef Name="tasktypeid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="tbl_task_ibfk_1">
+    <End Role="tbl_tasktype" Type="Self.tbl_tasktype" Multiplicity="0..1" />
+    <End Role="tbl_task" Type="Self.tbl_task" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_tasktype">
+        <PropertyRef Name="tasktypeid" />
+      </Principal>
+      <Dependent Role="tbl_task">
+        <PropertyRef Name="tasktypeid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="sp_FetchApprovedUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="cybereum">
+    <Parameter Name="P_Pageno" Type="int" Mode="In" />
+    <Parameter Name="P_pagesize" Type="int" Mode="In" />
+    <Parameter Name="P_SortColumn" Type="varchar" Mode="In" />
+    <Parameter Name="P_SortOrder" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_FetchLoginDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="cybereum">
+    <Parameter Name="P_email" Type="varchar" Mode="In" />
+    <Parameter Name="P_password" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_FetchMilestoneExists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="cybereum">
+    <Parameter Name="P_milestonename" Type="varchar" Mode="In" />
+    <Parameter Name="P_projectid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_FetchMilestones" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="cybereum">
+    <Parameter Name="P_PMid" Type="int" Mode="In" />
+    <Parameter Name="P_Roleid" Type="int" Mode="In" />
+    <Parameter Name="P_Projectid" Type="int" Mode="In" />
+    <Parameter Name="P_Pageno" Type="int" Mode="In" />
+    <Parameter Name="P_pagesize" Type="int" Mode="In" />
+    <Parameter Name="P_SortColumn" Type="varchar" Mode="In" />
+    <Parameter Name="P_SortOrder" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_FetchPendingUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="cybereum">
+    <Parameter Name="P_Pageno" Type="int" Mode="In" />
+    <Parameter Name="P_pagesize" Type="int" Mode="In" />
+    <Parameter Name="P_SortColumn" Type="varchar" Mode="In" />
+    <Parameter Name="P_SortOrder" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_FetchProjectExists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="cybereum">
+    <Parameter Name="P_projectname" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_FetchProjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="cybereum">
+    <Parameter Name="P_PMid" Type="int" Mode="In" />
+    <Parameter Name="P_Roleid" Type="int" Mode="In" />
+    <Parameter Name="P_Pageno" Type="int" Mode="In" />
+    <Parameter Name="P_pagesize" Type="int" Mode="In" />
+    <Parameter Name="P_SortColumn" Type="varchar" Mode="In" />
+    <Parameter Name="P_SortOrder" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_FetchSubTasks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="cybereum">
+    <Parameter Name="P_PMid" Type="int" Mode="In" />
+    <Parameter Name="P_Roleid" Type="int" Mode="In" />
+    <Parameter Name="P_taskid" Type="int" Mode="In" />
+    <Parameter Name="P_Pageno" Type="int" Mode="In" />
+    <Parameter Name="P_pagesize" Type="int" Mode="In" />
+    <Parameter Name="P_SortColumn" Type="varchar" Mode="In" />
+    <Parameter Name="P_SortOrder" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_FetchTaskExists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="cybereum">
+    <Parameter Name="P_taskname" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_FetchTasks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="cybereum">
+    <Parameter Name="P_PMid" Type="int" Mode="In" />
+    <Parameter Name="P_Roleid" Type="int" Mode="In" />
+    <Parameter Name="P_milestoneid" Type="int" Mode="In" />
+    <Parameter Name="P_Pageno" Type="int" Mode="In" />
+    <Parameter Name="P_pagesize" Type="int" Mode="In" />
+    <Parameter Name="P_SortColumn" Type="varchar" Mode="In" />
+    <Parameter Name="P_SortOrder" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_FetchUserExists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="cybereum">
+    <Parameter Name="P_email" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_FetchUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="cybereum">
+    <Parameter Name="P_PMid" Type="int" Mode="In" />
+    <Parameter Name="P_Roleid" Type="int" Mode="In" />
+    <Parameter Name="P_Pageno" Type="int" Mode="In" />
+    <Parameter Name="P_pagesize" Type="int" Mode="In" />
+    <Parameter Name="P_SortColumn" Type="varchar" Mode="In" />
+    <Parameter Name="P_SortOrder" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_getganttchart" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="cybereum">
+    <Parameter Name="p_roleid" Type="int" Mode="In" />
+    <Parameter Name="p_userid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_getganttchartdata" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="cybereum">
+    <Parameter Name="p_roleid" Type="int" Mode="In" />
+    <Parameter Name="p_userid" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_get_milestone" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="cybereum">
+    <Parameter Name="p_roleid" Type="int" Mode="In" />
+    <Parameter Name="p_userid" Type="int" Mode="In" />
+    <Parameter Name="p_id" Type="int" Mode="In" />
+    <Parameter Name="p_rowno" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_get_project" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="cybereum">
+    <Parameter Name="p_roleid" Type="int" Mode="In" />
+    <Parameter Name="p_userid" Type="int" Mode="In" />
+    <Parameter Name="p_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_get_subtask" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="cybereum">
+    <Parameter Name="p_roleid" Type="int" Mode="In" />
+    <Parameter Name="p_userid" Type="int" Mode="In" />
+    <Parameter Name="p_id" Type="int" Mode="In" />
+    <Parameter Name="p_rowno" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_get_task" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="cybereum">
+    <Parameter Name="p_roleid" Type="int" Mode="In" />
+    <Parameter Name="p_userid" Type="int" Mode="In" />
+    <Parameter Name="p_id" Type="int" Mode="In" />
+    <Parameter Name="p_rowno" Type="int" Mode="In" />
+  </Function>
+  <EntityContainer Name="cybereumModelStoreContainer">
+    <EntitySet Name="tbl_milestone" EntityType="Self.tbl_milestone" Schema="cybereum" store:Type="Tables" />
+    <EntitySet Name="tbl_project" EntityType="Self.tbl_project" Schema="cybereum" store:Type="Tables" />
+    <EntitySet Name="tbl_projectdet" EntityType="Self.tbl_projectdet" Schema="cybereum" store:Type="Tables" />
+    <EntitySet Name="tbl_status" EntityType="Self.tbl_status" Schema="cybereum" store:Type="Tables" />
+    <EntitySet Name="tbl_subtask" EntityType="Self.tbl_subtask" Schema="cybereum" store:Type="Tables" />
+    <EntitySet Name="tbl_task" EntityType="Self.tbl_task" Schema="cybereum" store:Type="Tables" />
+    <EntitySet Name="tbl_tasktype" EntityType="Self.tbl_tasktype" Schema="cybereum" store:Type="Tables" />
+    <EntitySet Name="tbl_user" EntityType="Self.tbl_user" Schema="cybereum" store:Type="Tables" />
+    <EntitySet Name="tbl_userrole" EntityType="Self.tbl_userrole" Schema="cybereum" store:Type="Tables" />
+    <AssociationSet Name="FK_assignedto" Association="Self.FK_assignedto">
+      <End Role="tbl_user" EntitySet="tbl_user" />
+      <End Role="tbl_task" EntitySet="tbl_task" />
+    </AssociationSet>
+    <AssociationSet Name="FK_createdby" Association="Self.FK_createdby">
+      <End Role="tbl_user" EntitySet="tbl_user" />
+      <End Role="tbl_project" EntitySet="tbl_project" />
+    </AssociationSet>
+    <AssociationSet Name="FK_milestoneassignedto" Association="Self.FK_milestoneassignedto">
+      <End Role="tbl_user" EntitySet="tbl_user" />
+      <End Role="tbl_milestone" EntitySet="tbl_milestone" />
+    </AssociationSet>
+    <AssociationSet Name="FK_milestoneprojectid" Association="Self.FK_milestoneprojectid">
+      <End Role="tbl_project" EntitySet="tbl_project" />
+      <End Role="tbl_milestone" EntitySet="tbl_milestone" />
+    </AssociationSet>
+    <AssociationSet Name="FK_milestonetasktype" Association="Self.FK_milestonetasktype">
+      <End Role="tbl_tasktype" EntitySet="tbl_tasktype" />
+      <End Role="tbl_milestone" EntitySet="tbl_milestone" />
+    </AssociationSet>
+    <AssociationSet Name="FK_modifiedby" Association="Self.FK_modifiedby">
+      <End Role="tbl_user" EntitySet="tbl_user" />
+      <End Role="tbl_tasktype" EntitySet="tbl_tasktype" />
+    </AssociationSet>
+    <AssociationSet Name="fk_pmuser" Association="Self.fk_pmuser">
+      <End Role="tbl_user" EntitySet="tbl_user" />
+      <End Role="tbl_user1" EntitySet="tbl_user" />
+    </AssociationSet>
+    <AssociationSet Name="FK_-subtask_assignedto" Association="Self.FK_-subtask_assignedto">
+      <End Role="tbl_user" EntitySet="tbl_user" />
+      <End Role="tbl_subtask" EntitySet="tbl_subtask" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SubTask_Task" Association="Self.FK_SubTask_Task">
+      <End Role="tbl_task" EntitySet="tbl_task" />
+      <End Role="tbl_subtask" EntitySet="tbl_subtask" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Task_milestone" Association="Self.FK_Task_milestone">
+      <End Role="tbl_milestone" EntitySet="tbl_milestone" />
+      <End Role="tbl_task" EntitySet="tbl_task" />
+    </AssociationSet>
+    <AssociationSet Name="FK_updatedby" Association="Self.FK_updatedby">
+      <End Role="tbl_user" EntitySet="tbl_user" />
+      <End Role="tbl_project" EntitySet="tbl_project" />
+    </AssociationSet>
+    <AssociationSet Name="FK_userrole" Association="Self.FK_userrole">
+      <End Role="tbl_userrole" EntitySet="tbl_userrole" />
+      <End Role="tbl_user" EntitySet="tbl_user" />
+    </AssociationSet>
+    <AssociationSet Name="tbl_subtask_status" Association="Self.tbl_subtask_status">
+      <End Role="tbl_status" EntitySet="tbl_status" />
+      <End Role="tbl_subtask" EntitySet="tbl_subtask" />
+    </AssociationSet>
+    <AssociationSet Name="tbl_subtask_tasktype" Association="Self.tbl_subtask_tasktype">
+      <End Role="tbl_tasktype" EntitySet="tbl_tasktype" />
+      <End Role="tbl_subtask" EntitySet="tbl_subtask" />
+    </AssociationSet>
+    <AssociationSet Name="tbl_task_ibfk_1" Association="Self.tbl_task_ibfk_1">
+      <End Role="tbl_tasktype" EntitySet="tbl_tasktype" />
+      <End Role="tbl_task" EntitySet="tbl_task" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
