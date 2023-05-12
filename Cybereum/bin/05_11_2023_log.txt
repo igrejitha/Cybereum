@@ -1,0 +1,36 @@
+05/11/2023 11:44:30 AM The underlying provider failed on Open.
+05/11/2023 11:44:30 AM System.Collections.ListDictionaryInternal
+05/11/2023 11:44:30 AM Unable to connect to any of the specified MySQL hosts.
+05/11/2023 11:44:30 AM Void Open()
+05/11/2023 12:14:05 PM An error occurred while executing the command definition. See the inner exception for details.
+05/11/2023 12:14:05 PM System.Collections.ListDictionaryInternal
+05/11/2023 12:14:05 PM Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+05/11/2023 12:14:05 PM System.Data.Common.DbDataReader ExecuteStoreCommands(System.Data.Entity.Core.EntityClient.EntityCommand, System.Data.CommandBehavior)
+05/11/2023 01:36:40 PM An error occurred while executing the command definition. See the inner exception for details.
+05/11/2023 01:36:40 PM System.Collections.ListDictionaryInternal
+05/11/2023 01:36:40 PM Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+05/11/2023 01:36:40 PM System.Data.Common.DbDataReader ExecuteStoreCommands(System.Data.Entity.Core.EntityClient.EntityCommand, System.Data.CommandBehavior)
+05/11/2023 01:38:47 PM An error occurred while executing the command definition. See the inner exception for details.
+05/11/2023 01:38:47 PM System.Collections.ListDictionaryInternal
+05/11/2023 01:38:47 PM Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+05/11/2023 01:38:47 PM System.Data.Common.DbDataReader ExecuteStoreCommands(System.Data.Entity.Core.EntityClient.EntityCommand, System.Data.CommandBehavior)
+05/11/2023 03:49:42 PM The underlying provider failed on Open.
+05/11/2023 03:49:42 PM System.Collections.ListDictionaryInternal
+05/11/2023 03:49:42 PM Unable to connect to any of the specified MySQL hosts.
+05/11/2023 03:49:42 PM Void Open()
+05/11/2023 04:10:02 PM An error occurred while executing the command definition. See the inner exception for details.
+05/11/2023 04:10:02 PM System.Collections.ListDictionaryInternal
+05/11/2023 04:10:02 PM Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+05/11/2023 04:10:02 PM System.Data.Common.DbDataReader ExecuteStoreCommands(System.Data.Entity.Core.EntityClient.EntityCommand, System.Data.CommandBehavior)
+05/11/2023 04:14:18 PM An error occurred while executing the command definition. See the inner exception for details.
+05/11/2023 04:14:18 PM System.Collections.ListDictionaryInternal
+05/11/2023 04:14:18 PM Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+05/11/2023 04:14:18 PM System.Data.Common.DbDataReader ExecuteStoreCommands(System.Data.Entity.Core.EntityClient.EntityCommand, System.Data.CommandBehavior)
+05/11/2023 06:16:48 PM An error occurred while executing the command definition. See the inner exception for details.
+05/11/2023 06:16:48 PM System.Collections.ListDictionaryInternal
+05/11/2023 06:16:48 PM Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+05/11/2023 06:16:48 PM System.Data.Common.DbDataReader ExecuteStoreCommands(System.Data.Entity.Core.EntityClient.EntityCommand, System.Data.CommandBehavior)
+05/11/2023 06:17:34 PM An error occurred while executing the command definition. See the inner exception for details.
+05/11/2023 06:17:34 PM System.Collections.ListDictionaryInternal
+05/11/2023 06:17:34 PM Timeout expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+05/11/2023 06:17:34 PM System.Data.Common.DbDataReader ExecuteStoreCommands(System.Data.Entity.Core.EntityClient.EntityCommand, System.Data.CommandBehavior)
