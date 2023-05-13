@@ -1,4 +1,8 @@
 ﻿@*@model Cybereum.Models.ProjectActivity*@
+<<<<<<< Updated upstream
+=======
+@*@using DlhSoft.Web.Mvc;*@
+>>>>>>> Stashed changes
 @{
     ViewBag.Title = "GANTT Chart";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,11 +10,13 @@
 
 @*<html>
     <head>*@
-<script src="https://cdn.anychart.com/releases/8.6.0/js/anychart-core.min.js"> </script>
-<script src="https://cdn.anychart.com/releases/8.6.0/js/anychart-gantt.min.js"></script>
+@*<script src="https://cdn.anychart.com/releases/8.6.0/js/anychart-core.min.js"> </script>
+<script src="https://cdn.anychart.com/releases/8.6.0/js/anychart-gantt.min.js"></script>*@
+<script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-core.min.js" type="text/javascript"></script>
+<script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-gantt.min.js" type="text/javascript"></script>
 @*</head>
     <body>*@
-<div class=" form-horizontal">
+<div class="form-horizontal">
     <h4>GANTT Chart</h4>
     <hr />
 </div>
@@ -19,6 +25,18 @@
 </div>
 <div id="container" style="height:450px"> </div>
 <br />
+<<<<<<< Updated upstream
+=======
+@*@(Html.GanttChartView(component => {
+    // Settings.
+    component.Columns[(int)ColumnType.Content].Header = "Activity";
+    // CSS classes.
+    component.StandardBarCssClass = "dsgc-standard-bar";
+    component.StandardCompletedBarCssClass = "dsgc-standard-completed-bar";
+    // Item change action set up (post).
+    component.ItemChangeAction = "UpdateGanttChartItem";    
+}))*@
+>>>>>>> Stashed changes
 @*<div class="row">
     <div class="col-xl-12 col-lg-12">
         <div class="card">
@@ -183,11 +201,12 @@
                 // fit elements to the width of the timeline
                 chart.fitAll();
                 //chart.fitToTask("1");
-
+                //chart.zoomTo("week", 2, "first-date");
 
                 /* listen to the rowDblClick event
                     and update the chart title */
                 chart.listen("rowDblClick", function (e) {
+<<<<<<< Updated upstream
                     debugger;
                     var taskid = e.item.get("taskid");
                     var projectid = "@ViewBag.projectid";
@@ -195,6 +214,33 @@
                     window.open(link, '_blank');
                     return false;
                 });
+=======
+                    debugger;                    
+                    var taskid = e.item.get("taskid");
+                    var projectid = "@ViewBag.projectid";
+                    var link = '@Html.Raw(@Url.Action("Create", "Activity", new { projectid = "rowid", activityid = "taskid"}))'.replace('rowid', projectid).replace('taskid', taskid);
+                    window.open(link, '_blank');
+                    return false;
+                });
+
+                /* listen to the rowClick event
+                    and update the chart title */
+                chart.listen("rowClick", function (e) {
+                    debugger;
+                    //New activity
+                    @*var taskid = e.item.get("taskid");
+                    var projectid = "@ViewBag.projectid";
+                    var link = '@Html.Raw(@Url.Action("Create", "Activity", new { projectid = "rowid", activityid = "taskid"}))'.replace('rowid', projectid).replace('taskid', taskid);
+                    window.open(link, '_blank');*@
+
+                    //Edit existing activity
+                    var taskid = e.item.get("taskid");
+                    var projectid = "@ViewBag.projectid";
+                    var link = '@Html.Raw(@Url.Action("Addrecord", "Activity", new { id = "id"}))'.replace('id', taskid);
+                    window.open(link, '_blank');
+                    return false;
+                });
+>>>>>>> Stashed changes
 
             }
         });

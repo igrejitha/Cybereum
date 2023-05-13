@@ -9,9 +9,32 @@
         color: red;
         display: none;
     }
+
+    #divLoader {
+        position: fixed;
+        display: block;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        text-align: center;
+        opacity: 0.7;
+        background-color: #fff;
+        z-index: 99;
+    }
+
+    #loading-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 100;
+}
 </style>
 
 <div class="row">
+    <div id="divLoader" style="display:none;">
+        <img id="loading-image" src="~/images/Spinner.gif" alt="Loader" />
+    </div>
     <div class="col-xl-12 col-lg-12">
         <div class="card">
             <div class="card-header">
@@ -55,17 +78,43 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
+                                @Html.LabelFor(model => model.durations, "Duration", htmlAttributes: new { @class = "" })
+
+                                @Html.TextBoxFor(model => model.durations, new { @class = "form-control", autocomplete = "off" })
+                                @Html.ValidationMessageFor(model => model.durations, "", new { @class = "text-danger" })
+
+                            </div>
+                            <div class="form-group col-md-6">
                                 @Html.LabelFor(model => model.enddate, "End Date", htmlAttributes: new { @class = "" })
 
                                 @Html.TextBoxFor(model => model.enddate, new { @type = "date", @class = "form-control datepicker", @Value = Model.enddate.ToString("yyyy-MM-dd") })
                                 @Html.ValidationMessageFor(model => model.enddate, "", new { @class = "text-danger" })
 
                             </div>
+                        </div>
+                        <div class="form-row">
                             <div class="form-group col-md-6">
                                 @Html.LabelFor(model => model.ismilestone, "Is Milestone?", htmlAttributes: new { @class = "" })
 
                                 @Html.CheckBoxFor(model => model.ismilestone)
 
+                            </div>
+                            <div class="form-group col-md-6">                                
+                                @Html.Label("Predecessors", htmlAttributes: new { @class = "" })
+                                @*@Html.DropDownList("predecessors", null, htmlAttributes: new { @class = "form-control",multiple="multiple" })*@
+                                <div style="height: 300px; overflow-y: scroll;">
+                                    @if (ViewBag.predecessors != null)
+                                    {
+                                        foreach (var item in ViewBag.predecessors)
+                                        {
+                                            <input id="@item.Value" type="checkbox" name="predecessors" value="@item.Value" checked="@item.Selected" class="checkbox" onclick="Selectitem()" />
+                                            <label for="@item.Value">
+                                                @item.Text
+                                            </label>
+                                            <br />
+                                        }
+                                    }
+                                </div>
                             </div>
                         </div>
                         <div class="form-row">
@@ -133,9 +182,62 @@
         //$("#overlay").fadeIn(300);
     });
 
+    function Selectitem() {
+        debugger;
+        $("#divLoader").show();
+        var $element = $(this);
+        var id = $element.attr('id');
+        var arr = [];
+        $.each($("input[name='predecessors']:checked"), function () {
+            arr.push($(this).val());
+        });
+        //$.getJSON("/Activity/GetPredecesdate",
+        //        {
+        //            id: arr
+        //        },
+        //        function (data) {
+        //            debugger;
+        //            var date = new Date(parseInt(data.substr(6)));
+        //            var month = ("0" + (date.getMonth() + 1)).slice(-2);
+        //            date = date.getFullYear() + '-' + month + '-' + ("0" + date.getDate()).slice(-2);
+        //            $('#enddate').val(date);
+        //        });
+        $.ajax({
+            url: '/Activity/GetPredecesdate',
+            data: { id: arr },
+            traditional: true,
+            success: function (data) {
+                debugger;
+                $("#divLoader").hide();
+                var date = new Date(parseInt(data.substr(6)));
+                var month = ("0" + (date.getMonth() + 1)).slice(-2);
+                date = date.getFullYear() + '-' + month + '-' + ("0" + date.getDate()).slice(-2);
+                $('#startdate').val(date);
+                $('#enddate').val(date);
+            }
+        });
+
+    }
 
     $(document).ready(function () {
         debugger;
+
+        $('#durations').change(function () {
+            var recordId = this.value;
+            var startdate = $("#startdate").val();
+            $.getJSON("/Activity/GetEnddate",
+                {
+                    startDate: startdate,
+                    id: recordId
+                },
+                function (data) {
+                    debugger;
+                    var date = new Date(parseInt(data.substr(6)));
+                    var month = ("0" + (date.getMonth() + 1)).slice(-2);
+                    date = date.getFullYear() + '-' + month + '-' + ("0" + date.getDate()).slice(-2);
+                    $('#enddate').val(date);
+                });
+        });
 
         $(function () {
             //$("#startdate").datepicker();
@@ -175,5 +277,6 @@
                 $(".chkCheckBoxId").prop("checked", false)
             }
         });
+
     });
 </script>
