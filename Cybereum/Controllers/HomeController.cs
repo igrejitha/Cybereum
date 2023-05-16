@@ -783,32 +783,28 @@ namespace Cybereum.Controllers
                                 where p.emailverification == true && p.isactive == 0 && p.roleid != 1
                                 select p.userid).Count();
 
-            //var countproject = (from p in entities.tbl_project
-            //                    where p.isactive == 1
-            //                    select p.projectid).Count();
-
-            var gremlinServer = new GremlinServer(gremlinvariables.hostname, gremlinvariables.port, enableSsl: true, username: "/dbs/" + HttpUtility.UrlEncode(gremlinvariables.database) + "/colls/" + HttpUtility.UrlEncode(gremlinvariables.collection), password: gremlinvariables.authKey);
-            using (var gremlinClient = new GremlinClient(
-                gremlinServer,
-                new GraphSON2Reader(),
-                new GraphSON2Writer(),
-                GremlinClient.GraphSON2MimeType,
-                gremlinvariables.connectionPoolSettings))
+            //var gremlinServer = new GremlinServer(gremlinvariables.hostname, gremlinvariables.port, enableSsl: true, username: "/dbs/" + HttpUtility.UrlEncode(gremlinvariables.database) + "/colls/" + HttpUtility.UrlEncode(gremlinvariables.collection), password: gremlinvariables.authKey);
+            //using (var gremlinClient = new GremlinClient(
+            //    gremlinServer,
+            //    new GraphSON2Reader(),
+            //    new GraphSON2Writer(),
+            //    GremlinClient.GraphSON2MimeType,
+            //    gremlinvariables.connectionPoolSettings))
+            //{
+            var gremlinScript = "g.V().hasLabel('project').count()";
+            try
             {
-                var gremlinScript = "g.V().hasLabel('project').count()";
-                try
-                {
-                    //var results = await gremlinClient.SubmitAsync<dynamic>(gremlinScript).ConfigureAwait(false);
-                    var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
-                    task.Wait();
-                    var results = task.Result;
-                    projectcount = results.ToList()[0];
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
+                //var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
+                //task.Wait();
+                //var results = task.Result;
+                var results = IGUtilities.ExecuteGremlinScript(gremlinScript);
+                projectcount = results.ToList()[0];
             }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            //}
             ViewBag.countApproved = countapproved;
             ViewBag.countPending = countpending;
             ViewBag.countProject = projectcount;
@@ -831,61 +827,46 @@ namespace Cybereum.Controllers
             //                    select p.projectid).Count();
             long projectcount = 0;
             long taskcount = 0;
-            var gremlinServer = new GremlinServer(gremlinvariables.hostname, gremlinvariables.port, enableSsl: true, username: "/dbs/" + HttpUtility.UrlEncode(gremlinvariables.database) + "/colls/" + HttpUtility.UrlEncode(gremlinvariables.collection), password: gremlinvariables.authKey);
-            using (var gremlinClient = new GremlinClient(
-                gremlinServer,
-                new GraphSON2Reader(),
-                new GraphSON2Writer(),
-                GremlinClient.GraphSON2MimeType,
-                gremlinvariables.connectionPoolSettings))
-            {
-                var gremlinScript = "g.V().has('project','createdby','" + pmuserid + "').or().has('project','projectmembers','" + pmuserid + "')";
-                try
-                {
-                    //var results = await gremlinClient.SubmitAsync<dynamic>(gremlinScript).ConfigureAwait(false);
-                    var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
-                    task.Wait();
-                    var results = task.Result;
-                    //projectcount = results.ToList()[0];
-                    projectcount = results.Count();
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-
-                var gremlinScript1 = "g.V().has('task','createdby','" + pmuserid + "').count()";
-                if (Convert.ToInt16(Session["RoleId"]) == (int)Role.User)
-                {
-                    gremlinScript1 = "g.V().has('task','assignedto','" + pmuserid + "').count()";
-                }
-
-                try
-                {
-                    var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript1);
-                    task.Wait();
-                    var results = task.Result;
-                    taskcount = results.ToList()[0];
-                }
-                catch (Exception ex)
-                {
-                    throw ex;
-                }
-            }
-            //var countTask = (from p in entities.tbl_task
-            //                 join a in entities.tbl_milestone on p.milestoneid equals a.milestoneid
-            //                 join b in entities.tbl_project on a.projectid equals b.projectid
-            //                 where p.isactive == 1 && b.createdby == pmuserid
-            //                 select p.taskid).Count();
-
-            //if (Convert.ToInt16(Session["RoleId"]) == (int)Role.User)
+            //var gremlinServer = new GremlinServer(gremlinvariables.hostname, gremlinvariables.port, enableSsl: true, username: "/dbs/" + HttpUtility.UrlEncode(gremlinvariables.database) + "/colls/" + HttpUtility.UrlEncode(gremlinvariables.collection), password: gremlinvariables.authKey);
+            //using (var gremlinClient = new GremlinClient(
+            //    gremlinServer,
+            //    new GraphSON2Reader(),
+            //    new GraphSON2Writer(),
+            //    GremlinClient.GraphSON2MimeType,
+            //    gremlinvariables.connectionPoolSettings))
             //{
-            //    countTask = (from p in entities.tbl_task
-            //                 join a in entities.tbl_milestone on p.milestoneid equals a.milestoneid
-            //                 join b in entities.tbl_project on a.projectid equals b.projectid
-            //                 where p.isactive == 1 && p.assignedto == pmuserid
-            //                 select p.taskid).Count();
-            //}
+            var gremlinScript = "g.V().has('project','createdby','" + pmuserid + "').or().has('project','projectmembers','" + pmuserid + "')";
+            try
+            {
+                //var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
+                //task.Wait();
+                //var results = task.Result;
+                var results = IGUtilities.ExecuteGremlinScript(gremlinScript);
+                projectcount = results.Count();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            var gremlinScript1 = "g.V().has('task','createdby','" + pmuserid + "').count()";
+            if (Convert.ToInt16(Session["RoleId"]) == (int)Role.User)
+            {
+                gremlinScript1 = "g.V().has('task','assignedto','" + pmuserid + "').count()";
+            }
+
+            try
+            {
+                //var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript1);
+                //task.Wait();
+                //var results = task.Result;
+                var results = IGUtilities.ExecuteGremlinScript(gremlinScript1);
+                taskcount = results.ToList()[0];
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
 
             ViewBag.countUser = countUser;
             ViewBag.countProject = projectcount;
@@ -941,6 +922,7 @@ namespace Cybereum.Controllers
                 ViewBag.projectid = projectid;
                 Session["ProjectId"] = projectid;
             }
+<<<<<<< Updated upstream
 
 
             //var gremlinScript = "g.V().has('activity','projectid','" + projectid + "').order().by('enddate',decr).limit(1).project('startdate','enddate').by(values('startdate')).by(values('enddate'))";
@@ -968,6 +950,9 @@ namespace Cybereum.Controllers
             return View(Activity);
             //List<GanttChartItem> items = getgannchartNew(projectid);
             //return View(model:items);
+=======
+            return View(Activity);
+>>>>>>> Stashed changes
         }
 
 
@@ -1174,12 +1159,13 @@ namespace Cybereum.Controllers
                 DateTime enddate;
                 string connection = string.Empty;
 
-                var gremlinServer = new GremlinServer(gremlinvariables.hostname, gremlinvariables.port, enableSsl: true, username: gremlinvariables.containerLink, password: gremlinvariables.authKey);
-                var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType, gremlinvariables.connectionPoolSettings);
+                //var gremlinServer = new GremlinServer(gremlinvariables.hostname, gremlinvariables.port, enableSsl: true, username: gremlinvariables.containerLink, password: gremlinvariables.authKey);
+                //var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType, gremlinvariables.connectionPoolSettings);
                 var gremlinScript = "g.V().has('project','id','" + projectid + "').project('id','projectname','startdate','enddate').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate'))";
-                var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
-                task.Wait();
-                var projectdata = task.Result;
+                //var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
+                //task.Wait();
+                //var projectdata = task.Result;
+                var projectdata = IGUtilities.ExecuteGremlinScript(gremlinScript);
 
                 List<ganttchartmodel> ganttchartmodellist = new List<ganttchartmodel>();
                 int i = 1;
@@ -1221,6 +1207,7 @@ namespace Cybereum.Controllers
 
                     List<Children> Activity = new List<Children>();
                     List<chartconnector> chartconnector = new List<chartconnector>();
+<<<<<<< Updated upstream
 
                     gremlinScript = "g.V().has('activity','projectid','" + project["id"] + "').order().by('startdate',incr).order().by('enddate',incr).project('id','activityname','startdate','enddate','durations','predecessors').by(id()).by(values('activityname')).by(values('startdate')).by(values('enddate')).by(values('durations')).by(values('predecessors').fold())";
                     //gremlinScript = "g.V().has('activity','projectid','" + project["id"] + "').project('id','activityname','startdate','enddate','durations').by(id()).by(values('activityname')).by(values('startdate')).by(values('enddate')).by(values('durations'))";
@@ -1228,6 +1215,16 @@ namespace Cybereum.Controllers
                     taskactivity.Wait();
                     var activitydata = taskactivity.Result;
 
+=======
+
+                    gremlinScript = "g.V().has('activity','projectid','" + project["id"] + "').order().by('startdate',incr).order().by('enddate',incr).project('id','activityname','startdate','enddate','durations','predecessors').by(id()).by(values('activityname')).by(values('startdate')).by(values('enddate')).by(values('durations')).by(values('predecessors').fold())";
+                    //gremlinScript = "g.V().has('activity','projectid','" + project["id"] + "').project('id','activityname','startdate','enddate','durations').by(id()).by(values('activityname')).by(values('startdate')).by(values('enddate')).by(values('durations'))";
+                    //var taskactivity = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
+                    //taskactivity.Wait();
+                    //var activitydata = taskactivity.Result;
+                    var activitydata = IGUtilities.ExecuteGremlinScript(gremlinScript);
+
+>>>>>>> Stashed changes
                     foreach (var itemactivity in activitydata)
                     {
                         Children objActivity = new Children();
@@ -1270,6 +1267,7 @@ namespace Cybereum.Controllers
                         foreach (string item in jArray)
                         {
                             tasks = tasks + item + ",";
+<<<<<<< Updated upstream
                         }
                         if (tasks != "") tasks = tasks.Remove(tasks.LastIndexOf(",")).ToString();
                         if (tasks.ToString() != string.Empty)
@@ -1334,6 +1332,71 @@ namespace Cybereum.Controllers
                             }
                             //objActivity.connectTo = tasks;
                         }
+=======
+                        }
+                        if (tasks != "") tasks = tasks.Remove(tasks.LastIndexOf(",")).ToString();
+                        if (tasks.ToString() != string.Empty)
+                        {
+                            string[] ints = tasks.Split(',').ToArray();
+                            connection = string.Empty;
+                            if (ints.Count() > 1)
+                            {
+                                for (int j = 0; j <= ints.Count() - 1; j++)
+                                {
+                                    //if (j == 0)
+                                    //{
+                                    //    var connector = Activity.Find(a => a.taskid == ints[j]);
+                                    //    if (connector != null)
+                                    //    {
+                                    //        objActivity.connectTo = connector.id;
+                                    //        objActivity.connecterType = "start - finish";
+                                    //    }
+                                    //}
+                                    //else
+                                    //{
+                                    //    var connector = Activity.Find(a => a.taskid == ints[j]);
+                                    //    if (connector != null)
+                                    //    {
+                                    //        var student = connector;
+                                    //        if (student != null)
+                                    //        {
+                                    //            if (student.connectTo == null)
+                                    //            {
+                                    //                student.connectTo = objActivity.id;
+                                    //                student.connecterType = "Finish - Start";
+                                    //            }
+                                    //        }
+                                    //    }
+                                    //}
+
+                                    var connector = Activity.Find(a => a.taskid == ints[j]);
+                                    chartconnector conn = new chartconnector();
+                                    if (connector != null)
+                                    {
+                                        conn.connectTo = connector.id;
+                                        conn.connectorType = "finish - start";
+                                    }
+                                    //  connector: [
+                                    //  { connectTo: "1_5", connectorType: "start-finish"},
+                                    //  { connectTo: "1_1", connectorType: "finish-finish"},
+                                    //  { connectTo: "1_3", connectorType: "finish-finish"},
+                                    //  { connectTo: "1_4", connectorType: "start-start"}
+                                    //],
+                                    chartconnector.Add(conn);
+                                }
+                                objActivity.connector = chartconnector;
+                            }
+                            else
+                            {
+                                var connector = Activity.Find(a => a.taskid == ints[0]);
+                                if (connector != null)
+                                {
+                                    objActivity.connectTo = connector.id;
+                                    objActivity.connecterType = "start - finish";
+                                }
+                            }
+                        }
+>>>>>>> Stashed changes
                         else
                         {
                             //objActivity.connectTo = i.ToString();
@@ -1446,14 +1509,39 @@ namespace Cybereum.Controllers
                     }
                     //foreach (Children objactivity in Activity)
                     //{
+<<<<<<< Updated upstream
                     //    if (objactivity.connectTo == null )
                     //    {
 
                     //    }
                     //}
+=======
+                    //    //gremlinScript = $"g.V().has('activity', 'id', '{objactivity.taskid}').in('precedes').project('id').by(id)";
+                    //    gremlinScript = $"g.V().has('activity', 'predecessors', '{objactivity.taskid}').project('id').by(id)";
+                    //    var activitylist = IGUtilities.ExecuteGremlinScript(gremlinScript);
+                    //    if (activitylist.Count > 0)
+                    //    {
+                    //        chartconnector = new List<chartconnector>();
+                    //        foreach (var item in activitylist)
+                    //        {
+                    //            chartconnector conn = new chartconnector();
+                    //            var connector = Activity.Find(a => a.taskid == item["id"]);
+                    //            if (connector != null)
+                    //            {
+                    //                conn.connectTo = connector.id;
+                    //                conn.connectorType = "finish - start";
+                    //            }
+                    //            chartconnector.Add(conn);
+                    //        }
+                    //        objactivity.connector = chartconnector;
+                    //    }
+                    //}
+
+>>>>>>> Stashed changes
 
                     if (activitydata.Count > 0)
                     {
+                        Activity = Activity.OrderBy(a => a.actualStart).ThenBy(a => a.actualEnd).ToList();
                         ganttchart.children = Activity;
                     }
                     ganttchartmodellist.Add(ganttchart);

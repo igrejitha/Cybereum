@@ -938,6 +938,10 @@ using System.IO;
 using Gremlin.Net.Structure.IO.GraphSON;
 using Newtonsoft.Json.Linq;
 using Cybereum.Services;
+<<<<<<< Updated upstream
+=======
+using System.Configuration;
+>>>>>>> Stashed changes
 //using QuickGraph;
 
 namespace Cybereum.Controllers
@@ -945,6 +949,7 @@ namespace Cybereum.Controllers
     public class ProjectController : Controller
     {
         private cybereumEntities db = new cybereumEntities();
+<<<<<<< Updated upstream
 
         //private const string hostname = "gremtest1.gremlin.cosmos.azure.com";
         //private const int port = 443;
@@ -962,6 +967,9 @@ namespace Cybereum.Controllers
 
         //string containerLink = "/dbs/" + database + "/colls/" + collection;
 
+=======
+        
+>>>>>>> Stashed changes
         [Authorize]
         [SessionTimeout]
         // GET: Project
@@ -984,6 +992,7 @@ namespace Cybereum.Controllers
             Project project = new Project();
             try
             {
+<<<<<<< Updated upstream
                 //var gremlinServer = new GremlinServer(hostname, port, enableSsl: true, username: "/dbs/" + HttpUtility.UrlEncode(database) + "/colls/" + HttpUtility.UrlEncode(collection), password: authKey);
                 //using (var gremlinClient = new GremlinClient(
                 //    gremlinServer,
@@ -992,14 +1001,20 @@ namespace Cybereum.Controllers
                 //    GremlinClient.GraphSON2MimeType,
                 //    connectionPoolSettings))
                 //{
+=======
+                
+>>>>>>> Stashed changes
                 var gremlinScript = "g.V().has('id','" + id + "').project('id','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon','projectmembers','projectstatus','projecttype').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('projectmembers').fold()).by(values('projectstatus')).by(values('projecttype'))";
                 //var gremlinScript = "g.V().has('id','" + id + "').project('id','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon','projectmembers').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('projectmembers'))";
                 try
                 {
+<<<<<<< Updated upstream
                     //var results = await gremlinClient.SubmitAsync<dynamic>(gremlinScript).ConfigureAwait(false);
                     //var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
                     //task.Wait();
                     //var results = task.Result;
+=======
+>>>>>>> Stashed changes
                     var results = IGUtilities.ExecuteGremlinScript(gremlinScript);
 
                     foreach (var result in results)
@@ -1054,6 +1069,7 @@ namespace Cybereum.Controllers
         {
             List<Project> projectlist = new List<Project>();
             try
+<<<<<<< Updated upstream
             {
                 //var gremlinServer = new GremlinServer(hostname, port, enableSsl: true, username: "/dbs/" + HttpUtility.UrlEncode(database) + "/colls/" + HttpUtility.UrlEncode(collection), password: authKey);
                 //using (var gremlinClient = new GremlinClient(
@@ -1063,6 +1079,9 @@ namespace Cybereum.Controllers
                 //    GremlinClient.GraphSON2MimeType,
                 //    connectionPoolSettings))
                 //{
+=======
+            {                
+>>>>>>> Stashed changes
                 int pmuserid = Convert.ToInt16(Session["LoggedInUserId"]);
                 var gremlinScript = "g.V().hasLabel('project').project('projectid','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon'))";
                 if (Convert.ToInt32(Session["RoleID"]) == (int)Role.ProjectManager)
@@ -1078,6 +1097,7 @@ namespace Cybereum.Controllers
 
                     string pList = JsonConvert.SerializeObject(results);
                     projectlist = JsonConvert.DeserializeObject<List<Project>>(pList);
+<<<<<<< Updated upstream
 
                     //foreach (var result in results)
                     //{
@@ -1102,6 +1122,9 @@ namespace Cybereum.Controllers
                     //    projectlist.Add(project);
                     //}
 
+=======
+                    
+>>>>>>> Stashed changes
                     foreach (var project in projectlist)
                     {
                         int userid = Convert.ToInt32(project.createdby);
@@ -1112,6 +1135,7 @@ namespace Cybereum.Controllers
                             project.createdusername = username.firstname + ' ' + username.lastname;
                         }
                     }
+<<<<<<< Updated upstream
 
                     ////projects from projectmembers
                     //if (Convert.ToInt32(Session["RoleID"]) == (int)Role.ProjectManager)
@@ -1163,6 +1187,9 @@ namespace Cybereum.Controllers
                     //    if (findresult == null)
                     //        projectlist.Add(project);
                     //}
+=======
+                    
+>>>>>>> Stashed changes
                     var projectresult = this.Json(new { data = projectlist, recordsTotal = projectlist.Count(), recordsFiltered = projectlist.Count() }, JsonRequestBehavior.AllowGet);
                     return projectresult;
                 }
@@ -1193,30 +1220,7 @@ namespace Cybereum.Controllers
             }
             return View(tbl_project);
         }
-
-        //// GET: Project/Create
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
-
-        //// POST: Project/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "projectid,projectname,startdate,enddate,createdon,modifiedon,createdby,modifiedby,projectcost,noofresource,isactive")] tbl_project tbl_project)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.tbl_project.Add(tbl_project);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    return View(tbl_project);
-        //}
-
+        
         public ActionResult Addrecord(int Id)
         {
             ViewBag.Message = "Edit Project";
@@ -1420,6 +1424,7 @@ namespace Cybereum.Controllers
                 //var objList = db.sp_FetchProjectExists(tbl_project.projectname).FirstOrDefault();
                 long count = 0;
                 if (tbl_project.projectid == null)
+<<<<<<< Updated upstream
                 {
                     //using (var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType))
                     //{
@@ -1427,6 +1432,10 @@ namespace Cybereum.Controllers
                     //var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
                     //task.Wait();
                     //var objList = task.Result;
+=======
+                {                    
+                    var gremlinScript = "g.V().has('project','projectname','" + tbl_project.projectname + "').count()";
+>>>>>>> Stashed changes
                     var objList = IGUtilities.ExecuteGremlinScript(gremlinScript);
                     count = objList.ToList()[0];
                     //}
@@ -1491,11 +1500,14 @@ namespace Cybereum.Controllers
                             $".property('type', 'project')";
 
                     // Execute the Gremlin script                    
+<<<<<<< Updated upstream
                     //using (var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType))
                     //{
                     //    var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
                     //    task.Wait();
                     //    var result = task.Result;
+=======
+>>>>>>> Stashed changes
                     var result = IGUtilities.ExecuteGremlinScript(gremlinScript);
                     message = "Added Successfully";
                     //}
@@ -1514,7 +1526,11 @@ namespace Cybereum.Controllers
                     //******************* Start Activity****************************
                     ProjectActivity tbl_activity = new ProjectActivity();
                     tbl_activity.createdby = Session["LoggedInUserId"].ToString();
+<<<<<<< Updated upstream
                     tbl_activity.activityname = "Start Activity";
+=======
+                    tbl_activity.activityname = ConfigurationManager.AppSettings["StartActivity"];//"Start Activity"
+>>>>>>> Stashed changes
                     tbl_activity.startdate = tbl_project.startdate;
                     tbl_activity.enddate = tbl_project.startdate;
                     tbl_activity.projectid = tbl_project.projectid;
@@ -1542,7 +1558,11 @@ namespace Cybereum.Controllers
                     //******************* End Activity****************************
                     tbl_activity = new ProjectActivity();
                     tbl_activity.createdby = Session["LoggedInUserId"].ToString();
+<<<<<<< Updated upstream
                     tbl_activity.activityname = "End Activity";
+=======
+                    tbl_activity.activityname = ConfigurationManager.AppSettings["EndActivity"];
+>>>>>>> Stashed changes
                     tbl_activity.startdate = tbl_project.enddate;
                     tbl_activity.enddate = tbl_project.enddate;
                     tbl_activity.projectid = tbl_project.projectid;
@@ -1570,11 +1590,14 @@ namespace Cybereum.Controllers
                 else
                 {
                     string gremlinscript = $"g.V().has('project', 'id','{ tbl_project.projectid }').properties('projectmembers').drop()";
+<<<<<<< Updated upstream
                     //using (var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType))
                     //{
                     //    var task = gremlinClient.SubmitAsync<dynamic>(gremlinscript);
                     //    task.Wait();
                     //    var result = task.Result;
+=======
+>>>>>>> Stashed changes
                     var result = IGUtilities.ExecuteGremlinScript(gremlinscript);
                     message = "Updated Successfully";
                     //}
@@ -1591,12 +1614,15 @@ namespace Cybereum.Controllers
                                                 $".property('type', 'project')";
 
 
+<<<<<<< Updated upstream
                     // Execute the Gremlin script                    
                     //using (var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType))
                     //{
                     //    var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
                     //    task.Wait();
                     //    var result = task.Result;
+=======
+>>>>>>> Stashed changes
                     var results = IGUtilities.ExecuteGremlinScript(gremlinScript);
                     message = "Updated Successfully";
                     //}
@@ -1858,19 +1884,6 @@ namespace Cybereum.Controllers
             //projects = files.ToList();
             JsonResult result = new JsonResult();
             result = this.Json(new { data = files, recordsTotal = 0, recordsFiltered = 0 }, JsonRequestBehavior.AllowGet);
-            //projects = JsonConvert.DeserializeObject<tbl_project>(result.ToString());
-            //using (var client = new DocumentClient(new Uri(hostname), authkey))
-            //{
-            //    var query = client.CreateGremlinQuery<dynamic>(database, "g.V()");
-            //    while (query.HasMoreResults)
-            //    {
-            //        foreach (dynamic result in query.ExecuteNextAsync().Result)
-            //        {
-            //            var project = JsonConvert.DeserializeObject<Project>(result.ToString());
-            //            projects.Add(project);
-            //        }
-            //    }
-            //}
             return View(chartmodel);
         }
 

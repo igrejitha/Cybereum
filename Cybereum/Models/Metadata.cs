@@ -1239,6 +1239,13 @@ namespace Cybereum.Models
         public bool ismilestone { get; set; }
         public long durations { get; set; }
         public string[] Predecessors { get; set; }
+<<<<<<< Updated upstream
+=======
+
+        [Display(Name = "Predecessors List")]
+        public System.Web.Mvc.MultiSelectList PredecessorsList { get; set; }
+
+>>>>>>> Stashed changes
         public string projectid { get; set; }
         public string projectname { get; set; }
         public string createdby { get; set; }

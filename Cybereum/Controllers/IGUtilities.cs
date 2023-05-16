@@ -1163,7 +1163,11 @@ public static class IGUtilities
     {
         DateTime[] arrayOfOrgHolidays = new DateTime[] { };//new DateTime(2023, 05, 01)
 
+<<<<<<< Updated upstream
         for (int i = 0; i < Days-1; i++)
+=======
+        for (int i = 0; i < Days - 1; i++)
+>>>>>>> Stashed changes
         {
             if (startDate.DayOfWeek != DayOfWeek.Saturday && startDate.DayOfWeek != DayOfWeek.Sunday)
             {
@@ -1171,7 +1175,11 @@ public static class IGUtilities
 
                 if (holiday != "Holiday")
                 {
+<<<<<<< Updated upstream
                     startDate = startDate.AddDays(1);
+=======
+                    startDate = startDate.AddDays(1);                    
+>>>>>>> Stashed changes
                 }
             }
             else
@@ -1181,6 +1189,17 @@ public static class IGUtilities
             }
         }
 
+<<<<<<< Updated upstream
+=======
+        if (startDate.DayOfWeek == DayOfWeek.Saturday )
+        {
+            startDate = startDate.AddDays(2);
+        }
+        else if (startDate.DayOfWeek == DayOfWeek.Sunday)
+        {
+            startDate = startDate.AddDays(1);
+        }
+>>>>>>> Stashed changes
         return startDate;
     }
 
@@ -1232,10 +1251,17 @@ public static class IGUtilities
         //var gremlinServer = new GremlinServer(gremlinvariables.hostname, gremlinvariables.port, enableSsl: true, username: "/dbs/" + gremlinvariables.database + "/colls/" + gremlinvariables.collection, password: gremlinvariables.authKey);
         //using (var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType))
         //{
+<<<<<<< Updated upstream
             var task = gremlinClient.SubmitAsync<dynamic>(script);
             task.Wait();
             var result = task.Result;
             return result;
+=======
+        var task = gremlinClient.SubmitAsync<dynamic>(script);
+        task.Wait();
+        var result = task.Result;
+        return result;
+>>>>>>> Stashed changes
         //}
     }
 }

@@ -24,11 +24,19 @@
     }
 
     #loading-image {
+<<<<<<< Updated upstream
   position: absolute;
   top: 50%;
   left: 50%;
   z-index: 100;
 }
+=======
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 100;
+    }
+>>>>>>> Stashed changes
 </style>
 
 <div class="row">
@@ -99,14 +107,22 @@
                                 @Html.CheckBoxFor(model => model.ismilestone)
 
                             </div>
+<<<<<<< Updated upstream
                             <div class="form-group col-md-6">                                
                                 @Html.Label("Predecessors", htmlAttributes: new { @class = "" })
                                 @*@Html.DropDownList("predecessors", null, htmlAttributes: new { @class = "form-control",multiple="multiple" })*@
                                 <div style="height: 300px; overflow-y: scroll;">
+=======
+                            <div class="form-group col-md-6">
+                                @Html.Label("Predecessors", htmlAttributes: new { @class = "" })
+                                @*@Html.DropDownList("predecessors", ViewBag.predecessors as SelectList, htmlAttributes: new { @class = "form-control", multiple = "multiple" })*@
+                                @*<div style="height: 300px; overflow-y: scroll;">
+>>>>>>> Stashed changes
                                     @if (ViewBag.predecessors != null)
                                     {
                                         foreach (var item in ViewBag.predecessors)
                                         {
+<<<<<<< Updated upstream
                                             <input id="@item.Value" type="checkbox" name="predecessors" value="@item.Value" checked="@item.Selected" class="checkbox" onclick="Selectitem()" />
                                             <label for="@item.Value">
                                                 @item.Text
@@ -134,6 +150,42 @@
                                             }
                                         }
                                     </div>*@
+=======
+                                            <input id="@item.Value" type="checkbox" name="Predecessors" value="@item.Value" checked="@item.Selected" class="checkbox" onclick="Selectitem()" />
+                                            <label for="@item.Value">
+                                                @item.Text
+                                            </label>
+                                                <br />
+                                        }
+                                    }
+                                </div>*@                                
+                                <div>
+                                        <select id="mypredecessors" multiple="multiple" class="form-control" name="Predecessors" onchange="GetSelectedPredecessors()">
+                                            @if (ViewBag.predecessors != null)
+                                            {
+                                                foreach (var item in ViewBag.predecessors)
+                                                {
+                                                    if (item.Text != null)
+                                                    {
+                                                        if (item.Selected == true)
+                                                        {
+                                                            <option id="@item.Value" value="@item.Value" selected="selected">
+                                                                @item.Text
+                                                            </option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option id="@item.Value" value="@item.Value">
+                                                                @item.Text
+                                                            </option>
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+
+>>>>>>> Stashed changes
                             </div>
                         </div>
                         <div class="form-group col-md-6">
@@ -156,9 +208,15 @@
                             <div class="col-6">
                                 <h4>
                                     @Html.ActionLink("Back to List", "Index", new
+<<<<<<< Updated upstream
                                {
                                    projectid = ViewBag.projectid
                                })
+=======
+                                       {
+                                           projectid = ViewBag.projectid
+                                       })
+>>>>>>> Stashed changes
                                 </h4>
                             </div>
                             <div class="col-6">
@@ -167,7 +225,11 @@
                             </div>
 
                         </div>
+<<<<<<< Updated upstream
                         @*</div>*@
+=======
+                                @*</div>*@
+>>>>>>> Stashed changes
                     }
                 </div>
             </div>
@@ -188,6 +250,7 @@
         var $element = $(this);
         var id = $element.attr('id');
         var arr = [];
+<<<<<<< Updated upstream
         $.each($("input[name='predecessors']:checked"), function () {
             arr.push($(this).val());
         });
@@ -202,6 +265,11 @@
         //            date = date.getFullYear() + '-' + month + '-' + ("0" + date.getDate()).slice(-2);
         //            $('#enddate').val(date);
         //        });
+=======
+        $.each($("input[name='Predecessors']:checked"), function () {
+            arr.push($(this).val());
+        });        
+>>>>>>> Stashed changes
         $.ajax({
             url: '/Activity/GetPredecesdate',
             data: { id: arr },
@@ -218,6 +286,39 @@
         });
 
     }
+<<<<<<< Updated upstream
+=======
+
+
+    function GetSelectedPredecessors() {
+        debugger;
+        $("#divLoader").show();
+        var arr = [];
+        $("#mypredecessors option:selected").each(function () {
+            arr.push($(this).val());
+        });
+        if (arr) {
+            $.ajax({
+                url: '/Activity/GetPredecesdate',
+                data: { id: arr },
+                traditional: true,
+                success: function (data) {
+                    debugger;
+                    $("#divLoader").hide();
+                    var date = new Date(parseInt(data.substr(6)));
+                    var month = ("0" + (date.getMonth() + 1)).slice(-2);
+                    date = date.getFullYear() + '-' + month + '-' + ("0" + date.getDate()).slice(-2);
+                    $('#startdate').val(date);
+                    $('#enddate').val(date);                    
+                }
+            });
+        }
+        else {
+            $("#divLoader").hide();
+            alert("Please select at least one predecessor");
+        };
+    }
+>>>>>>> Stashed changes
 
     $(document).ready(function () {
         debugger;
