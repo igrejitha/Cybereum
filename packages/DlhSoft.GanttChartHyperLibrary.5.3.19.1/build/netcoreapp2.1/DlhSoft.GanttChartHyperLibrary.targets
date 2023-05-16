@@ -1,0 +1,11 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+   <Target Name="CopyScriptsToWwwRoot" BeforeTargets="Build">
+      <Message Text="Copying scripts to wwwroot" />
+         <ItemGroup>
+            <SourceScripts Include="$(MSBuildThisFileDirectory)..\..\content\Scripts\**\*.js"/>
+         </ItemGroup>
+         <Copy 
+            SourceFiles="@(SourceScripts)"
+            DestinationFiles="@(SourceScripts -> '$(MSBuildProjectDirectory)\wwwroot\js\%(RecursiveDir)%(Filename)%(Extension)')" />
+   </Target>
+</Project>

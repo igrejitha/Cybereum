@@ -1,0 +1,18 @@
+05/09/2023 10:13:47 AM The underlying provider failed on Open.
+05/09/2023 10:13:47 AM System.Collections.ListDictionaryInternal
+05/09/2023 10:13:47 AM Unable to connect to any of the specified MySQL hosts.
+05/09/2023 10:13:47 AM Void Open()
+05/09/2023 11:23:43 AM Object reference not set to an instance of an object.
+05/09/2023 11:23:43 AM System.Collections.ListDictionaryInternal
+05/09/2023 11:25:36 AM Object reference not set to an instance of an object.
+05/09/2023 11:25:36 AM System.Collections.ListDictionaryInternal
+05/09/2023 11:26:39 AM Object reference not set to an instance of an object.
+05/09/2023 11:26:39 AM System.Collections.ListDictionaryInternal
+05/09/2023 12:10:37 PM The underlying provider failed on Open.
+05/09/2023 12:10:37 PM System.Collections.ListDictionaryInternal
+05/09/2023 12:10:37 PM Unable to connect to any of the specified MySQL hosts.
+05/09/2023 12:10:37 PM Void Open()
+05/09/2023 08:01:07 PM The underlying provider failed on Open.
+05/09/2023 08:01:07 PM System.Collections.ListDictionaryInternal
+05/09/2023 08:01:07 PM Unable to connect to any of the specified MySQL hosts.
+05/09/2023 08:01:07 PM Void Open()

@@ -1,5 +1,6 @@
 ﻿@*@page*@
 @*@inject Cybereum.GraphService GraphService*@
+@using Cybereum.Services;
 <html>
 <head>
     <script src="https://d3js.org/d3.v5.min.js"></script>
@@ -31,16 +32,30 @@
         }
         
       
-        //var graphService = new GraphService("gremtest1.gremlin.cosmosdb.azure.com", 443, "lja6Gkeuf5nsnEg9TYyC79N1fvt4v1ZBb9JwkbWPNiNC1tEeBOSVu8vBHQZeKnSFguIKz9ziKjVEiPAjRAuf3w==", "graphdb", "Graph7");
+        var graphService = new Cybereum.Services.GraphService("gremtest1.gremlin.cosmosdb.azure.com", 443, "lja6Gkeuf5nsnEg9TYyC79N1fvt4v1ZBb9JwkbWPNiNC1tEeBOSVu8vBHQZeKnSFguIKz9ziKjVEiPAjRAuf3w==", "graphdb", "ProjectGraph");
 
         graphService.GetGraphDataAsync().then(function (graphData) {
             generateGraph(graphData);
         });
         
-        function generateGraph(data) {
+        function GetGraphData() {
             debugger;
-            //var nodes = graphData.Nodes;
-            //var links = graphData.Links;
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("getgannchart")' ,
+                datatype: JSON,
+                data: {
+                },
+                contentType: "text/json",
+                success: function (data) {
+                    debugger;
+                    generateGraph(data);
+                }
+            });
+        }
+
+        function generateGraph(data) {
+            debugger;            
             var nodes = [];
             var links = [];
             data.forEach(function (d) {
@@ -194,6 +209,7 @@
                 .attr("d", "M0,-5L10,0L0,5");
         }
     </script>
-    <input type="file" accept=".csv" onchange="uploadFile(event)">
+    <input type="file" accept=".csv" onchange="uploadFile(event)"/>
+    <input type="submit" name="btnSubmit" value="Save" class="btn btn" style="background-color: #0D2136; color: white;" onclick="GetGraphData()"/>    
     </body>
 </html>
