@@ -1240,11 +1240,17 @@ namespace Cybereum.Models
         public long durations { get; set; }
         public string[] Predecessors { get; set; }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
 
         [Display(Name = "Predecessors List")]
         public System.Web.Mvc.MultiSelectList PredecessorsList { get; set; }
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         public string projectid { get; set; }
         public string projectname { get; set; }

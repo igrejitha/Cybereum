@@ -1164,7 +1164,11 @@ public static class IGUtilities
         DateTime[] arrayOfOrgHolidays = new DateTime[] { };//new DateTime(2023, 05, 01)
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         for (int i = 0; i < Days-1; i++)
+=======
+        for (int i = 0; i < Days - 1; i++)
+>>>>>>> Stashed changes
 =======
         for (int i = 0; i < Days - 1; i++)
 >>>>>>> Stashed changes
@@ -1176,7 +1180,11 @@ public static class IGUtilities
                 if (holiday != "Holiday")
                 {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                     startDate = startDate.AddDays(1);
+=======
+                    startDate = startDate.AddDays(1);                    
+>>>>>>> Stashed changes
 =======
                     startDate = startDate.AddDays(1);                    
 >>>>>>> Stashed changes
@@ -1190,7 +1198,10 @@ public static class IGUtilities
         }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
         if (startDate.DayOfWeek == DayOfWeek.Saturday )
         {
             startDate = startDate.AddDays(2);
@@ -1199,6 +1210,9 @@ public static class IGUtilities
         {
             startDate = startDate.AddDays(1);
         }
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         return startDate;
     }
@@ -1252,15 +1266,21 @@ public static class IGUtilities
         //using (var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType))
         //{
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             var task = gremlinClient.SubmitAsync<dynamic>(script);
             task.Wait();
             var result = task.Result;
             return result;
 =======
+=======
+>>>>>>> Stashed changes
         var task = gremlinClient.SubmitAsync<dynamic>(script);
         task.Wait();
         var result = task.Result;
         return result;
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         //}
     }

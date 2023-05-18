@@ -923,6 +923,7 @@ namespace Cybereum.Controllers
                 Session["ProjectId"] = projectid;
             }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 
             //var gremlinScript = "g.V().has('activity','projectid','" + projectid + "').order().by('enddate',decr).limit(1).project('startdate','enddate').by(values('startdate')).by(values('enddate'))";
@@ -950,6 +951,9 @@ namespace Cybereum.Controllers
             return View(Activity);
             //List<GanttChartItem> items = getgannchartNew(projectid);
             //return View(model:items);
+=======
+            return View(Activity);
+>>>>>>> Stashed changes
 =======
             return View(Activity);
 >>>>>>> Stashed changes
@@ -1208,6 +1212,7 @@ namespace Cybereum.Controllers
                     List<Children> Activity = new List<Children>();
                     List<chartconnector> chartconnector = new List<chartconnector>();
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
                     gremlinScript = "g.V().has('activity','projectid','" + project["id"] + "').order().by('startdate',incr).order().by('enddate',incr).project('id','activityname','startdate','enddate','durations','predecessors').by(id()).by(values('activityname')).by(values('startdate')).by(values('enddate')).by(values('durations')).by(values('predecessors').fold())";
                     //gremlinScript = "g.V().has('activity','projectid','" + project["id"] + "').project('id','activityname','startdate','enddate','durations').by(id()).by(values('activityname')).by(values('startdate')).by(values('enddate')).by(values('durations'))";
@@ -1225,8 +1230,20 @@ namespace Cybereum.Controllers
                     var activitydata = IGUtilities.ExecuteGremlinScript(gremlinScript);
 
 >>>>>>> Stashed changes
+=======
+
+                    gremlinScript = "g.V().has('activity','projectid','" + project["id"] + "').order().by('startdate',incr).order().by('enddate',incr).project('id','activityname','startdate','enddate','durations','predecessors').by(id()).by(values('activityname')).by(values('startdate')).by(values('enddate')).by(values('durations')).by(values('predecessors').fold())";
+                    //gremlinScript = "g.V().has('activity','projectid','" + project["id"] + "').project('id','activityname','startdate','enddate','durations').by(id()).by(values('activityname')).by(values('startdate')).by(values('enddate')).by(values('durations'))";
+                    //var taskactivity = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
+                    //taskactivity.Wait();
+                    //var activitydata = taskactivity.Result;
+                    var activitydata = IGUtilities.ExecuteGremlinScript(gremlinScript);
+
+                    int activityindex = 0;
+>>>>>>> Stashed changes
                     foreach (var itemactivity in activitydata)
                     {
+                        activityindex++;
                         Children objActivity = new Children();
                         objActivity.id = i.ToString();
                         i++;
@@ -1268,6 +1285,9 @@ namespace Cybereum.Controllers
                         {
                             tasks = tasks + item + ",";
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
                         }
                         if (tasks != "") tasks = tasks.Remove(tasks.LastIndexOf(",")).ToString();
                         if (tasks.ToString() != string.Empty)
@@ -1278,6 +1298,7 @@ namespace Cybereum.Controllers
                             {
                                 for (int j = 0; j <= ints.Count() - 1; j++)
                                 {
+<<<<<<< Updated upstream
                                     //if (j == 0)
                                     //{
                                     //    var connector = Activity.Find(a => a.taskid == ints[j]);
@@ -1304,19 +1325,29 @@ namespace Cybereum.Controllers
                                     //    }
                                     //}
 
+=======
+>>>>>>> Stashed changes
                                     var connector = Activity.Find(a => a.taskid == ints[j]);
                                     chartconnector conn = new chartconnector();
                                     if (connector != null)
                                     {
                                         conn.connectTo = connector.id;
+<<<<<<< Updated upstream
                                         conn.connectorType = "finish - start";
+=======
+                                        conn.connectorType = "start-finish";
+>>>>>>> Stashed changes
                                     }
                                     //  connector: [
                                     //  { connectTo: "1_5", connectorType: "start-finish"},
                                     //  { connectTo: "1_1", connectorType: "finish-finish"},
                                     //  { connectTo: "1_3", connectorType: "finish-finish"},
                                     //  { connectTo: "1_4", connectorType: "start-start"}
+<<<<<<< Updated upstream
                                     //],  
+=======
+                                    //],
+>>>>>>> Stashed changes
                                     chartconnector.Add(conn);
                                 }
                                 objActivity.connector = chartconnector;
@@ -1327,6 +1358,7 @@ namespace Cybereum.Controllers
                                 if (connector != null)
                                 {
                                     objActivity.connectTo = connector.id;
+<<<<<<< Updated upstream
                                     objActivity.connecterType = "start - finish";
                                 }
                             }
@@ -1397,12 +1429,23 @@ namespace Cybereum.Controllers
                             }
                         }
 >>>>>>> Stashed changes
+=======
+                                    objActivity.connecterType = "start-finish";
+                                }
+                            }
+                        }
+>>>>>>> Stashed changes
                         else
                         {
                             //objActivity.connectTo = i.ToString();
                             //objActivity.connecterType = "start - finish";
+<<<<<<< Updated upstream
                         }
 
+=======
+                        }                                                
+                        
+>>>>>>> Stashed changes
                         //if (ganttchart.name != "FPSO-3")
                         //{
                         //    List<Children> Task = new List<Children>();
@@ -1510,12 +1553,15 @@ namespace Cybereum.Controllers
                     //foreach (Children objactivity in Activity)
                     //{
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                     //    if (objactivity.connectTo == null )
                     //    {
 
                     //    }
                     //}
 =======
+=======
+>>>>>>> Stashed changes
                     //    //gremlinScript = $"g.V().has('activity', 'id', '{objactivity.taskid}').in('precedes').project('id').by(id)";
                     //    gremlinScript = $"g.V().has('activity', 'predecessors', '{objactivity.taskid}').project('id').by(id)";
                     //    var activitylist = IGUtilities.ExecuteGremlinScript(gremlinScript);
@@ -1537,11 +1583,22 @@ namespace Cybereum.Controllers
                     //    }
                     //}
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
                     if (activitydata.Count > 0)
                     {
                         Activity = Activity.OrderBy(a => a.actualStart).ThenBy(a => a.actualEnd).ToList();
+<<<<<<< Updated upstream
+=======
+
+                        var item = Activity[Activity.Count - 2];
+                        Activity.LastOrDefault().connectTo = item.id.ToString();
+                        Activity.LastOrDefault().connecterType = "Finish-start";
+
+>>>>>>> Stashed changes
                         ganttchart.children = Activity;
                     }
                     ganttchartmodellist.Add(ganttchart);
