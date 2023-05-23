@@ -2,11 +2,14 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
 @*@using DlhSoft.Web.Mvc;*@
 >>>>>>> Stashed changes
 =======
 @*@using DlhSoft.Web.Mvc;*@
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -15,6 +18,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 @*<html>
     <head>*@
@@ -36,6 +40,16 @@
 <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-gantt.min.js" type="text/javascript"></script>
 
 >>>>>>> Stashed changes
+=======
+
+@*<script src="https://cdn.anychart.com/releases/8.6.0/js/anychart-core.min.js"> </script>
+  <script src="https://cdn.anychart.com/releases/8.6.0/js/anychart-gantt.min.js"></script>*@
+<script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-core.min.js" type="text/javascript"></script>
+  <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-gantt.min.js" type="text/javascript"></script>
+@*<script src="~/js/anychart-gantt.min.js" type="text/javascript"></script>
+<script src="~/js/anychart-core.min.js" type="text/javascript"></script>*@
+
+>>>>>>> Stashed changes
 <div class="form-horizontal">
     <h4>GANTT Chart</h4>
     <hr />
@@ -45,6 +59,7 @@
 </div>
 <div id="container" style="height:450px"> </div>
 <br />
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -213,12 +228,13 @@
 @*<div>
         @{Html.RenderAction("Create", "Activity",new { projectid=@ViewBag.projectid });}
     </div>*@
+=======
+
+>>>>>>> Stashed changes
 @Scripts.Render("~/bundles/jquery")
 <script type="text/javascript">
     $(document).ajaxSend(function () {
-        //$("#overlay").fadeIn(300);
     });
-
 
     $(document).ready(function () {
         debugger;
@@ -256,6 +272,7 @@
                 }
             });
         });
+        
     });
 </script>
 <script>
@@ -285,16 +302,14 @@
                 header.level(0).format("{%tickValue}{dateTimeFormat:dd MMM}");
                 header.level(1).format("{%value}");
                 header.level(2).format("{%value}-{%endValue}");                
+<<<<<<< Updated upstream
 
+=======
+                
+>>>>>>> Stashed changes
                 // disable the first data grid column
                 chart.dataGrid().column(0).enabled(false);
                 chart.dataGrid().column(1).width(300);
-
-                //var header = chart.getTimeline().header();
-                //header.level(0).format(function () {
-                //    var duration = (this.end - this.tickValue) / 1000 / 3600 / 24;
-                //    return this.value + ": " + duration + " days"
-                //});
 
                 // set the data
                 chart.data(treeData);
@@ -317,8 +332,11 @@
                 minDate.setDate(minDate.getDate() - 5);
                 var maxDate = new Date(max.actualEnd);
                 maxDate.setDate(maxDate.getDate() + 5);
+<<<<<<< Updated upstream
                 //chart.getTimeline().scale().minimum("2023-05-01");
                 //chart.getTimeline().scale().maximum("2023-06-30");
+=======
+>>>>>>> Stashed changes
                 chart.getTimeline().scale().minimum(minDate);
                 chart.getTimeline().scale().maximum(maxDate);
 
@@ -331,6 +349,7 @@
                 // fit elements to the width of the timeline
                 chart.fitAll();
                 //chart.fitToTask("1");
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
                 //chart.zoomTo("week", 2, "first-date");
@@ -383,6 +402,10 @@
                 //});
                 
 >>>>>>> Stashed changes
+=======
+                //chart.zoomIn();               
+                
+>>>>>>> Stashed changes
                 /* listen to the rowClick event
                     and update the chart title */
                 var timer = null
@@ -394,6 +417,11 @@
                         var roleid = @Session["RoleId"];
                         var taskid = e.item.get("taskid");
                         var projectid = "@ViewBag.projectid";
+<<<<<<< Updated upstream
+=======
+                        if (projectid === taskid) 
+                            return false;
+>>>>>>> Stashed changes
                         var link = '@Html.Raw(@Url.Action("Addrecord", "Activity", new { id = "id"}))'.replace('id', taskid);
                         if (roleid === 2) {
                             window.open(link, '_blank');
@@ -402,6 +430,9 @@
                     }, 300)
                 });
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -412,6 +443,9 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======
@@ -421,6 +455,7 @@
                     var roleid = @Session["RoleId"];
                     var taskid = e.item.get("taskid");
                     var projectid = "@ViewBag.projectid";
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
                     var link = '@Html.Raw(@Url.Action("Create", "Activity", new { projectid = "rowid", activityid = "taskid"}))'.replace('rowid', projectid).replace('taskid', taskid);                    
@@ -475,6 +510,17 @@
                 //    debugger;                    
                 //    var taskid = e.item.get("taskid");
                 //});
+=======
+                    if (projectid === taskid) 
+                        return false;
+                    var link = '@Html.Raw(@Url.Action("Create", "Activity", new { projectid = "rowid", activityid = "taskid"}))'.replace('rowid', projectid).replace('taskid', taskid);
+                    if (roleid === 2) {
+                        window.open(link, '_blank');
+                    }
+                    return false;
+                });
+                    
+>>>>>>> Stashed changes
             }
         });
 

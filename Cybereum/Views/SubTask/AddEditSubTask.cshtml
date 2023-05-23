@@ -23,71 +23,55 @@
                     {
                         @Html.AntiForgeryToken()
 
-                        @*<div class="form-horizontal">
-                            <hr />*@
                         <span class="text-danger" style="align-items:center;">
                             @ViewBag.Message
                             @Html.HiddenFor(model => model.subtaskid, htmlAttributes: new { @class = "control-label col-md-2" })
                             @Html.HiddenFor(model => model.taskid)
                             @Html.HiddenFor(model => model.taskname)
                             @Html.HiddenFor(model => model.createdby)
-                            @Html.HiddenFor(model => model.createdon)                            
+                            @Html.HiddenFor(model => model.createdon)
                         </span>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 @Html.LabelFor(model => model.subtaskname, "Sub-Task Name", htmlAttributes: new { @class = "" })
                                 @*<div class="col-md-10">*@
-                                    @Html.EditorFor(model => model.subtaskname, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                                    @Html.ValidationMessageFor(model => model.subtaskname, "", new { @class = "text-danger" })
+                                @Html.EditorFor(model => model.subtaskname, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                                @Html.ValidationMessageFor(model => model.subtaskname, "", new { @class = "text-danger" })
                                 @*</div>*@
                             </div>
                             <div class="form-group col-md-6">
                                 @Html.LabelFor(model => model.startdate, "Start Date", htmlAttributes: new { @class = "" })
-                                @*<div class="col-md-10">*@
-                                    @*@Html.EditorFor(model => model.startdate, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })*@
-                                    @*@Html.TextBoxFor(model => model.startdate, "{0:MM/dd/yyyy}", new { @class = "form-control mb-2 mr-sm-2 datepicker", @type = "date", @placeholder = "MM/dd/yyyy", autocomplete = "off" })*@
-                                    @Html.TextBoxFor(model => model.startdate, new { @type = "date", @class = "form-control datepicker", @Value = Model.startdate.ToString("yyyy-MM-dd") })
-                                    @Html.ValidationMessageFor(model => model.startdate, "", new { @class = "text-danger" })
-                                @*</div>*@
+                                @Html.TextBoxFor(model => model.startdate, new { @type = "date", @class = "form-control datepicker", @Value = Model.startdate.ToString("yyyy-MM-dd") })
+                                @Html.ValidationMessageFor(model => model.startdate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(model => model.enddate, "End Date", htmlAttributes: new { @class = "" })
+                                @Html.TextBoxFor(model => model.enddate, new { @type = "date", @class = "form-control datepicker", @Value = Model.enddate.ToString("yyyy-MM-dd") })
+                                @Html.ValidationMessageFor(model => model.enddate, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(model => model.taskstatus, "Status", htmlAttributes: new { @class = "" })
+                                @Html.DropDownList("taskstatus", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.taskstatus, "", new { @class = "text-danger" })
                             </div>
                         </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    @Html.LabelFor(model => model.enddate, "End Date", htmlAttributes: new { @class = "" })
-                                    @*<div class="col-md-10">*@
-                                        @*@Html.EditorFor(model => model.enddate, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })*@
-                                        @Html.TextBoxFor(model => model.enddate, new { @type = "date", @class = "form-control datepicker", @Value = Model.enddate.ToString("yyyy-MM-dd") })
-                                        @Html.ValidationMessageFor(model => model.enddate, "", new { @class = "text-danger" })
-                                    @*</div>*@
+                                    @Html.LabelFor(model => model.tasktype, "Task Type", htmlAttributes: new { @class = "" })
+                                    @Html.DropDownList("tasktype", null, htmlAttributes: new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.tasktype, "", new { @class = "text-danger" })
                                 </div>
-                                <div class="form-group col-md-6">
-                                    @Html.LabelFor(model => model.taskstatus,"Status", htmlAttributes: new { @class = "" })
-                                    @*<div class="col-md-10">*@
-                                        @Html.DropDownList("taskstatus", null, htmlAttributes: new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(model => model.taskstatus, "", new { @class = "text-danger" })
-                                    @*</div>*@
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    @Html.LabelFor(model => model.tasktype,"Task Type", htmlAttributes: new { @class = "" })
-                                    @*<div class="col-md-10">*@
-                                        @Html.DropDownList("tasktype", null, htmlAttributes: new { @class = "form-control" })
-                                        @Html.ValidationMessageFor(model => model.tasktype, "", new { @class = "text-danger" })
-                                    @*</div>*@
-                                </div>                                
                                 <div class="form-group col-md-6">
                                     @Html.LabelFor(model => model.assignedto, "Assigned To", htmlAttributes: new { @class = "" })
-                                    @*<div class="col-md-10">*@
                                     @Html.DropDownList("assignedto", null, htmlAttributes: new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.assignedto, "", new { @class = "text-danger" })
-                                    @*</div>*@
                                 </div>
                             </div>
-                            
+
                             <div class="row" style="padding-top: 30px;">
-                                <div class="col-6">
-                                    @*<a href="@Url.Action("ApprovedUsers", "User")"><h4>Back To List</h4></a>*@
+                                <div class="col-6">                                    
                                     <h4>
                                         @Html.ActionLink("Back to List", "List", new
                                    {
@@ -97,7 +81,6 @@
                                     </h4>
                                 </div>
                                 <div class="col-6">
-                                    @*<button type="button" class="btn btn" style="background-color: #0D2136; color: white;" data-dismiss="modal" onclick="history.go(-1); return false;">Close</button>*@
                                     <input type="submit" name="btnSubmit" value="Save" class="btn btn" style="background-color: #0D2136; color: white;" />
                                 </div>
 
@@ -161,6 +144,6 @@
                 $(".chkCheckBoxId").prop("checked", false)
             }
         });
-        
+
     });
 </script>

@@ -783,6 +783,7 @@ namespace Cybereum.Controllers
                                 where p.emailverification == true && p.isactive == 0 && p.roleid != 1
                                 select p.userid).Count();
 
+<<<<<<< Updated upstream
             //var gremlinServer = new GremlinServer(gremlinvariables.hostname, gremlinvariables.port, enableSsl: true, username: "/dbs/" + HttpUtility.UrlEncode(gremlinvariables.database) + "/colls/" + HttpUtility.UrlEncode(gremlinvariables.collection), password: gremlinvariables.authKey);
             //using (var gremlinClient = new GremlinClient(
             //    gremlinServer,
@@ -797,6 +798,12 @@ namespace Cybereum.Controllers
                 //var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
                 //task.Wait();
                 //var results = task.Result;
+=======
+            
+            var gremlinScript = "g.V().hasLabel('project').count()";
+            try
+            {
+>>>>>>> Stashed changes
                 var results = IGUtilities.ExecuteGremlinScript(gremlinScript);
                 projectcount = results.ToList()[0];
             }
@@ -804,7 +811,11 @@ namespace Cybereum.Controllers
             {
                 throw ex;
             }
+<<<<<<< Updated upstream
             //}
+=======
+            
+>>>>>>> Stashed changes
             ViewBag.countApproved = countapproved;
             ViewBag.countPending = countpending;
             ViewBag.countProject = projectcount;
@@ -822,11 +833,10 @@ namespace Cybereum.Controllers
                              where p.emailverification == true && p.isactive == 1 && p.pmuserid == pmuserid && p.roleid == 3
                              select p.userid).Count();
 
-            //var countProject = (from p in entities.tbl_project
-            //                    where p.isactive == 1 && p.createdby == pmuserid
-            //                    select p.projectid).Count();
+            
             long projectcount = 0;
             long taskcount = 0;
+<<<<<<< Updated upstream
             //var gremlinServer = new GremlinServer(gremlinvariables.hostname, gremlinvariables.port, enableSsl: true, username: "/dbs/" + HttpUtility.UrlEncode(gremlinvariables.database) + "/colls/" + HttpUtility.UrlEncode(gremlinvariables.collection), password: gremlinvariables.authKey);
             //using (var gremlinClient = new GremlinClient(
             //    gremlinServer,
@@ -841,6 +851,11 @@ namespace Cybereum.Controllers
                 //var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
                 //task.Wait();
                 //var results = task.Result;
+=======
+            var gremlinScript = "g.V().has('project','createdby','" + pmuserid + "').or().has('project','projectmembers','" + pmuserid + "')";
+            try
+            {
+>>>>>>> Stashed changes
                 var results = IGUtilities.ExecuteGremlinScript(gremlinScript);
                 projectcount = results.Count();
             }
@@ -922,6 +937,7 @@ namespace Cybereum.Controllers
                 ViewBag.projectid = projectid;
                 Session["ProjectId"] = projectid;
             }
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 
@@ -1153,7 +1169,11 @@ namespace Cybereum.Controllers
                 Console.Write(ex);
                 return null;
             }
+=======
+            return View(Activity);
+>>>>>>> Stashed changes
         }
+        
 
         public JsonResult getgannchart(string projectid)
         {
@@ -1163,12 +1183,16 @@ namespace Cybereum.Controllers
                 DateTime enddate;
                 string connection = string.Empty;
 
+<<<<<<< Updated upstream
                 //var gremlinServer = new GremlinServer(gremlinvariables.hostname, gremlinvariables.port, enableSsl: true, username: gremlinvariables.containerLink, password: gremlinvariables.authKey);
                 //var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType, gremlinvariables.connectionPoolSettings);
                 var gremlinScript = "g.V().has('project','id','" + projectid + "').project('id','projectname','startdate','enddate').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate'))";
                 //var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
                 //task.Wait();
                 //var projectdata = task.Result;
+=======
+                var gremlinScript = "g.V().has('project','id','" + projectid + "').project('id','projectname','startdate','enddate').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate'))";
+>>>>>>> Stashed changes
                 var projectdata = IGUtilities.ExecuteGremlinScript(gremlinScript);
 
                 List<ganttchartmodel> ganttchartmodellist = new List<ganttchartmodel>();
@@ -1206,11 +1230,10 @@ namespace Cybereum.Controllers
                     //ganttchart.progressValue = duration + "%";
                     ganttchart.actualStart = startdate.ToString("yyyy-MM-dd");
                     ganttchart.actualEnd = enddate.ToString("yyyy-MM-dd");
-                    //ganttchart.connectTo = i.ToString();
-                    //ganttchart.connecterType = "finish - start";
-
+                    
                     List<Children> Activity = new List<Children>();
                     List<chartconnector> chartconnector = new List<chartconnector>();
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 
@@ -1242,18 +1265,31 @@ namespace Cybereum.Controllers
                     int activityindex = 0;
 >>>>>>> Stashed changes
                     foreach (var itemactivity in activitydata)
+=======
+
+                    gremlinScript = "g.V().has('activity','projectid','" + project["id"] + "').order().by('startdate',incr).order().by('enddate',incr).project('id','activityname','startdate','enddate','durations','predecessors').by(id()).by(values('activityname')).by(values('startdate')).by(values('enddate')).by(values('durations')).by(values('predecessors').fold())";
+                    var activitydata = IGUtilities.ExecuteGremlinScript(gremlinScript);
+                    string pList = JsonConvert.SerializeObject(activitydata);
+                    List<ProjectActivity> Activitylist = JsonConvert.DeserializeObject<List<ProjectActivity>>(pList);
+                    Activitylist = Activitylist.OrderBy(a => a.startdate).ThenBy(a => a.enddate).ToList();
+                    int activityindex = 0;
+                    foreach (var itemactivity in Activitylist)
+>>>>>>> Stashed changes
                     {
                         activityindex++;
                         Children objActivity = new Children();
                         objActivity.id = i.ToString();
                         i++;
-                        objActivity.taskid = itemactivity["id"].ToString();
-                        objActivity.name = itemactivity["activityname"].ToString();
+                        objActivity.taskid = itemactivity.id.ToString();
+                        objActivity.name = itemactivity.activityname;//itemactivity["activityname"].ToString();
 
-                        startdate = Convert.ToDateTime(itemactivity["startdate"].ToString());
-                        enddate = Convert.ToDateTime(itemactivity["enddate"].ToString());
+                        startdate = itemactivity.startdate;
+                        enddate = itemactivity.enddate;
 
+<<<<<<< Updated upstream
                         //duration = itemactivity["durations"].ToString();
+=======
+>>>>>>> Stashed changes
                         if (DateTime.Now.Date < startdate.Date)
                         {
                             duration = 0;
@@ -1269,15 +1305,23 @@ namespace Cybereum.Controllers
                             if (dt2 != 0)
                                 duration = Convert.ToInt64((dt1 / dt2) * 100);
                         }
+<<<<<<< Updated upstream
                         //duration = IGUtilities.CalculateDays(startdate.Date, enddate.Date) * 8;
+=======
+>>>>>>> Stashed changes
                         //objActivity.progressValue = duration + "%";
 
                         objActivity.actualStart = startdate.ToString("yyyy-MM-dd");
                         objActivity.actualEnd = enddate.ToString("yyyy-MM-dd");
+<<<<<<< Updated upstream
                         //objActivity.connectTo = i.ToString();
                         //objActivity.connecterType = "start - finish";
 
                         var predecessors = itemactivity["predecessors"];
+=======
+                        
+                        var predecessors = itemactivity.Predecessors;
+>>>>>>> Stashed changes
                         var stringlist = JsonConvert.SerializeObject(predecessors);
                         var jArray = JArray.Parse(stringlist);
                         string tasks = string.Empty;
@@ -1286,6 +1330,9 @@ namespace Cybereum.Controllers
                             tasks = tasks + item + ",";
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
                         }
@@ -1298,6 +1345,7 @@ namespace Cybereum.Controllers
                             {
                                 for (int j = 0; j <= ints.Count() - 1; j++)
                                 {
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
                                     //if (j == 0)
                                     //{
@@ -1327,11 +1375,14 @@ namespace Cybereum.Controllers
 
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
                                     var connector = Activity.Find(a => a.taskid == ints[j]);
                                     chartconnector conn = new chartconnector();
                                     if (connector != null)
                                     {
                                         conn.connectTo = connector.id;
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
                                         conn.connectorType = "finish - start";
 =======
@@ -1348,6 +1399,10 @@ namespace Cybereum.Controllers
 =======
                                     //],
 >>>>>>> Stashed changes
+=======
+                                        conn.connectorType = "start-finish";
+                                    }                                    
+>>>>>>> Stashed changes
                                     chartconnector.Add(conn);
                                 }
                                 objActivity.connector = chartconnector;
@@ -1358,6 +1413,7 @@ namespace Cybereum.Controllers
                                 if (connector != null)
                                 {
                                     objActivity.connectTo = connector.id;
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
                                     objActivity.connecterType = "start - finish";
                                 }
@@ -1443,6 +1499,18 @@ namespace Cybereum.Controllers
                         }
 
 =======
+                        }                                                
+                        
+>>>>>>> Stashed changes
+=======
+                                    objActivity.connecterType = "start-finish";
+                                }
+                            }
+                        }
+                        else
+                        {
+                            //objActivity.connectTo = (i-2).ToString();
+                            //objActivity.connecterType = "start - finish";
                         }                                                
                         
 >>>>>>> Stashed changes
@@ -1590,6 +1658,7 @@ namespace Cybereum.Controllers
 
                     if (activitydata.Count > 0)
                     {
+<<<<<<< Updated upstream
                         Activity = Activity.OrderBy(a => a.actualStart).ThenBy(a => a.actualEnd).ToList();
 <<<<<<< Updated upstream
 =======
@@ -1597,6 +1666,12 @@ namespace Cybereum.Controllers
                         var item = Activity[Activity.Count - 2];
                         Activity.LastOrDefault().connectTo = item.id.ToString();
                         Activity.LastOrDefault().connecterType = "Finish-start";
+
+>>>>>>> Stashed changes
+=======
+                        var item = Activity[Activity.Count - 2];
+                        Activity.LastOrDefault().connectTo = item.id.ToString();
+                        Activity.LastOrDefault().connecterType = "finish-start";
 
 >>>>>>> Stashed changes
                         ganttchart.children = Activity;
@@ -1613,6 +1688,7 @@ namespace Cybereum.Controllers
                 Console.Write(ex);
                 return null;
             }
+<<<<<<< Updated upstream
         }
 
         public JsonResult getgannchartvalue(int? projectid)
@@ -1731,6 +1807,9 @@ namespace Cybereum.Controllers
         //        MaxJsonLength = Int32.MaxValue
         //    };
         //}
+=======
+        }        
+>>>>>>> Stashed changes
     }
 >>>>>>> Stashed changes
 }

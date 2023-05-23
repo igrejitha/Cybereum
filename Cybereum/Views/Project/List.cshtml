@@ -40,16 +40,6 @@
         </div>
     </div>
 </div>
-@*<div id="msg">
-
-    </div>*@
-@*<div class="modal fade" id="msg" role="dialog" aria-labelledby="clientModal" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content" id="clientmodalbody">
-
-            </div>
-        </div>
-    </div>*@
 
 @Scripts.Render("~/bundles/jquery")
 <script type="text/javascript">
@@ -121,8 +111,6 @@
                         }
                     }
                 },
-                //{ 'data': 'projectcost', 'name': 'Cost' },
-                //{ 'data': 'noofresource', 'name': 'No of Resource' },
                 { 'data': 'createdusername', 'name': 'Project Manager' },
                 {
                     'data': 'createdon', 'name': 'Created On',
@@ -139,10 +127,7 @@
                     }
                 },
                 {
-                    "render": function (data, type, full, meta)
-                        //{
-                        //    return '<button class="btn btn" style="background-color: #0D2136; color: white;" onclick=getProject("' + full.projectid + '"); >Edit</button>';
-                        //}
+                    "render": function (data, type, full, meta)                        
                     {
                         var value1 = '@Request.RequestContext.HttpContext.Session["RoleId"]';
                         if (value1 == '2') {
@@ -156,14 +141,12 @@
                 ,
                 {
                     data: 'projectname', render: function (data, type, row) {
-                        //return "<button type='submit' onclick=GetTask('" + encodeURIComponent(row.projectid) + "'); class='btn btn-info'>Task</button>";
                         return "<button type='submit' onclick=GetMilestone('" + encodeURIComponent(row.projectid) + "'); class='btn btn' style='background-color: #0D2136; color: white;'>Activity</button>";
                     }
                 }
                 ,
                 {
                     data: 'projectname', render: function (data, type, row) {
-                        //return "<button type='submit' onclick=GetTask('" + encodeURIComponent(row.projectid) + "'); class='btn btn-info'>Task</button>";
                         return "<button type='submit' onclick=GetChart('" + encodeURIComponent(row.projectid) + "'); class='btn btn' style='background-color: #0D2136; color: white;'>GANTT Chart</button>";
                     }
                 }
@@ -209,15 +192,9 @@
                         }
                     }
                 },
-                //{
-                //    data: 'projectname', render: function (data, type, row) {
-                //        return "<button type='submit' onclick=EditData('" + encodeURIComponent(row.projectid) + "'); class='btn btn-info'>Edit</button>";
-                //    }
-                //}
                 {
                     "render": function (data, type, full, meta)
                     {
-                        //return '<button class="btn btn"  style="background-color: #0D2136; color: white;" onclick=getProject("' + full.projectid + '"); >Edit</button>';
                         {
                             var value1 = '@Request.RequestContext.HttpContext.Session["RoleId"]';
                             if (value1 == '2') {
@@ -231,13 +208,11 @@
                 },
             {
                 data: 'projectname', render: function (data, type, row) {
-                    //return "<button type='submit' onclick=GetTask('" + encodeURIComponent(row.projectid) + "'); class='btn btn-info'>Task</button>";
                     return "<button type='submit' onclick=GetMilestone('" + encodeURIComponent(row.projectid) + "'); class='btn btn'  style='background-color: #0D2136; color: white;'>Activity</button>";
                 }
             },
                 {
                     data: 'projectname', render: function (data, type, row) {
-                        //return "<button type='submit' onclick=GetTask('" + encodeURIComponent(row.projectid) + "'); class='btn btn-info'>Task</button>";
                         return "<button type='submit' onclick=GetChart('" + encodeURIComponent(row.projectid) + "'); class='btn btn'  style='background-color: #0D2136; color: white;'>GANTT Chart</button>";
                     }
                 }
@@ -310,80 +285,6 @@
         }
         return false;
     }
-
-    @*function OnSuccess(objFilter) {
-        $("#overlay").fadeOut(300);
-
-        debugger;
-        $("#tblProject").DataTable(
-        {
-            processing: true,
-            serverSide: true,
-            filter: false,
-            orderMulti: false,
-            destroy: true,
-            //ordering: true,
-            pageLength: 75,
-            //LengthChange: true,
-            Sort: true,
-            "ajax": {
-                url: '@Url.Action("projectlist", "Project")',
-                type: 'POST'
-
-            },
-            aLengthMenu: [[75, 100, 500, 1000, -1], [75, 100, 500, 1000, "All"]],
-            iDisplayLength: 75,
-            scrollY: 400,
-            scrollCollapse: false,
-            aoColumnDefs: [{
-                bSortable: false,
-                aTargets: [-1, -2]
-            }],
-            columns: [
-                { 'data': 'projectname', 'name': 'Project Name' },
-                { 'data': 'startdate', 'name': 'Start Date' },
-                { 'data': 'enddate', 'name': 'End Date' },
-                { 'data': 'createdusername', 'name': 'Project Manager' },
-                {
-                    'data': 'createdon', 'name': 'Created On',
-                    'render': function (jsonDate) {
-                        debugger;
-                        if (jsonDate != null) {
-                            var date = new Date(parseInt(jsonDate.substr(6)));
-                            var month = ("0" + (date.getMonth() + 1)).slice(-2);
-                            return month + '-' + ("0" + date.getDate()).slice(-2) + '-' + date.getFullYear();
-                        }
-                        else {
-                            return "";
-                        }
-                    }
-                },
-                {
-                    data: 'projectname', render: function (data, type, row) {
-                        //return "<button type='submit' onclick=EditData('" + encodeURIComponent(row.projectid) + "'); class='btn btn'  style='background-color: #0D2136; color: white;'>Edit</button>";
-                        {
-                            var value1 = '@Request.RequestContext.HttpContext.Session["RoleId"]';
-                            if (value1 == '2') {
-                                return '<button class="btn btn" style="background-color: #0D2136; color: white;" onclick=getProject("' + full.projectid + '"); >Edit</button>';
-                            }
-                            else {
-                                return '<button class="btn btn" style="background-color: #0D2136; color: white;" disabled="disabled" onclick=getProject("' + full.projectid + '"); >Edit</button>';
-                            }
-                        }
-                    }
-                },
-                {
-                    data: 'projectname', render: function (data, type, row) {
-                        return "<button type='submit' onclick=GetTask('" + encodeURIComponent(row.projectid) + "'); class='btn btn'  style='background-color: #0D2136; color: white;'>Task</button>";
-                    }
-                }
-            ],
-            select: {
-                style: 'multi',
-                selector: 'td:first-child'
-            },
-        });
-    };*@
 
     function msg(strMsg, mode) {
         $.notify(strMsg, mode, { globalPosition: 'top center', clickToHide: true, autoHide: false });
