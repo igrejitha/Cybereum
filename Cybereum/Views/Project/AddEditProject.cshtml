@@ -25,12 +25,9 @@
 
                         <span class="text-danger" style="align-items:center;">
                             @ViewBag.Message
-                            @Html.HiddenFor(model => model.projectid)
-                            @*@Html.HiddenFor(model => model.createdby)*@
-                            @Html.HiddenFor(model => model.createdon)
-                            @*@Html.HiddenFor(model => model.modifiedby)
-                                @Html.HiddenFor(model => model.modifiedon)
-                                @Html.HiddenFor(model => model.isactive)*@
+                            @Html.HiddenFor(model => model.projectid)                            
+                            @Html.HiddenFor(model => model.createdon)                            
+                            @Html.HiddenFor(model => model.createdby)
                         </span>
                         <div class="form-row">
                             <div class="form-group col-md-6">
@@ -42,20 +39,15 @@
                             </div>
                             <div class="form-group col-md-6">
                                 @Html.LabelFor(model => model.startdate, "Start Date", htmlAttributes: new { @class = "" })
-                                @*<div class="col-md-10">*@
                                 @Html.TextBoxFor(model => model.startdate, new { @type = "date", @class = "form-control datepicker", @Value = Model.startdate.ToString("yyyy-MM-dd") })
-                                @Html.ValidationMessageFor(model => model.startdate, "", new { @class = "text-danger" })
-                                @*</div>*@
+                                @Html.ValidationMessageFor(model => model.startdate, "", new { @class = "text-danger" })                                
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 @Html.LabelFor(model => model.enddate, "End Date", htmlAttributes: new { @class = "" })
-                                @*<div class="col-md-10">*@
-                                @*@Html.EditorFor(model => model.enddate, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })*@
                                 @Html.TextBoxFor(model => model.enddate, new { @type = "date", @class = "form-control datepicker", @Value = Model.enddate.ToString("yyyy-MM-dd") })
                                 @Html.ValidationMessageFor(model => model.enddate, "", new { @class = "text-danger" })
-                                @*</div>*@
                             </div>
                             <div class="form-group col-md-6">
                                 @Html.LabelFor(model => model.projectstatus, "Project Status", htmlAttributes: new { @class = "" })
@@ -67,12 +59,7 @@
                             new SelectListItem{ Text="Cancelled", Value = "Cancelled" }
                             }, htmlAttributes: new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.projectstatus, "", new { @class = "text-danger" })
-                            </div>
-                            @*<div class="form-group col-md-6">
-                                    @Html.LabelFor(model => model.projectcost, "Cost", htmlAttributes: new { @class = "" })
-                                    @Html.EditorFor(model => model.projectcost, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                                    @Html.ValidationMessageFor(model => model.projectcost, "", new { @class = "text-danger" })
-                                </div>*@                            
+                            </div>                                                       
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
@@ -86,21 +73,37 @@
                             new SelectListItem{ Text="Thermal Power Station", Value = "Thermal Power Station" }
                             }, htmlAttributes: new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.projecttype, "", new { @class = "text-danger" })
+<<<<<<< Updated upstream
                             </div>
                             @*<div class="form-group col-md-6">
+=======
+                            </div>                            
+                            <div class="form-group col-md-6">
+>>>>>>> Stashed changes
                                 @Html.Label("Project Members", htmlAttributes: new { @class = "" })
-                                <div class="col-md-10">
+                                <select id="myprojectmembers" multiple="multiple" class="form-control" name="projectmembers">
                                     @if (ViewBag.projectmembers != null)
                                     {
                                         foreach (var item in ViewBag.projectmembers)
                                         {
-                                            <input id="@item.Value" type="checkbox" name="projectmembers" value="@item.Value" checked="@item.Selected" class="checkbox" />
-                                            <label for="@item.Value">
-                                                @item.Text
-                                            </label>
-                                            <br />
+                                            if (item.Text != null)
+                                            {
+                                                if (item.Selected == true)
+                                                {
+                                                    <option id="@item.Value" value="@item.Value" selected="selected">
+                                                        @item.Text
+                                                    </option>
+                                                }
+                                                else
+                                                {
+                                                    <option id="@item.Value" value="@item.Value">
+                                                        @item.Text
+                                                    </option>
+                                                }
+                                            }
                                         }
                                     }
+<<<<<<< Updated upstream
                                 </div>
                             </div>*@
                             <div class="form-group col-md-6">
@@ -148,13 +151,19 @@
                             {*@
                                 @Html.HiddenFor(model => model.createdby)
                             @*}*@
+=======
+                                </select>
+                            </div>
+                          
+                                
+                          
+>>>>>>> Stashed changes
                         </div>
                         <div class="row" style="padding-top: 30px;">
                             <div class="col-6">
                                 <a href="@Url.Action("List", "Project")"><h4>Back To List</h4></a>
                             </div>
                             <div class="col-6">
-                                @*<button type="button" class="btn btn" style="background-color: #0D2136; color: white;" data-dismiss="modal" onclick="history.go(-1); return false;">Close</button>*@
                                 <input type="submit" name="btnSubmit" value="Save" class="btn btn" style="background-color: #0D2136; color: white;" onclick="updatemark()" />
                             </div>
 

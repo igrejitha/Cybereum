@@ -15,6 +15,10 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+using System.Configuration;
+>>>>>>> Stashed changes
 =======
 using System.Configuration;
 >>>>>>> Stashed changes
@@ -28,6 +32,7 @@ namespace Cybereum.Controllers
     {
         private cybereumEntities db = new cybereumEntities();
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
         //private const string hostname = "gremtest1.gremlin.cosmos.azure.com";
@@ -46,6 +51,8 @@ namespace Cybereum.Controllers
 
         //string containerLink = "/dbs/" + database + "/colls/" + collection;
 
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======
@@ -89,6 +96,7 @@ namespace Cybereum.Controllers
             {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 //var gremlinServer = new GremlinServer(hostname, port, enableSsl: true, username: "/dbs/" + HttpUtility.UrlEncode(database) + "/colls/" + HttpUtility.UrlEncode(collection), password: authKey);
                 //using (var gremlinClient = new GremlinClient(
                 //    gremlinServer,
@@ -101,16 +109,22 @@ namespace Cybereum.Controllers
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
                 var gremlinScript = "g.V().has('activity','projectid','" + projectid + "').project('id','activityname','startdate','enddate','durations','ismilestone','createdby','createdusername','createdon','projectid')" +
                                     ".by(id()).by(values('activityname')).by(values('startdate')).by(values('enddate')).by(values('durations')).by(values('ismilestone')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('projectid'))";
                 try
                 {
+<<<<<<< Updated upstream
                     //var results = await gremlinClient.SubmitAsync<dynamic>(gremlinScript).ConfigureAwait(false);
+=======
+>>>>>>> Stashed changes
                     var results = IGUtilities.ExecuteGremlinScript(gremlinScript);
                     string pList = JsonConvert.SerializeObject(results);
                     List<ProjectActivity> people = JsonConvert.DeserializeObject<List<ProjectActivity>>(pList);
 
                     list = people;
+<<<<<<< Updated upstream
 
                     //foreach (var result in results)
                     //{
@@ -144,6 +158,9 @@ namespace Cybereum.Controllers
                     //    list.Add(activity);
                     //}
                     //var projectresult = this.Json(new { data = list, recordsTotal = list.Count(), recordsFiltered = list.Count() }, JsonRequestBehavior.AllowGet);
+=======
+                    
+>>>>>>> Stashed changes
                     var projectresult = this.Json(new { data = list, recordsTotal = list.Count(), recordsFiltered = list.Count() }, JsonRequestBehavior.AllowGet);
                     return projectresult;
                 }
@@ -165,6 +182,7 @@ namespace Cybereum.Controllers
             ProjectActivity activity = new ProjectActivity();
             try
             {
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
                 //var gremlinServer = new GremlinServer(hostname, port, enableSsl: true, username: "/dbs/" + HttpUtility.UrlEncode(database) + "/colls/" + HttpUtility.UrlEncode(collection), password: authKey);
@@ -205,6 +223,13 @@ namespace Cybereum.Controllers
                     var results = IGUtilities.ExecuteGremlinScript(gremlinScript);
                     foreach (var result in results)
 >>>>>>> Stashed changes
+=======
+                var gremlinScript = "g.V().has('activity','id','" + id + "').project('id','activityname','startdate','enddate','durations','ismilestone','createdby','createdusername','createdon','projectid','predecessors').by(id()).by(values('activityname')).by(values('startdate')).by(values('enddate')).by(values('durations')).by(values('ismilestone')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('projectid')).by(values('predecessors').fold())";                
+                try
+                {
+                    var results = IGUtilities.ExecuteGremlinScript(gremlinScript);
+                    foreach (var result in results)
+>>>>>>> Stashed changes
                     {
                         activity.id = result["id"].ToString();
                         activity.projectid = result["projectid"].ToString();
@@ -220,6 +245,7 @@ namespace Cybereum.Controllers
                         string tasks = string.Empty;
                         foreach (string item in jArray)
                         {
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -250,6 +276,9 @@ namespace Cybereum.Controllers
                             activity.createdby = result["createdby"].ToString();
                             activity.createdusername = result["createdusername"].ToString();
                             activity.createdon = Convert.ToDateTime(result["createdon"]);
+=======
+                            tasks = tasks + item + ",";
+>>>>>>> Stashed changes
 =======
                             tasks = tasks + item + ",";
 >>>>>>> Stashed changes
@@ -295,9 +324,12 @@ namespace Cybereum.Controllers
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             var result1 = getactivitybyid(Activity.id);
             Activity = result1.Result;
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======
@@ -309,6 +341,9 @@ namespace Cybereum.Controllers
             }
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -326,6 +361,7 @@ namespace Cybereum.Controllers
                 ViewBag.projectid = projectid;
                 Session["ProjectId"] = projectid;
             }
+<<<<<<< Updated upstream
             //if (activityid == "null") activityid = null;
             if (activityid != null)
 <<<<<<< Updated upstream
@@ -348,6 +384,14 @@ namespace Cybereum.Controllers
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
+=======
+            
+            if (activityid != null)
+            {
+                var gremlinScript = "g.V().has('activity','id','" + activityid + "').project('startdate','enddate').by(values('startdate')).by(values('enddate'))";
+                var result = IGUtilities.ExecuteGremlinScript(gremlinScript);
+                if (result.Count > 0)
+>>>>>>> Stashed changes
                 {
                     foreach (var item in result)
                     {
@@ -367,6 +411,7 @@ namespace Cybereum.Controllers
                         foreach (var item in resultProject)
                         {
                             ViewBag.HasDate = false;
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
                             DateTime dt1 = Convert.ToDateTime(item["enddate"]);
@@ -457,6 +502,10 @@ namespace Cybereum.Controllers
                             DateTime dt1 = Convert.ToDateTime(item["startdate"]);
                             //dt1 = dt1.AddDays(1);
 >>>>>>> Stashed changes
+=======
+                            DateTime dt1 = Convert.ToDateTime(item["startdate"]);
+                            //dt1 = dt1.AddDays(1);
+>>>>>>> Stashed changes
                             Activity.startdate = dt1;
                             Activity.enddate = dt1;
                         }
@@ -465,9 +514,26 @@ namespace Cybereum.Controllers
                     {
                         Activity.startdate = DateTime.Today;
                         Activity.enddate = DateTime.Today;
+                    }                    
+                }                
+            }
+            else if (Activity.id == null)
+            {
+                var gremlinScript = "g.V().has('activity','projectid','" + projectid + "').order().by('enddate',decr).limit(1).project('startdate','enddate').by(values('startdate')).by(values('enddate'))";
+                var result = IGUtilities.ExecuteGremlinScript(gremlinScript);
+                if (result.Count > 0)
+                {
+                    foreach (var item in result)
+                    {
+                        ViewBag.HasDate = false;
+                        DateTime dt1 = Convert.ToDateTime(item["enddate"]);
+                        dt1 = dt1.AddDays(1);
+                        Activity.startdate = dt1;
+                        Activity.enddate = dt1;
                     }
                     //}
                 }
+<<<<<<< Updated upstream
                 //}
             }
             else if (Activity.id == null)
@@ -497,12 +563,18 @@ namespace Cybereum.Controllers
                         Activity.enddate = dt1;
                     }
                 }
+=======
+>>>>>>> Stashed changes
                 else
                 {
                     Activity.startdate = DateTime.Today;
                     Activity.enddate = DateTime.Today;
+<<<<<<< Updated upstream
                 }
                 //}
+=======
+                }                
+>>>>>>> Stashed changes
             }
 
             int pmuserid = Convert.ToInt32(Session["LoggedInUserId"]);
@@ -512,6 +584,7 @@ namespace Cybereum.Controllers
 
             List<SelectListItem> predecessors = FillActivity(projectid, activityid, Activity);
             ViewBag.predecessors = predecessors;
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -592,6 +665,12 @@ namespace Cybereum.Controllers
         }
 
 >>>>>>> Stashed changes
+=======
+            
+            return View(Activity);
+        }
+
+>>>>>>> Stashed changes
         public JsonResult GetEnddate(DateTime startDate, int id)
         {
             var record = IGUtilities.CalculateDays(startDate, id);
@@ -631,6 +710,9 @@ namespace Cybereum.Controllers
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -640,6 +722,7 @@ namespace Cybereum.Controllers
         {
             List<SelectListItem> predecessors = new List<SelectListItem>();
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -690,6 +773,10 @@ namespace Cybereum.Controllers
             var gremlinScript = "g.V().has('activity','projectid','" + projectid + "').order().by('startdate',incr).order().by('enddate',incr).project('id','activityname').by(values('id')).by(values('activityname'))";
 
 >>>>>>> Stashed changes
+=======
+            var gremlinScript = "g.V().has('activity','projectid','" + projectid + "').order().by('startdate',incr).order().by('enddate',incr).project('id','activityname').by(values('id')).by(values('activityname'))";
+
+>>>>>>> Stashed changes
             var result = IGUtilities.ExecuteGremlinScript(gremlinScript);
             string pList = JsonConvert.SerializeObject(result);
             List<ProjectActivity> projectlist = JsonConvert.DeserializeObject<List<ProjectActivity>>(pList);
@@ -698,6 +785,7 @@ namespace Cybereum.Controllers
                             select new SelectListItem
                             {
                                 Text = b.activityname,
+<<<<<<< Updated upstream
                                 Value = b.id.ToString()
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -715,6 +803,12 @@ namespace Cybereum.Controllers
 <<<<<<< Updated upstream
 >>>>>>> Stashed changes
 =======
+>>>>>>> Stashed changes
+=======
+                                Value = b.id.ToString()                                
+                            }).ToList();
+            //predecessors.Insert(0, new SelectListItem { Text = "<-- Select -->", Value = "" });
+
 >>>>>>> Stashed changes
 
             if (Activity.Predecessors != null && predecessors.Count > 0)
@@ -742,7 +836,10 @@ namespace Cybereum.Controllers
             }
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 
@@ -762,6 +859,9 @@ namespace Cybereum.Controllers
                 }
             }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -802,6 +902,7 @@ namespace Cybereum.Controllers
         {
             string message = string.Empty;
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -916,6 +1017,26 @@ namespace Cybereum.Controllers
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
+=======
+            string predecessors = string.Empty;
+            if (tbl_activity.Predecessors != null)
+            {
+                predecessors = String.Join(",", tbl_activity.Predecessors);
+            }
+
+            if (ModelState.IsValid)
+            {                
+                int duration = Convert.ToInt16(tbl_activity.durations);
+                tbl_activity.enddate = IGUtilities.CalculateDays(tbl_activity.startdate, duration);
+
+                string a = "";
+                long count = 0;
+                if (tbl_activity.id == null)
+                {                    
+                    var gremlinScript = "g.V().has('activity','activityname','" + tbl_activity.activityname + "').has('activity','projectid','" + tbl_activity.projectid + "').count()";
+                    var objList = IGUtilities.ExecuteGremlinScript(gremlinScript);
+                    count = objList.ToList()[0];
+>>>>>>> Stashed changes
                     if (count > 0)
                     {
                         message = "Activity name already exists.";
@@ -923,6 +1044,7 @@ namespace Cybereum.Controllers
                     }
                 }
                 else
+<<<<<<< Updated upstream
                 {
                     //using (var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType))
                     //{
@@ -939,6 +1061,9 @@ namespace Cybereum.Controllers
                     //        }
                     //    }
                     //}
+=======
+                {                    
+>>>>>>> Stashed changes
                     var gremlinScript = "g.V().has('activity','activityname','" + tbl_activity.activityname + "').has('activity','projectid','" + tbl_activity.projectid + "')";
                     var objList = IGUtilities.ExecuteGremlinScript(gremlinScript);
                     foreach (var result in objList)
@@ -953,6 +1078,7 @@ namespace Cybereum.Controllers
 
                 if (tbl_activity.id == null)
                 {
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -1031,6 +1157,26 @@ namespace Cybereum.Controllers
                         tbl_activity.createdby = Session["LoggedInUserId"].ToString();
 
 >>>>>>> Stashed changes
+=======
+                    if (tbl_activity.Predecessors != null)
+                    {
+                        for (int i = 0; i < tbl_activity.Predecessors.Length; i++)
+                        {
+                            if (tbl_activity.Predecessors[i] != "" && tbl_activity.Predecessors[i] != "System.String[]")
+                            {
+                                a = a + $".property(list,'predecessors', '{tbl_activity.Predecessors[i]}') ";
+                            }
+                        }
+                    }
+                    else
+                    {
+                        a = a + $".property(list,'predecessors', '')";
+                    }
+
+                    if (tbl_activity.createdby == null)
+                        tbl_activity.createdby = Session["LoggedInUserId"].ToString();
+
+>>>>>>> Stashed changes
                     string gremlinScript = $"g.addV('activity').property('pk', '{tbl_activity.activityname}')" +
                             $".property('activityname', '{tbl_activity.activityname}')" +
                             $".property('startdate', '{tbl_activity.startdate.ToString("yyyy-MM-dd")}')" +
@@ -1043,6 +1189,7 @@ namespace Cybereum.Controllers
                             $".property('createdon', '{DateTime.Now}')" + a +
                             $".property('type', 'activity')";
 
+<<<<<<< Updated upstream
                     // Execute the Gremlin script                    
                     //using (var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType))
                     //{
@@ -1051,10 +1198,14 @@ namespace Cybereum.Controllers
                     //    var result = task.Result;
                     //    message = "Added Successfully";
                     //}                    
+=======
+                                    
+>>>>>>> Stashed changes
                     var result = IGUtilities.ExecuteGremlinScript(gremlinScript);
                     message = "Added Successfully";
 
                     gremlinScript = "g.V().has('activity','activityname','" + tbl_activity.activityname + "').project('id').by(values('id'))";
+<<<<<<< Updated upstream
                     //using (var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType))
                     //{
                     //    var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
@@ -1268,6 +1419,25 @@ namespace Cybereum.Controllers
                     //Connect the predeccesors to succesors
                     //foreach (var predecessor in tbl_activity.Predecessors)
                     //{
+=======
+                    
+                    result = IGUtilities.ExecuteGremlinScript(gremlinScript);
+                    foreach (var result2 in result)
+                    {
+                        tbl_activity.id = Convert.ToString(result2["id"]);
+                    }
+
+                    //Remove connection the project to activity
+                    gremlinScript = $"\ng.V().has('activity', 'id', '{tbl_activity.id}').bothE().drop()";                    
+                    result = IGUtilities.ExecuteGremlinScript(gremlinScript);
+                    message = "Gremlin script executed successfully";
+
+                    //connect the project to activity
+                    gremlinScript = $"\ng.V('{tbl_activity.projectid}').addE('contains').to(g.V('{tbl_activity.id}'))";                    
+                    result = IGUtilities.ExecuteGremlinScript(gremlinScript);
+
+                    //Connect the predeccesors to succesors                    
+>>>>>>> Stashed changes
                     if (tbl_activity.Predecessors != null)
                     {
                         for (int i = 0; i < tbl_activity.Predecessors.Length; i++)
@@ -1275,6 +1445,7 @@ namespace Cybereum.Controllers
                             if (tbl_activity.Predecessors[i] != "" && tbl_activity.Predecessors[i] != "System.String[]")
                             {
                                 gremlinScript = $"\ng.V('{tbl_activity.id}').addE('precedes').property('duration', '{tbl_activity.durations}').to(g.V('{tbl_activity.Predecessors[i]}'))";
+<<<<<<< Updated upstream
                                 //using (var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType))
                                 //{
                                 //    var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
@@ -1282,16 +1453,19 @@ namespace Cybereum.Controllers
                                 //    var result = task.Result;
                                 //    message = "Gremlin script executed successfully";
                                 //}
+=======
+>>>>>>> Stashed changes
                                 result = IGUtilities.ExecuteGremlinScript(gremlinScript);
                             }
                         }
                     }
-                    //}
+                   
                 }
                 else
                 {
                     string gremlinscript = $"g.V().has('activity', 'id','{ tbl_activity.id }').properties('predecessors').drop()";
                     var result = IGUtilities.ExecuteGremlinScript(gremlinscript);
+<<<<<<< Updated upstream
                     //using (var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType))
                     //{
                     //    var task = gremlinClient.SubmitAsync<dynamic>(gremlinscript);
@@ -1301,6 +1475,9 @@ namespace Cybereum.Controllers
                     //}
 
                     //string a = "";
+=======
+                    
+>>>>>>> Stashed changes
                     if (tbl_activity.Predecessors != null)
                     {
                         for (int i = 0; i < tbl_activity.Predecessors.Length; i++)
@@ -1328,6 +1505,7 @@ namespace Cybereum.Controllers
                                             $".property('updatedon', '{DateTime.Now}')" +
                                             $".property('type', 'activity')";
 
+<<<<<<< Updated upstream
                     // Execute the Gremlin script                    
                     //using (var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType))
                     //{
@@ -1336,10 +1514,13 @@ namespace Cybereum.Controllers
                     //    var result = task.Result;
                     //    message = "Updated Successfully";
                     //}
+=======
+>>>>>>> Stashed changes
                     result = IGUtilities.ExecuteGremlinScript(gremlinScript);
 
                     //Remove connection the task to subtask
                     gremlinScript = $"\ng.V().has('activity', 'id', '{tbl_activity.id}').bothE().drop()";
+<<<<<<< Updated upstream
                     // Execute the Gremlin script
                     //using (var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType))
                     //{
@@ -1348,10 +1529,13 @@ namespace Cybereum.Controllers
                     //    var result = task.Result;
                     //    message = "Gremlin script executed successfully";
                     //}
+=======
+>>>>>>> Stashed changes
                     result = IGUtilities.ExecuteGremlinScript(gremlinScript);
 
                     //connect the project to activity
                     gremlinScript = $"\ng.V('{tbl_activity.projectid}').addE('contains').to(g.V('{tbl_activity.id}'))";
+<<<<<<< Updated upstream
                     //gremlinScript = $"\ng.V().has('project','projectid','{tbl_activity.projectid}').as('a').V().has('activity','activityname','{tbl_activity.activityname}').addE('projectactivity').to('a')";
                     // Execute the Gremlin script
                     //using (var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType))
@@ -1365,6 +1549,8 @@ namespace Cybereum.Controllers
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
                     result = IGUtilities.ExecuteGremlinScript(gremlinScript);
 
                     //Connect the predeccesors to succesors
@@ -1372,6 +1558,7 @@ namespace Cybereum.Controllers
                     //{
                     if (tbl_activity.Predecessors != null)
                     {
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -1391,11 +1578,14 @@ namespace Cybereum.Controllers
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
                         for (int i = 0; i < tbl_activity.Predecessors.Length; i++)
                         {
                             if (tbl_activity.Predecessors[i] != "" && tbl_activity.Predecessors[i] != "System.String[]")
                             {
                                 gremlinScript = $"\ng.V('{tbl_activity.id}').addE('precedes').property('duration', '{duration}').to(g.V('{tbl_activity.Predecessors[i]}'))";
+<<<<<<< Updated upstream
                                 //using (var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType))
                                 //{
                                 //    var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
@@ -1412,6 +1602,11 @@ namespace Cybereum.Controllers
 =======
 >>>>>>> Stashed changes
 =======
+>>>>>>> Stashed changes
+=======
+                                result = IGUtilities.ExecuteGremlinScript(gremlinScript);
+                            }
+                        }
 >>>>>>> Stashed changes
                     }
                     //}
@@ -1448,6 +1643,10 @@ namespace Cybereum.Controllers
                             }
                         }
                     }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
                     //****************************Update project End date****************************
                     gremlinScript1 = $"g.V().has('project','id','{tbl_activity.projectid}').project('id','startdate','enddate').by(values('id')).by(values('startdate')).by(values('enddate'))";
                     result1 = IGUtilities.ExecuteGremlinScript(gremlinScript1);
@@ -1459,7 +1658,10 @@ namespace Cybereum.Controllers
                             {
                                 gremlinScript1 = $"g.V('{item["id"]}')" +                                                
                                                 $".property('enddate', '{dt1.ToString("yyyy-MM-dd")}')" +                                                
+<<<<<<< Updated upstream
                                                 $".property('durations', '{1}')" +
+=======
+>>>>>>> Stashed changes
                                                 $".property('updatedon', '{DateTime.Now}')" +
                                                 $".property('type', 'project')";
                                 result1 = IGUtilities.ExecuteGremlinScript(gremlinScript1);
@@ -1483,33 +1685,7 @@ namespace Cybereum.Controllers
             return View(tbl_activity);
             //return RedirectToAction("Create", tbl_activity);
         }
-
-        // GET: Milestone/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            tbl_milestone tbl_milestone = db.tbl_milestone.Find(id);
-            if (tbl_milestone == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tbl_milestone);
-        }
-
-        // POST: Milestone/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            tbl_milestone tbl_milestone = db.tbl_milestone.Find(id);
-            db.tbl_milestone.Remove(tbl_milestone);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)

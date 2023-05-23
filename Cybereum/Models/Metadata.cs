@@ -1241,7 +1241,10 @@ namespace Cybereum.Models
         public string[] Predecessors { get; set; }
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 
@@ -1249,6 +1252,9 @@ namespace Cybereum.Models
         public System.Web.Mvc.MultiSelectList PredecessorsList { get; set; }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes

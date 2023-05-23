@@ -554,15 +554,11 @@ namespace Cybereum.Controllers
 
         public ActionResult Login()
         {
-            //LoginViewModel user = new LoginViewModel();
-            //user.Email = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
             return View();
         }
 
         public ActionResult UserLogin()
         {
-            //LoginViewModel user = new LoginViewModel();
-            //user.Email = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
             return View();
         }
 
@@ -680,7 +676,6 @@ namespace Cybereum.Controllers
                         EncryptDecrypt encrypt = new EncryptDecrypt();
                         string password = encrypt.Encrypt(user.password);
                         var objList = objdmsEntities.tbl_user.Where(x => x.emailid == user.Email && x.password == password && x.isactive == 1 && x.roleid == 3).FirstOrDefault();
-                        //var objList = objdmsEntities.sp_FetchLoginDetails(user.Email, password).FirstOrDefault();
                         if (objList != null)
                         {
                             if (objList.userid > 0)
@@ -975,50 +970,7 @@ namespace Cybereum.Controllers
             }
             return View(pwd);
         }
-        //public void SendEmailToUser(string emailId, string activationCode,string name)
-        //{
-        //    try
-        //    {
-        //        var GenarateUserVerificationLink = "/Account/UserVerification/" + activationCode;
-        //        var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, GenarateUserVerificationLink);
-
-        //        var fromMail = new MailAddress(ConfigurationManager.AppSettings["SMTPUserName"].ToString()); // set your email    
-        //        var fromEmailpassword = ConfigurationManager.AppSettings["SMTPPassword"].ToString(); // Set your password     
-        //        var toEmail = new MailAddress(emailId);
-
-        //        var smtp = new SmtpClient();
-        //        smtp.Host = ConfigurationManager.AppSettings["SMTPServer"].ToString();
-        //        smtp.Port = 25;
-        //        //smtp.EnableSsl = true;            
-        //        smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-        //        smtp.UseDefaultCredentials = false;
-        //        smtp.Credentials = new NetworkCredential(fromMail.Address, fromEmailpassword);
-
-        //        var Message = new MailMessage(fromMail, toEmail);
-        //        Message.Subject = "Welcome to Cybereum Project Management - Confirm Your email for Registration";
-        //        Message.Body = "Dear " + name + ","+
-        //                        "< br/> We're thrilled to have you on board the cybereum project management platform! " +
-        //                        " We're excited to help you streamline your project management process with our cutting-edge data analytics and ML integration." +
-        //                        "<br/> To complete your registration, we need you to confirm your email address. Simply click on the link below to verify your email:" +
-        //                        "<br/><br/><a href=" + link + ">" + link + "</a>" +
-        //                        "<br/><br/> Once you've confirmed your email and your registration is granted, you'll have access to our full suite of project management tools, including advanced data analytics and ML features that will help you make more informed decisions and drive better outcomes for your projects." +
-        //                        "<br/> If you have any questions or need assistance getting started, please don't hesitate to reach out to our support team at support@cybereum.io " +
-        //                        "<br/> We're here to help." +
-        //                        "<br/> <br/> Best regards," +
-        //                        "<br/> The cybereum Team";
-        //        Message.IsBodyHtml = true;
-        //        smtp.Send(Message);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        IGUtilities.WriteLog(ex.Message);
-        //        IGUtilities.WriteLog(ex.Data.ToString());
-        //        IGUtilities.WriteLog(ex.InnerException.Message);
-        //        IGUtilities.WriteLog(ex.TargetSite.ToString());
-        //        throw ex;
-        //    }
-        //}
-
+        
         #region Verification from Email Account.    
         public ActionResult UserVerification(string id)
         {
@@ -1028,7 +980,7 @@ namespace Cybereum.Controllers
 
                 cybereumEntities objEnt = new cybereumEntities();
 
-                objEnt.Configuration.ValidateOnSaveEnabled = false; // Ignor to password confirmation     
+                objEnt.Configuration.ValidateOnSaveEnabled = false; // Ignore to password confirmation     
                 var IsVerify = objEnt.tbl_user.Where(u => u.activationcode == new Guid(id).ToString()).FirstOrDefault();
                 if (IsVerify != null)
                 {
