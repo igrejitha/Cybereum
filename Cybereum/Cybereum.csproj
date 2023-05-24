@@ -5792,6 +5792,7 @@
     <Content Include="Views\User\EditUser.cshtml" />
     <Content Include="Views\User\AddUsers.cshtml" />
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     <Content Include="Views\Project\Create.cshtml" />
     <Content Include="Views\Project\Delete.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
@@ -5805,6 +5806,8 @@
     <Content Include="Views\Project\d3_GANTT_Chart.cshtml" />
     <Content Include="Views\Project\DashTest2.cshtml" />
     <Content Include="Views\Home\GANTT.cshtml" />
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
     <Content Include="Views\Home\GANTTChart.cshtml" />

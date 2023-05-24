@@ -1166,7 +1166,11 @@ public static class IGUtilities
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         for (int i = 0; i < Days-1; i++)
+=======
+        for (int i = 0; i < Days - 1; i++)
+>>>>>>> Stashed changes
 =======
         for (int i = 0; i < Days - 1; i++)
 >>>>>>> Stashed changes
@@ -1186,7 +1190,11 @@ public static class IGUtilities
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                     startDate = startDate.AddDays(1);
+=======
+                    startDate = startDate.AddDays(1);                    
+>>>>>>> Stashed changes
 =======
                     startDate = startDate.AddDays(1);                    
 >>>>>>> Stashed changes
@@ -1208,7 +1216,10 @@ public static class IGUtilities
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======
@@ -1223,6 +1234,9 @@ public static class IGUtilities
         }
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -1282,11 +1296,14 @@ public static class IGUtilities
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             var task = gremlinClient.SubmitAsync<dynamic>(script);
             task.Wait();
             var result = task.Result;
             return result;
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======
@@ -1297,6 +1314,9 @@ public static class IGUtilities
         return result;
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes

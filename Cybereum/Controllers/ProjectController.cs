@@ -941,6 +941,10 @@ using Cybereum.Services;
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+using System.Configuration;
+>>>>>>> Stashed changes
 =======
 using System.Configuration;
 >>>>>>> Stashed changes
@@ -957,6 +961,7 @@ namespace Cybereum.Controllers
     public class ProjectController : Controller
     {
         private cybereumEntities db = new cybereumEntities();
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -977,6 +982,9 @@ namespace Cybereum.Controllers
 
         //string containerLink = "/dbs/" + database + "/colls/" + collection;
 
+=======
+        
+>>>>>>> Stashed changes
 =======
         
 >>>>>>> Stashed changes
@@ -1011,6 +1019,7 @@ namespace Cybereum.Controllers
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 //var gremlinServer = new GremlinServer(hostname, port, enableSsl: true, username: "/dbs/" + HttpUtility.UrlEncode(database) + "/colls/" + HttpUtility.UrlEncode(collection), password: authKey);
                 //using (var gremlinClient = new GremlinClient(
                 //    gremlinServer,
@@ -1038,6 +1047,12 @@ namespace Cybereum.Controllers
 =======
 >>>>>>> Stashed changes
 =======
+>>>>>>> Stashed changes
+=======
+                
+                var gremlinScript = "g.V().has('id','" + id + "').project('id','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon','projectmembers','projectstatus','projecttype').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('projectmembers').fold()).by(values('projectstatus')).by(values('projecttype'))";
+                try
+                {
 >>>>>>> Stashed changes
 =======
                 
@@ -1102,6 +1117,7 @@ namespace Cybereum.Controllers
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             {
                 //var gremlinServer = new GremlinServer(hostname, port, enableSsl: true, username: "/dbs/" + HttpUtility.UrlEncode(database) + "/colls/" + HttpUtility.UrlEncode(collection), password: authKey);
                 //using (var gremlinClient = new GremlinClient(
@@ -1120,12 +1136,18 @@ namespace Cybereum.Controllers
 =======
             {                
 >>>>>>> Stashed changes
+=======
+            {                
+>>>>>>> Stashed changes
                 int pmuserid = Convert.ToInt16(Session["LoggedInUserId"]);
                 var gremlinScript = "g.V().hasLabel('project').project('projectid','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon'))";
                 if (Convert.ToInt32(Session["RoleID"]) == (int)Role.ProjectManager)
                 {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                     //gremlinScript = "g.V().has('project','createdby','" + pmuserid + "').or().has('project','projectmembers','" + pmuserid + "').project('id','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon'))";
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
                     gremlinScript = "g.V().or(has('project','createdby','" + pmuserid + "'),has('project','projectmembers','" + pmuserid + "')).project('projectid','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon'))";
@@ -1138,6 +1160,7 @@ namespace Cybereum.Controllers
 
                     string pList = JsonConvert.SerializeObject(results);
                     projectlist = JsonConvert.DeserializeObject<List<Project>>(pList);
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -1174,6 +1197,9 @@ namespace Cybereum.Controllers
 =======
                     
 >>>>>>> Stashed changes
+=======
+                    
+>>>>>>> Stashed changes
                     foreach (var project in projectlist)
                     {
                         int userid = Convert.ToInt32(project.createdby);
@@ -1184,6 +1210,7 @@ namespace Cybereum.Controllers
                             project.createdusername = username.firstname + ' ' + username.lastname;
                         }
                     }
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
@@ -1247,6 +1274,9 @@ namespace Cybereum.Controllers
 =======
                     
 >>>>>>> Stashed changes
+=======
+                    
+>>>>>>> Stashed changes
                     var projectresult = this.Json(new { data = projectlist, recordsTotal = projectlist.Count(), recordsFiltered = projectlist.Count() }, JsonRequestBehavior.AllowGet);
                     return projectresult;
                 }
@@ -1264,6 +1294,7 @@ namespace Cybereum.Controllers
         }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         // GET: Project/Details/5
         public ActionResult Details(int? id)
         {
@@ -1279,6 +1310,8 @@ namespace Cybereum.Controllers
             return View(tbl_project);
         }
         
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
         public ActionResult Addrecord(int Id)
@@ -1386,6 +1419,7 @@ namespace Cybereum.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         public ActionResult Create([Bind(Include = "projectid,projectname,startdate,enddate,createdon,modifiedon,createdby,modifiedby,projectcost,noofresource,isactive")] ProjectViewModel tbl_project)
         //public ActionResult AddUsers(FormCollection formval, UserLevelOne _mod)
         {
@@ -1469,6 +1503,8 @@ namespace Cybereum.Controllers
         [ValidateAntiForgeryToken]
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
         public ActionResult AddEditProject([Bind(Include = "projectid,projectname,startdate,enddate,createdon,modifiedon,createdby,modifiedby,projectcost,noofresource,isactive,projectmembers,projectstatus,projecttype")] Project tbl_project)
         {
             string message = string.Empty;
@@ -1490,6 +1526,7 @@ namespace Cybereum.Controllers
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 {
                     //using (var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType))
                     //{
@@ -1497,6 +1534,10 @@ namespace Cybereum.Controllers
                     //var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
                     //task.Wait();
                     //var objList = task.Result;
+=======
+                {                    
+                    var gremlinScript = "g.V().has('project','projectname','" + tbl_project.projectname + "').count()";
+>>>>>>> Stashed changes
 =======
                 {                    
                     var gremlinScript = "g.V().has('project','projectname','" + tbl_project.projectname + "').count()";
@@ -1576,11 +1617,14 @@ namespace Cybereum.Controllers
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                     //using (var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType))
                     //{
                     //    var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
                     //    task.Wait();
                     //    var result = task.Result;
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======
@@ -1608,7 +1652,11 @@ namespace Cybereum.Controllers
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                     tbl_activity.activityname = "Start Activity";
+=======
+                    tbl_activity.activityname = ConfigurationManager.AppSettings["StartActivity"];//"Start Activity"
+>>>>>>> Stashed changes
 =======
                     tbl_activity.activityname = ConfigurationManager.AppSettings["StartActivity"];//"Start Activity"
 >>>>>>> Stashed changes
@@ -1648,7 +1696,11 @@ namespace Cybereum.Controllers
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                     tbl_activity.activityname = "End Activity";
+=======
+                    tbl_activity.activityname = ConfigurationManager.AppSettings["EndActivity"];
+>>>>>>> Stashed changes
 =======
                     tbl_activity.activityname = ConfigurationManager.AppSettings["EndActivity"];
 >>>>>>> Stashed changes
@@ -1688,11 +1740,14 @@ namespace Cybereum.Controllers
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                     //using (var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType))
                     //{
                     //    var task = gremlinClient.SubmitAsync<dynamic>(gremlinscript);
                     //    task.Wait();
                     //    var result = task.Result;
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======
@@ -1718,12 +1773,15 @@ namespace Cybereum.Controllers
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                     // Execute the Gremlin script                    
                     //using (var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType))
                     //{
                     //    var task = gremlinClient.SubmitAsync<dynamic>(gremlinScript);
                     //    task.Wait();
                     //    var result = task.Result;
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======
@@ -1766,6 +1824,7 @@ namespace Cybereum.Controllers
 
         public async Task<GraphData> getgannchart()
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         {
             GraphService service = new GraphService(gremlinvariables.hostname,gremlinvariables.port,gremlinvariables.authKey,gremlinvariables.database,gremlinvariables.collection);
             GraphData x = await service.GetGraphData();
@@ -1802,10 +1861,16 @@ namespace Cybereum.Controllers
             return View(chartmodel);
 =======
         {
+=======
+        {
+>>>>>>> Stashed changes
             GraphService service = new GraphService(gremlinvariables.hostname,gremlinvariables.port,gremlinvariables.authKey,gremlinvariables.database,gremlinvariables.collection);
             GraphData x = await service.GetGraphData();
             //var x = JsonConvert.SerializeObject(projectdata, Formatting.Indented);
             return x;
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         }
 
