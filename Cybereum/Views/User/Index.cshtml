@@ -4,19 +4,6 @@
     ViewBag.Title = "User List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@*<script src="~/Scripts/jquery-2.1.1.min.js"></script>*@
-
-@*<link rel="stylesheet" href="~/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>*@
-
-@*<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.bootstrap4.min.css" />
-
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.css" />*@
-
-@*
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>*@
 
 <style>
     #button {
@@ -64,11 +51,6 @@
         display: none;
     }
 </style>
-
-@*<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
-    <script src="~/Scripts/notify.min.js"></script>*@
 
 <div class="form-horizontal">
     <h4>Users List</h4>
@@ -120,48 +102,7 @@
 
     $(document).ready(function () {
         $('#liUsers').addClass("active");
-        @*var value = '@Request.RequestContext.HttpContext.Session["LoggedInUserId"]';
-        var value1 = '@Request.RequestContext.HttpContext.Session["RoleId"]';
-        LoadUsersData(value, value1);*@
-
-
-        //$('#txtwellnessno').keypress(function (e) {
-        //    debugger;
-        //    var key = e.which;
-        //    if (key == 13) {
-        //        $('input[name = searchgrid]').click();
-        //        return false;
-        //    }
-        //    if (key != 8 && key != 0 && (key < 48 || key > 57)) {
-        //        $("#errormsg").html("Digits Only").show().fadeOut("slow");
-        //        return false;
-        //    }
-        //});
-
-        //$("#txtfiledate").change(function () {
-        //    debugger;
-        //    var startdate = $(this).val();
-        //    var date = $("#txtfiledateto").val();
-        //    if (date != "") {
-        //        if (date < startdate) {
-        //            alert('To date must be greater than From date');
-        //            $(this).val('');
-        //        }
-        //    }
-        //});
-
-        //$("#txtfiledateto").change(function () {
-        //    debugger;
-        //    var startdate = $("#txtfiledate").val();
-        //    var date = $(this).val();
-        //    if (date < startdate) {
-        //        alert('To date must be greater than From date');
-        //        $(this).val('');
-        //    }
-        //});
-
-
-
+        
         function LoadUsersData(id, roleid) {
             debugger;
             $.ajax({
@@ -218,22 +159,7 @@
                 { 'data': 'lastname', 'name': 'Last Name' },
                 { 'data': 'emailid', 'name': 'Email ID' },
                 { 'data': 'rolename', 'name': 'Role Name' },
-                { 'data': 'organization', 'name': 'Organization' },
-                //{
-                //    'data': 'createddate', 'name': 'Created Date',
-                //    'render': function (jsonDate) {
-                //        debugger;
-                //        if (jsonDate != null) {
-                //            var date = new Date(parseInt(jsonDate.substr(6)));
-                //            var month = ("0" + (date.getMonth() + 1)).slice(-2);
-                //            return month + '-' +  ("0" + date.getDate()).slice(-2) + '-' + date.getFullYear();
-                //        }
-                //        else
-                //        {
-                //            return "";
-                //        }
-                //    }
-                //},
+                { 'data': 'organization', 'name': 'Organization' },                
                 {
                     "render": function (data, type, full, meta)
                     { return '<button class="btn btn" style="background-color: #0D2136; color: white;" onclick=getClient("' + full.userid + '"); >Edit</button>'; }
@@ -265,21 +191,6 @@
                 { 'data': 'emailid', 'name': 'Email ID' },
                 { 'data': 'rolename', 'name': 'Role Name' },
                 { 'data': 'organization', 'name': 'Organization' },
-                //{
-                //    'data': 'createddate', 'name': 'Created Date',
-                //    'render': function (jsonDate) {
-                //        debugger;
-                //        if (jsonDate != null) {
-                //            var date = new Date(parseInt(jsonDate.substr(6)));
-                //            var month = ("0" + (date.getMonth() + 1)).slice(-2);
-                //            return month + '-' +  ("0" + date.getDate()).slice(-2) + '-' + date.getFullYear();
-                //        }
-                //        else
-                //        {
-                //            return "";
-                //        }
-                //    }
-                //},
                 {
                     "render": function (data, type, full, meta)
                     { return '<button class="btn btn-info" onclick=getClient("' + full.userid + '"); >Edit</button>'; }
@@ -294,10 +205,7 @@
     function getClient(id) {
         debugger;
         location.href = '@Url.Action("Addrecord", "User", new { id = "id" })'.replace('id', id);
-        //$.get("/Users/AddUsers", { id: id }, function (result) {
-        //    //$("#clientmodalbody").html(result);
-        //    //$("#client").modal('show');
-        //});
+        
     }
 
     function EditData(userid) {

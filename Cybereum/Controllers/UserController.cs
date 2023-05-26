@@ -21,9 +21,6 @@ namespace Cybereum.Controllers
         // GET: User
         public ActionResult Index()
         {
-            //var tbl_user = db.tbl_user.Include(t => t.tbl_userrole).Where(t=> t.isactive==1);
-            //return View(tbl_user.ToList());         
-
             GetUser(Convert.ToInt32(System.Web.HttpContext.Current.Session["LoggedInUserId"]), Convert.ToInt32(System.Web.HttpContext.Current.Session["RoleId"]));
             return View();
         }
@@ -56,102 +53,13 @@ namespace Cybereum.Controllers
             db.Entry(tbl_user).State = EntityState.Modified;
             db.SaveChanges();
 
-            //SendEmailToUser(tbl_user.emailid, tbl_user.firstname +" " + tbl_user.lastname);
+            
             var UserLink = "/Account/login";
             var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, UserLink);
             IGUtilities.SendConfirmationEmailToUser(tbl_user.emailid, tbl_user.firstname + " " + tbl_user.lastname, link);
             return "Success";
         }
-
-
-        //public void SendEmailToUser(string emailId,string name)
-        //{
-        //    try
-        //    {
-        //        var UserLink = "/Account/login";
-        //        var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, UserLink);
-
-        //        var fromMail = new MailAddress(ConfigurationManager.AppSettings["SMTPUserName"].ToString()); // set your email    
-        //        var fromEmailpassword = ConfigurationManager.AppSettings["SMTPPassword"].ToString(); // Set your password     
-        //        var toEmail = new MailAddress(emailId);
-
-        //        var smtp = new SmtpClient();
-        //        smtp.Host = ConfigurationManager.AppSettings["SMTPServer"].ToString();
-        //        smtp.Port = 25;
-        //        smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-        //        smtp.UseDefaultCredentials = false;
-        //        smtp.Credentials = new NetworkCredential(fromMail.Address, fromEmailpassword);
-
-        //        var Message = new MailMessage(fromMail, toEmail);
-        //        Message.Subject = "Welcome to cybereum - Your One-Stop Project Management Solution with Cutting Edge Data Analytics and ML";
-        //        Message.Body = "<br/> Dear " + name +","+
-        //                        "<br/> We are so excited to welcome you to cybereum! You are now a part of a community of innovative individuals who are transforming the way they manage their projects and tasks." +
-        //                        "<br/><br/> Cybereum is a powerful project management platform that combines cutting edge data analytics and ML to deliver a truly unique and comprehensive solution. With its user-friendly interface and advanced features, you'll be able to manage your projects and tasks with ease, increase efficiency, and achieve your goals like never before."+
-        //                        "<br/> We wanted to take a moment to thank you for confirming your email and granting access to our platform. Now that you're all set up, it's time to dive in and start exploring! Here's what you can expect:" +
-        //                        "<br/> Access to a comprehensive project management dashboard" +
-        //                        "<br/> The ability to create projects and tasks with ease" +
-        //                        "<br/> Assign tasks to team members with ease" +
-        //                        "<br/> Track progress and deadlines in real - time" +
-        //                        "<br/> Collaborate with team members in real - time" +
-        //                        "<br/> And much more!" +
-        //                        "<br/> We believe that cybereum will have a profound impact on your work, and we're eager to see what you'll achieve. So why wait? Start exploring and experience the power of cybereum for yourself!" +
-        //                        "<br/><br/> Best regards," +
-        //                        "<br/> The cybereum team." +
-        //                        "<br/> Click below link to login." +
-        //                        "<br/><br/><a href=" + link + ">" + link + "</a>";
-        //        Message.IsBodyHtml = true;
-        //        smtp.Send(Message);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        IGUtilities.WriteLog(ex.Message);
-        //        IGUtilities.WriteLog(ex.Data.ToString());
-        //        IGUtilities.WriteLog(ex.InnerException.Message);
-        //        IGUtilities.WriteLog(ex.TargetSite.ToString());
-        //        throw ex;
-        //    }
-        //}
-
-
-        //public void SendRegisterEmailToUser(string emailId, string activationCode, string name)
-        //{
-        //    try
-        //    {
-        //        var GenarateUserVerificationLink = "/Account/UserVerification/" + activationCode;
-        //        var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, GenarateUserVerificationLink);
-
-        //        var fromMail = new MailAddress(ConfigurationManager.AppSettings["SMTPUserName"].ToString()); // set your email    
-        //        var fromEmailpassword = ConfigurationManager.AppSettings["SMTPPassword"].ToString(); // Set your password     
-        //        var toEmail = new MailAddress(emailId);
-
-        //        var smtp = new SmtpClient();
-        //        smtp.Host = ConfigurationManager.AppSettings["SMTPServer"].ToString();
-        //        smtp.Port = 25;
-        //        //smtp.EnableSsl = true;            
-        //        smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-        //        smtp.UseDefaultCredentials = false;
-        //        smtp.Credentials = new NetworkCredential(fromMail.Address, fromEmailpassword);
-
-        //        var Message = new MailMessage(fromMail, toEmail);
-        //        Message.Subject = "Welcome to Cybereum Project Management - Confirm Your email for Registration";
-        //        Message.Body = "Dear " + name + "," +
-        //                       "< br/> We're thrilled to have you on board the cybereum project management platform! " +
-        //                       " We're excited to help you streamline your project management process with our cutting-edge data analytics and ML integration." +
-        //                       "<br/> To complete your registration, we need you to confirm your email address. Simply click on the link below to verify your email:" +
-        //                       "<br/><br/><a href=" + link + ">" + link + "</a>";
-        //        Message.IsBodyHtml = true;
-        //        smtp.Send(Message);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        IGUtilities.WriteLog(ex.Message);
-        //        IGUtilities.WriteLog(ex.Data.ToString());
-        //        IGUtilities.WriteLog(ex.InnerException.Message);
-        //        IGUtilities.WriteLog(ex.TargetSite.ToString());
-        //        throw ex;
-        //    }
-        //}
-
+        
         public string RejectUser(int datuserid)
         {
             if (datuserid == null)
@@ -521,29 +429,9 @@ namespace Cybereum.Controllers
             ViewBag.Message = "Edit User";
             tbl_user user = new tbl_user();
 
-            //var Result = db.tbl_user.ToList();
-            //var OutResult = Result.Where(a => a.userid == Id).FirstOrDefault();
             user = db.tbl_user.Find(Id);
             user.password = encrypt.Decrypt(user.password);
-            //if (OutResult != null)
-            //{
-            //    user.userid = OutResult.userid;
-            //    user.emailid = OutResult.emailid;                
-            //    user.firstname = OutResult.firstname;
-            //    user.lastname = OutResult.lastname;
-            //    user.organization = OutResult.organization;
-            //    user.password = encrypt.Decrypt(OutResult.password);
-            //    user.createddate = OutResult.createddate;
-            //    user.organization = OutResult.organization;
-            //    user.roleid = OutResult.roleid;
-            //    user.isactive = OutResult.isactive;                
-            //    user.emailverification = OutResult.emailverification;
-
-            //    user.activationcode  = OutResult.activationcode;
-            //    user.otp = OutResult.otp;
-            //    user.pmuserid = OutResult.pmuserid;
-            //    user.username = OutResult.username;
-            //}
+            
             return RedirectToAction("AddUsers", user);
         }
 

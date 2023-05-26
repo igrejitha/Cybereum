@@ -58,7 +58,13 @@
 </div>
 @if (Convert.ToInt32(Session["RoleId"]) == 2)
 {
-<p><button type="button" class="btn btn" style="background-color: #0D2136; color: white;" onclick="location.href='@Url.Action("Create", "Activity")?projectid=@ViewBag.projectid'">Add New</button></p>
+<p>
+    @*<button id="btncreate" type="button" class="btn btn" style="background-color: #0D2136; color: white;" 
+            onclick="location.href='@Url.Action("Create", "Activity")?activityid=null&projectid=@ViewBag.projectid '">Add New</button>*@
+    <button id="btncreate" type="button" class="btn btn" style="background-color: #0D2136; color: white;">
+        Add New
+    </button>
+</p>
 }
 
 
@@ -95,6 +101,15 @@
 
     $(document).ready(function () {
         $('#liUsers').addClass("active");
+
+        $("#btncreate").click(function(){
+            debugger;
+            var taskid = null;
+            var projectid = "@ViewBag.projectid";
+            var link = '@Url.Action("Create", "Activity", new { projectid = "rowid", activityid = "taskid"})'.replace('rowid', projectid).replace('taskid', taskid);
+            window.open(link, '_self');
+            return false;
+        });
 
         debugger;
         //var reset = 0;

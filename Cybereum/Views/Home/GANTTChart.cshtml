@@ -1,16 +1,18 @@
-﻿@model Cybereum.Models.ProjectActivity
+﻿@*@model Cybereum.Models.ProjectActivity*@
 @{
     ViewBag.Title = "GANTT Chart";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@*<html>
-    <head>*@
-<script src="https://cdn.anychart.com/releases/8.6.0/js/anychart-core.min.js"> </script>
-<script src="https://cdn.anychart.com/releases/8.6.0/js/anychart-gantt.min.js"></script>
-@*</head>
-    <body>*@
-<div class=" form-horizontal">
+
+@*<script src="https://cdn.anychart.com/releases/8.6.0/js/anychart-core.min.js"> </script>
+  <script src="https://cdn.anychart.com/releases/8.6.0/js/anychart-gantt.min.js"></script>*@
+<script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-core.min.js" type="text/javascript"></script>
+  <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-gantt.min.js" type="text/javascript"></script>
+@*<script src="~/js/anychart-gantt.min.js" type="text/javascript"></script>
+<script src="~/js/anychart-core.min.js" type="text/javascript"></script>*@
+
+<div class="form-horizontal">
     <h4>GANTT Chart</h4>
     <hr />
 </div>
@@ -19,81 +21,11 @@
 </div>
 <div id="container" style="height:450px"> </div>
 <br />
-<div class="row">
-    <div class="col-xl-12 col-lg-12">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Add Activity</h4>
-            </div>
-            <div class="card-body">
-                <div class="basic-form">
-                    @using (Html.BeginForm("GANTTChart", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                    {
-                        @Html.AntiForgeryToken()
 
-                        @*<div class="form-horizontal">
-                            <hr />*@
-                        <span class="text-danger" style="align-items:center;">
-                            @ViewBag.Message
-                            @Html.HiddenFor(model => model.id)
-                            @Html.HiddenFor(model => model.projectid)
-                            @*@Html.HiddenFor(model => model.createdby)*@
-                            @Html.HiddenFor(model => model.createdon)
-                        </span>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                @Html.LabelFor(model => model.activityname, "Activity Name", htmlAttributes: new { @class = "" })
-                                @Html.EditorFor(model => model.activityname, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                                @Html.ValidationMessageFor(model => model.activityname, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="form-group col-md-6">
-                                @Html.LabelFor(model => model.startdate, "Start Date", htmlAttributes: new { @class = "" })
-
-                                @Html.TextBoxFor(model => model.startdate, new { @type = "date", @class = "form-control datepicker", @Value = Model.startdate.ToString("yyyy-MM-dd") })
-                                @Html.ValidationMessageFor(model => model.startdate, "", new { @class = "text-danger" })
-
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                @Html.LabelFor(model => model.enddate, "End Date", htmlAttributes: new { @class = "" })
-
-                                @Html.TextBoxFor(model => model.enddate, new { @type = "date", @class = "form-control datepicker", @Value = Model.enddate.ToString("yyyy-MM-dd") })
-                                @Html.ValidationMessageFor(model => model.enddate, "", new { @class = "text-danger" })
-
-                            </div>
-                            <div class="form-group col-md-6">
-                                @Html.LabelFor(model => model.ismilestone, "Is Milestone?", htmlAttributes: new { @class = "" })
-
-                                @Html.CheckBoxFor(model => model.ismilestone)
-
-                            </div>
-                        </div>
-                        <div class="row" style="padding-top: 30px;">
-                            <div class="col-6">                               
-                            </div>
-                            <div class="col-6">                                
-                                <input type="submit" name="btnSubmit" value="Save" class="btn btn" style="background-color: #0D2136; color: white;" />
-                            </div>
-
-                        </div>
-                        @*</div>*@
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-@*<div>
-    @{Html.RenderAction("Create", "Activity",new { projectid=@ViewBag.projectid });} 
-</div>*@
 @Scripts.Render("~/bundles/jquery")
 <script type="text/javascript">
     $(document).ajaxSend(function () {
-        //$("#overlay").fadeIn(300);
     });
-
 
     $(document).ready(function () {
         debugger;
@@ -127,11 +59,13 @@
                 }
             });
         });
+        
     });
 </script>
 <script>
     anychart.onDocumentReady(function () {
         // create data
+        debugger;
         var projectid = "@ViewBag.projectid";
         $.ajax({
             type: 'GET',
@@ -152,31 +86,37 @@
                 var chart = anychart.ganttProject();
 
                 var header = chart.getTimeline().header();
-                //header.level(0).format("{%tickValue}{dateTimeFormat:dd-MMM}");
-                //chart.dataGrid().column(0).enabled(false);
-                //header.level(1).format("{%value}");
-
                 header.level(0).format("{%tickValue}{dateTimeFormat:dd MMM}");
                 header.level(1).format("{%value}");
-                header.level(2).format("{%value}-{%endValue}");
-                //header.level(0).format("{%value}-{%endValue}");
-
+                header.level(2).format("{%value}-{%endValue}");                
+                
                 // disable the first data grid column
                 chart.dataGrid().column(0).enabled(false);
                 chart.dataGrid().column(1).width(300);
-
-                //var header = chart.getTimeline().header();
-                //header.level(0).format(function () {
-                //    var duration = (this.end - this.tickValue) / 1000 / 3600 / 24;
-                //    return this.value + ": " + duration + " days"
-                //});
 
                 // set the data
                 chart.data(treeData);
 
                 //// set the position of the splitter
-                //chart.splitterPosition("30%");
+                //chart.splitterPosition("25%");
+                var max = null;
+                var min = null;
 
+                for (var i = 0; i < data.length; i++) {
+                    var current = data[i];
+                    if (max === null || current.source > max.source) {
+                        max = current;
+                    }
+                    if (min === null || current.source < min.source) {
+                        min = current;
+                    }
+                }
+                var minDate = new Date(min.actualStart);
+                minDate.setDate(minDate.getDate() - 5);
+                var maxDate = new Date(max.actualEnd);
+                maxDate.setDate(maxDate.getDate() + 5);
+                chart.getTimeline().scale().minimum(minDate);
+                chart.getTimeline().scale().maximum(maxDate);
 
                 //// configure the scale
                 //chart.getTimeline().scale().maximum(Date.UTC(2023, 06, 30));
@@ -187,20 +127,46 @@
                 // fit elements to the width of the timeline
                 chart.fitAll();
                 //chart.fitToTask("1");
-
+                //chart.zoomIn();               
+                
+                /* listen to the rowClick event
+                    and update the chart title */
+                var timer = null
+                chart.listen("rowClick", function (e) {
+                    debugger;                    
+                    clearTimeout(timer);
+                    timer = setTimeout(function(){
+                        //Edit existing activity
+                        var roleid = @Session["RoleId"];
+                        var taskid = e.item.get("taskid");
+                        var projectid = "@ViewBag.projectid";
+                        if (projectid === taskid) 
+                            return false;
+                        var link = '@Html.Raw(@Url.Action("Addrecord", "Activity", new { id = "id"}))'.replace('id', taskid);
+                        if (roleid === 2) {
+                            window.open(link, '_blank');
+                        }
+                        return false;
+                    }, 300)
+                });
 
                 /* listen to the rowDblClick event
                     and update the chart title */
-                @*chart.listen("rowDblClick", function (e) {
+                chart.listen("rowDblClick", function (e) {
                     debugger;
+                    clearTimeout(timer);
+                    var roleid = @Session["RoleId"];
                     var taskid = e.item.get("taskid");
                     var projectid = "@ViewBag.projectid";
-                    var link = '@Url.Action("Create", "Activity", new { projectid = "rowid"})'.replace('rowid', projectid);
-                    //location.href = '@Url.Action("Create", "Activity", new { projectid = "rowid",})'.replace('rowid', projectid);
-                    window.open(link, '_blank');                    
+                    if (projectid === taskid) 
+                        return false;
+                    var link = '@Html.Raw(@Url.Action("Create", "Activity", new { projectid = "rowid", activityid = "taskid"}))'.replace('rowid', projectid).replace('taskid', taskid);
+                    if (roleid === 2) {
+                        window.open(link, '_blank');
+                    }
                     return false;
-                });*@
-
+                });
+                    
             }
         });
 

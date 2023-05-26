@@ -33,8 +33,11 @@ namespace Cybereum.Services
 
             using (var gremlinClient = new GremlinClient(gremlinServer))
             {
-                var gremlinScript = "g.V().hasLabel('activity').id()";
-                var results = await gremlinClient.SubmitAsync<dynamic>(gremlinScript);
+                //var gremlinScript = "g.V().hasLabel('activity').id()";
+                //var gremlinScript = "g.V().has('activity','projectid','0a79452c-16e0-425e-94b0-8fff751f181a').project('id','name').by(id()).by(values('activityname'))";
+                var gremlinScript = "g.V().hasLabel('activity').project('id','name').by(id()).by(values('activityname'))";
+                //var results = await gremlinClient.SubmitAsync<dynamic>(gremlinScript);
+                var results = IGUtilities.ExecuteGremlinScript(gremlinScript);
 
                 var nodes = results.Select(result => new Node
                 {
@@ -42,7 +45,7 @@ namespace Cybereum.Services
                 }).ToList();
 
                 gremlinScript = "g.E().hasLabel('precedes').project('id', 'source', 'target', 'duration').by(id()).by(outV().id()).by(inV().id()).by(values('duration'))";
-                results = await gremlinClient.SubmitAsync<dynamic>(gremlinScript);
+                results = IGUtilities.ExecuteGremlinScript(gremlinScript);
 
                 var links = results.Select(result => new Link
                 {

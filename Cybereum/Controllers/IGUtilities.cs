@@ -10,6 +10,9 @@ using System.Net.Mail;
 using System.Configuration;
 using System.Net;
 using System.DirectoryServices;
+using Gremlin.Net.Driver;
+using Gremlin.Net.Structure.IO.GraphSON;
+using Cybereum.Models;
 
 public static class IGUtilities
 {
@@ -422,7 +425,7 @@ public static class IGUtilities
     }
 
 
-    public static void SendRegisterEmailToUser(string link,string emailId, string activationCode, string name)
+    public static void SendRegisterEmailToUser(string link, string emailId, string activationCode, string name)
     {
         try
         {
@@ -432,7 +435,7 @@ public static class IGUtilities
 
             var smtp = new SmtpClient();
             smtp.Host = ConfigurationManager.AppSettings["SMTPServer"].ToString();
-            smtp.Port = 587;            
+            smtp.Port = 587;
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtp.UseDefaultCredentials = false;
             smtp.Credentials = new NetworkCredential(fromMail.Address, fromEmailpassword);
@@ -457,7 +460,7 @@ public static class IGUtilities
         }
     }
 
-    public static void SendConfirmationEmailToUser(string emailId, string name,string link)
+    public static void SendConfirmationEmailToUser(string emailId, string name, string link)
     {
         try
         {
@@ -487,9 +490,9 @@ public static class IGUtilities
                             "<br/> We believe that cybereum will have a profound impact on your work, and we're eager to see what you'll achieve. So why wait? Start exploring and experience the power of cybereum for yourself!" +
                             "<br/><br/> Best regards," +
                             "<br/> The cybereum team.";
-                            //+
-                            //"<br/> Click below link to login." +
-                            //"<br/><br/><a href=" + link + ">" + link + "</a>";
+            //+
+            //"<br/> Click below link to login." +
+            //"<br/><br/><a href=" + link + ">" + link + "</a>";
             Message.IsBodyHtml = true;
             smtp.Send(Message);
         }
@@ -524,6 +527,70 @@ public static class IGUtilities
     }
 
     #endregion
+
+    public static int CalculateDays(DateTime startDate, DateTime endDate)
+    {
+        DateTime[] arrayOfOrgHolidays = new DateTime[] { };//new DateTime(2023, 05, 01)
+
+        int noOfDays = 0;
+        int count = 0;
+        if (DateTime.Compare(startDate, endDate) == 1)
+        {
+            return 1;
+        }
+
+        while (DateTime.Compare(startDate, endDate) <= 0)
+        {
+            if (startDate.DayOfWeek != DayOfWeek.Saturday && startDate.DayOfWeek != DayOfWeek.Sunday)
+            {
+                string holiday = (from date in arrayOfOrgHolidays where DateTime.Compare(startDate, date) == 0 select "Holiday").FirstOrDefault();
+
+                if (holiday != "Holiday")
+                {
+                    noOfDays += 1;
+                    count++;
+                }
+                startDate = startDate.AddDays(1);
+            }
+            else
+                startDate = startDate.AddDays(1);
+        }
+
+        return noOfDays;
+    }
+
+    public static DateTime CalculateDays(DateTime startDate, int Days)
+    {
+        DateTime[] arrayOfOrgHolidays = new DateTime[] { };//new DateTime(2023, 05, 01)
+
+        for (int i = 0; i < Days - 1; i++)
+        {
+            if (startDate.DayOfWeek != DayOfWeek.Saturday && startDate.DayOfWeek != DayOfWeek.Sunday)
+            {
+                string holiday = (from date in arrayOfOrgHolidays where DateTime.Compare(startDate, date) == 0 select "Holiday").FirstOrDefault();
+
+                if (holiday != "Holiday")
+                {
+                    startDate = startDate.AddDays(1);                    
+                }
+            }
+            else
+            {
+                startDate = startDate.AddDays(1);
+                i--;
+            }
+        }
+
+        if (startDate.DayOfWeek == DayOfWeek.Saturday )
+        {
+            startDate = startDate.AddDays(2);
+        }
+        else if (startDate.DayOfWeek == DayOfWeek.Sunday)
+        {
+            startDate = startDate.AddDays(1);
+        }
+        return startDate;
+    }
 
     public static string GeneratePassword()
     {
@@ -563,5 +630,20 @@ public static class IGUtilities
             // otherwise, it will crash out so return false
             return false;
         }
+    }
+
+    public static GremlinServer gremlinServer = new GremlinServer(gremlinvariables.hostname, gremlinvariables.port, enableSsl: true, username: "/dbs/" + gremlinvariables.database + "/colls/" + gremlinvariables.collection, password: gremlinvariables.authKey);
+    public static GremlinClient gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType);
+    public static ResultSet<dynamic> ExecuteGremlinScript(string script)
+    {
+        //var gremlinScript = script;
+        //var gremlinServer = new GremlinServer(gremlinvariables.hostname, gremlinvariables.port, enableSsl: true, username: "/dbs/" + gremlinvariables.database + "/colls/" + gremlinvariables.collection, password: gremlinvariables.authKey);
+        //using (var gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType))
+        //{
+        var task = gremlinClient.SubmitAsync<dynamic>(script);
+        task.Wait();
+        var result = task.Result;
+        return result;
+        //}
     }
 }

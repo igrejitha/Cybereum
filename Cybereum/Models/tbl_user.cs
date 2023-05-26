@@ -17,13 +17,8 @@ namespace Cybereum.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tbl_user()
         {
-            this.tbl_milestone = new HashSet<tbl_milestone>();
-            this.tbl_project = new HashSet<tbl_project>();
-            this.tbl_project1 = new HashSet<tbl_project>();
-            this.tbl_subtask = new HashSet<tbl_subtask>();
-            this.tbl_task = new HashSet<tbl_task>();
-            this.tbl_tasktype = new HashSet<tbl_tasktype>();
             this.tbl_user1 = new HashSet<tbl_user>();
+            this.tbl_tasktype = new HashSet<tbl_tasktype>();
         }
     
         public int userid { get; set; }
@@ -43,20 +38,10 @@ namespace Cybereum.Models
         public string GUID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tbl_milestone> tbl_milestone { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tbl_project> tbl_project { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tbl_project> tbl_project1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tbl_subtask> tbl_subtask { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tbl_task> tbl_task { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tbl_tasktype> tbl_tasktype { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_user> tbl_user1 { get; set; }
         public virtual tbl_user tbl_user2 { get; set; }
         public virtual tbl_userrole tbl_userrole { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbl_tasktype> tbl_tasktype { get; set; }
     }
 }

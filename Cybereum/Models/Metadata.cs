@@ -8,6 +8,7 @@ using System.Data.Entity;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Gremlin.Net.Driver;
+using System.Configuration;
 
 namespace Cybereum.Models
 {
@@ -426,7 +427,15 @@ namespace Cybereum.Models
         public string connecterType { get; set; }
         public string progressValue { get; set; }
         public List<Children> children { get; set; }
+        public List<chartconnector> connector { get; set; }
     }
+
+    public class chartconnector
+    {
+        public string connectTo { get; set; }
+        public string connectorType { get; set; }
+    }
+
 
     public class TestModel
     {
@@ -510,7 +519,7 @@ namespace Cybereum.Models
         public DateTime createdon { get; set; }
         public List<ProjectActivity> activities { get; set; }
 
-        public int[] projectmembers { get; set; }        
+        public int[] projectmembers { get; set; }
         public string organization { get; set; }
 
         public string projectstatus { get; set; }
@@ -546,7 +555,11 @@ namespace Cybereum.Models
 
         public bool ismilestone { get; set; }
         public long durations { get; set; }
-        public List<string> Predecessors { get; set; }
+        public string[] Predecessors { get; set; }
+
+        [Display(Name = "Predecessors List")]
+        public System.Web.Mvc.MultiSelectList PredecessorsList { get; set; }
+
         public string projectid { get; set; }
         public string projectname { get; set; }
         public string createdby { get; set; }
@@ -630,30 +643,36 @@ namespace Cybereum.Models
         {
             get
             {
-                return "gremtest1.gremlin.cosmos.azure.com";
+                return ConfigurationManager.AppSettings["gremlinhostname"];
             }
         }
 
-        public static int port { get { return 443; } }
+        public static int port
+        {
+            get
+            {
+                return Convert.ToInt16(ConfigurationManager.AppSettings["gremlinport"]);
+            }
+        }
         public static string authKey
         {
             get
             {
-                return "lja6Gkeuf5nsnEg9TYyC79N1fvt4v1ZBb9JwkbWPNiNC1tEeBOSVu8vBHQZeKnSFguIKz9ziKjVEiPAjRAuf3w==";
+                return ConfigurationManager.AppSettings["gremlinauthkey"];
             }
         }
         public static string database
         {
             get
             {
-                return "graphdb";
+                return ConfigurationManager.AppSettings["gremlindatabase"];
             }
         }
         public static string collection
         {
             get
             {
-                return "ProjectGraph";
+                return ConfigurationManager.AppSettings["gremlincollection"];
             }
         }
 
@@ -669,7 +688,7 @@ namespace Cybereum.Models
         {
             get
             {
-                return "/dbs/" + database + "/colls/" + collection;                       
+                return "/dbs/" + database + "/colls/" + collection;
             }
         }
     }
