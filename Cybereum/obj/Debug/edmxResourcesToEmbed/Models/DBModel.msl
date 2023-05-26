@@ -16,251 +16,12 @@
         <ComplexTypeMapping TypeName="cybereumModel.sp_FetchPendingUsers_Result" />
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_FetchProjects" FunctionName="cybereumModel.Store.sp_FetchProjects">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="cybereumModel.sp_FetchProjects_Result" />
-      </ResultMapping>
-    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_FetchUsers" FunctionName="cybereumModel.Store.sp_FetchUsers">
       <ResultMapping>
         <ComplexTypeMapping TypeName="cybereumModel.sp_FetchUsers_Result" />
       </ResultMapping>
     </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_FetchProjectExists" FunctionName="cybereumModel.Store.sp_FetchProjectExists" />
-    <FunctionImportMapping FunctionImportName="sp_FetchTaskExists" FunctionName="cybereumModel.Store.sp_FetchTaskExists" />
     <FunctionImportMapping FunctionImportName="sp_FetchUserExists" FunctionName="cybereumModel.Store.sp_FetchUserExists" />
-    <FunctionImportMapping FunctionImportName="sp_FetchTasks" FunctionName="cybereumModel.Store.sp_FetchTasks">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="cybereumModel.sp_FetchTasks_Result">
-          <ScalarProperty Name="taskid" ColumnName="taskid" />
-          <ScalarProperty Name="taskname" ColumnName="taskname" />
-          <ScalarProperty Name="startdate" ColumnName="startdate" />
-          <ScalarProperty Name="enddate" ColumnName="enddate" />
-          <ScalarProperty Name="isactive" ColumnName="isactive" />
-          <ScalarProperty Name="createdby" ColumnName="createdby" />
-          <ScalarProperty Name="modifiedby" ColumnName="modifiedby" />
-          <ScalarProperty Name="assignedto" ColumnName="assignedto" />
-          <ScalarProperty Name="assignedusername" ColumnName="assignedusername" />
-          <ScalarProperty Name="createdusername" ColumnName="createdusername" />
-          <ScalarProperty Name="modifiedusername" ColumnName="modifiedusername" />
-          <ScalarProperty Name="TotalRecordCount" ColumnName="TotalRecordCount" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_FetchMilestones" FunctionName="cybereumModel.Store.sp_FetchMilestones">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="cybereumModel.sp_FetchMilestones_Result">
-          <ScalarProperty Name="milestoneid" ColumnName="milestoneid" />
-          <ScalarProperty Name="milestonename" ColumnName="milestonename" />
-          <ScalarProperty Name="startdate" ColumnName="startdate" />
-          <ScalarProperty Name="enddate" ColumnName="enddate" />
-          <ScalarProperty Name="isactive" ColumnName="isactive" />
-          <ScalarProperty Name="createdby" ColumnName="createdby" />
-          <ScalarProperty Name="modifiedby" ColumnName="modifiedby" />
-          <ScalarProperty Name="assignedto" ColumnName="assignedto" />
-          <ScalarProperty Name="assignedusername" ColumnName="assignedusername" />
-          <ScalarProperty Name="createdusername" ColumnName="createdusername" />
-          <ScalarProperty Name="modifiedusername" ColumnName="modifiedusername" />
-          <ScalarProperty Name="TotalRecordCount" ColumnName="TotalRecordCount" />
-          <ScalarProperty Name="createddate" ColumnName="createddate" />
-          <ScalarProperty Name="modifieddate" ColumnName="modifieddate" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_FetchSubTasks" FunctionName="cybereumModel.Store.sp_FetchSubTasks">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="cybereumModel.sp_FetchSubTasks_Result">
-          <ScalarProperty Name="taskid" ColumnName="taskid" />
-          <ScalarProperty Name="taskname" ColumnName="taskname" />
-          <ScalarProperty Name="startdate" ColumnName="startdate" />
-          <ScalarProperty Name="enddate" ColumnName="enddate" />
-          <ScalarProperty Name="isactive" ColumnName="isactive" />
-          <ScalarProperty Name="createdby" ColumnName="createdby" />
-          <ScalarProperty Name="modifiedby" ColumnName="modifiedby" />
-          <ScalarProperty Name="assignedto" ColumnName="assignedto" />
-          <ScalarProperty Name="assignedusername" ColumnName="assignedusername" />
-          <ScalarProperty Name="createdusername" ColumnName="createdusername" />
-          <ScalarProperty Name="modifiedusername" ColumnName="modifiedusername" />
-          <ScalarProperty Name="TotalRecordCount" ColumnName="TotalRecordCount" />
-          <ScalarProperty Name="createddate" ColumnName="createddate" />
-          <ScalarProperty Name="modifieddate" ColumnName="modifieddate" />
-          <ScalarProperty Name="subtaskid" ColumnName="subtaskid" />
-          <ScalarProperty Name="subtaskname" ColumnName="subtaskname" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_getganttchart" FunctionName="cybereumModel.Store.sp_getganttchart">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="cybereumModel.sp_getganttchart_Result" />
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_get_project" FunctionName="cybereumModel.Store.sp_get_project">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="cybereumModel.sp_get_project_Result" />
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_get_milestone" FunctionName="cybereumModel.Store.sp_get_milestone">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="cybereumModel.sp_get_milestone_Result">
-          <ScalarProperty Name="connectTo" ColumnName="connectTo" />
-          <ScalarProperty Name="enddate" ColumnName="enddate" />
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="startdate" ColumnName="startdate" />
-          <ScalarProperty Name="parentname" ColumnName="parentname" />
-          <ScalarProperty Name="predecessors" ColumnName="predecessors" />
-          <ScalarProperty Name="rowno" ColumnName="rowno" />
-          <ScalarProperty Name="successors" ColumnName="successors" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_get_task" FunctionName="cybereumModel.Store.sp_get_task">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="cybereumModel.sp_get_task_Result">
-          <ScalarProperty Name="rowno" ColumnName="rowno" />
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="startdate" ColumnName="startdate" />
-          <ScalarProperty Name="enddate" ColumnName="enddate" />
-          <ScalarProperty Name="connectTo" ColumnName="connectTo" />
-          <ScalarProperty Name="parentname" ColumnName="parentname" />
-          <ScalarProperty Name="predecessors" ColumnName="predecessors" />
-          <ScalarProperty Name="successors" ColumnName="successors" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_get_subtask" FunctionName="cybereumModel.Store.sp_get_subtask">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="cybereumModel.sp_get_subtask_Result">
-          <ScalarProperty Name="connectTo" ColumnName="connectTo" />
-          <ScalarProperty Name="enddate" ColumnName="enddate" />
-          <ScalarProperty Name="id" ColumnName="id" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="parentname" ColumnName="parentname" />
-          <ScalarProperty Name="predecessors" ColumnName="predecessors" />
-          <ScalarProperty Name="rowno" ColumnName="rowno" />
-          <ScalarProperty Name="startdate" ColumnName="startdate" />
-          <ScalarProperty Name="successors" ColumnName="successors" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <EntitySetMapping Name="tbl_milestone">
-      <EntityTypeMapping TypeName="cybereumModel.tbl_milestone">
-        <MappingFragment StoreEntitySet="tbl_milestone">
-          <ScalarProperty Name="assignedto" ColumnName="assignedto" />
-          <ScalarProperty Name="tasktypeid" ColumnName="tasktypeid" />
-          <ScalarProperty Name="priority" ColumnName="priority" />
-          <ScalarProperty Name="projectid" ColumnName="projectid" />
-          <ScalarProperty Name="modifieddate" ColumnName="modifieddate" />
-          <ScalarProperty Name="modifiedby" ColumnName="modifiedby" />
-          <ScalarProperty Name="createddate" ColumnName="createddate" />
-          <ScalarProperty Name="createdby" ColumnName="createdby" />
-          <ScalarProperty Name="statusid" ColumnName="statusid" />
-          <ScalarProperty Name="enddate" ColumnName="enddate" />
-          <ScalarProperty Name="startdate" ColumnName="startdate" />
-          <ScalarProperty Name="isactive" ColumnName="isactive" />
-          <ScalarProperty Name="milestonename" ColumnName="milestonename" />
-          <ScalarProperty Name="milestoneid" ColumnName="milestoneid" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tbl_project">
-      <EntityTypeMapping TypeName="cybereumModel.tbl_project">
-        <MappingFragment StoreEntitySet="tbl_project">
-          <ScalarProperty Name="isactive" ColumnName="isactive" />
-          <ScalarProperty Name="noofresource" ColumnName="noofresource" />
-          <ScalarProperty Name="projectcost" ColumnName="projectcost" />
-          <ScalarProperty Name="modifiedby" ColumnName="modifiedby" />
-          <ScalarProperty Name="createdby" ColumnName="createdby" />
-          <ScalarProperty Name="modifiedon" ColumnName="modifiedon" />
-          <ScalarProperty Name="createdon" ColumnName="createdon" />
-          <ScalarProperty Name="enddate" ColumnName="enddate" />
-          <ScalarProperty Name="startdate" ColumnName="startdate" />
-          <ScalarProperty Name="projectname" ColumnName="projectname" />
-          <ScalarProperty Name="projectid" ColumnName="projectid" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tbl_projectdet">
-      <EntityTypeMapping TypeName="cybereumModel.tbl_projectdet">
-        <MappingFragment StoreEntitySet="tbl_projectdet">
-          <ScalarProperty Name="modifiedon" ColumnName="modifiedon" />
-          <ScalarProperty Name="modifiedby" ColumnName="modifiedby" />
-          <ScalarProperty Name="createdon" ColumnName="createdon" />
-          <ScalarProperty Name="createdby" ColumnName="createdby" />
-          <ScalarProperty Name="userid" ColumnName="userid" />
-          <ScalarProperty Name="projectid" ColumnName="projectid" />
-          <ScalarProperty Name="projectdetid" ColumnName="projectdetid" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tbl_status">
-      <EntityTypeMapping TypeName="cybereumModel.tbl_status">
-        <MappingFragment StoreEntitySet="tbl_status">
-          <ScalarProperty Name="modifiedon" ColumnName="modifiedon" />
-          <ScalarProperty Name="modifiedby" ColumnName="modifiedby" />
-          <ScalarProperty Name="createdon" ColumnName="createdon" />
-          <ScalarProperty Name="createdby" ColumnName="createdby" />
-          <ScalarProperty Name="isactive" ColumnName="isactive" />
-          <ScalarProperty Name="statusname" ColumnName="statusname" />
-          <ScalarProperty Name="statusid" ColumnName="statusid" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tbl_subtask">
-      <EntityTypeMapping TypeName="cybereumModel.tbl_subtask">
-        <MappingFragment StoreEntitySet="tbl_subtask">
-          <ScalarProperty Name="assignedto" ColumnName="assignedto" />
-          <ScalarProperty Name="tasktypeid" ColumnName="tasktypeid" />
-          <ScalarProperty Name="priority" ColumnName="priority" />
-          <ScalarProperty Name="taskid" ColumnName="taskid" />
-          <ScalarProperty Name="modifieddate" ColumnName="modifieddate" />
-          <ScalarProperty Name="modifiedby" ColumnName="modifiedby" />
-          <ScalarProperty Name="createddate" ColumnName="createddate" />
-          <ScalarProperty Name="createdby" ColumnName="createdby" />
-          <ScalarProperty Name="statusid" ColumnName="statusid" />
-          <ScalarProperty Name="enddate" ColumnName="enddate" />
-          <ScalarProperty Name="startdate" ColumnName="startdate" />
-          <ScalarProperty Name="isactive" ColumnName="isactive" />
-          <ScalarProperty Name="subtaskname" ColumnName="subtaskname" />
-          <ScalarProperty Name="subtaskid" ColumnName="subtaskid" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tbl_task">
-      <EntityTypeMapping TypeName="cybereumModel.tbl_task">
-        <MappingFragment StoreEntitySet="tbl_task">
-          <ScalarProperty Name="milestoneid" ColumnName="milestoneid" />
-          <ScalarProperty Name="assignedto" ColumnName="assignedto" />
-          <ScalarProperty Name="tasktypeid" ColumnName="tasktypeid" />
-          <ScalarProperty Name="priority" ColumnName="priority" />
-          <ScalarProperty Name="projectid" ColumnName="projectid" />
-          <ScalarProperty Name="modifieddate" ColumnName="modifieddate" />
-          <ScalarProperty Name="modifiedby" ColumnName="modifiedby" />
-          <ScalarProperty Name="createddate" ColumnName="createddate" />
-          <ScalarProperty Name="createdby" ColumnName="createdby" />
-          <ScalarProperty Name="statusid" ColumnName="statusid" />
-          <ScalarProperty Name="enddate" ColumnName="enddate" />
-          <ScalarProperty Name="startdate" ColumnName="startdate" />
-          <ScalarProperty Name="isactive" ColumnName="isactive" />
-          <ScalarProperty Name="taskname" ColumnName="taskname" />
-          <ScalarProperty Name="taskid" ColumnName="taskid" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tbl_tasktype">
-      <EntityTypeMapping TypeName="cybereumModel.tbl_tasktype">
-        <MappingFragment StoreEntitySet="tbl_tasktype">
-          <ScalarProperty Name="modifiedon" ColumnName="modifiedon" />
-          <ScalarProperty Name="modifiedby" ColumnName="modifiedby" />
-          <ScalarProperty Name="createdon" ColumnName="createdon" />
-          <ScalarProperty Name="createdby" ColumnName="createdby" />
-          <ScalarProperty Name="isactive" ColumnName="isactive" />
-          <ScalarProperty Name="tasktypename" ColumnName="tasktypename" />
-          <ScalarProperty Name="tasktypeid" ColumnName="tasktypeid" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="tbl_user">
       <EntityTypeMapping TypeName="cybereumModel.tbl_user">
         <MappingFragment StoreEntitySet="tbl_user">
@@ -291,5 +52,39 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="tbl_status">
+      <EntityTypeMapping TypeName="cybereumModel.tbl_status">
+        <MappingFragment StoreEntitySet="tbl_status">
+          <ScalarProperty Name="modifiedon" ColumnName="modifiedon" />
+          <ScalarProperty Name="modifiedby" ColumnName="modifiedby" />
+          <ScalarProperty Name="createdon" ColumnName="createdon" />
+          <ScalarProperty Name="createdby" ColumnName="createdby" />
+          <ScalarProperty Name="isactive" ColumnName="isactive" />
+          <ScalarProperty Name="statusname" ColumnName="statusname" />
+          <ScalarProperty Name="statusid" ColumnName="statusid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tbl_tasktype">
+      <EntityTypeMapping TypeName="cybereumModel.tbl_tasktype">
+        <MappingFragment StoreEntitySet="tbl_tasktype">
+          <ScalarProperty Name="modifiedon" ColumnName="modifiedon" />
+          <ScalarProperty Name="createdon" ColumnName="createdon" />
+          <ScalarProperty Name="createdby" ColumnName="createdby" />
+          <ScalarProperty Name="isactive" ColumnName="isactive" />
+          <ScalarProperty Name="tasktypename" ColumnName="tasktypename" />
+          <ScalarProperty Name="tasktypeid" ColumnName="tasktypeid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="FK_modifiedby" TypeName="cybereumModel.FK_modifiedby" StoreEntitySet="tbl_tasktype">
+      <EndProperty Name="tbl_tasktype">
+        <ScalarProperty Name="tasktypeid" ColumnName="tasktypeid" />
+      </EndProperty>
+      <EndProperty Name="tbl_user">
+        <ScalarProperty Name="userid" ColumnName="modifiedby" />
+      </EndProperty>
+      <Condition ColumnName="modifiedby" IsNull="false" />
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -17,14 +17,6 @@
       <Parameter Name="P_SortColumn" Mode="In" Type="String" />
       <Parameter Name="P_SortOrder" Mode="In" Type="String" />
     </FunctionImport>
-    <FunctionImport Name="sp_FetchProjects" ReturnType="Collection(cybereumModel.sp_FetchProjects_Result)">
-      <Parameter Name="P_PMid" Mode="In" Type="Int32" />
-      <Parameter Name="P_Roleid" Mode="In" Type="Int32" />
-      <Parameter Name="P_Pageno" Mode="In" Type="Int32" />
-      <Parameter Name="P_pagesize" Mode="In" Type="Int32" />
-      <Parameter Name="P_SortColumn" Mode="In" Type="String" />
-      <Parameter Name="P_SortOrder" Mode="In" Type="String" />
-    </FunctionImport>
     <FunctionImport Name="sp_FetchUsers" ReturnType="Collection(cybereumModel.sp_FetchUsers_Result)">
       <Parameter Name="P_PMid" Mode="In" Type="Int32" />
       <Parameter Name="P_Roleid" Mode="In" Type="Int32" />
@@ -33,130 +25,15 @@
       <Parameter Name="P_SortColumn" Mode="In" Type="String" />
       <Parameter Name="P_SortOrder" Mode="In" Type="String" />
     </FunctionImport>
-    <FunctionImport Name="sp_FetchProjectExists" ReturnType="Collection(Int16)">
-      <Parameter Name="P_projectname" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="sp_FetchTaskExists" ReturnType="Collection(Int16)">
-      <Parameter Name="P_taskname" Mode="In" Type="String" />
-    </FunctionImport>
     <FunctionImport Name="sp_FetchUserExists" ReturnType="Collection(Int16)">
       <Parameter Name="P_email" Mode="In" Type="String" />
     </FunctionImport>
-    <FunctionImport Name="sp_FetchTasks" ReturnType="Collection(cybereumModel.sp_FetchTasks_Result)">
-      <Parameter Name="P_PMid" Mode="In" Type="Int32" />
-      <Parameter Name="P_Roleid" Mode="In" Type="Int32" />
-      <Parameter Name="P_milestoneid" Mode="In" Type="Int32" />
-      <Parameter Name="P_Pageno" Mode="In" Type="Int32" />
-      <Parameter Name="P_pagesize" Mode="In" Type="Int32" />
-      <Parameter Name="P_SortColumn" Mode="In" Type="String" />
-      <Parameter Name="P_SortOrder" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="sp_FetchMilestones" ReturnType="Collection(cybereumModel.sp_FetchMilestones_Result)">
-      <Parameter Name="P_PMid" Mode="In" Type="Int32" />
-      <Parameter Name="P_Roleid" Mode="In" Type="Int32" />
-      <Parameter Name="P_Projectid" Mode="In" Type="Int32" />
-      <Parameter Name="P_Pageno" Mode="In" Type="Int32" />
-      <Parameter Name="P_pagesize" Mode="In" Type="Int32" />
-      <Parameter Name="P_SortColumn" Mode="In" Type="String" />
-      <Parameter Name="P_SortOrder" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="sp_FetchSubTasks" ReturnType="Collection(cybereumModel.sp_FetchSubTasks_Result)">
-      <Parameter Name="P_PMid" Mode="In" Type="Int32" />
-      <Parameter Name="P_Roleid" Mode="In" Type="Int32" />
-      <Parameter Name="P_taskid" Mode="In" Type="Int32" />
-      <Parameter Name="P_Pageno" Mode="In" Type="Int32" />
-      <Parameter Name="P_pagesize" Mode="In" Type="Int32" />
-      <Parameter Name="P_SortColumn" Mode="In" Type="String" />
-      <Parameter Name="P_SortOrder" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="sp_getganttchart" ReturnType="Collection(cybereumModel.sp_getganttchart_Result)">
+    <FunctionImport Name="sp_getganttchart">
       <Parameter Name="p_roleid" Mode="In" Type="Int32" />
       <Parameter Name="p_userid" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="sp_get_project" ReturnType="Collection(cybereumModel.sp_get_project_Result)">
-      <Parameter Name="p_roleid" Mode="In" Type="Int32" />
-      <Parameter Name="p_userid" Mode="In" Type="Int32" />
-      <Parameter Name="p_id" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="sp_get_milestone" ReturnType="Collection(cybereumModel.sp_get_milestone_Result)">
-      <Parameter Name="p_roleid" Mode="In" Type="Int32" />
-      <Parameter Name="p_userid" Mode="In" Type="Int32" />
-      <Parameter Name="p_id" Mode="In" Type="Int32" />
-      <Parameter Name="p_rowno" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="sp_get_task" ReturnType="Collection(cybereumModel.sp_get_task_Result)">
-      <Parameter Name="p_roleid" Mode="In" Type="Int32" />
-      <Parameter Name="p_userid" Mode="In" Type="Int32" />
-      <Parameter Name="p_id" Mode="In" Type="Int32" />
-      <Parameter Name="p_rowno" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <FunctionImport Name="sp_get_subtask" ReturnType="Collection(cybereumModel.sp_get_subtask_Result)">
-      <Parameter Name="p_roleid" Mode="In" Type="Int32" />
-      <Parameter Name="p_userid" Mode="In" Type="Int32" />
-      <Parameter Name="p_id" Mode="In" Type="Int32" />
-      <Parameter Name="p_rowno" Mode="In" Type="Int32" />
-    </FunctionImport>
-    <EntitySet Name="tbl_milestone" EntityType="cybereumModel.tbl_milestone" />
-    <EntitySet Name="tbl_project" EntityType="cybereumModel.tbl_project" />
-    <EntitySet Name="tbl_projectdet" EntityType="cybereumModel.tbl_projectdet" />
-    <EntitySet Name="tbl_status" EntityType="cybereumModel.tbl_status" />
-    <EntitySet Name="tbl_subtask" EntityType="cybereumModel.tbl_subtask" />
-    <EntitySet Name="tbl_task" EntityType="cybereumModel.tbl_task" />
-    <EntitySet Name="tbl_tasktype" EntityType="cybereumModel.tbl_tasktype" />
     <EntitySet Name="tbl_user" EntityType="cybereumModel.tbl_user" />
     <EntitySet Name="tbl_userrole" EntityType="cybereumModel.tbl_userrole" />
-    <AssociationSet Name="FK_milestoneassignedto" Association="cybereumModel.FK_milestoneassignedto">
-      <End Role="tbl_user" EntitySet="tbl_user" />
-      <End Role="tbl_milestone" EntitySet="tbl_milestone" />
-    </AssociationSet>
-    <AssociationSet Name="FK_milestoneprojectid" Association="cybereumModel.FK_milestoneprojectid">
-      <End Role="tbl_project" EntitySet="tbl_project" />
-      <End Role="tbl_milestone" EntitySet="tbl_milestone" />
-    </AssociationSet>
-    <AssociationSet Name="FK_milestonetasktype" Association="cybereumModel.FK_milestonetasktype">
-      <End Role="tbl_tasktype" EntitySet="tbl_tasktype" />
-      <End Role="tbl_milestone" EntitySet="tbl_milestone" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Task_milestone" Association="cybereumModel.FK_Task_milestone">
-      <End Role="tbl_milestone" EntitySet="tbl_milestone" />
-      <End Role="tbl_task" EntitySet="tbl_task" />
-    </AssociationSet>
-    <AssociationSet Name="FK_createdby" Association="cybereumModel.FK_createdby">
-      <End Role="tbl_user" EntitySet="tbl_user" />
-      <End Role="tbl_project" EntitySet="tbl_project" />
-    </AssociationSet>
-    <AssociationSet Name="FK_updatedby" Association="cybereumModel.FK_updatedby">
-      <End Role="tbl_user" EntitySet="tbl_user" />
-      <End Role="tbl_project" EntitySet="tbl_project" />
-    </AssociationSet>
-    <AssociationSet Name="tbl_subtask_status" Association="cybereumModel.tbl_subtask_status">
-      <End Role="tbl_status" EntitySet="tbl_status" />
-      <End Role="tbl_subtask" EntitySet="tbl_subtask" />
-    </AssociationSet>
-    <AssociationSet Name="FK__subtask_assignedto" Association="cybereumModel.FK__subtask_assignedto">
-      <End Role="tbl_user" EntitySet="tbl_user" />
-      <End Role="tbl_subtask" EntitySet="tbl_subtask" />
-    </AssociationSet>
-    <AssociationSet Name="FK_SubTask_Task" Association="cybereumModel.FK_SubTask_Task">
-      <End Role="tbl_task" EntitySet="tbl_task" />
-      <End Role="tbl_subtask" EntitySet="tbl_subtask" />
-    </AssociationSet>
-    <AssociationSet Name="tbl_subtask_tasktype" Association="cybereumModel.tbl_subtask_tasktype">
-      <End Role="tbl_tasktype" EntitySet="tbl_tasktype" />
-      <End Role="tbl_subtask" EntitySet="tbl_subtask" />
-    </AssociationSet>
-    <AssociationSet Name="FK_assignedto" Association="cybereumModel.FK_assignedto">
-      <End Role="tbl_user" EntitySet="tbl_user" />
-      <End Role="tbl_task" EntitySet="tbl_task" />
-    </AssociationSet>
-    <AssociationSet Name="tbl_task_ibfk_1" Association="cybereumModel.tbl_task_ibfk_1">
-      <End Role="tbl_tasktype" EntitySet="tbl_tasktype" />
-      <End Role="tbl_task" EntitySet="tbl_task" />
-    </AssociationSet>
-    <AssociationSet Name="FK_modifiedby" Association="cybereumModel.FK_modifiedby">
-      <End Role="tbl_user" EntitySet="tbl_user" />
-      <End Role="tbl_tasktype" EntitySet="tbl_tasktype" />
-    </AssociationSet>
     <AssociationSet Name="fk_pmuser" Association="cybereumModel.fk_pmuser">
       <End Role="tbl_user" EntitySet="tbl_user" />
       <End Role="tbl_user1" EntitySet="tbl_user" />
@@ -164,6 +41,12 @@
     <AssociationSet Name="FK_userrole" Association="cybereumModel.FK_userrole">
       <End Role="tbl_userrole" EntitySet="tbl_userrole" />
       <End Role="tbl_user" EntitySet="tbl_user" />
+    </AssociationSet>
+    <EntitySet Name="tbl_status" EntityType="cybereumModel.tbl_status" />
+    <EntitySet Name="tbl_tasktype" EntityType="cybereumModel.tbl_tasktype" />
+    <AssociationSet Name="FK_modifiedby" Association="cybereumModel.FK_modifiedby">
+      <End Role="tbl_user" EntitySet="tbl_user" />
+      <End Role="tbl_tasktype" EntitySet="tbl_tasktype" />
     </AssociationSet>
   </EntityContainer>
   <ComplexType Name="sp_FetchLoginDetails_Result">
@@ -194,22 +77,6 @@
     <Property Type="String" Name="rolename" Nullable="false" />
     <Property Type="Int32" Name="userid" Nullable="false" />
   </ComplexType>
-  <ComplexType Name="sp_FetchProjects_Result">
-    <Property Type="Int32" Name="projectid" Nullable="false" />
-    <Property Type="String" Name="projectname" Nullable="false" />
-    <Property Type="DateTime" Name="startdate" Nullable="false" />
-    <Property Type="DateTime" Name="enddate" Nullable="false" />
-    <Property Type="Int32" Name="projectcost" Nullable="true" />
-    <Property Type="Int32" Name="isactive" Nullable="false" />
-    <Property Type="Int32" Name="noofresource" Nullable="true" />
-    <Property Type="Int32" Name="createdby" Nullable="false" />
-    <Property Type="Int32" Name="modifiedby" Nullable="true" />
-    <Property Type="DateTime" Name="createdon" Nullable="false" />
-    <Property Type="DateTime" Name="modifiedon" Nullable="true" />
-    <Property Type="Int32" Name="TotalRecordCount" Nullable="false" />
-    <Property Type="String" Name="createdusername" Nullable="false" />
-    <Property Type="String" Name="modifiedusername" Nullable="true" />
-  </ComplexType>
   <ComplexType Name="sp_FetchUsers_Result">
     <Property Type="String" Name="emailid" Nullable="false" />
     <Property Type="String" Name="firstname" Nullable="false" />
@@ -221,250 +88,6 @@
     <Property Type="Int32" Name="userid" Nullable="false" />
     <Property Type="String" Name="rolename" Nullable="false" />
   </ComplexType>
-  <ComplexType Name="sp_FetchTasks_Result">
-    <Property Type="Int32" Name="taskid" Nullable="false" />
-    <Property Type="String" Name="taskname" Nullable="false" />
-    <Property Type="DateTime" Name="startdate" Nullable="false" />
-    <Property Type="DateTime" Name="enddate" Nullable="false" />
-    <Property Type="Int32" Name="isactive" Nullable="false" />
-    <Property Type="Int32" Name="createdby" Nullable="false" />
-    <Property Type="Int32" Name="modifiedby" Nullable="true" />
-    <Property Type="Int32" Name="assignedto" Nullable="false" />
-    <Property Type="String" Name="assignedusername" Nullable="false" />
-    <Property Type="String" Name="createdusername" Nullable="false" />
-    <Property Type="String" Name="modifiedusername" Nullable="true" />
-    <Property Type="Int32" Name="TotalRecordCount" Nullable="false" />
-    <Property Type="DateTime" Name="createddate" Nullable="false" />
-    <Property Type="DateTime" Name="modifieddate" Nullable="true" />
-    <Property Type="Int32" Name="milestoneid" Nullable="false" />
-    <Property Type="String" Name="milestonename" Nullable="false" />
-  </ComplexType>
-  <ComplexType Name="sp_FetchMilestones_Result">
-    <Property Type="Int32" Name="milestoneid" Nullable="false" />
-    <Property Type="String" Name="milestonename" Nullable="false" />
-    <Property Type="DateTime" Name="startdate" Nullable="false" />
-    <Property Type="DateTime" Name="enddate" Nullable="false" />
-    <Property Type="Int32" Name="isactive" Nullable="false" />
-    <Property Type="Int32" Name="createdby" Nullable="false" />
-    <Property Type="Int32" Name="modifiedby" Nullable="true" />
-    <Property Type="Int32" Name="assignedto" Nullable="true" />
-    <Property Type="String" Name="assignedusername" Nullable="true" />
-    <Property Type="String" Name="createdusername" Nullable="false" />
-    <Property Type="String" Name="modifiedusername" Nullable="true" />
-    <Property Type="Int32" Name="TotalRecordCount" Nullable="false" />
-    <Property Type="DateTime" Name="createddate" Nullable="false" />
-    <Property Type="DateTime" Name="modifieddate" Nullable="true" />
-    <Property Type="Int32" Name="projectid" Nullable="false" />
-    <Property Type="String" Name="projectname" Nullable="false" />
-  </ComplexType>
-  <ComplexType Name="sp_FetchSubTasks_Result">
-    <Property Type="Int32" Name="taskid" Nullable="false" />
-    <Property Type="String" Name="taskname" Nullable="false" />
-    <Property Type="DateTime" Name="startdate" Nullable="false" />
-    <Property Type="DateTime" Name="enddate" Nullable="false" />
-    <Property Type="Int32" Name="isactive" Nullable="false" />
-    <Property Type="Int32" Name="createdby" Nullable="false" />
-    <Property Type="Int32" Name="modifiedby" Nullable="true" />
-    <Property Type="Int32" Name="assignedto" Nullable="false" />
-    <Property Type="String" Name="assignedusername" Nullable="false" />
-    <Property Type="String" Name="createdusername" Nullable="false" />
-    <Property Type="String" Name="modifiedusername" Nullable="true" />
-    <Property Type="Int32" Name="TotalRecordCount" Nullable="false" />
-    <Property Type="DateTime" Name="createddate" Nullable="false" />
-    <Property Type="DateTime" Name="modifieddate" Nullable="true" />
-    <Property Type="Int32" Name="subtaskid" Nullable="false" />
-    <Property Type="String" Name="subtaskname" Nullable="false" />
-  </ComplexType>
-  <ComplexType Name="sp_getganttchart_Result">
-    <Property Type="Int32" Name="id" Nullable="false" />
-    <Property Type="String" Name="name" Nullable="false" />
-    <Property Type="DateTime" Name="actualStart" Nullable="false" />
-    <Property Type="DateTime" Name="actualEnd" Nullable="false" />
-    <Property Type="String" Name="parentname" Nullable="false" />
-    <Property Type="Int32" Name="predecessors" Nullable="false" />
-    <Property Type="Int32" Name="successors" Nullable="false" />
-    <Property Type="Int32" Name="rowno" Nullable="false" />
-    <Property Type="Int32" Name="progressValue" Nullable="false" />
-    <Property Type="Int32" Name="connectTo" Nullable="false" />
-  </ComplexType>
-  <ComplexType Name="sp_get_project_Result">
-    <Property Type="Int32" Name="rowno" Nullable="false" />
-    <Property Type="Int32" Name="id" Nullable="false" />
-    <Property Type="String" Name="name" Nullable="false" />
-    <Property Type="DateTime" Name="startdate" Nullable="false" />
-    <Property Type="DateTime" Name="enddate" Nullable="false" />
-    <Property Type="Int32" Name="predecessors" Nullable="false" />
-    <Property Type="Int32" Name="successors" Nullable="false" />
-    <Property Type="Int32" Name="connectTo" Nullable="false" />
-    <Property Type="String" Name="parentname" Nullable="false" />
-    <Property Type="Int32" Name="progressValue" Nullable="false" />
-  </ComplexType>
-  <ComplexType Name="sp_get_milestone_Result">
-    <Property Type="Int32" Name="connectTo" Nullable="false" />
-    <Property Type="DateTime" Name="enddate" Nullable="false" />
-    <Property Type="Int32" Name="id" Nullable="false" />
-    <Property Type="String" Name="name" Nullable="false" />
-    <Property Type="DateTime" Name="startdate" Nullable="false" />
-    <Property Type="String" Name="parentname" Nullable="false" />
-    <Property Type="Int32" Name="predecessors" Nullable="false" />
-    <Property Type="Int32" Name="rowno" Nullable="false" />
-    <Property Type="Int32" Name="successors" Nullable="false" />
-    <Property Type="Int32" Name="progressValue" Nullable="false" />
-  </ComplexType>
-  <ComplexType Name="sp_get_task_Result">
-    <Property Type="Int32" Name="rowno" Nullable="false" />
-    <Property Type="Int32" Name="id" Nullable="false" />
-    <Property Type="String" Name="name" Nullable="false" />
-    <Property Type="DateTime" Name="startdate" Nullable="false" />
-    <Property Type="DateTime" Name="enddate" Nullable="false" />
-    <Property Type="Int32" Name="connectTo" Nullable="false" />
-    <Property Type="String" Name="parentname" Nullable="false" />
-    <Property Type="Int32" Name="predecessors" Nullable="false" />
-    <Property Type="Int32" Name="successors" Nullable="false" />
-    <Property Type="Int32" Name="progressValue" Nullable="false" />
-  </ComplexType>
-  <ComplexType Name="sp_get_subtask_Result">
-    <Property Type="Int32" Name="connectTo" Nullable="false" />
-    <Property Type="DateTime" Name="enddate" Nullable="false" />
-    <Property Type="Int32" Name="id" Nullable="false" />
-    <Property Type="String" Name="name" Nullable="false" />
-    <Property Type="String" Name="parentname" Nullable="false" />
-    <Property Type="Int32" Name="predecessors" Nullable="false" />
-    <Property Type="Int32" Name="rowno" Nullable="false" />
-    <Property Type="DateTime" Name="startdate" Nullable="false" />
-    <Property Type="Int32" Name="successors" Nullable="false" />
-    <Property Type="Int32" Name="progressValue" Nullable="false" />
-  </ComplexType>
-  <EntityType Name="tbl_milestone">
-    <Key>
-      <PropertyRef Name="milestoneid" />
-    </Key>
-    <Property Name="milestoneid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="milestonename" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-    <Property Name="isactive" Type="Int32" Nullable="false" />
-    <Property Name="startdate" Type="DateTime" Nullable="false" />
-    <Property Name="enddate" Type="DateTime" Nullable="false" />
-    <Property Name="statusid" Type="Int32" />
-    <Property Name="createdby" Type="Int32" Nullable="false" />
-    <Property Name="createddate" Type="DateTime" Nullable="false" />
-    <Property Name="modifiedby" Type="Int32" />
-    <Property Name="modifieddate" Type="DateTime" />
-    <Property Name="projectid" Type="Int32" Nullable="false" />
-    <Property Name="priority" Type="Int32" />
-    <Property Name="tasktypeid" Type="Int32" />
-    <Property Name="assignedto" Type="Int32" />
-    <NavigationProperty Name="tbl_user" Relationship="cybereumModel.FK_milestoneassignedto" FromRole="tbl_milestone" ToRole="tbl_user" />
-    <NavigationProperty Name="tbl_project" Relationship="cybereumModel.FK_milestoneprojectid" FromRole="tbl_milestone" ToRole="tbl_project" />
-    <NavigationProperty Name="tbl_tasktype" Relationship="cybereumModel.FK_milestonetasktype" FromRole="tbl_milestone" ToRole="tbl_tasktype" />
-    <NavigationProperty Name="tbl_task" Relationship="cybereumModel.FK_Task_milestone" FromRole="tbl_milestone" ToRole="tbl_task" />
-  </EntityType>
-  <EntityType Name="tbl_project">
-    <Key>
-      <PropertyRef Name="projectid" />
-    </Key>
-    <Property Name="projectid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="projectname" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="false" />
-    <Property Name="startdate" Type="DateTime" Nullable="false" />
-    <Property Name="enddate" Type="DateTime" Nullable="false" />
-    <Property Name="createdon" Type="DateTime" Nullable="false" />
-    <Property Name="modifiedon" Type="DateTime" />
-    <Property Name="createdby" Type="Int32" Nullable="false" />
-    <Property Name="modifiedby" Type="Int32" />
-    <Property Name="projectcost" Type="Int32" />
-    <Property Name="noofresource" Type="Int32" />
-    <Property Name="isactive" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="tbl_milestone" Relationship="cybereumModel.FK_milestoneprojectid" FromRole="tbl_project" ToRole="tbl_milestone" />
-    <NavigationProperty Name="tbl_user" Relationship="cybereumModel.FK_createdby" FromRole="tbl_project" ToRole="tbl_user" />
-    <NavigationProperty Name="tbl_user1" Relationship="cybereumModel.FK_updatedby" FromRole="tbl_project" ToRole="tbl_user" />
-  </EntityType>
-  <EntityType Name="tbl_projectdet">
-    <Key>
-      <PropertyRef Name="projectdetid" />
-    </Key>
-    <Property Name="projectdetid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="projectid" Type="Int32" Nullable="false" />
-    <Property Name="userid" Type="Int32" Nullable="false" />
-    <Property Name="createdby" Type="Int32" />
-    <Property Name="createdon" Type="DateTime" />
-    <Property Name="modifiedby" Type="Int32" />
-    <Property Name="modifiedon" Type="DateTime" />
-  </EntityType>
-  <EntityType Name="tbl_status">
-    <Key>
-      <PropertyRef Name="statusid" />
-    </Key>
-    <Property Name="statusid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="statusname" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-    <Property Name="isactive" Type="Int32" Nullable="false" />
-    <Property Name="createdby" Type="Int32" Nullable="false" />
-    <Property Name="createdon" Type="DateTime" Nullable="false" />
-    <Property Name="modifiedby" Type="Int32" />
-    <Property Name="modifiedon" Type="DateTime" />
-    <NavigationProperty Name="tbl_subtask" Relationship="cybereumModel.tbl_subtask_status" FromRole="tbl_status" ToRole="tbl_subtask" />
-  </EntityType>
-  <EntityType Name="tbl_subtask">
-    <Key>
-      <PropertyRef Name="subtaskid" />
-    </Key>
-    <Property Name="subtaskid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="subtaskname" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-    <Property Name="isactive" Type="Int32" Nullable="false" />
-    <Property Name="startdate" Type="DateTime" Nullable="false" />
-    <Property Name="enddate" Type="DateTime" Nullable="false" />
-    <Property Name="statusid" Type="Int32" Nullable="false" />
-    <Property Name="createdby" Type="Int32" Nullable="false" />
-    <Property Name="createddate" Type="DateTime" Nullable="false" />
-    <Property Name="modifiedby" Type="Int32" />
-    <Property Name="modifieddate" Type="DateTime" />
-    <Property Name="taskid" Type="Int32" Nullable="false" />
-    <Property Name="priority" Type="Int32" Nullable="false" />
-    <Property Name="tasktypeid" Type="Int32" />
-    <Property Name="assignedto" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="tbl_status" Relationship="cybereumModel.tbl_subtask_status" FromRole="tbl_subtask" ToRole="tbl_status" />
-    <NavigationProperty Name="tbl_user" Relationship="cybereumModel.FK__subtask_assignedto" FromRole="tbl_subtask" ToRole="tbl_user" />
-    <NavigationProperty Name="tbl_task" Relationship="cybereumModel.FK_SubTask_Task" FromRole="tbl_subtask" ToRole="tbl_task" />
-    <NavigationProperty Name="tbl_tasktype" Relationship="cybereumModel.tbl_subtask_tasktype" FromRole="tbl_subtask" ToRole="tbl_tasktype" />
-  </EntityType>
-  <EntityType Name="tbl_task">
-    <Key>
-      <PropertyRef Name="taskid" />
-    </Key>
-    <Property Name="taskid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="taskname" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
-    <Property Name="isactive" Type="Int32" Nullable="false" />
-    <Property Name="startdate" Type="DateTime" Nullable="false" />
-    <Property Name="enddate" Type="DateTime" Nullable="false" />
-    <Property Name="statusid" Type="Int32" Nullable="false" />
-    <Property Name="createdby" Type="Int32" Nullable="false" />
-    <Property Name="createddate" Type="DateTime" Nullable="false" />
-    <Property Name="modifiedby" Type="Int32" />
-    <Property Name="modifieddate" Type="DateTime" />
-    <Property Name="projectid" Type="Int32" Nullable="false" />
-    <Property Name="priority" Type="Int32" Nullable="false" />
-    <Property Name="tasktypeid" Type="Int32" />
-    <Property Name="assignedto" Type="Int32" Nullable="false" />
-    <Property Name="milestoneid" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="tbl_milestone" Relationship="cybereumModel.FK_Task_milestone" FromRole="tbl_task" ToRole="tbl_milestone" />
-    <NavigationProperty Name="tbl_subtask" Relationship="cybereumModel.FK_SubTask_Task" FromRole="tbl_task" ToRole="tbl_subtask" />
-    <NavigationProperty Name="tbl_user" Relationship="cybereumModel.FK_assignedto" FromRole="tbl_task" ToRole="tbl_user" />
-    <NavigationProperty Name="tbl_tasktype" Relationship="cybereumModel.tbl_task_ibfk_1" FromRole="tbl_task" ToRole="tbl_tasktype" />
-  </EntityType>
-  <EntityType Name="tbl_tasktype">
-    <Key>
-      <PropertyRef Name="tasktypeid" />
-    </Key>
-    <Property Name="tasktypeid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="tasktypename" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
-    <Property Name="isactive" Type="Int32" Nullable="false" />
-    <Property Name="createdby" Type="Int32" Nullable="false" />
-    <Property Name="createdon" Type="DateTime" Nullable="false" />
-    <Property Name="modifiedby" Type="Int32" />
-    <Property Name="modifiedon" Type="DateTime" />
-    <NavigationProperty Name="tbl_milestone" Relationship="cybereumModel.FK_milestonetasktype" FromRole="tbl_tasktype" ToRole="tbl_milestone" />
-    <NavigationProperty Name="tbl_subtask" Relationship="cybereumModel.tbl_subtask_tasktype" FromRole="tbl_tasktype" ToRole="tbl_subtask" />
-    <NavigationProperty Name="tbl_task" Relationship="cybereumModel.tbl_task_ibfk_1" FromRole="tbl_tasktype" ToRole="tbl_task" />
-    <NavigationProperty Name="tbl_user" Relationship="cybereumModel.FK_modifiedby" FromRole="tbl_tasktype" ToRole="tbl_user" />
-  </EntityType>
   <EntityType Name="tbl_user">
     <Key>
       <PropertyRef Name="userid" />
@@ -484,15 +107,10 @@
     <Property Name="activationcode" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
     <Property Name="pmuserid" Type="Int32" />
     <Property Name="GUID" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="tbl_milestone" Relationship="cybereumModel.FK_milestoneassignedto" FromRole="tbl_user" ToRole="tbl_milestone" />
-    <NavigationProperty Name="tbl_project" Relationship="cybereumModel.FK_createdby" FromRole="tbl_user" ToRole="tbl_project" />
-    <NavigationProperty Name="tbl_project1" Relationship="cybereumModel.FK_updatedby" FromRole="tbl_user" ToRole="tbl_project" />
-    <NavigationProperty Name="tbl_subtask" Relationship="cybereumModel.FK__subtask_assignedto" FromRole="tbl_user" ToRole="tbl_subtask" />
-    <NavigationProperty Name="tbl_task" Relationship="cybereumModel.FK_assignedto" FromRole="tbl_user" ToRole="tbl_task" />
-    <NavigationProperty Name="tbl_tasktype" Relationship="cybereumModel.FK_modifiedby" FromRole="tbl_user" ToRole="tbl_tasktype" />
     <NavigationProperty Name="tbl_user1" Relationship="cybereumModel.fk_pmuser" FromRole="tbl_user" ToRole="tbl_user1" />
     <NavigationProperty Name="tbl_user2" Relationship="cybereumModel.fk_pmuser" FromRole="tbl_user1" ToRole="tbl_user" />
     <NavigationProperty Name="tbl_userrole" Relationship="cybereumModel.FK_userrole" FromRole="tbl_user" ToRole="tbl_userrole" />
+    <NavigationProperty Name="tbl_tasktype" Relationship="cybereumModel.FK_modifiedby" FromRole="tbl_user" ToRole="tbl_tasktype" />
   </EntityType>
   <EntityType Name="tbl_userrole">
     <Key>
@@ -503,162 +121,6 @@
     <Property Name="isactive" Type="Int32" Nullable="false" />
     <NavigationProperty Name="tbl_user" Relationship="cybereumModel.FK_userrole" FromRole="tbl_userrole" ToRole="tbl_user" />
   </EntityType>
-  <Association Name="FK_milestoneassignedto">
-    <End Type="cybereumModel.tbl_user" Role="tbl_user" Multiplicity="0..1" />
-    <End Type="cybereumModel.tbl_milestone" Role="tbl_milestone" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tbl_user">
-        <PropertyRef Name="userid" />
-      </Principal>
-      <Dependent Role="tbl_milestone">
-        <PropertyRef Name="assignedto" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_milestoneprojectid">
-    <End Type="cybereumModel.tbl_project" Role="tbl_project" Multiplicity="1" />
-    <End Type="cybereumModel.tbl_milestone" Role="tbl_milestone" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tbl_project">
-        <PropertyRef Name="projectid" />
-      </Principal>
-      <Dependent Role="tbl_milestone">
-        <PropertyRef Name="projectid" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_milestonetasktype">
-    <End Type="cybereumModel.tbl_tasktype" Role="tbl_tasktype" Multiplicity="0..1" />
-    <End Type="cybereumModel.tbl_milestone" Role="tbl_milestone" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tbl_tasktype">
-        <PropertyRef Name="tasktypeid" />
-      </Principal>
-      <Dependent Role="tbl_milestone">
-        <PropertyRef Name="tasktypeid" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Task_milestone">
-    <End Type="cybereumModel.tbl_milestone" Role="tbl_milestone" Multiplicity="1" />
-    <End Type="cybereumModel.tbl_task" Role="tbl_task" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tbl_milestone">
-        <PropertyRef Name="milestoneid" />
-      </Principal>
-      <Dependent Role="tbl_task">
-        <PropertyRef Name="milestoneid" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_createdby">
-    <End Type="cybereumModel.tbl_user" Role="tbl_user" Multiplicity="1" />
-    <End Type="cybereumModel.tbl_project" Role="tbl_project" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tbl_user">
-        <PropertyRef Name="userid" />
-      </Principal>
-      <Dependent Role="tbl_project">
-        <PropertyRef Name="createdby" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_updatedby">
-    <End Type="cybereumModel.tbl_user" Role="tbl_user" Multiplicity="0..1" />
-    <End Type="cybereumModel.tbl_project" Role="tbl_project" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tbl_user">
-        <PropertyRef Name="userid" />
-      </Principal>
-      <Dependent Role="tbl_project">
-        <PropertyRef Name="modifiedby" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="tbl_subtask_status">
-    <End Type="cybereumModel.tbl_status" Role="tbl_status" Multiplicity="1" />
-    <End Type="cybereumModel.tbl_subtask" Role="tbl_subtask" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tbl_status">
-        <PropertyRef Name="statusid" />
-      </Principal>
-      <Dependent Role="tbl_subtask">
-        <PropertyRef Name="statusid" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK__subtask_assignedto">
-    <End Type="cybereumModel.tbl_user" Role="tbl_user" Multiplicity="1" />
-    <End Type="cybereumModel.tbl_subtask" Role="tbl_subtask" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tbl_user">
-        <PropertyRef Name="userid" />
-      </Principal>
-      <Dependent Role="tbl_subtask">
-        <PropertyRef Name="assignedto" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_SubTask_Task">
-    <End Type="cybereumModel.tbl_task" Role="tbl_task" Multiplicity="1" />
-    <End Type="cybereumModel.tbl_subtask" Role="tbl_subtask" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tbl_task">
-        <PropertyRef Name="taskid" />
-      </Principal>
-      <Dependent Role="tbl_subtask">
-        <PropertyRef Name="taskid" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="tbl_subtask_tasktype">
-    <End Type="cybereumModel.tbl_tasktype" Role="tbl_tasktype" Multiplicity="0..1" />
-    <End Type="cybereumModel.tbl_subtask" Role="tbl_subtask" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tbl_tasktype">
-        <PropertyRef Name="tasktypeid" />
-      </Principal>
-      <Dependent Role="tbl_subtask">
-        <PropertyRef Name="tasktypeid" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_assignedto">
-    <End Type="cybereumModel.tbl_user" Role="tbl_user" Multiplicity="1" />
-    <End Type="cybereumModel.tbl_task" Role="tbl_task" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tbl_user">
-        <PropertyRef Name="userid" />
-      </Principal>
-      <Dependent Role="tbl_task">
-        <PropertyRef Name="assignedto" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="tbl_task_ibfk_1">
-    <End Type="cybereumModel.tbl_tasktype" Role="tbl_tasktype" Multiplicity="0..1" />
-    <End Type="cybereumModel.tbl_task" Role="tbl_task" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tbl_tasktype">
-        <PropertyRef Name="tasktypeid" />
-      </Principal>
-      <Dependent Role="tbl_task">
-        <PropertyRef Name="tasktypeid" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_modifiedby">
-    <End Type="cybereumModel.tbl_user" Role="tbl_user" Multiplicity="0..1" />
-    <End Type="cybereumModel.tbl_tasktype" Role="tbl_tasktype" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tbl_user">
-        <PropertyRef Name="userid" />
-      </Principal>
-      <Dependent Role="tbl_tasktype">
-        <PropertyRef Name="modifiedby" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="fk_pmuser">
     <End Type="cybereumModel.tbl_user" Role="tbl_user" Multiplicity="0..1" />
     <End Type="cybereumModel.tbl_user" Role="tbl_user1" Multiplicity="*" />
@@ -682,5 +144,33 @@
         <PropertyRef Name="roleid" />
       </Dependent>
     </ReferentialConstraint>
+  </Association>
+  <EntityType Name="tbl_status">
+    <Key>
+      <PropertyRef Name="statusid" />
+    </Key>
+    <Property Name="statusid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="statusname" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="isactive" Type="Int32" Nullable="false" />
+    <Property Name="createdby" Type="Int32" Nullable="false" />
+    <Property Name="createdon" Type="DateTime" Nullable="false" />
+    <Property Name="modifiedby" Type="Int32" />
+    <Property Name="modifiedon" Type="DateTime" />
+  </EntityType>
+  <EntityType Name="tbl_tasktype">
+    <Key>
+      <PropertyRef Name="tasktypeid" />
+    </Key>
+    <Property Name="tasktypeid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tasktypename" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="isactive" Type="Int32" Nullable="false" />
+    <Property Name="createdby" Type="Int32" Nullable="false" />
+    <Property Name="createdon" Type="DateTime" Nullable="false" />
+    <Property Name="modifiedon" Type="DateTime" />
+    <NavigationProperty Name="tbl_user" Relationship="cybereumModel.FK_modifiedby" FromRole="tbl_tasktype" ToRole="tbl_user" />
+  </EntityType>
+  <Association Name="FK_modifiedby">
+    <End Type="cybereumModel.tbl_user" Role="tbl_user" Multiplicity="0..1" />
+    <End Type="cybereumModel.tbl_tasktype" Role="tbl_tasktype" Multiplicity="*" />
   </Association>
 </Schema>

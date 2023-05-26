@@ -1,52 +1,9 @@
 ﻿@*@model Cybereum.Models.ProjectActivity*@
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-@*@using DlhSoft.Web.Mvc;*@
->>>>>>> Stashed changes
-=======
-@*@using DlhSoft.Web.Mvc;*@
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 @{
     ViewBag.Title = "GANTT Chart";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-@*<html>
-    <head>*@
-@*<script src="https://cdn.anychart.com/releases/8.6.0/js/anychart-core.min.js"> </script>
-<<<<<<< Updated upstream
-<script src="https://cdn.anychart.com/releases/8.6.0/js/anychart-gantt.min.js"></script>*@
-=======
-    <script src="https://cdn.anychart.com/releases/8.6.0/js/anychart-gantt.min.js"></script>*@
->>>>>>> Stashed changes
-<script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-core.min.js" type="text/javascript"></script>
-<script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-gantt.min.js" type="text/javascript"></script>
-@*</head>
-    <body>*@
-=======
-
-@*<script src="https://cdn.anychart.com/releases/8.6.0/js/anychart-core.min.js"> </script>
-    <script src="https://cdn.anychart.com/releases/8.6.0/js/anychart-gantt.min.js"></script>*@
-<script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-core.min.js" type="text/javascript"></script>
-<script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-gantt.min.js" type="text/javascript"></script>
-
->>>>>>> Stashed changes
-=======
-=======
->>>>>>> Stashed changes
 
 @*<script src="https://cdn.anychart.com/releases/8.6.0/js/anychart-core.min.js"> </script>
   <script src="https://cdn.anychart.com/releases/8.6.0/js/anychart-gantt.min.js"></script>*@
@@ -55,10 +12,6 @@
 @*<script src="~/js/anychart-gantt.min.js" type="text/javascript"></script>
 <script src="~/js/anychart-core.min.js" type="text/javascript"></script>*@
 
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 <div class="form-horizontal">
     <h4>GANTT Chart</h4>
     <hr />
@@ -68,182 +21,7 @@
 </div>
 <div id="container" style="height:450px"> </div>
 <br />
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-@*@(Html.GanttChartView(component => {
-    // Settings.
-    component.Columns[(int)ColumnType.Content].Header = "Activity";
-    // CSS classes.
-    component.StandardBarCssClass = "dsgc-standard-bar";
-    component.StandardCompletedBarCssClass = "dsgc-standard-completed-bar";
-    // Item change action set up (post).
-    component.ItemChangeAction = "UpdateGanttChartItem";    
-}))*@
->>>>>>> Stashed changes
-@*<div class="row">
-    <div class="col-xl-12 col-lg-12">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Add Activity</h4>
-            </div>
-            <div class="card-body">
-                <div class="basic-form">
-                    @using (Html.BeginForm("GANTTChart", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                    {
-                        @Html.AntiForgeryToken()                        
-                        <span class="text-danger" style="align-items:center;">
-                            @ViewBag.Message
-                            @Html.HiddenFor(model => model.id)
-                            @Html.HiddenFor(model => model.projectid)                            
-                            @Html.HiddenFor(model => model.createdon)
-                        </span>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                @Html.LabelFor(model => model.activityname, "Activity Name", htmlAttributes: new { @class = "" })
-                                @Html.EditorFor(model => model.activityname, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                                @Html.ValidationMessageFor(model => model.activityname, "", new { @class = "text-danger" })
-=======
-@*@(Html.GanttChartView(component => {
-        // Settings.
-        component.Columns[(int)ColumnType.Content].Header = "Activity";
-        // CSS classes.
-        component.StandardBarCssClass = "dsgc-standard-bar";
-        component.StandardCompletedBarCssClass = "dsgc-standard-completed-bar";
-        // Item change action set up (post).
-        component.ItemChangeAction = "UpdateGanttChartItem";
-    }))*@
-=======
->>>>>>> Stashed changes
-@*<div class="row">
-        <div class="col-xl-12 col-lg-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Add Activity</h4>
-                </div>
-                <div class="card-body">
-                    <div class="basic-form">
-                        @using (Html.BeginForm("GANTTChart", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                        {
-                            @Html.AntiForgeryToken()
-                            <span class="text-danger" style="align-items:center;">
-                                @ViewBag.Message
-                                @Html.HiddenFor(model => model.id)
-                                @Html.HiddenFor(model => model.projectid)
-                                @Html.HiddenFor(model => model.createdon)
-                            </span>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    @Html.LabelFor(model => model.activityname, "Activity Name", htmlAttributes: new { @class = "" })
-                                    @Html.EditorFor(model => model.activityname, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                                    @Html.ValidationMessageFor(model => model.activityname, "", new { @class = "text-danger" })
-                                </div>
-                                <div class="form-group col-md-6">
-                                    @Html.LabelFor(model => model.startdate, "Start Date", htmlAttributes: new { @class = "" })
-<<<<<<< Updated upstream
 
-                                    @Html.TextBoxFor(model => model.startdate, new { @type = "date", @class = "form-control datepicker", @Value = Model.startdate.ToString("yyyy-MM-dd") })
-                                    @Html.ValidationMessageFor(model => model.startdate, "", new { @class = "text-danger" })
-
-                                </div>
->>>>>>> Stashed changes
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    @Html.LabelFor(model => model.enddate, "End Date", htmlAttributes: new { @class = "" })
-
-=======
-
-                                    @Html.TextBoxFor(model => model.startdate, new { @type = "date", @class = "form-control datepicker", @Value = Model.startdate.ToString("yyyy-MM-dd") })
-                                    @Html.ValidationMessageFor(model => model.startdate, "", new { @class = "text-danger" })
-
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    @Html.LabelFor(model => model.enddate, "End Date", htmlAttributes: new { @class = "" })
-
->>>>>>> Stashed changes
-                                    @Html.TextBoxFor(model => model.enddate, new { @type = "date", @class = "form-control datepicker", @Value = Model.enddate.ToString("yyyy-MM-dd") })
-                                    @Html.ValidationMessageFor(model => model.enddate, "", new { @class = "text-danger" })
-
-                                </div>
-                                <div class="form-group col-md-6">
-                                    @Html.LabelFor(model => model.ismilestone, "Is Milestone?", htmlAttributes: new { @class = "" })
-
-                                    @Html.CheckBoxFor(model => model.ismilestone)
-
-                                </div>
-                            </div>
-                            <div class="row" style="padding-top: 30px;">
-                                <div class="col-6">
-                                </div>
-                                <div class="col-6">
-                                    <input type="submit" name="btnSubmit" value="Save" class="btn btn" style="background-color: #0D2136; color: white;" />
-                                </div>
-
-                            </div>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                @Html.LabelFor(model => model.enddate, "End Date", htmlAttributes: new { @class = "" })
-
-                                @Html.TextBoxFor(model => model.enddate, new { @type = "date", @class = "form-control datepicker", @Value = Model.enddate.ToString("yyyy-MM-dd") })
-                                @Html.ValidationMessageFor(model => model.enddate, "", new { @class = "text-danger" })
-
-                            </div>
-                            <div class="form-group col-md-6">
-                                @Html.LabelFor(model => model.ismilestone, "Is Milestone?", htmlAttributes: new { @class = "" })
-
-                                @Html.CheckBoxFor(model => model.ismilestone)
-
-                            </div>
-                        </div>
-                        <div class="row" style="padding-top: 30px;">
-                            <div class="col-6">                               
-                            </div>
-                            <div class="col-6">                                
-                                <input type="submit" name="btnSubmit" value="Save" class="btn btn" style="background-color: #0D2136; color: white;" />
-                            </div>
-
-                        </div>                        
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-</div>*@
-=======
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>*@
->>>>>>> Stashed changes
-=======
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>*@
->>>>>>> Stashed changes
-
-@*<div>
-        @{Html.RenderAction("Create", "Activity",new { projectid=@ViewBag.projectid });}
-    </div>*@
-=======
-
->>>>>>> Stashed changes
-=======
-
->>>>>>> Stashed changes
 @Scripts.Render("~/bundles/jquery")
 <script type="text/javascript">
     $(document).ajaxSend(function () {
@@ -251,10 +29,6 @@
 
     $(document).ready(function () {
         debugger;
-
-        $('#container').contextmenu(function() {
-            //alert("Right click");
-        });
 
         $(function () {
             //$("#startdate").datepicker();
@@ -315,15 +89,7 @@
                 header.level(0).format("{%tickValue}{dateTimeFormat:dd MMM}");
                 header.level(1).format("{%value}");
                 header.level(2).format("{%value}-{%endValue}");                
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-
-=======
                 
->>>>>>> Stashed changes
-=======
-                
->>>>>>> Stashed changes
                 // disable the first data grid column
                 chart.dataGrid().column(0).enabled(false);
                 chart.dataGrid().column(1).width(300);
@@ -349,14 +115,6 @@
                 minDate.setDate(minDate.getDate() - 5);
                 var maxDate = new Date(max.actualEnd);
                 maxDate.setDate(maxDate.getDate() + 5);
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                //chart.getTimeline().scale().minimum("2023-05-01");
-                //chart.getTimeline().scale().maximum("2023-06-30");
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
                 chart.getTimeline().scale().minimum(minDate);
                 chart.getTimeline().scale().maximum(maxDate);
 
@@ -369,68 +127,8 @@
                 // fit elements to the width of the timeline
                 chart.fitAll();
                 //chart.fitToTask("1");
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                //chart.zoomTo("week", 2, "first-date");
-=======
-                //var tl = chart.getTimeline();
-                //tl.textMarker(0).value(anychart.enums.GanttDateTimeMarkers.START - 1*day);
-                //chart.zoomTo("week", 2, "first-date");
-
-=======
-                //chart.zoomIn();
-                //var tl = chart.getTimeline();                
-                //tl.textMarker(0).value(anychart.enums.GanttDateTimeMarkers.START - 5*day);
-                //tl.rangeMarker(1).from(anychart.enums.GanttDateTimeMarkers.START - 7*day).to(anychart.enums.GanttDateTimeMarkers.END);
-                //chart.zoomTo("month", 2, "last-visible-date");
-                //chart.zoomTo(Date.UTC(2023, 5, 01), Date.UTC(2023, 6, 30));
-                
-                //// Set zoom levels.
-                //scale.zoomLevels([
-                //    [
-                //        {unit: 'day', count: 3},
-                //        {unit: 'month', count: 1},
-                //        {unit: 'year', count: 1}
-                //    ]
-                //]);
-
-                ////zooming feature
-                //var zoomingCoef = 1;
-                //var isPreviousNegative = true;
-  
-                ////mouse wheel listener
-                //$("#container").on('wheel', function(e){
-                //    e.preventDefault();
-                //    e.stopImmediatePropagation();
-     
-                //    //define the zoomingCoef
-                //    if(e.originalEvent.deltaY > 0 ^ isPreviousNegative) {
-                //        zoomingCoef -= e.originalEvent.deltaY/10;
-                //    } else {
-                //        zoomingCoef =1;
-                //    }
-   
-                //    //zoomIn or zoomOut
-                //    if(e.originalEvent.deltaY < 0) {
-                //        chart.zoomIn(zoomingCoef);
-                //        isPreviousNegative = true;
-                //    }	else {
-                //        chart.zoomOut(zoomingCoef);
-                //        isPreviousNegative = false;
-                //    }
-                //});
-                
->>>>>>> Stashed changes
-=======
                 //chart.zoomIn();               
                 
->>>>>>> Stashed changes
-=======
-                //chart.zoomIn();               
-                
->>>>>>> Stashed changes
                 /* listen to the rowClick event
                     and update the chart title */
                 var timer = null
@@ -442,16 +140,8 @@
                         var roleid = @Session["RoleId"];
                         var taskid = e.item.get("taskid");
                         var projectid = "@ViewBag.projectid";
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
                         if (projectid === taskid) 
                             return false;
->>>>>>> Stashed changes
-=======
-                        if (projectid === taskid) 
-                            return false;
->>>>>>> Stashed changes
                         var link = '@Html.Raw(@Url.Action("Addrecord", "Activity", new { id = "id"}))'.replace('id', taskid);
                         if (roleid === 2) {
                             window.open(link, '_blank');
@@ -459,95 +149,15 @@
                         return false;
                     }, 300)
                 });
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 
                 /* listen to the rowDblClick event
                     and update the chart title */
                 chart.listen("rowDblClick", function (e) {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
                     debugger;
                     clearTimeout(timer);
                     var roleid = @Session["RoleId"];
                     var taskid = e.item.get("taskid");
                     var projectid = "@ViewBag.projectid";
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                    var link = '@Html.Raw(@Url.Action("Create", "Activity", new { projectid = "rowid", activityid = "taskid"}))'.replace('rowid', projectid).replace('taskid', taskid);                    
-                    window.open(link, '_blank');
-                    return false;
-                });
-=======
-                    debugger;                    
-                    var taskid = e.item.get("taskid");
-                    var projectid = "@ViewBag.projectid";
-                    var link = '@Html.Raw(@Url.Action("Create", "Activity", new { projectid = "rowid", activityid = "taskid"}))'.replace('rowid', projectid).replace('taskid', taskid);
-                    window.open(link, '_blank');
-                    return false;
-                });
-
-                /* listen to the rowClick event
-                    and update the chart title */
-                chart.listen("rowClick", function (e) {
-                    debugger;
-                    //New activity
-                    @*var taskid = e.item.get("taskid");
-                    var projectid = "@ViewBag.projectid";
-                    var link = '@Html.Raw(@Url.Action("Create", "Activity", new { projectid = "rowid", activityid = "taskid"}))'.replace('rowid', projectid).replace('taskid', taskid);
-                    window.open(link, '_blank');*@
-
-                    //Edit existing activity
-                    var taskid = e.item.get("taskid");
-                    var projectid = "@ViewBag.projectid";
-                    var link = '@Html.Raw(@Url.Action("Addrecord", "Activity", new { id = "id"}))'.replace('id', taskid);
-                    window.open(link, '_blank');
-                    return false;
-                });
->>>>>>> Stashed changes
-=======
-                    var link = '@Html.Raw(@Url.Action("Create", "Activity", new { projectid = "rowid", activityid = "taskid"}))'.replace('rowid', projectid).replace('taskid', taskid);
-                    if (roleid === 2) {
-                        window.open(link, '_blank');
-                    }
-                    return false;
-                });
->>>>>>> Stashed changes
-=======
-                    var link = '@Html.Raw(@Url.Action("Create", "Activity", new { projectid = "rowid", activityid = "taskid"}))'.replace('rowid', projectid).replace('taskid', taskid);
-                    if (roleid === 2) {
-                        window.open(link, '_blank');
-                    }
-                    return false;
-                });
->>>>>>> Stashed changes
-
-                //chart.listen("contextmenu", function(e) {
-                //    debugger;                    
-                //    var taskid = e.item.get("taskid");
-                //});
-=======
                     if (projectid === taskid) 
                         return false;
                     var link = '@Html.Raw(@Url.Action("Create", "Activity", new { projectid = "rowid", activityid = "taskid"}))'.replace('rowid', projectid).replace('taskid', taskid);
@@ -557,18 +167,6 @@
                     return false;
                 });
                     
->>>>>>> Stashed changes
-=======
-                    if (projectid === taskid) 
-                        return false;
-                    var link = '@Html.Raw(@Url.Action("Create", "Activity", new { projectid = "rowid", activityid = "taskid"}))'.replace('rowid', projectid).replace('taskid', taskid);
-                    if (roleid === 2) {
-                        window.open(link, '_blank');
-                    }
-                    return false;
-                });
-                    
->>>>>>> Stashed changes
             }
         });
 

@@ -24,37 +24,11 @@
     }
 
     #loading-image {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  z-index: 100;
-}
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
         position: absolute;
         top: 50%;
         left: 50%;
         z-index: 100;
     }
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 </style>
 
 <div class="row">
@@ -125,77 +99,14 @@
                                 @Html.CheckBoxFor(model => model.ismilestone)
 
                             </div>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                            <div class="form-group col-md-6">                                
-                                @Html.Label("Predecessors", htmlAttributes: new { @class = "" })
-                                @*@Html.DropDownList("predecessors", null, htmlAttributes: new { @class = "form-control",multiple="multiple" })*@
-                                <div style="height: 300px; overflow-y: scroll;">
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
                             <div class="form-group col-md-6">
                                 @Html.Label("Predecessors", htmlAttributes: new { @class = "" })
                                 @*@Html.DropDownList("predecessors", ViewBag.predecessors as SelectList, htmlAttributes: new { @class = "form-control", multiple = "multiple" })*@
                                 @*<div style="height: 300px; overflow-y: scroll;">
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
                                     @if (ViewBag.predecessors != null)
                                     {
                                         foreach (var item in ViewBag.predecessors)
                                         {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                                            <input id="@item.Value" type="checkbox" name="predecessors" value="@item.Value" checked="@item.Selected" class="checkbox" onclick="Selectitem()" />
-                                            <label for="@item.Value">
-                                                @item.Text
-                                            </label>
-                                            <br />
-                                        }
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                @Html.Label("Predecessors", htmlAttributes: new { @class = "" })
-                                @Html.DropDownList("Predecessors", null, htmlAttributes: new { @class = "form-control" })
-                                @*<div style="height: 300px; overflow-y: scroll;">
-                                        @if (ViewBag.predecessors != null)
-                                        {
-                                            foreach (var item in ViewBag.predecessors)
-                                            {
-                                                <input id="@item.Value" type="checkbox" name="predecessors" value="@item.Value" checked="@item.Selected" class="checkbox" />
-                                                <label for="@item.Value">
-                                                    @item.Text
-                                                </label>
-                                                <br />
-                                            }
-                                        }
-                                    </div>*@
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
                                             <input id="@item.Value" type="checkbox" name="Predecessors" value="@item.Value" checked="@item.Selected" class="checkbox" onclick="Selectitem()" />
                                             <label for="@item.Value">
                                                 @item.Text
@@ -230,16 +141,6 @@
                                         </select>
                                     </div>
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
                             </div>
                         </div>
                         <div class="form-group col-md-6">
@@ -262,33 +163,9 @@
                             <div class="col-6">
                                 <h4>
                                     @Html.ActionLink("Back to List", "Index", new
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                               {
-                                   projectid = ViewBag.projectid
-                               })
-=======
                                        {
                                            projectid = ViewBag.projectid
                                        })
->>>>>>> Stashed changes
-=======
-                                       {
-                                           projectid = ViewBag.projectid
-                                       })
->>>>>>> Stashed changes
-=======
-                                       {
-                                           projectid = ViewBag.projectid
-                                       })
->>>>>>> Stashed changes
-=======
-                                       {
-                                           projectid = ViewBag.projectid
-                                       })
->>>>>>> Stashed changes
                                 </h4>
                             </div>
                             <div class="col-6">
@@ -297,23 +174,7 @@
                             </div>
 
                         </div>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                        @*</div>*@
-=======
                                 @*</div>*@
->>>>>>> Stashed changes
-=======
-                                @*</div>*@
->>>>>>> Stashed changes
-=======
-                                @*</div>*@
->>>>>>> Stashed changes
-=======
-                                @*</div>*@
->>>>>>> Stashed changes
                     }
                 </div>
             </div>
@@ -334,44 +195,9 @@
         var $element = $(this);
         var id = $element.attr('id');
         var arr = [];
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-        $.each($("input[name='predecessors']:checked"), function () {
-            arr.push($(this).val());
-        });
-        //$.getJSON("/Activity/GetPredecesdate",
-        //        {
-        //            id: arr
-        //        },
-        //        function (data) {
-        //            debugger;
-        //            var date = new Date(parseInt(data.substr(6)));
-        //            var month = ("0" + (date.getMonth() + 1)).slice(-2);
-        //            date = date.getFullYear() + '-' + month + '-' + ("0" + date.getDate()).slice(-2);
-        //            $('#enddate').val(date);
-        //        });
-=======
         $.each($("input[name='Predecessors']:checked"), function () {
             arr.push($(this).val());
         });        
->>>>>>> Stashed changes
-=======
-        $.each($("input[name='Predecessors']:checked"), function () {
-            arr.push($(this).val());
-        });        
->>>>>>> Stashed changes
-=======
-        $.each($("input[name='Predecessors']:checked"), function () {
-            arr.push($(this).val());
-        });        
->>>>>>> Stashed changes
-=======
-        $.each($("input[name='Predecessors']:checked"), function () {
-            arr.push($(this).val());
-        });        
->>>>>>> Stashed changes
         $.ajax({
             url: '/Activity/GetPredecesdate',
             data: { id: arr },
@@ -388,17 +214,6 @@
         });
 
     }
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 
 
     function GetSelectedPredecessors() {
@@ -429,16 +244,6 @@
             alert("Please select at least one predecessor");
         };
     }
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 
     $(document).ready(function () {
         debugger;

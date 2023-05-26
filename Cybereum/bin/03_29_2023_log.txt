@@ -1,4 +1,0 @@
-03/29/2023 12:52:08 PM An error occurred while executing the command. See the inner exception for details.
-03/29/2023 12:52:08 PM System.Collections.ListDictionaryInternal
-03/29/2023 12:52:08 PM Attempt by method 'MySql.Data.Entity.EFMySqlCommand.set_DbConnection(System.Data.Common.DbConnection)' to access method 'MySql.Data.MySqlClient.MySqlConnection.get_Settings()' failed.
-03/29/2023 12:52:08 PM System.Data.Entity.Core.Objects.ObjectResult`1[TElement] CreateFunctionObjectResult[TElement](System.Data.Entity.Core.EntityClient.EntityCommand, System.Collections.ObjectModel.ReadOnlyCollection`1[System.Data.Entity.Core.Metadata.Edm.EntitySet], System.Data.Entity.Core.Metadata.Edm.EdmType[], System.Data.Entity.Core.Objects.ExecutionOptions)

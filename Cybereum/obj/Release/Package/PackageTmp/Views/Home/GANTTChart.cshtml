@@ -1,82 +1,177 @@
-﻿@{
+﻿@*@model Cybereum.Models.ProjectActivity*@
+@{
     ViewBag.Title = "GANTT Chart";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@*<html>
-<head>*@
-    <script src="https://cdn.anychart.com/releases/8.6.0/js/anychart-core.min.js"> </script>
-    <script src="https://cdn.anychart.com/releases/8.6.0/js/anychart-gantt.min.js"></script>
-@*</head>
-<body>*@
-<div class=" form-horizontal">
+
+@*<script src="https://cdn.anychart.com/releases/8.6.0/js/anychart-core.min.js"> </script>
+  <script src="https://cdn.anychart.com/releases/8.6.0/js/anychart-gantt.min.js"></script>*@
+<script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-core.min.js" type="text/javascript"></script>
+  <script src="https://cdn.anychart.com/releases/8.11.0/js/anychart-gantt.min.js" type="text/javascript"></script>
+@*<script src="~/js/anychart-gantt.min.js" type="text/javascript"></script>
+<script src="~/js/anychart-core.min.js" type="text/javascript"></script>*@
+
+<div class="form-horizontal">
     <h4>GANTT Chart</h4>
     <hr />
 </div>
 <div class="col-6">
     <a href="@Url.Action("List", "Project")"><h4>Back To List</h4></a>
 </div>
-    <div id="container" style="height:500px"> </div>
-    <script>
-        anychart.onDocumentReady(function () {            
-            // create data
-            var projectid="@ViewBag.projectid";
-    $.ajax({
-        type: 'GET',
-        url: '@Url.Action("getgannchart")?projectid='+ projectid ,
-        datatype: JSON,
-        data: {
-        },
-        contentType: "text/json",
-        success: function (data) {
-            debugger;
-            data = $.parseJSON(data);
-            // set the input date/time format
-            anychart.format.inputDateTimeFormat("yyyy-MM-dd");
-            // create a data tree
-            var treeData = anychart.data.tree(data, "as-tree");
+<div id="container" style="height:450px"> </div>
+<br />
 
-            // create a chart
-            var chart = anychart.ganttProject();
-
-            var header = chart.getTimeline().header();
-            //header.level(0).format("{%tickValue}{dateTimeFormat:dd-MMM}");
-            //chart.dataGrid().column(0).enabled(false);
-            //header.level(1).format("{%value}");
-
-            header.level(0).format("{%tickValue}{dateTimeFormat:dd MMM}");
-            header.level(1).format("{%value}");
-            header.level(2).format("{%value}-{%endValue}");
-            //header.level(0).format("{%value}-{%endValue}");
-
-            //var header = chart.getTimeline().header();
-            //header.level(0).format(function () {
-            //    var duration = (this.end - this.tickValue) / 1000 / 3600 / 24;
-            //    return this.value + ": " + duration + " days"
-            //});
-
-            // set the data
-            chart.data(treeData);
-
-            // set the position of the splitter
-            chart.splitterPosition("30%");
-
-
-            //// configure the scale
-            //chart.getTimeline().scale().maximum(Date.UTC(2023, 06, 30));
-            // set the container id
-            chart.container("container");
-            // initiate drawing the chart
-            chart.draw();
-            // fit elements to the width of the timeline
-            //chart.fitAll();
-            chart.fitToTask("1");
-
-        }
+@Scripts.Render("~/bundles/jquery")
+<script type="text/javascript">
+    $(document).ajaxSend(function () {
     });
 
+    $(document).ready(function () {
+        debugger;
+
+        $(function () {
+            //$("#startdate").datepicker();
+            $("#startdate").on('change', function () {
+                debugger;
+                var startdate = $("#startdate").val();
+                var date = $("#enddate").val();
+                if (date != "") {
+                    if (date < startdate) {
+                        alert('End date must be greater than Start date');
+                        $(this).val('');
+                    }
+                }
+            });
         });
 
-    </script>
+
+        $(function () {
+            $("#enddate").on('change', function () {
+                debugger;
+                var date = $("#enddate").val();
+                var startdate = $("#startdate").val();
+                if (date != "") {
+                    if (date < startdate) {
+                        alert('End date must be greater than Start date');
+                        $(this).val('');
+                    }
+                }
+            });
+        });
+        
+    });
+</script>
+<script>
+    anychart.onDocumentReady(function () {
+        // create data
+        debugger;
+        var projectid = "@ViewBag.projectid";
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("getgannchart")?projectid=' + projectid,
+            datatype: JSON,
+            data: {
+            },
+            contentType: "text/json",
+            success: function (data) {
+                debugger;
+                data = $.parseJSON(data);
+                // set the input date/time format
+                anychart.format.inputDateTimeFormat("yyyy-MM-dd");
+                // create a data tree
+                var treeData = anychart.data.tree(data, "as-tree");
+
+                // create a chart
+                var chart = anychart.ganttProject();
+
+                var header = chart.getTimeline().header();
+                header.level(0).format("{%tickValue}{dateTimeFormat:dd MMM}");
+                header.level(1).format("{%value}");
+                header.level(2).format("{%value}-{%endValue}");                
+                
+                // disable the first data grid column
+                chart.dataGrid().column(0).enabled(false);
+                chart.dataGrid().column(1).width(300);
+
+                // set the data
+                chart.data(treeData);
+
+                //// set the position of the splitter
+                //chart.splitterPosition("25%");
+                var max = null;
+                var min = null;
+
+                for (var i = 0; i < data.length; i++) {
+                    var current = data[i];
+                    if (max === null || current.source > max.source) {
+                        max = current;
+                    }
+                    if (min === null || current.source < min.source) {
+                        min = current;
+                    }
+                }
+                var minDate = new Date(min.actualStart);
+                minDate.setDate(minDate.getDate() - 5);
+                var maxDate = new Date(max.actualEnd);
+                maxDate.setDate(maxDate.getDate() + 5);
+                chart.getTimeline().scale().minimum(minDate);
+                chart.getTimeline().scale().maximum(maxDate);
+
+                //// configure the scale
+                //chart.getTimeline().scale().maximum(Date.UTC(2023, 06, 30));
+                // set the container id
+                chart.container("container");
+                // initiate drawing the chart
+                chart.draw();
+                // fit elements to the width of the timeline
+                chart.fitAll();
+                //chart.fitToTask("1");
+                //chart.zoomIn();               
+                
+                /* listen to the rowClick event
+                    and update the chart title */
+                var timer = null
+                chart.listen("rowClick", function (e) {
+                    debugger;                    
+                    clearTimeout(timer);
+                    timer = setTimeout(function(){
+                        //Edit existing activity
+                        var roleid = @Session["RoleId"];
+                        var taskid = e.item.get("taskid");
+                        var projectid = "@ViewBag.projectid";
+                        if (projectid === taskid) 
+                            return false;
+                        var link = '@Html.Raw(@Url.Action("Addrecord", "Activity", new { id = "id"}))'.replace('id', taskid);
+                        if (roleid === 2) {
+                            window.open(link, '_blank');
+                        }
+                        return false;
+                    }, 300)
+                });
+
+                /* listen to the rowDblClick event
+                    and update the chart title */
+                chart.listen("rowDblClick", function (e) {
+                    debugger;
+                    clearTimeout(timer);
+                    var roleid = @Session["RoleId"];
+                    var taskid = e.item.get("taskid");
+                    var projectid = "@ViewBag.projectid";
+                    if (projectid === taskid) 
+                        return false;
+                    var link = '@Html.Raw(@Url.Action("Create", "Activity", new { projectid = "rowid", activityid = "taskid"}))'.replace('rowid', projectid).replace('taskid', taskid);
+                    if (roleid === 2) {
+                        window.open(link, '_blank');
+                    }
+                    return false;
+                });
+                    
+            }
+        });
+
+    });
+
+</script>
 @*</body>
-</html>*@
+    </html>*@

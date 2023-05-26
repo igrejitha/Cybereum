@@ -90,17 +90,32 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/ApplicationInsights.config">
       <publishTime>03/16/2023 10:24:37</publishTime>
     </File>
+    <File Include="bin/BouncyCastle.Crypto.dll">
+      <publishTime>10/19/2021 11:53:32</publishTime>
+    </File>
     <File Include="bin/Cybereum.dll">
-      <publishTime>04/27/2023 19:40:29</publishTime>
+      <publishTime>05/24/2023 14:52:13</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
-      <publishTime>03/02/2015 09:32:26</publishTime>
+      <publishTime>04/16/2020 20:38:42</publishTime>
     </File>
     <File Include="bin/EntityFramework.SqlServer.dll">
-      <publishTime>03/02/2015 09:32:26</publishTime>
+      <publishTime>04/16/2020 20:38:56</publishTime>
+    </File>
+    <File Include="bin/Google.Protobuf.dll">
+      <publishTime>10/26/2022 13:46:16</publishTime>
     </File>
     <File Include="bin/Gremlin.Net.dll">
       <publishTime>01/14/2022 12:43:24</publishTime>
+    </File>
+    <File Include="bin/K4os.Compression.LZ4.dll">
+      <publishTime>01/06/2023 17:16:10</publishTime>
+    </File>
+    <File Include="bin/K4os.Compression.LZ4.Streams.dll">
+      <publishTime>01/06/2023 17:16:12</publishTime>
+    </File>
+    <File Include="bin/K4os.Hash.xxHash.dll">
+      <publishTime>11/08/2022 18:08:14</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>12/07/2015 19:04:38</publishTime>
@@ -172,10 +187,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/05/2016 04:55:32</publishTime>
     </File>
     <File Include="bin/MySql.Data.dll">
-      <publishTime>06/10/2022 20:37:08</publishTime>
+      <publishTime>04/13/2023 00:31:20</publishTime>
     </File>
     <File Include="bin/MySql.Data.Entity.EF6.dll">
       <publishTime>10/02/2015 17:05:30</publishTime>
+    </File>
+    <File Include="bin/MySql.Data.EntityFramework.dll">
+      <publishTime>04/13/2023 00:31:20</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>03/24/2018 17:44:14</publishTime>
@@ -225,6 +243,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/System.AppContext.dll">
       <publishTime>11/05/2016 04:55:34</publishTime>
     </File>
+    <File Include="bin/System.Buffers.dll">
+      <publishTime>02/19/2020 10:05:18</publishTime>
+    </File>
     <File Include="bin/System.Console.dll">
       <publishTime>11/05/2016 04:55:48</publishTime>
     </File>
@@ -252,11 +273,17 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/System.IO.FileSystem.Primitives.dll">
       <publishTime>11/05/2016 04:56:08</publishTime>
     </File>
+    <File Include="bin/System.IO.Pipelines.dll">
+      <publishTime>02/15/2022 17:10:38</publishTime>
+    </File>
     <File Include="bin/System.Linq.dll">
       <publishTime>11/05/2016 04:56:20</publishTime>
     </File>
     <File Include="bin/System.Linq.Expressions.dll">
       <publishTime>11/05/2016 04:56:24</publishTime>
+    </File>
+    <File Include="bin/System.Memory.dll">
+      <publishTime>05/08/2022 03:31:02</publishTime>
     </File>
     <File Include="bin/System.Net.Http.dll">
       <publishTime>11/05/2016 04:56:30</publishTime>
@@ -270,6 +297,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/System.Net.WebSockets.dll">
       <publishTime>11/05/2016 04:56:34</publishTime>
     </File>
+    <File Include="bin/System.Numerics.Vectors.dll">
+      <publishTime>05/15/2018 13:29:44</publishTime>
+    </File>
     <File Include="bin/System.Reflection.dll">
       <publishTime>11/05/2016 04:56:48</publishTime>
     </File>
@@ -277,7 +307,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>11/05/2016 04:56:48</publishTime>
     </File>
     <File Include="bin/System.Runtime.CompilerServices.Unsafe.dll">
-      <publishTime>02/19/2020 10:05:16</publishTime>
+      <publishTime>10/22/2021 23:40:18</publishTime>
     </File>
     <File Include="bin/System.Runtime.dll">
       <publishTime>11/05/2016 04:57:10</publishTime>
@@ -6396,6 +6426,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="images/testimonial/4.jpg">
       <publishTime>04/14/2023 12:11:29</publishTime>
     </File>
+    <File Include="js/anychart-core.min.js">
+      <publishTime>05/23/2023 21:05:26</publishTime>
+    </File>
+    <File Include="js/anychart-gantt.min.js">
+      <publishTime>05/23/2023 21:05:46</publishTime>
+    </File>
     <File Include="js/custom.js">
       <publishTime>04/14/2023 12:11:29</publishTime>
     </File>
@@ -6466,7 +6502,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/14/2023 12:11:30</publishTime>
     </File>
     <File Include="js/plugins-init/datatables.init.js">
-      <publishTime>04/14/2023 12:11:30</publishTime>
+      <publishTime>04/28/2023 20:59:54</publishTime>
     </File>
     <File Include="js/plugins-init/flot-init.js">
       <publishTime>04/14/2023 12:11:30</publishTime>
@@ -6532,10 +6568,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/14/2023 12:11:30</publishTime>
     </File>
     <File Include="Models/DBModel.edmx.diagram">
-      <publishTime>04/03/2023 21:36:29</publishTime>
+      <publishTime>05/23/2023 11:49:08</publishTime>
     </File>
     <File Include="packages.config">
-      <publishTime>04/18/2023 12:50:06</publishTime>
+      <publishTime>05/23/2023 20:40:00</publishTime>
     </File>
     <File Include="Scripts/ai.0.22.9-build00167.js">
       <publishTime>03/16/2023 10:24:37</publishTime>
@@ -7006,7 +7042,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/16/2023 10:24:10</publishTime>
     </File>
     <File Include="Scripts/_references.js">
-      <publishTime>04/17/2023 11:25:21</publishTime>
+      <publishTime>05/23/2023 15:51:55</publishTime>
     </File>
     <File Include="scss/abstracts/_abstracts.scss">
       <publishTime>04/14/2023 12:11:30</publishTime>
@@ -7609,19 +7645,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/17/2023 16:11:54</publishTime>
     </File>
     <File Include="Views/Activity/Create.cshtml">
-      <publishTime>04/19/2023 17:36:45</publishTime>
+      <publishTime>05/16/2023 08:57:49</publishTime>
     </File>
     <File Include="Views/Activity/Index.cshtml">
-      <publishTime>04/27/2023 19:11:28</publishTime>
+      <publishTime>05/04/2023 14:04:28</publishTime>
     </File>
     <File Include="Views/Home/Dashboard.cshtml">
       <publishTime>04/21/2023 14:07:56</publishTime>
     </File>
     <File Include="Views/Home/GANTT.cshtml">
-      <publishTime>04/01/2023 23:02:24</publishTime>
+      <publishTime>05/03/2023 12:37:43</publishTime>
     </File>
     <File Include="Views/Home/GANTTChart.cshtml">
-      <publishTime>04/27/2023 19:22:46</publishTime>
+      <publishTime>05/23/2023 21:06:39</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
       <publishTime>04/21/2023 13:40:09</publishTime>
@@ -7660,13 +7696,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/17/2023 16:24:07</publishTime>
     </File>
     <File Include="Views/Project/AddEditProject.cshtml">
-      <publishTime>04/25/2023 11:09:53</publishTime>
+      <publishTime>05/23/2023 12:20:54</publishTime>
     </File>
     <File Include="Views/Project/Create.cshtml">
       <publishTime>04/17/2023 14:54:59</publishTime>
     </File>
     <File Include="Views/Project/d3_GANTT_Chart.cshtml">
-      <publishTime>04/01/2023 22:25:12</publishTime>
+      <publishTime>05/03/2023 12:33:06</publishTime>
     </File>
     <File Include="Views/Project/DashTest2.cshtml">
       <publishTime>04/02/2023 20:12:17</publishTime>
@@ -7681,16 +7717,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/24/2023 11:44:37</publishTime>
     </File>
     <File Include="Views/Project/GANTT.cshtml">
-      <publishTime>04/02/2023 19:35:33</publishTime>
+      <publishTime>05/10/2023 18:48:06</publishTime>
     </File>
     <File Include="Views/Project/Graph.cshtml">
-      <publishTime>03/31/2023 15:07:15</publishTime>
+      <publishTime>05/11/2023 18:02:19</publishTime>
     </File>
     <File Include="Views/Project/Index.cshtml">
       <publishTime>04/17/2023 14:28:44</publishTime>
     </File>
     <File Include="Views/Project/List.cshtml">
-      <publishTime>04/25/2023 11:32:52</publishTime>
+      <publishTime>05/23/2023 12:21:55</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>03/16/2023 10:24:13</publishTime>
@@ -7708,7 +7744,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/21/2023 13:18:04</publishTime>
     </File>
     <File Include="Views/SubTask/AddEditSubTask.cshtml">
-      <publishTime>04/21/2023 13:14:58</publishTime>
+      <publishTime>05/23/2023 12:23:23</publishTime>
     </File>
     <File Include="Views/SubTask/Create.cshtml">
       <publishTime>04/17/2023 16:16:47</publishTime>
@@ -7726,10 +7762,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/17/2023 16:25:21</publishTime>
     </File>
     <File Include="Views/SubTask/List.cshtml">
-      <publishTime>04/25/2023 11:32:44</publishTime>
+      <publishTime>05/23/2023 12:23:36</publishTime>
     </File>
     <File Include="Views/Task/AddEditTask.cshtml">
-      <publishTime>04/21/2023 16:15:14</publishTime>
+      <publishTime>05/23/2023 12:46:44</publishTime>
     </File>
     <File Include="Views/Task/Create.cshtml">
       <publishTime>04/17/2023 16:20:15</publishTime>
@@ -7747,10 +7783,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>04/17/2023 16:25:35</publishTime>
     </File>
     <File Include="Views/Task/List.cshtml">
-      <publishTime>04/25/2023 12:01:07</publishTime>
+      <publishTime>05/23/2023 12:24:47</publishTime>
     </File>
     <File Include="Views/User/AddUsers.cshtml">
-      <publishTime>04/17/2023 17:56:16</publishTime>
+      <publishTime>04/28/2023 21:02:51</publishTime>
     </File>
     <File Include="Views/User/ApprovedUsers.cshtml">
       <publishTime>04/17/2023 13:24:52</publishTime>
@@ -7765,13 +7801,13 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/21/2023 11:58:40</publishTime>
     </File>
     <File Include="Views/User/Edit.cshtml">
-      <publishTime>04/17/2023 14:38:05</publishTime>
+      <publishTime>05/23/2023 13:02:38</publishTime>
     </File>
     <File Include="Views/User/EditUser.cshtml">
-      <publishTime>03/23/2023 15:26:05</publishTime>
+      <publishTime>05/23/2023 13:02:56</publishTime>
     </File>
     <File Include="Views/User/Index.cshtml">
-      <publishTime>04/17/2023 17:47:32</publishTime>
+      <publishTime>05/23/2023 13:00:49</publishTime>
     </File>
     <File Include="Views/User/PendingUsers.cshtml">
       <publishTime>04/17/2023 16:22:42</publishTime>
@@ -7783,7 +7819,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/16/2023 10:23:42</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>04/27/2023 19:40:31</publishTime>
+      <publishTime>05/24/2023 14:52:16</publishTime>
     </File>
   </ItemGroup>
 </Project>
