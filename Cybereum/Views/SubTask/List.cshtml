@@ -58,7 +58,15 @@
 </div>
 @if (Convert.ToInt32(Session["RoleId"]) != 1)
 {
-    <p><button type="button" class="btn btn" style="background-color: #0D2136; color: white;" onclick="location.href='@Url.Action("AddEditSubTask", "SubTask")?taskid=@ViewBag.taskid'">Add New</button></p>
+    <p>        
+    <button type="button" class="btn btn" style="background-color: #0D2136; color: white;" onclick="location.href='@Url.Action("AddEditSubTask", "SubTask")?taskid=@ViewBag.taskid'">Add New</button>
+        @Html.ActionLink("Back to Task", "List", "Task", new
+   {
+       // routeValues
+       activityid = ViewBag.activityid,
+       projectid = ViewBag.projectid
+   }, null)
+    </p>
 }
 
 <div class="col-12">
@@ -222,8 +230,9 @@
 
     function getSubTask(id) {
         debugger;
-        location.href = '@Url.Action("AddEditrecord", "SubTask", new { id = "id"})'.replace('id', id);
-
+        var projectid = "@ViewBag.projectid";
+        var activityid = "@ViewBag.activityid";
+        location.href = '@Url.Action("AddEditrecord", "SubTask", new { id = "id", activityid = "task", projectid = "value" })'.replace('id', id).replace('task', activityid).replace('value', projectid);
     }
 
 

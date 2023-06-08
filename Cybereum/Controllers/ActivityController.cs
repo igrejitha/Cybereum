@@ -26,9 +26,9 @@ namespace Cybereum.Controllers
         [SessionTimeout]
         public ActionResult Index(string projectid)
         {
-            TempData["ProjectId"] = projectid;
-            ViewBag.projectid = TempData["ProjectId"];
-            TempData.Keep();
+            //TempData["ProjectId"] = projectid;
+            //ViewBag.projectid = TempData["ProjectId"];
+            //TempData.Keep();
             if (projectid == string.Empty)
             {
                 ViewBag.projectid = Convert.ToInt32(Session["ProjectId"]);
@@ -67,7 +67,7 @@ namespace Cybereum.Controllers
                     List<ProjectActivity> people = JsonConvert.DeserializeObject<List<ProjectActivity>>(pList);
 
                     list = people;
-                    
+
                     var projectresult = this.Json(new { data = list, recordsTotal = list.Count(), recordsFiltered = list.Count() }, JsonRequestBehavior.AllowGet);
                     return projectresult;
                 }
@@ -89,7 +89,7 @@ namespace Cybereum.Controllers
             ProjectActivity activity = new ProjectActivity();
             try
             {
-                var gremlinScript = "g.V().has('activity','id','" + id + "').project('id','activityname','startdate','enddate','durations','ismilestone','createdby','createdusername','createdon','projectid','predecessors').by(id()).by(values('activityname')).by(values('startdate')).by(values('enddate')).by(values('durations')).by(values('ismilestone')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('projectid')).by(values('predecessors').fold())";                
+                var gremlinScript = "g.V().has('activity','id','" + id + "').project('id','activityname','startdate','enddate','durations','ismilestone','createdby','createdusername','createdon','projectid','predecessors').by(id()).by(values('activityname')).by(values('startdate')).by(values('enddate')).by(values('durations')).by(values('ismilestone')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('projectid')).by(values('predecessors').fold())";
                 try
                 {
                     var results = IGUtilities.ExecuteGremlinScript(gremlinScript);
@@ -160,7 +160,7 @@ namespace Cybereum.Controllers
                 ViewBag.projectid = projectid;
                 Session["ProjectId"] = projectid;
             }
-            
+
             if (activityid != null)
             {
                 var gremlinScript = "g.V().has('activity','id','" + activityid + "').project('startdate','enddate').by(values('startdate')).by(values('enddate'))";
@@ -195,8 +195,8 @@ namespace Cybereum.Controllers
                     {
                         Activity.startdate = DateTime.Today;
                         Activity.enddate = DateTime.Today;
-                    }                    
-                }                
+                    }
+                }
             }
             else if (Activity.id == null)
             {
@@ -217,7 +217,7 @@ namespace Cybereum.Controllers
                 {
                     Activity.startdate = DateTime.Today;
                     Activity.enddate = DateTime.Today;
-                }                
+                }
             }
 
             int pmuserid = Convert.ToInt32(Session["LoggedInUserId"]);
@@ -227,7 +227,7 @@ namespace Cybereum.Controllers
 
             List<SelectListItem> predecessors = FillActivity(projectid, activityid, Activity);
             ViewBag.predecessors = predecessors;
-            
+
             return View(Activity);
         }
 
@@ -268,6 +268,37 @@ namespace Cybereum.Controllers
             return Json(lastactivityenddate, JsonRequestBehavior.AllowGet);
         }
 
+        public DateTime GetPredecesenddate(string[] id)
+        {
+            DateTime lastactivityenddate = DateTime.Now;
+            string gremlinScript = string.Empty;
+            if (id != null)
+            {
+                for (int i = 0; i <= id.Length - 1; i++)
+                {
+                    gremlinScript = "g.V().has('activity','id','" + id[i] + "').project('enddate').by(values('enddate'))";
+
+                    var result = IGUtilities.ExecuteGremlinScript(gremlinScript);
+                    if (result.Count > 0)
+                    {
+                        foreach (var item in result)
+                        {
+                            DateTime dt1 = Convert.ToDateTime(item["enddate"]);
+                            dt1 = dt1.AddDays(1);
+                            if (i == 0)
+                            {
+                                lastactivityenddate = dt1;
+                            }
+                            if (dt1 > lastactivityenddate)
+                                lastactivityenddate = dt1;
+                        }
+
+                    }
+                }
+            }
+            return lastactivityenddate;
+        }
+
         public List<SelectListItem> FillActivity(string projectid, string activityid, ProjectActivity Activity)
         {
             List<SelectListItem> predecessors = new List<SelectListItem>();
@@ -282,7 +313,7 @@ namespace Cybereum.Controllers
                             select new SelectListItem
                             {
                                 Text = b.activityname,
-                                Value = b.id.ToString()                                
+                                Value = b.id.ToString()
                             }).ToList();
             //predecessors.Insert(0, new SelectListItem { Text = "<-- Select -->", Value = "" });
 
@@ -370,14 +401,14 @@ namespace Cybereum.Controllers
             }
 
             if (ModelState.IsValid)
-            {                
+            {
                 int duration = Convert.ToInt16(tbl_activity.durations);
                 tbl_activity.enddate = IGUtilities.CalculateDays(tbl_activity.startdate, duration);
 
                 string a = "";
                 long count = 0;
                 if (tbl_activity.id == null)
-                {                    
+                {
                     var gremlinScript = "g.V().has('activity','activityname','" + tbl_activity.activityname + "').has('activity','projectid','" + tbl_activity.projectid + "').count()";
                     var objList = IGUtilities.ExecuteGremlinScript(gremlinScript);
                     count = objList.ToList()[0];
@@ -388,7 +419,7 @@ namespace Cybereum.Controllers
                     }
                 }
                 else
-                {                    
+                {
                     var gremlinScript = "g.V().has('activity','activityname','" + tbl_activity.activityname + "').has('activity','projectid','" + tbl_activity.projectid + "')";
                     var objList = IGUtilities.ExecuteGremlinScript(gremlinScript);
                     foreach (var result in objList)
@@ -401,23 +432,23 @@ namespace Cybereum.Controllers
                     }
                 }
 
-                if (tbl_activity.id == null)
+                if (tbl_activity.Predecessors != null)
                 {
-                    if (tbl_activity.Predecessors != null)
+                    for (int i = 0; i < tbl_activity.Predecessors.Length; i++)
                     {
-                        for (int i = 0; i < tbl_activity.Predecessors.Length; i++)
+                        if (tbl_activity.Predecessors[i] != "" && tbl_activity.Predecessors[i] != "System.String[]")
                         {
-                            if (tbl_activity.Predecessors[i] != "" && tbl_activity.Predecessors[i] != "System.String[]")
-                            {
-                                a = a + $".property(list,'predecessors', '{tbl_activity.Predecessors[i]}') ";
-                            }
+                            a = a + $".property(list,'predecessors', '{tbl_activity.Predecessors[i]}') ";
                         }
                     }
-                    else
-                    {
-                        a = a + $".property(list,'predecessors', '')";
-                    }
+                }
+                else
+                {
+                    a = a + $".property(list,'predecessors', '') ";
+                }
 
+                if (tbl_activity.id == null)
+                {
                     if (tbl_activity.createdby == null)
                         tbl_activity.createdby = Session["LoggedInUserId"].ToString();
 
@@ -433,12 +464,12 @@ namespace Cybereum.Controllers
                             $".property('createdon', '{DateTime.Now}')" + a +
                             $".property('type', 'activity')";
 
-                                    
+
                     var result = IGUtilities.ExecuteGremlinScript(gremlinScript);
                     message = "Added Successfully";
 
                     gremlinScript = "g.V().has('activity','activityname','" + tbl_activity.activityname + "').project('id').by(values('id'))";
-                    
+
                     result = IGUtilities.ExecuteGremlinScript(gremlinScript);
                     foreach (var result2 in result)
                     {
@@ -446,12 +477,12 @@ namespace Cybereum.Controllers
                     }
 
                     //Remove connection the project to activity
-                    gremlinScript = $"\ng.V().has('activity', 'id', '{tbl_activity.id}').bothE().drop()";                    
+                    gremlinScript = $"\ng.V().has('activity', 'id', '{tbl_activity.id}').bothE().drop()";
                     result = IGUtilities.ExecuteGremlinScript(gremlinScript);
                     message = "Gremlin script executed successfully";
 
                     //connect the project to activity
-                    gremlinScript = $"\ng.V('{tbl_activity.projectid}').addE('contains').to(g.V('{tbl_activity.id}'))";                    
+                    gremlinScript = $"\ng.V('{tbl_activity.projectid}').addE('contains').to(g.V('{tbl_activity.id}'))";
                     result = IGUtilities.ExecuteGremlinScript(gremlinScript);
 
                     //Connect the predeccesors to succesors                    
@@ -466,27 +497,12 @@ namespace Cybereum.Controllers
                             }
                         }
                     }
-                   
+
                 }
                 else
                 {
                     string gremlinscript = $"g.V().has('activity', 'id','{ tbl_activity.id }').properties('predecessors').drop()";
                     var result = IGUtilities.ExecuteGremlinScript(gremlinscript);
-                    
-                    if (tbl_activity.Predecessors != null)
-                    {
-                        for (int i = 0; i < tbl_activity.Predecessors.Length; i++)
-                        {
-                            if (tbl_activity.Predecessors[i] != "" && tbl_activity.Predecessors[i] != "System.String[]")
-                            {
-                                a = a + $".property(list,'predecessors', '{tbl_activity.Predecessors[i]}') ";
-                            }
-                        }
-                    }
-                    else
-                    {
-                        a = a + $".property(list,'predecessors', '') ";
-                    }
 
                     string gremlinScript = $"g.V('{tbl_activity.id}')" +
                                             $".property('activityname', '{tbl_activity.activityname}')" +
@@ -525,19 +541,22 @@ namespace Cybereum.Controllers
                         }
                     }
                     //}
+                    //***************update preceding activity dates*************
+                    updateprecedingactivitydates(tbl_activity.projectid, tbl_activity.id);
+                    //****************************End****************************
                 }
 
                 //****************************Update End Activity date****************************
-                string gremlinScript1 = $"g.V().has('activity','projectid','{tbl_activity.projectid}').order().by('enddate',decr).project('startdate','enddate').by(values('startdate')).by(values('enddate')).limit(1)";
+                string gremlinScript1 = $"g.V().has('activity','projectid','{tbl_activity.projectid}').has('activityname',neq('{ ConfigurationManager.AppSettings["EndActivity"] }')).order().by('enddate',decr).project('startdate','enddate').by(values('startdate')).by(values('enddate')).limit(1)";
                 var result1 = IGUtilities.ExecuteGremlinScript(gremlinScript1);
-                DateTime dt1=DateTime.Now;
+                DateTime dt1 = DateTime.Now;
                 if (result1.Count > 0)
                 {
                     foreach (var item in result1)
                     {
                         ViewBag.HasDate = false;
                         dt1 = Convert.ToDateTime(item["enddate"]);
-                        //dt1 = dt1.AddDays(1);
+                        dt1 = dt1.AddDays(1);
                     }
                     gremlinScript1 = $"g.V().has('activity','activityname','{ ConfigurationManager.AppSettings["EndActivity"] }').has('activity','projectid','{tbl_activity.projectid}').project('id','startdate','enddate').by(values('id')).by(values('startdate')).by(values('enddate'))";
                     result1 = IGUtilities.ExecuteGremlinScript(gremlinScript1);
@@ -545,19 +564,20 @@ namespace Cybereum.Controllers
                     {
                         foreach (var item in result1)
                         {
-                            if (dt1 > Convert.ToDateTime(item["enddate"]))
-                            {
-                                gremlinScript1 = $"g.V('{item["id"]}')" +
-                                                $".property('startdate', '{dt1.ToString("yyyy-MM-dd")}')" +
-                                                $".property('enddate', '{dt1.ToString("yyyy-MM-dd")}')" +
-                                                $".property('projectid', '{tbl_activity.projectid}')" +
-                                                $".property('durations', '{1}')" +
-                                                $".property('updatedon', '{DateTime.Now}')" +
-                                                $".property('type', 'activity')";
-                                result1 = IGUtilities.ExecuteGremlinScript(gremlinScript1);
-                            }
+                            //if (dt1 > Convert.ToDateTime(item["enddate"]))
+                            //{
+                            gremlinScript1 = $"g.V('{item["id"]}')" +
+                                            $".property('startdate', '{dt1.ToString("yyyy-MM-dd")}')" +
+                                            $".property('enddate', '{dt1.ToString("yyyy-MM-dd")}')" +
+                                            $".property('projectid', '{tbl_activity.projectid}')" +
+                                            $".property('durations', '{1}')" +
+                                            $".property('updatedon', '{DateTime.Now}')" +
+                                            $".property('type', 'activity')";
+                            result1 = IGUtilities.ExecuteGremlinScript(gremlinScript1);
+                            //}
                         }
                     }
+                    //****************************End****************************
 
                     //****************************Update project End date****************************
                     gremlinScript1 = $"g.V().has('project','id','{tbl_activity.projectid}').project('id','startdate','enddate').by(values('id')).by(values('startdate')).by(values('enddate'))";
@@ -566,18 +586,19 @@ namespace Cybereum.Controllers
                     {
                         foreach (var item in result1)
                         {
-                            if (dt1 > Convert.ToDateTime(item["enddate"]))
-                            {
-                                gremlinScript1 = $"g.V('{item["id"]}')" +                                                
-                                                $".property('enddate', '{dt1.ToString("yyyy-MM-dd")}')" +                                                
-                                                $".property('updatedon', '{DateTime.Now}')" +
-                                                $".property('type', 'project')";
-                                result1 = IGUtilities.ExecuteGremlinScript(gremlinScript1);
-                            }
+                            //if (dt1 > Convert.ToDateTime(item["enddate"]))
+                            //{
+                            gremlinScript1 = $"g.V('{item["id"]}')" +
+                                            $".property('enddate', '{dt1.ToString("yyyy-MM-dd")}')" +
+                                            $".property('updatedon', '{DateTime.Now}')" +
+                                            $".property('type', 'project')";
+                            result1 = IGUtilities.ExecuteGremlinScript(gremlinScript1);
+                            //}
                         }
                     }
                 }
                 //****************************End****************************
+
                 return RedirectToAction("Index", new { projectid = tbl_activity.projectid });
             }
 
@@ -593,7 +614,75 @@ namespace Cybereum.Controllers
             return View(tbl_activity);
             //return RedirectToAction("Create", tbl_activity);
         }
-        
+
+        private void updateprecedingactivitydates(string projectid, string activityid)
+        {
+            try
+            {
+                var gremlinScript = "g.V().has('activity','projectid','" + projectid + "').order().by('startdate',incr).order().by('enddate',incr).project('id','activityname','startdate','enddate','durations','predecessors').by(id()).by(values('activityname')).by(values('startdate')).by(values('enddate')).by(values('durations')).by(values('predecessors').fold())";
+                var activitydata = IGUtilities.ExecuteGremlinScript(gremlinScript);
+                string pList = JsonConvert.SerializeObject(activitydata);
+                List<ProjectActivity> Activitylist = JsonConvert.DeserializeObject<List<ProjectActivity>>(pList);
+                Activitylist = Activitylist.OrderBy(a => a.startdate).ThenBy(a => a.enddate).ToList();
+                
+                // finding index
+                int index = Activitylist.FindIndex(a => a.id == activityid);
+
+                //Remove previous activities
+                Activitylist.RemoveRange(0, index+1);
+                //Remove end activity
+                Activitylist.Remove(Activitylist.Find(m => m.activityname == ConfigurationManager.AppSettings["EndActivity"]));
+
+                //********update start and enddate of successor activities
+                foreach (var itemactivity in Activitylist)
+                {
+                    string gremlinScript1 = $"g.V().has('activity','id','{itemactivity.id}').project('id','activityname','durations','startdate','enddate','predecessors').by(values('id')).by(values('activityname')).by(values('durations')).by(values('startdate')).by(values('enddate')).by(values('predecessors').fold())";
+                    var result1 = IGUtilities.ExecuteGremlinScript(gremlinScript1);
+                    if (result1.Count > 0)
+                    {
+                        foreach (var item in result1)
+                        {
+                            DateTime precedingenddate = DateTime.Now;
+
+                            var predecessors = item["predecessors"];
+                            var stringlist = JsonConvert.SerializeObject(predecessors);
+                            var jArray = JArray.Parse(stringlist);
+                            string tasks = string.Empty;
+
+                            foreach (string precedor in jArray)
+                            {
+                                tasks = tasks + precedor + ",";
+                            }
+                            if (tasks != "") tasks = tasks.Remove(tasks.LastIndexOf(",")).ToString();
+                            if (tasks.ToString() != string.Empty)
+                            {
+                                string[] ints = tasks.Split(',').ToArray();
+                                precedingenddate = GetPredecesenddate(ints);
+                            }
+                            else
+                            {
+                                precedingenddate = Convert.ToDateTime(item["startdate"]);                                
+                            }
+
+                            int days = Convert.ToInt16(item["durations"]);
+                            DateTime todate = IGUtilities.CalculateDays(precedingenddate, days);
+                            var gremlinScripts = $"g.V('{item["id"]}')" +
+                                        $".property('startdate', '{precedingenddate.ToString("yyyy-MM-dd")}')" +
+                                        $".property('enddate', '{todate.ToString("yyyy-MM-dd")}')" +
+                                        $".property('updatedon', '{DateTime.Now}')" +
+                                        $".property('type', 'activity')";
+                            var result = IGUtilities.ExecuteGremlinScript(gremlinScripts);
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

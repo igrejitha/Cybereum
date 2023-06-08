@@ -58,13 +58,12 @@
 </div>
 @if (Convert.ToInt32(Session["RoleId"]) == 2)
 {
-<p>
-    @*<button id="btncreate" type="button" class="btn btn" style="background-color: #0D2136; color: white;" 
-            onclick="location.href='@Url.Action("Create", "Activity")?activityid=null&projectid=@ViewBag.projectid '">Add New</button>*@
-    <button id="btncreate" type="button" class="btn btn" style="background-color: #0D2136; color: white;">
-        Add New
-    </button>
-</p>
+    <p>        
+        <button id="btncreate" type="button" class="btn btn" style="background-color: #0D2136; color: white;">
+            Add New
+        </button>
+        @Html.ActionLink("Back to Project", "List", "Project")
+    </p>
 }
 
 
@@ -102,7 +101,7 @@
     $(document).ready(function () {
         $('#liUsers').addClass("active");
 
-        $("#btncreate").click(function(){
+        $("#btncreate").click(function () {
             debugger;
             var taskid = null;
             var projectid = "@ViewBag.projectid";
@@ -176,8 +175,7 @@
                     }
                 },
                 {
-                    "render": function (data, type, full, meta)
-                    {
+                    "render": function (data, type, full, meta) {
                         //return '<button class="btn btn" style="background-color: #0D2136; color: white;" onclick=getActivity("' + full.activityid + '"); >Edit</button>';
                         var value1 = '@Request.RequestContext.HttpContext.Session["RoleId"]';
                         if (value1 == '2') {
@@ -223,8 +221,7 @@
                 { 'data': 'startdate', 'name': 'Start Date' },
                 { 'data': 'enddate', 'name': 'End Date' },
                 {
-                    "render": function (data, type, full, meta)
-                    {
+                    "render": function (data, type, full, meta) {
                         //return '<button class="btn btn" style="background-color: #0D2136; color: white;" onclick=getActivity("' + full.activityid + '"); >Edit</button>';
                         var value1 = '@Request.RequestContext.HttpContext.Session["RoleId"]';
                         if (value1 == '2') {
@@ -257,56 +254,10 @@
 
     function GetTask(activityid) {
         debugger;
-        location.href = '@Url.Action("List", "Task")?activityid=' + activityid + '';
+        var projectid = "@ViewBag.projectid";
+        location.href = '@Url.Action("List", "Task")?activityid=' + activityid + '&projectid=' + projectid + '';
     }
 
-    @*function OnSuccess(objFilter) {
-        $("#overlay").fadeOut(300);
-
-        debugger;
-        $("#tblActivity").DataTable(
-        {
-            processing: true,
-            serverSide: true,
-            filter: false,
-            orderMulti: false,
-            destroy: true,
-            //ordering: true,
-            pageLength: 75,
-            //LengthChange: true,
-            //Filter: true,
-            Sort: true,
-            "ajax": {
-                url: '@Url.Action("activitylist", "Activity")',
-                type: 'POST',
-                data: {
-                    datprojectid: projectid
-                }
-            },
-            aLengthMenu: [[75, 100, 500, 1000, -1], [75, 100, 500, 1000, "All"]],
-            iDisplayLength: 75,
-            //scrollY: 400,
-            scrollCollapse: false,
-            aoColumnDefs: [{
-                bSortable: false,
-                aTargets: [-1, -2]
-            }],
-            columns: [
-                { 'data': 'activityname', 'name': 'Activity Name' },
-                { 'data': 'projectname', 'name': 'Project Name' },
-                { 'data': 'startdate', 'name': 'Start Date' },
-                { 'data': 'enddate', 'name': 'End Date' },
-                {
-                    data: 'milestonename', render: function (data, type, row) {
-                        return "<button type='submit' onclick=EditData('" + encodeURIComponent(row.taskid) + "'); class='btn btn-info'>Edit</button>";
-                    }
-                }],
-            select: {
-                style: 'multi',
-                selector: 'td:first-child'
-            },
-        });
-    };*@
 
     function msg(strMsg, mode) {
         $.notify(strMsg, mode, { globalPosition: 'top center', clickToHide: true, autoHide: false });

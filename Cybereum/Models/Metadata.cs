@@ -601,6 +601,8 @@ namespace Cybereum.Models
         public DateTime createdon { get; set; }
 
         public List<ProjectSubTask> subtasks { get; set; }
+
+        public string projectid { get; set; }
     }
 
     public class ProjectSubTask

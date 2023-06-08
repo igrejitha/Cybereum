@@ -21,7 +21,7 @@ namespace Cybereum.Controllers
         // GET: User
         public ActionResult Index()
         {
-            GetUser(Convert.ToInt32(System.Web.HttpContext.Current.Session["LoggedInUserId"]), Convert.ToInt32(System.Web.HttpContext.Current.Session["RoleId"]));
+            //GetUser(Convert.ToInt32(System.Web.HttpContext.Current.Session["LoggedInUserId"]), Convert.ToInt32(System.Web.HttpContext.Current.Session["RoleId"]));
             return View();
         }
 

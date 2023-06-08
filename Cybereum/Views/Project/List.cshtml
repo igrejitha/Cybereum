@@ -127,11 +127,16 @@
                     }
                 },
                 {
-                    "render": function (data, type, full, meta)                        
-                    {
+                    "render": function (data, type, full, meta) {
                         var value1 = '@Request.RequestContext.HttpContext.Session["RoleId"]';
+                        var value2 = '@Request.RequestContext.HttpContext.Session["LoggedInUserId"]';
                         if (value1 == '2') {
-                            return '<button class="btn btn" style="background-color: #0D2136; color: white;" onclick=getProject("' + full.projectid + '"); >Edit</button>';
+                            if (value2 == full.createdby) {
+                                return '<button class="btn btn" style="background-color: #0D2136; color: white;" onclick=getProject("' + full.projectid + '"); >Edit</button>';
+                            }
+                            else {
+                                return '<button class="btn btn" style="background-color: #0D2136; color: white;" disabled="disabled" onclick=getProject("' + full.projectid + '"); >Edit</button>';
+                            }
                         }
                         else {
                             return '<button class="btn btn" style="background-color: #0D2136; color: white;" disabled="disabled" onclick=getProject("' + full.projectid + '"); >Edit</button>';
@@ -193,12 +198,18 @@
                     }
                 },
                 {
-                    "render": function (data, type, full, meta)
-                    {
+                    "render": function (data, type, full, meta) {
                         {
+                            debugger;
                             var value1 = '@Request.RequestContext.HttpContext.Session["RoleId"]';
+                            var value2 = '@Request.RequestContext.HttpContext.Session["LoggedInUserId"]';
                             if (value1 == '2') {
-                                return '<button class="btn btn" style="background-color: #0D2136; color: white;" onclick=getProject("' + full.projectid + '"); >Edit</button>';
+                                if (value2 == full.createdby) {
+                                    return '<button class="btn btn" style="background-color: #0D2136; color: white;" onclick=getProject("' + full.projectid + '"); >Edit</button>';
+                                }
+                                else {
+                                    return '<button class="btn btn" style="background-color: #0D2136; color: white;" disabled="disabled" onclick=getProject("' + full.projectid + '"); >Edit</button>';
+                                }
                             }
                             else {
                                 return '<button class="btn btn" style="background-color: #0D2136; color: white;" disabled="disabled" onclick=getProject("' + full.projectid + '"); >Edit</button>';

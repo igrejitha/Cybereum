@@ -124,12 +124,11 @@ namespace Cybereum.Controllers
 
                     string pList = JsonConvert.SerializeObject(results);
                     projectlist = JsonConvert.DeserializeObject<List<Project>>(pList);
-                    
+
                     foreach (var project in projectlist)
                     {
                         int userid = Convert.ToInt32(project.createdby);
                         var username = db.tbl_user.Where(x => x.userid == userid).FirstOrDefault();
-
                         if (username != null)
                         {
                             project.createdusername = username.firstname + ' ' + username.lastname;

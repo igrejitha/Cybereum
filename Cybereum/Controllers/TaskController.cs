@@ -21,45 +21,30 @@ namespace Cybereum.Controllers
         // GET: Task
         [Authorize]
         [SessionTimeout]
-        public ActionResult Index(int? milestoneid)
+        public ActionResult List(string activityid, string projectid)
         {
-            //var tbl_task = db.tbl_task.Include(t => t.tbl_project).Include(t => t.tbl_user).Include(t => t.tbl_tasktype);
-            //return View(tbl_task.ToList());
-
-            TempData["MilestoneId"] = milestoneid;
-            ViewBag.milestoneid = TempData["MilestoneId"];
-            TempData.Keep();
-            if (milestoneid == 0)
-            {
-                ViewBag.milestoneid = Convert.ToInt32(Session["MilestoneId"]);
-                Session["MilestoneId"] = ViewBag.milestoneid;
-            }
-            else
-            {
-                ViewBag.milestoneid = milestoneid;
-                Session["MilestoneId"] = milestoneid;
-            }
-            //GetTask(Convert.ToInt32(System.Web.HttpContext.Current.Session["LoggedInUserId"]), Convert.ToInt32(System.Web.HttpContext.Current.Session["RoleId"]), milestoneid);
-            return View();
-        }
-
-        // GET: Task
-        [Authorize]
-        [SessionTimeout]
-        public ActionResult List(string activityid)
-        {
-            TempData["ActivityId"] = activityid;
-            ViewBag.activityid = TempData["ActivityId"];
-            TempData.Keep();
+            //TempData["ActivityId"] = activityid;
+            //ViewBag.activityid = TempData["ActivityId"];
+            //TempData.Keep();
             if (activityid == null)
             {
-                ViewBag.activityid = Convert.ToInt32(Session["ActivityId"]);
+                ViewBag.activityid = Session["ActivityId"];
                 Session["ActivityId"] = ViewBag.activityid;
             }
             else
             {
-                ViewBag.activityid = activityid;
-                Session["ActivityId"] = activityid;
+                ViewBag.activityid = activityid;                
+                Session["ActivityId"] = activityid;                
+            }
+            if (projectid == null)
+            {
+                ViewBag.projectid = Session["ProjectId"];
+                Session["ProjectId"] = ViewBag.projectid;
+            }
+            else
+            {
+                ViewBag.projectid = projectid;
+                Session["ProjectId"] = projectid;
             }
             return View();
         }
@@ -104,13 +89,15 @@ namespace Cybereum.Controllers
                         }
 
                         task.assignedto = result["assignedto"].ToString();
-
-                        int userid = Convert.ToInt32(result["assignedto"]);
-                        var username = db.tbl_user.Where(x => x.userid == userid).FirstOrDefault();
-
-                        if (username != null)
+                        if (task.assignedto != "")
                         {
-                            task.assignedusername = username.firstname + ' ' + username.lastname;
+                            int userid = Convert.ToInt32(result["assignedto"].ToString());
+                            var username = db.tbl_user.Where(x => x.userid == userid).FirstOrDefault();
+
+                            if (username != null)
+                            {
+                                task.assignedusername = username.firstname + ' ' + username.lastname;
+                            }
                         }
 
                         task.createdon = Convert.ToDateTime(result["createdon"]);
@@ -143,11 +130,13 @@ namespace Cybereum.Controllers
             return RedirectToAction("Create", task);
         }
 
-        public ActionResult AddEditrecord(string Id)
+        public ActionResult AddEditrecord(string Id, string projectid)
         {
             ViewBag.Message = "Edit Task";
 
             var task = gettaskbyid(Id);
+            Session["Projectid"] = projectid;
+            ViewBag.projectid = projectid;
             return RedirectToAction("AddEditTask", task.Result);
         }
 
@@ -197,17 +186,27 @@ namespace Cybereum.Controllers
 
         [Authorize]
         [SessionTimeout]
-        public ActionResult AddEditTask(int? taskid, string activityid, ProjectTask projecttask)
+        public ActionResult AddEditTask(int? taskid, string activityid, string projectid, ProjectTask projecttask)
         {
             if (activityid == null)
             {
-                ViewBag.activityid = Convert.ToInt32(Session["ActivityId"]);
-                Session["ActivityId"] = ViewBag.activityid;
+                //ViewBag.activityid = Convert.ToInt32(Session["ActivityId"]);
+                //Session["ActivityId"] = ViewBag.activityid;
             }
             else
             {
-                ViewBag.activityid = activityid;
-                Session["ActivityId"] = activityid;
+                ViewBag.activityid = activityid;                
+                //Session["ActivityId"] = activityid;
+            }
+            if (projectid==null)
+            {
+                ViewBag.projectid = Session["ProjectId"];
+                Session["ProjectId"] = ViewBag.projectid;
+            }
+            else
+            {
+                ViewBag.projectid = projectid;
+                Session["ProjectId"] = projectid;
             }
 
             if (projecttask.taskid == null)
@@ -265,25 +264,10 @@ namespace Cybereum.Controllers
         {
             string message = string.Empty;
             if (ModelState.IsValid)
-            {
-                long duration = 0;
-                if (DateTime.Now.Date < tbl_task.startdate.Date)
-                {
-                    duration = 0;
-                }
-                else if (DateTime.Now.Date > tbl_task.enddate.Date)
-                {
-                    duration = 100;
-                }
-                else
-                {
-                    double dt1 = (DateTime.Now.Date - tbl_task.startdate.Date).TotalDays + 1;
-                    double dt2 = (tbl_task.enddate.Date - tbl_task.startdate.Date).TotalDays + 1;
-                    if (dt2 != 0)
-                        duration = Convert.ToInt64((dt1 / dt2) * 100);
-                }
-
-
+            {                
+                int duration = Convert.ToInt16(tbl_task.durations);
+                tbl_task.enddate = IGUtilities.CalculateDays(tbl_task.startdate, duration);
+                
                 long count = 0;
                 if (tbl_task.taskid == null)
                 {
@@ -348,18 +332,18 @@ namespace Cybereum.Controllers
                     // Execute the Gremlin script                    
                     result = IGUtilities.ExecuteGremlinScript(gremlinScript);
                     message = "Gremlin script executed successfully";
-                    
+
 
                     //connect the project to activity
                     gremlinScript = $"\ng.V('{tbl_task.activityid}').addE('contains').to(g.V('{tbl_task.taskid}'))";
                     // Execute the Gremlin script
                     result = IGUtilities.ExecuteGremlinScript(gremlinScript);
                     message = "Gremlin script executed successfully";
-                    
+
 
                     gremlinScript = $"\ng.V('{tbl_task.activityid}').addE('precedes').property('duration', '{tbl_task.durations}').to(g.V('{tbl_task.taskid}'))";
                     result = IGUtilities.ExecuteGremlinScript(gremlinScript);
-                    message = "Gremlin script executed successfully";                    
+                    message = "Gremlin script executed successfully";
                 }
                 else
                 {
@@ -378,22 +362,18 @@ namespace Cybereum.Controllers
                     //var gremlinServer = new GremlinServer(hostname, port, enableSsl: true, username: "/dbs/" + database + "/colls/" + collection, password: authKey);
                     var result = IGUtilities.ExecuteGremlinScript(gremlinScript);
                     message = "Updated Successfully";
-                    
+
 
                     //connect the activity to task
                     gremlinScript = $"\ng.V('{tbl_task.activityid}').addE('contains').to(g.V('{tbl_task.taskid}'))";
                     // Execute the Gremlin script
                     result = IGUtilities.ExecuteGremlinScript(gremlinScript);
-                    message = "Gremlin script executed successfully";
-                    
 
                     //Connect the predeccesors to succesors
                     gremlinScript = $"\ng.V('{tbl_task.activityid}').addE('precedes').property('duration', '{tbl_task.durations}').to(g.V('{tbl_task.taskid}'))";
                     result = IGUtilities.ExecuteGremlinScript(gremlinScript);
-                    message = "Gremlin script executed successfully";                   
-                    
                 }
-                return RedirectToAction("List", new { activityid = tbl_task.activityid });
+                return RedirectToAction("List", new { activityid = tbl_task.activityid, projectid = Session["Projectid"] });
 
             }
             endloop:
@@ -505,6 +485,11 @@ namespace Cybereum.Controllers
             return user;
         }
 
+        public JsonResult GetEnddate(DateTime startDate, int id)
+        {
+            var record = IGUtilities.CalculateDays(startDate, id);
+            return Json(record, JsonRequestBehavior.AllowGet);
+        }
 
         protected override void Dispose(bool disposing)
         {

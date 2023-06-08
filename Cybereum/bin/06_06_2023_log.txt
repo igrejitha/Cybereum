@@ -1,0 +1,2 @@
+06/06/2023 11:18:11 AM Mailbox unavailable. The server response was: Access denied - Invalid HELO name (See RFC2821 4.1.1.1)
+06/06/2023 11:18:11 AM System.Collections.ListDictionaryInternal

@@ -1,0 +1,14 @@
+06/07/2023 03:15:41 PM Mailbox unavailable. The server response was: Access denied - Invalid HELO name (See RFC2821 4.1.1.1)
+06/07/2023 03:15:41 PM System.Collections.ListDictionaryInternal
+06/07/2023 03:15:41 PM Object reference not set to an instance of an object.
+06/07/2023 03:15:41 PM System.Collections.ListDictionaryInternal
+06/07/2023 03:16:28 PM Mailbox unavailable. The server response was: Access denied - Invalid HELO name (See RFC2821 4.1.1.1)
+06/07/2023 03:16:28 PM System.Collections.ListDictionaryInternal
+06/07/2023 03:16:28 PM Object reference not set to an instance of an object.
+06/07/2023 03:16:28 PM System.Collections.ListDictionaryInternal
+06/07/2023 03:18:27 PM Mailbox unavailable. The server response was: Access denied - Invalid HELO name (See RFC2821 4.1.1.1)
+06/07/2023 03:18:30 PM System.Collections.ListDictionaryInternal
+06/07/2023 03:18:33 PM Void CheckResponse(System.Net.Mail.SmtpStatusCode, System.String)
+06/07/2023 03:18:38 PM Mailbox unavailable. The server response was: Access denied - Invalid HELO name (See RFC2821 4.1.1.1)
+06/07/2023 03:18:38 PM System.Collections.ListDictionaryInternal
+06/07/2023 03:18:42 PM Void CheckResponse(System.Net.Mail.SmtpStatusCode, System.String)

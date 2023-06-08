@@ -468,6 +468,7 @@
     <Content Include="Content\site-client.css" />
     <Content Include="css\perfect-scrollbar.css" />
     <Content Include="css\style.css" />
+    <Content Include="css\style_Dash.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -2421,6 +2422,7 @@
     <Content Include="js\dashboard\distance-map.js" />
     <Content Include="js\dashboard\workout-statistic.js" />
     <Content Include="js\deznav-init.js" />
+    <Content Include="js\GanttChart.js" />
     <Content Include="js\layout-compact-nav.js" />
     <Content Include="js\layout-dark.js" />
     <Content Include="js\layout-fixed-header.js" />

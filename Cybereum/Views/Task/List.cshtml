@@ -56,9 +56,17 @@
     <hr />
 </div>
 
+
 @if (Convert.ToInt32(Session["RoleId"]) == 2)
 {
-    <p><button type="button" class="btn btn" style="background-color: #0D2136; color: white;" onclick="location.href='@Url.Action("AddEditTask", "Task")?activityid=@ViewBag.activityid'">Add New</button></p>
+    <p>       
+        <button type="button" class="btn btn" style="background-color: #0D2136; color: white;" onclick="location.href='@Url.Action("AddEditTask", "Task")?activityid=@ViewBag.activityid&projectid=@ViewBag.projectid'">Add New</button>
+        @Html.ActionLink("Back to Activity", "Index", "Activity", new
+    {
+        // routeValues
+        projectid = ViewBag.projectid
+    }, null)
+    </p>
 }
 
 <div class="col-12">
@@ -157,7 +165,7 @@
                         }
                     }
                 },
-                { 'data': 'assignedusername', 'name': 'Assigned To' },                
+                { 'data': 'assignedusername', 'name': 'Assigned To' },
                 {
                     "render": function (data, type, full, meta) {
                         debugger;
@@ -185,7 +193,7 @@
         });
     });
 
-    
+
     function OnSuccess(response) {
         $("#tblTask").dataTable(
         {
@@ -232,14 +240,17 @@
     };
 
     function getTask(id) {
-        debugger;        
-        location.href = '@Url.Action("AddEditrecord", "Task", new { id = "id"})'.replace('id', id);
+        debugger;
+        var projectid = "@ViewBag.projectid";
+        location.href = '@Url.Action("AddEditrecord", "Task", new { id = "id",projectid="value"})'.replace('id', id).replace('value', projectid);
 
     }
 
     function GetSubTask(taskid) {
         debugger;
-        location.href = '@Url.Action("List", "SubTask")?taskid=' + taskid + '';
+        var activityid = "@ViewBag.activityid";
+        var projectid = "@ViewBag.projectid";
+        location.href = '@Url.Action("List", "SubTask")?taskid=' + taskid + '&activityid=' + activityid + '&projectid=' + projectid + '';
     }
 
     function EditData(taskid) {
