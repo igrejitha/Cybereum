@@ -116,7 +116,7 @@ namespace Cybereum.Controllers
             {
                 IGUtilities.WriteLog(ex.Message);
                 IGUtilities.WriteLog(ex.Data.ToString());
-                IGUtilities.WriteLog(ex.InnerException.Message);
+                if (ex.InnerException != null) IGUtilities.WriteLog(ex.InnerException.Message);
                 IGUtilities.WriteLog(ex.TargetSite.ToString());
                 throw ex;
             }
@@ -183,7 +183,7 @@ namespace Cybereum.Controllers
             {
                 IGUtilities.WriteLog(ex.Message);
                 IGUtilities.WriteLog(ex.Data.ToString());
-                IGUtilities.WriteLog(ex.InnerException.Message);
+                if (ex.InnerException != null) IGUtilities.WriteLog(ex.InnerException.Message);
                 IGUtilities.WriteLog(ex.TargetSite.ToString());
                 throw ex;
             }
@@ -265,7 +265,7 @@ namespace Cybereum.Controllers
             {
                 IGUtilities.WriteLog(ex.Message);
                 IGUtilities.WriteLog(ex.Data.ToString());
-                IGUtilities.WriteLog(ex.InnerException.Message);
+                if (ex.InnerException != null)  IGUtilities.WriteLog(ex.InnerException.Message);
                 IGUtilities.WriteLog(ex.TargetSite.ToString());
                 throw ex;
             }
@@ -478,7 +478,7 @@ namespace Cybereum.Controllers
             {
                 IGUtilities.WriteLog(ex.Message);
                 IGUtilities.WriteLog(ex.Data.ToString());
-                IGUtilities.WriteLog(ex.InnerException.Message);
+                if (ex.InnerException != null) IGUtilities.WriteLog(ex.InnerException.Message);
                 IGUtilities.WriteLog(ex.TargetSite.ToString());
                 throw ex;
             }

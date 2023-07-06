@@ -326,20 +326,23 @@ namespace Cybereum.Controllers
 
             if (projectsubtask.subtaskid == null)
             {
-                var gremlinScript = "g.V().has('subtask','taskid','" + taskid + "').order().by('createdon',decr).limit(1).project('startdate','enddate').by(values('startdate')).by(values('enddate'))";
+                //var gremlinScript = "g.V().has('subtask','taskid','" + taskid + "').order().by('createdon',decr).limit(1).project('startdate','enddate').by(values('startdate')).by(values('enddate'))";
+                var gremlinScript = "g.V().has('task','id','" + taskid + "').project('startdate','enddate','durations').by(values('startdate')).by(values('enddate')).by(values('durations'))";
                 var result = IGUtilities.ExecuteGremlinScript(gremlinScript);
                 if (result.Count > 0)
                 {
                     foreach (var item in result)
                     {
-                        projectsubtask.startdate = Convert.ToDateTime(item["enddate"]);
+                        projectsubtask.startdate = Convert.ToDateTime(item["startdate"]);
                         projectsubtask.enddate = Convert.ToDateTime(item["enddate"]);
+                        projectsubtask.durations = Convert.ToInt16(item["durations"]);
                     }
                 }
                 else
                 {
                     projectsubtask.startdate = DateTime.Today;
                     projectsubtask.enddate = DateTime.Today;
+                    projectsubtask.durations = 1;
                 }
 
             }
@@ -547,10 +550,56 @@ namespace Cybereum.Controllers
             return View(tbl_subtask);
         }
 
-        public JsonResult GetEnddate(DateTime startDate, int id)
+        public JsonResult GetEnddate(DateTime startDate, int id, string taskid)
         {
             var record = IGUtilities.CalculateDays(startDate, id);
-            return Json(record, JsonRequestBehavior.AllowGet);
+            //return Json(record, JsonRequestBehavior.AllowGet);
+
+            ProjectSubTask subtask = new ProjectSubTask();
+            var gremlinScript = "g.V().has('task','id','" + taskid + "').project('startdate','enddate','durations').by(values('startdate')).by(values('enddate')).by(values('durations'))";
+            var result = IGUtilities.ExecuteGremlinScript(gremlinScript);
+            if (result.Count > 0)
+            {
+                foreach (var item in result)
+                {
+                    if (record > Convert.ToDateTime(item["enddate"]))
+                    {
+                        subtask.startdate = Convert.ToDateTime(item["startdate"]);
+                        subtask.enddate = Convert.ToDateTime(item["enddate"]);
+                        subtask.durations = Convert.ToInt16(item["durations"]);
+                    }
+                    else
+                    {
+                        subtask.enddate = record;
+                    }
+                }
+                return Json(subtask, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                subtask.enddate = record;
+            }
+            return Json(subtask, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult CheckTaskEnddate(string taskid, DateTime enddate)
+        {
+            ProjectSubTask subtask = new ProjectSubTask();
+            var gremlinScript = "g.V().has('task','id','" + taskid + "').project('startdate','enddate','durations').by(values('startdate')).by(values('enddate')).by(values('durations'))";
+            var result = IGUtilities.ExecuteGremlinScript(gremlinScript);
+            if (result.Count > 0)
+            {
+                foreach (var item in result)
+                {
+                    if (enddate > Convert.ToDateTime(item["enddate"]))
+                    {
+                        subtask.startdate = Convert.ToDateTime(item["startdate"]);
+                        subtask.enddate = Convert.ToDateTime(item["enddate"]);
+                        subtask.durations = Convert.ToInt16(item["durations"]);
+                    }
+                }
+            }
+            return Json(subtask, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

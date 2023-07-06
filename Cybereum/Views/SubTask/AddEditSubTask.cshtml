@@ -53,7 +53,7 @@
                             </div>
                             <div class="form-group col-md-6">
                                 @Html.LabelFor(model => model.enddate, "End Date", htmlAttributes: new { @class = "" })
-                                @Html.TextBoxFor(model => model.enddate, new { @type = "date", @class = "form-control datepicker", @Value = Model.enddate.ToString("yyyy-MM-dd"), @disabled = "disabled" })
+                                @Html.TextBoxFor(model => model.enddate, new { @type = "date", @class = "form-control datepicker", @Value = Model.enddate.ToString("yyyy-MM-dd") })
                                 @Html.ValidationMessageFor(model => model.enddate, "", new { @class = "text-danger" })
                             </div>
                         </div>
@@ -118,14 +118,27 @@
             $.getJSON("/SubTask/GetEnddate",
                 {
                     startDate: startdate,
-                    id: recordId
+                    id: recordId,
+                    taskid: "@ViewBag.taskid"
                 },
                 function (data) {
                     debugger;
-                    var date = new Date(parseInt(data.substr(6)));
+                    var date = new Date(parseInt(data.enddate.substr(6)));
                     var month = ("0" + (date.getMonth() + 1)).slice(-2);
                     date = date.getFullYear() + '-' + month + '-' + ("0" + date.getDate()).slice(-2);
                     $('#enddate').val(date);
+
+                    var date = new Date(parseInt(data.startdate.substr(6)));
+                    var month = ("0" + (date.getMonth() + 1)).slice(-2);
+                    date = date.getFullYear() + '-' + month + '-' + ("0" + date.getDate()).slice(-2);
+                    if (date != "1-01-01") {
+                        alert("End date should be less than activity's end date");
+                        $('#startdate').val(date);
+                    }
+
+                    if (data.durations != 0) {
+                        $('#durations').val(data.durations);
+                    }
                 });
         });
 

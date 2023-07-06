@@ -455,7 +455,7 @@ public static class IGUtilities
         {
             IGUtilities.WriteLog(ex.Message);
             IGUtilities.WriteLog(ex.Data.ToString());
-            IGUtilities.WriteLog(ex.InnerException.Message);
+            if (ex.InnerException != null) IGUtilities.WriteLog(ex.InnerException.Message);
             IGUtilities.WriteLog(ex.TargetSite.ToString());
             throw ex;
         }
@@ -475,6 +475,7 @@ public static class IGUtilities
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtp.UseDefaultCredentials = false;
             smtp.Credentials = new NetworkCredential(fromMail.Address, fromEmailpassword);
+            //smtp.EnableSsl = true;
 
             var Message = new MailMessage(fromMail, toEmail);
             Message.Subject = "Welcome to cybereum - Your One-Stop Project Management Solution with Cutting Edge Data Analytics and ML";
@@ -501,7 +502,7 @@ public static class IGUtilities
         {
             IGUtilities.WriteLog(ex.Message);
             IGUtilities.WriteLog(ex.Data.ToString());
-            IGUtilities.WriteLog(ex.InnerException.Message);
+            if (ex.InnerException != null) IGUtilities.WriteLog(ex.InnerException.Message);
             IGUtilities.WriteLog(ex.TargetSite.ToString());
             throw ex;
         }
@@ -572,7 +573,7 @@ public static class IGUtilities
 
                 if (holiday != "Holiday")
                 {
-                    startDate = startDate.AddDays(1);                    
+                    startDate = startDate.AddDays(1);
                 }
             }
             else
@@ -582,7 +583,7 @@ public static class IGUtilities
             }
         }
 
-        if (startDate.DayOfWeek == DayOfWeek.Saturday )
+        if (startDate.DayOfWeek == DayOfWeek.Saturday)
         {
             startDate = startDate.AddDays(2);
         }
@@ -592,7 +593,7 @@ public static class IGUtilities
         }
         return startDate;
     }
-    
+
     public static string GeneratePassword()
     {
         string OTPLength = "4";

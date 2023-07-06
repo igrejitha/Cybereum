@@ -23,6 +23,7 @@ using Cybereum.Services;
 using System.Configuration;
 //using QuickGraph;
 
+
 namespace Cybereum.Controllers
 {
     public class ProjectController : Controller
@@ -34,7 +35,8 @@ namespace Cybereum.Controllers
         // GET: Project
         public ActionResult Index()
         {
-            //GetProject(Convert.ToInt32(System.Web.HttpContext.Current.Session["LoggedInUserId"]), Convert.ToInt32(System.Web.HttpContext.Current.Session["RoleId"]));
+            //GetProject(Convert.ToInt32(System.Web.HttpContext.Current.Session["LoggedInUserId"]), Convert.ToInt32(System.Web.HttpContext.Current.Session["RoleId"]));            
+
             return View();
         }
 
@@ -51,11 +53,12 @@ namespace Cybereum.Controllers
             Project project = new Project();
             try
             {
-                
-                var gremlinScript = "g.V().has('id','" + id + "').project('id','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon','projectmembers','projectstatus','projecttype').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('projectmembers').fold()).by(values('projectstatus')).by(values('projecttype'))";
+
+                //var gremlinScript = "g.V().has('project','id','" + id + "').project('id','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon','projectmembers','projectstatus','projecttype').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('projectmembers').fold()).by(values('projectstatus')).by(values('projecttype'))";
                 try
                 {
-                    var results = IGUtilities.ExecuteGremlinScript(gremlinScript);
+                    //var results = IGUtilities.ExecuteGremlinScript(gremlinScript);
+                    var results = GetProjectbyID(id);
 
                     foreach (var result in results)
                     {
@@ -486,6 +489,13 @@ namespace Cybereum.Controllers
         public ActionResult DashTest2()
         {
             return View();
+        }
+
+        private static ResultSet<dynamic> GetProjectbyID(string id)
+        {
+            var gremlinScript = "g.V().has('project','id','" + id + "').project('id','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon','projectmembers','projectstatus','projecttype').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('projectmembers').fold()).by(values('projectstatus')).by(values('projecttype'))";
+            var results = IGUtilities.ExecuteGremlinScript(gremlinScript);
+            return results;
         }
 
     }

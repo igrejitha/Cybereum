@@ -229,3 +229,7 @@ D:\Test\Cybereum\Cybereum\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\Test\Cybereum\Cybereum\obj\Debug\Cybereum.csprojResolveAssemblyReference.cache
 D:\Test\Cybereum\Cybereum\obj\Debug\Cybereum.dll
 D:\Test\Cybereum\Cybereum\obj\Debug\Cybereum.pdb
+D:\Test\Cybereum\Cybereum\bin\Common.Logging.Core.dll
+D:\Test\Cybereum\Cybereum\bin\Nethereum.Portable.dll
+D:\Test\Cybereum\Cybereum\bin\Common.Logging.Core.pdb
+D:\Test\Cybereum\Cybereum\bin\Common.Logging.Core.xml

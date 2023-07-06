@@ -33,8 +33,8 @@ namespace Cybereum.Controllers
             }
             else
             {
-                ViewBag.activityid = activityid;                
-                Session["ActivityId"] = activityid;                
+                ViewBag.activityid = activityid;
+                Session["ActivityId"] = activityid;
             }
             if (projectid == null)
             {
@@ -195,10 +195,10 @@ namespace Cybereum.Controllers
             }
             else
             {
-                ViewBag.activityid = activityid;                
+                ViewBag.activityid = activityid;
                 //Session["ActivityId"] = activityid;
             }
-            if (projectid==null)
+            if (projectid == null)
             {
                 ViewBag.projectid = Session["ProjectId"];
                 Session["ProjectId"] = ViewBag.projectid;
@@ -211,20 +211,23 @@ namespace Cybereum.Controllers
 
             if (projecttask.taskid == null)
             {
-                var gremlinScript = "g.V().has('task','activityid','" + activityid + "').order().by('createdon',decr).limit(1).project('startdate','enddate').by(values('startdate')).by(values('enddate'))";
+                //var gremlinScript = "g.V().has('task','activityid','" + activityid + "').order().by('createdon',decr).limit(1).project('startdate','enddate').by(values('startdate')).by(values('enddate'))";
+                var gremlinScript = "g.V().has('activity','id','" + activityid + "').project('startdate','enddate','durations').by(values('startdate')).by(values('enddate')).by(values('durations'))";
                 var result = IGUtilities.ExecuteGremlinScript(gremlinScript);
                 if (result.Count > 0)
                 {
                     foreach (var item in result)
                     {
-                        projecttask.startdate = Convert.ToDateTime(item["enddate"]);
+                        projecttask.startdate = Convert.ToDateTime(item["startdate"]);
                         projecttask.enddate = Convert.ToDateTime(item["enddate"]);
+                        projecttask.durations = Convert.ToInt16(item["durations"]);
                     }
                 }
                 else
                 {
                     projecttask.startdate = DateTime.Today;
                     projecttask.enddate = DateTime.Today;
+                    projecttask.durations = 1;
                 }
 
             }
@@ -264,10 +267,10 @@ namespace Cybereum.Controllers
         {
             string message = string.Empty;
             if (ModelState.IsValid)
-            {                
+            {
                 int duration = Convert.ToInt16(tbl_task.durations);
                 tbl_task.enddate = IGUtilities.CalculateDays(tbl_task.startdate, duration);
-                
+
                 long count = 0;
                 if (tbl_task.taskid == null)
                 {
@@ -485,10 +488,55 @@ namespace Cybereum.Controllers
             return user;
         }
 
-        public JsonResult GetEnddate(DateTime startDate, int id)
+        public JsonResult GetEnddate(DateTime startDate, int id, string activityid)
         {
             var record = IGUtilities.CalculateDays(startDate, id);
-            return Json(record, JsonRequestBehavior.AllowGet);
+
+            ProjectTask task = new ProjectTask();
+            var gremlinScript = "g.V().has('activity','id','" + activityid + "').project('startdate','enddate','durations').by(values('startdate')).by(values('enddate')).by(values('durations'))";
+            var result = IGUtilities.ExecuteGremlinScript(gremlinScript);
+            if (result.Count > 0)
+            {
+                foreach (var item in result)
+                {
+                    if (record > Convert.ToDateTime(item["enddate"]))
+                    {
+                        task.startdate = Convert.ToDateTime(item["startdate"]);
+                        task.enddate = Convert.ToDateTime(item["enddate"]);
+                        task.durations = Convert.ToInt16(item["durations"]);
+                    }
+                    else
+                    {
+                        task.enddate = record;
+                    }
+                }
+                return Json(task, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                task.enddate = record;
+            }
+            return Json(task, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult CheckActivityEnddate(string activityid, DateTime enddate)
+        {
+            ProjectTask task = new ProjectTask();
+            var gremlinScript = "g.V().has('activity','id','" + activityid + "').project('startdate','enddate','durations').by(values('startdate')).by(values('enddate')).by(values('durations'))";
+            var result = IGUtilities.ExecuteGremlinScript(gremlinScript);
+            if (result.Count > 0)
+            {
+                foreach (var item in result)
+                {
+                    if (enddate > Convert.ToDateTime(item["enddate"]))
+                    {
+                        task.startdate = Convert.ToDateTime(item["startdate"]);
+                        task.enddate = Convert.ToDateTime(item["enddate"]);
+                        task.durations = Convert.ToInt16(item["durations"]);
+                    }
+                }
+            }
+            return Json(task, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

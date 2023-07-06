@@ -53,46 +53,46 @@
                             </div>
                             <div class="form-group col-md-6">
                                 @Html.LabelFor(model => model.enddate, "End Date", htmlAttributes: new { @class = "" })
-                                @Html.TextBoxFor(model => model.enddate, new { @type = "date", @class = "form-control datepicker", @Value = Model.enddate.ToString("yyyy-MM-dd"),@disabled="disabled" })
+                                @Html.TextBoxFor(model => model.enddate, new { @type = "date", @class = "form-control datepicker", @Value = Model.enddate.ToString("yyyy-MM-dd") })
                                 @Html.ValidationMessageFor(model => model.enddate, "", new { @class = "text-danger" })
                             </div>
                         </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    @Html.LabelFor(model => model.taskstatus, htmlAttributes: new { @class = "" })
-                                    @Html.DropDownList("taskstatus", null, htmlAttributes: new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.taskstatus, "", new { @class = "text-danger" })
-                                </div>
-                                <div class="form-group col-md-6">
-                                    @Html.LabelFor(model => model.tasktype, htmlAttributes: new { @class = "" })
-                                    @Html.DropDownList("tasktype", null, htmlAttributes: new { @class = "form-control", @id = "ddltasktype" })
-                                    @Html.ValidationMessageFor(model => model.tasktype, "", new { @class = "text-danger" })
-                                    <input type="hidden" id="tasktype" name="tasktype" />
-                                </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(model => model.taskstatus, htmlAttributes: new { @class = "" })
+                                @Html.DropDownList("taskstatus", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.taskstatus, "", new { @class = "text-danger" })
                             </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    @Html.LabelFor(model => model.assignedto, "Assigned To", htmlAttributes: new { @class = "" })
-                                    @Html.DropDownList("assignedto", null, htmlAttributes: new { @class = "form-control" })
-                                    @Html.ValidationMessageFor(model => model.assignedto, "", new { @class = "text-danger" })
-                                </div>
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(model => model.tasktype, htmlAttributes: new { @class = "" })
+                                @Html.DropDownList("tasktype", null, htmlAttributes: new { @class = "form-control", @id = "ddltasktype" })
+                                @Html.ValidationMessageFor(model => model.tasktype, "", new { @class = "text-danger" })
+                                <input type="hidden" id="tasktype" name="tasktype" />
                             </div>
-                                <div class="row" style="padding-top: 30px;">
-                                    <div class="col-6">
-                                        <h4>
-                                            @Html.ActionLink("Back to List", "List", new
-                                       {
-                                           // routeValues
-                                           activityid = ViewBag.activityid,
-                                           projectid = ViewBag.projectid
-                                       })
-                                        </h4>
-                                    </div>
-                                    <div class="col-6">
-                                        <input type="submit" name="btnSubmit" value="Save" class="btn btn" style="background-color: #0D2136; color: white;" />
-                                    </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                @Html.LabelFor(model => model.assignedto, "Assigned To", htmlAttributes: new { @class = "" })
+                                @Html.DropDownList("assignedto", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.assignedto, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                            <div class="row" style="padding-top: 30px;">
+                                <div class="col-6">
+                                    <h4>
+                                        @Html.ActionLink("Back to List", "List", new
+                                   {
+                                       // routeValues
+                                       activityid = ViewBag.activityid,
+                                       projectid = ViewBag.projectid
+                                   })
+                                    </h4>
+                                </div>
+                                <div class="col-6">
+                                    <input type="submit" name="btnSubmit" value="Save" class="btn btn" style="background-color: #0D2136; color: white;" />
+                                </div>
 
-                                </div>
+                            </div>
                     }
                 </div>
             </div>
@@ -120,16 +120,57 @@
             $.getJSON("/Task/GetEnddate",
                 {
                     startDate: startdate,
-                    id: recordId
+                    id: recordId,
+                    activityid: "@ViewBag.activityid"
                 },
                 function (data) {
-                    debugger;
-                    var date = new Date(parseInt(data.substr(6)));
+                    debugger;                    
+                    var date = new Date(parseInt(data.enddate.substr(6)));
                     var month = ("0" + (date.getMonth() + 1)).slice(-2);
                     date = date.getFullYear() + '-' + month + '-' + ("0" + date.getDate()).slice(-2);
                     $('#enddate').val(date);
+
+
+                    var date = new Date(parseInt(data.startdate.substr(6)));
+                    var month = ("0" + (date.getMonth() + 1)).slice(-2);
+                    date = date.getFullYear() + '-' + month + '-' + ("0" + date.getDate()).slice(-2);
+                    if (date != "1-01-01") {
+                        alert("End date should be less than activity's end date");
+                        $('#startdate').val(date);
+                    }                    
+
+                    if (data.durations != 0) {
+                        $('#durations').val(data.durations);
+                    }
+
                 });
         });
+
+        @*$(function () {
+            debugger;
+            var enddate = $("#enddate").val();
+            $.getJSON("/Task/CheckActivityEnddate",
+                {
+                    activityid: "@ViewBag.activityid",
+                    enddate: enddate,
+                },
+                function (data) {
+                    debugger;
+                    data.forEach(function (e) {
+                        var date = new Date(parseInt(e.startdate.substr(6)));
+                        var month = ("0" + (date.getMonth() + 1)).slice(-2);
+                        date = date.getFullYear() + '-' + month + '-' + ("0" + date.getDate()).slice(-2);
+                        $('#startdate').val(date);
+
+                        date = new Date(parseInt(e.enddate.substr(6)));
+                        month = ("0" + (date.getMonth() + 1)).slice(-2);
+                        date = date.getFullYear() + '-' + month + '-' + ("0" + date.getDate()).slice(-2);
+                        $('#enddate').val(date);
+
+                        $('#durations').val(e.durations);
+                    });
+                });
+        });*@
 
         $(function () {
             //$("#startdate").datepicker();
@@ -158,6 +199,7 @@
                         $(this).val('');
                     }
                 }
+
             });
         });
 
