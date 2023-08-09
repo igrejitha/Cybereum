@@ -1,111 +1,78 @@
 ﻿using System;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Globalization;
+using System.IdentityModel.Claims;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.Google;
+using Microsoft.Owin.Security.OpenIdConnect;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Owin;
 using Cybereum.Models;
-//using Gremlin.Net;
-//using Microsoft.Extensions.DependencyInjection;
 
 namespace Cybereum
 {
     public partial class Startup
     {
-        // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
+        private static string clientId = ConfigurationManager.AppSettings["ida:ClientId"];
+        private static string appKey = ConfigurationManager.AppSettings["ida:ClientSecret"];
+        private static string aadInstance = ConfigurationManager.AppSettings["ida:AADInstance"];
+        private static string tenantId = ConfigurationManager.AppSettings["ida:Tenant"];
+        private static string postLogoutRedirectUri = ConfigurationManager.AppSettings["ida:PostLogoutRedirectUri"];
+
+        public static readonly string Authority = aadInstance + tenantId;
+
+        // This is the resource ID of the AAD Graph API.  We'll need this to request a token to call the Graph API.
+        string graphResourceId = "https://graph.windows.net";
+
         public void ConfigureAuth(IAppBuilder app)
         {
-            // Configure the db context, user manager and signin manager to use a single instance per request
-            //app.CreatePerOwinContext(ApplicationDbContext.Create);
-            //app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
-            //app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
+            //***********************Azure Active Directory************************
+            ApplicationDbContext db = new ApplicationDbContext();
 
-            // Enable the application to use a cookie to store information for the signed in user
-            // and to use a cookie to temporarily store information about a user logging in with a third party login provider
-            // Configure the sign in cookie
-            //app.UseCookieAuthentication(new CookieAuthenticationOptions
-            //{
-            //    AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-            //    LoginPath = new PathString("/Account/Login"),
-            //    Provider = new CookieAuthenticationProvider
-            //    {
-            //        // Enables the application to validate the security stamp when the user logs in.
-            //        // This is a security feature which is used when you change a password or add an external login to your account.  
-            //        OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, ApplicationUser>(
-            //            validateInterval: TimeSpan.FromMinutes(30),
-            //            regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
-            //    }
-            //});            
-            app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
+            app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
 
-            // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.
-            app.UseTwoFactorSignInCookie(DefaultAuthenticationTypes.TwoFactorCookie, TimeSpan.FromMinutes(5));
+            app.UseCookieAuthentication(new CookieAuthenticationOptions());
 
-            // Enables the application to remember the second login verification factor such as phone or email.
-            // Once you check this option, your second step of verification during the login process will be remembered on the device where you logged in from.
-            // This is similar to the RememberMe option when you log in.
-            app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
+            app.UseOpenIdConnectAuthentication(
+                new OpenIdConnectAuthenticationOptions
+                {
+                    ClientId = clientId,
+                    Authority = Authority,
+                    PostLogoutRedirectUri = postLogoutRedirectUri,
 
-            // Uncomment the following lines to enable logging in with third party login providers
-            //app.UseMicrosoftAccountAuthentication(
-            //    clientId: "",
-            //    clientSecret: "");
+                    Notifications = new OpenIdConnectAuthenticationNotifications()
+                    {
+                        // If there is a code in the OpenID Connect response, redeem it for an access token and refresh token, and store those away.
+                        AuthorizationCodeReceived = (context) =>
+                        {
+                            var code = context.Code;
+                            ClientCredential credential = new ClientCredential(clientId, appKey);
+                            string signedInUserID = context.AuthenticationTicket.Identity.FindFirst(ClaimTypes.NameIdentifier).Value;
+                            AuthenticationContext authContext = new AuthenticationContext(Authority, new ADALTokenCache(signedInUserID));
+                            var result = authContext.AcquireTokenByAuthorizationCodeAsync(
+                            code, new Uri(HttpContext.Current.Request.Url.GetLeftPart(UriPartial.Path)), credential, graphResourceId);
 
-            //app.UseTwitterAuthentication(
-            //   consumerKey: "",
-            //   consumerSecret: "");
+                            return Task.FromResult(0);
+                        }
+                    }
+                });
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            //***********************End************************
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+
+            //app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
+
+            //// Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.
+            //app.UseTwoFactorSignInCookie(DefaultAuthenticationTypes.TwoFactorCookie, TimeSpan.FromMinutes(5));
+
+            //// Enables the application to remember the second login verification factor such as phone or email.
+            //// Once you check this option, your second step of verification during the login process will be remembered on the device where you logged in from.
+            //// This is similar to the RememberMe option when you log in.
+            //app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
         }
-
-
-        //public void ConfigureServices(IServiceCollection services)
-        //{
-        //    services.AddSingleton<GremlinClient>(
-        //        (serviceProvider) =>
-        //        {
-        //            var gremlinServer = new GremlinServer(
-        //                hostname: "localhost",
-        //                port: 8182,
-        //                enableSsl: false,
-        //                username: null,
-        //                password: null
-        //            );
-
-        //            var connectionPoolSettings = new ConnectionPoolSettings
-        //            {
-        //                MaxInProcessPerConnection = 32,
-        //                PoolSize = 4,
-        //                ReconnectionAttempts = 4,
-        //                ReconnectionBaseDelay = TimeSpan.FromSeconds(1)
-        //            };
-
-        //            return new GremlinClient(
-        //                gremlinServer: gremlinServer,
-        //                connectionPoolSettings: connectionPoolSettings
-        //            );
-        //        }
-        //    );
-
-        //    services.AddSingleton<GraphTraversalSource>(
-        //        (serviceProvider) =>
-        //        {
-        //            GremlinClient gremlinClient = serviceProvider.GetService<GremlinClient>();
-        //            var driverRemoteConnection = new DriverRemoteConnection(gremlinClient, "g");
-        //            return AnonymousTraversalSource.Traversal().WithRemote(driverRemoteConnection);
-        //        }
-        //    );
-
-        //    services.AddRazorPages();
-        //}
     }
 }

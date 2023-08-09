@@ -9,7 +9,6 @@ using System.Web.Mvc;
 using Cybereum.Models;
 using Cybereum.Filters;
 using Newtonsoft.Json;
-
 //using AppModelv2_WebApp_OpenIDConnect_DotNet.Models;
 //using Microsoft.Azure.Documents;
 //using Microsoft.Azure.Documents.Client;
@@ -21,15 +20,21 @@ using Gremlin.Net.Structure.IO.GraphSON;
 using Newtonsoft.Json.Linq;
 using Cybereum.Services;
 using System.Configuration;
+using System.Net.Http;
+using System.Text;
+using System.Collections.Specialized;
+using System.Web.Script.Serialization;
 //using QuickGraph;
 
 
 namespace Cybereum.Controllers
 {
+    [Authorize]
     public class ProjectController : Controller
     {
         private cybereumEntities db = new cybereumEntities();
-        
+
+
         [Authorize]
         [SessionTimeout]
         // GET: Project
@@ -69,7 +74,7 @@ namespace Cybereum.Controllers
                         //project.type = result["type"].ToString();
                         project.noofresource = result["noofresource"].ToString();
                         project.projectcost = result["projectcost"].ToString();
-                        project.createdby = result["createdby"].ToString();
+                        project.createdby = Convert.ToInt16(result["createdby"].ToString());
                         project.createdusername = result["createdusername"].ToString();
 
                         var projectmembers = result["projectmembers"];
@@ -112,12 +117,13 @@ namespace Cybereum.Controllers
         {
             List<Project> projectlist = new List<Project>();
             try
-            {                
+            {
                 int pmuserid = Convert.ToInt16(Session["LoggedInUserId"]);
-                var gremlinScript = "g.V().hasLabel('project').project('projectid','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon'))";
+                var gremlinScript = "g.V().hasLabel('project').project('projectid','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon','hashcode').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('hashcode'))";
                 if (Convert.ToInt32(Session["RoleID"]) == (int)Role.ProjectManager)
                 {
-                    gremlinScript = "g.V().or(has('project','createdby','" + pmuserid + "'),has('project','projectmembers','" + pmuserid + "')).project('projectid','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon'))";
+                    //gremlinScript = "g.V().or(has('project','createdby','" + pmuserid + "'),has('project','projectmembers','" + pmuserid + "')).project('projectid','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon'))";
+                    gremlinScript = "g.V().has('project','createdby','" + pmuserid + "').project('projectid','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon','hashcode').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('hashcode'))";
                 }
 
                 try
@@ -128,17 +134,37 @@ namespace Cybereum.Controllers
                     string pList = JsonConvert.SerializeObject(results);
                     projectlist = JsonConvert.DeserializeObject<List<Project>>(pList);
 
-                    foreach (var project in projectlist)
-                    {
-                        int userid = Convert.ToInt32(project.createdby);
-                        var username = db.tbl_user.Where(x => x.userid == userid).FirstOrDefault();
-                        if (username != null)
-                        {
-                            project.createdusername = username.firstname + ' ' + username.lastname;
-                        }
-                    }
-                    
-                    var projectresult = this.Json(new { data = projectlist, recordsTotal = projectlist.Count(), recordsFiltered = projectlist.Count() }, JsonRequestBehavior.AllowGet);
+                    var joinedData = from m in projectlist
+                                     join r in db.tbl_user on m.createdby equals r.userid
+                                     select new
+                                     {
+                                         projectid = m.projectid,
+                                         projectname = m.projectname,
+                                         startdate = m.startdate,
+                                         enddate = m.enddate,
+                                         type = m.type,
+                                         noofresource = m.noofresource,
+                                         projectcost = m.projectcost,
+                                         createdby = m.createdby,
+                                         createdusername = r.firstname + " " + r.lastname,
+                                         createdon = m.createdon,
+                                         projectmembers = m.projectmembers,
+                                         organization = m.organization,
+                                         projectstatus = m.projectstatus,
+                                         projecttype = m.projecttype,
+                                         hashcode = m.hashcode
+                                     };
+
+                    //foreach (var project in projectlist)
+                    //{
+                    //    int userid = Convert.ToInt32(project.createdby);
+                    //    var username = db.tbl_user.Where(x => x.userid == userid).FirstOrDefault();
+                    //    if (username != null)
+                    //    {
+                    //        project.createdusername = username.firstname + ' ' + username.lastname;
+                    //    }
+                    //}
+                    var projectresult = this.Json(new { data = joinedData, recordsTotal = projectlist.Count(), recordsFiltered = projectlist.Count() }, JsonRequestBehavior.AllowGet);
                     return projectresult;
                 }
                 catch (Exception ex)
@@ -152,6 +178,24 @@ namespace Cybereum.Controllers
                 throw ex;
             }
             return null;
+        }
+
+
+        public JsonResult Getprojectmember(string term)
+        {
+            int pmuserid = Convert.ToInt32(Session["LoggedInUserId"]);
+            var userlist = (
+                from b in db.tbl_user
+                join c in db.tbl_userrole on b.roleid equals c.roleid
+                where b.firstname.StartsWith(term) && b.roleid != 1 && b.isactive == 1 && b.userid != pmuserid
+                select new SelectListItem
+                {
+                    Text = b.firstname + " " + b.lastname + "-" + c.rolename + "-" + b.organization,
+                    Value = b.userid.ToString()
+                }
+                ).Distinct().OrderBy(x => x.Text).ToList();
+
+            return Json(userlist, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Addrecord(int Id)
@@ -185,8 +229,8 @@ namespace Cybereum.Controllers
 
             int pmuserid = Convert.ToInt32(Session["LoggedInUserId"]);
             int roleid = Convert.ToInt32(Session["RoleId"]);
-            List<SelectListItem> user = Filluser(pmuserid, roleid);
-            ViewBag.createdby = user;
+            //List<SelectListItem> user = Filluser(pmuserid, roleid);
+            //ViewBag.createdby = user;
             return View(Projects);
         }
 
@@ -218,12 +262,15 @@ namespace Cybereum.Controllers
                 }
             }
             ViewBag.projectmembers = members;
+            ViewBag.projectmembersNew = members;
+            ViewBag.projectmembersSelect = members;
 
             if (Projects.projectid == null)
             {
                 Projects.startdate = DateTime.Today;
                 Projects.enddate = DateTime.Today;
             }
+
             //Projects.projectmembers = null;
             return View(Projects);
         }
@@ -234,39 +281,71 @@ namespace Cybereum.Controllers
             if (roleid == (int)Role.Admin)
             {
                 user = (from b in db.tbl_user
-                        where b.roleid == 2 && b.isactive == 1 && b.userid != pmuserid
+                        join c in db.tbl_userrole on b.roleid equals c.roleid
+                        where b.roleid != 1 && b.isactive == 1 && b.userid != pmuserid
                         select new SelectListItem
                         {
-                            Text = b.firstname + " " + b.lastname,
+                            Text = b.firstname + " " + b.lastname + "-" + c.rolename + "-" + b.organization,
                             Value = b.userid.ToString()
                         }).Distinct().OrderBy(x => x.Text).ToList();
             }
             else
             {
                 user = (from b in db.tbl_user
+                        join c in db.tbl_userrole on b.roleid equals c.roleid
                         where b.pmuserid == pmuserid && b.isactive == 1
                         select new SelectListItem
                         {
-                            Text = b.firstname + " " + b.lastname,
+                            Text = b.firstname + " " + b.lastname + "-" + c.rolename + "-" + b.organization,
                             Value = b.userid.ToString()
                         }).Distinct().OrderBy(x => x.Text).ToList();
             }
             return user;
         }
 
+        //public List<SelectListItem> Fillprojectype()
+        //{
+        //    List<SelectListItem> projectype = new List<SelectListItem>();
+        //    SelectListItem item = new SelectListItem();
+        //    item.Text = "Nuclear Power Station";
+        //    item.Value = "Nuclear Power Station";
+        //    projectype.Add(item);
+
+        //    item = new SelectListItem();
+        //    item.Text = "Solar Power Station";
+        //    item.Value = "Solar Power Station";
+        //    projectype.Add(item);
+
+        //    item = new SelectListItem();
+        //    item.Text = "Wind Power Station";
+        //    item.Value = "Wind Power Station";
+        //    projectype.Add(item);
+
+        //    item = new SelectListItem();
+        //    item.Text = "Hydro Power Station";
+        //    item.Value = "Hydro Power Station";
+        //    projectype.Add(item);
+
+        //    item = new SelectListItem();
+        //    item.Text = "Thermal Power Station";
+        //    item.Value = "Thermal Power Station";
+        //    projectype.Add(item);
+
+        //    return projectype;
+        //}
+
         [Authorize]
         [SessionTimeout]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddEditProject([Bind(Include = "projectid,projectname,startdate,enddate,createdon,modifiedon,createdby,modifiedby,projectcost,noofresource,isactive,projectmembers,projectstatus,projecttype")] Project tbl_project)
+        public ActionResult AddEditProject([Bind(Include = "projectid,projectname,startdate,enddate,createdon,modifiedon,createdby,modifiedby,projectcost,noofresource,isactive,projectmembers,projectstatus,projecttype,members")] Project tbl_project)
         {
             string message = string.Empty;
-            string members = string.Empty;
-            if (tbl_project.projectmembers != null)
-            {
-                members = String.Join(",", tbl_project.projectmembers);
-            }
 
+            //if (tbl_project.members != null)
+            //{
+            //    tbl_project.projectmembers = tbl_project.members.Split(',').Select(n => Convert.ToInt32(n)).ToArray();
+            //}
 
             //var gremlinServer = new GremlinServer(hostname, port, enableSsl: true, username: "/dbs/" + database + "/colls/" + collection, password: authKey);
 
@@ -276,7 +355,7 @@ namespace Cybereum.Controllers
                 //var objList = db.sp_FetchProjectExists(tbl_project.projectname).FirstOrDefault();
                 long count = 0;
                 if (tbl_project.projectid == null)
-                {                    
+                {
                     var gremlinScript = "g.V().has('project','projectname','" + tbl_project.projectname + "').count()";
                     var objList = IGUtilities.ExecuteGremlinScript(gremlinScript);
                     count = objList.ToList()[0];
@@ -292,13 +371,13 @@ namespace Cybereum.Controllers
                     var gremlinScript = "g.V().has('project','projectname','" + tbl_project.projectname + "')";
                     var objList = IGUtilities.ExecuteGremlinScript(gremlinScript);
                     foreach (var result in objList)
+                    {
+                        if (result["id"] != tbl_project.projectid)
                         {
-                            if (result["id"] != tbl_project.projectid)
-                            {
-                                message = "Project name already exists.";
-                                goto endloop;
-                            }
-                        }                    
+                            message = "Project name already exists.";
+                            goto endloop;
+                        }
+                    }
                 }
 
                 string a = "";
@@ -317,15 +396,15 @@ namespace Cybereum.Controllers
                 //
                 if (tbl_project.projectid == null)
                 {
-                    if (tbl_project.createdby == null)
+                    if (tbl_project.createdby == 0 || tbl_project.createdby == null)
                     {
-                        tbl_project.createdby = Session["LoggedInUserId"].ToString();
+                        tbl_project.createdby = Convert.ToInt16(Session["LoggedInUserId"].ToString());
                         tbl_project.createdusername = Session["Username"].ToString();
                     }
                     else
                     {
                         tbl_project.createdby = tbl_project.createdby;
-                    }                                       
+                    }
 
                     string gremlinScript = $"g.addV('project').property('pk', '{tbl_project.projectname}')" +
                             $".property('projectname', '{tbl_project.projectname}')" +
@@ -335,7 +414,7 @@ namespace Cybereum.Controllers
                             $".property('projectcost', '{tbl_project.projectcost}')" +
                             $".property('projectstatus', '{tbl_project.projectstatus}')" +
                             $".property('projecttype', '{tbl_project.projecttype}')" + a +
-                            //$".property('projectmembers', '{members}')" +
+                            $".property('hashcode', '')" +
                             $".property('createdby', '{Convert.ToInt32(tbl_project.createdby)}')" +
                             $".property('createdusername', '')" +
                             $".property('createdon', '{DateTime.Now}')" +
@@ -348,7 +427,7 @@ namespace Cybereum.Controllers
 
 
                     //**************Get Last added project id***********
-                    gremlinScript = "g.V().has('project','projectname','" + tbl_project.projectname + "').project('id').by(values('id'))";                    
+                    gremlinScript = "g.V().has('project','projectname','" + tbl_project.projectname + "').project('id').by(values('id'))";
                     result = IGUtilities.ExecuteGremlinScript(gremlinScript);
                     foreach (var result1 in result)
                     {
@@ -376,12 +455,12 @@ namespace Cybereum.Controllers
                             $".property('createdby', '{Convert.ToInt32(tbl_activity.createdby)}')" +
                             $".property('createdusername', '')" +
                             $".property('createdon', '{DateTime.Now}')" + a +
-                            $".property('type', 'activity')";                                     
+                            $".property('type', 'activity')";
                     result = IGUtilities.ExecuteGremlinScript(gremlinScript);
                     message = "Activity Added Successfully";
 
                     //connect the project to activity
-                    gremlinScript = $"\ng.V('{tbl_activity.projectid}').addE('contains').to(g.V('{tbl_activity.id}'))";                    
+                    gremlinScript = $"\ng.V('{tbl_activity.projectid}').addE('contains').to(g.V('{tbl_activity.id}'))";
                     result = IGUtilities.ExecuteGremlinScript(gremlinScript);
                     //******************* End ****************************
 
@@ -412,6 +491,9 @@ namespace Cybereum.Controllers
                     gremlinScript = $"\ng.V('{tbl_activity.projectid}').addE('contains').to(g.V('{tbl_activity.id}'))";
                     result = IGUtilities.ExecuteGremlinScript(gremlinScript);
                     //******************* End ****************************
+
+                    //*************Nodejs API Call*************
+                    Senddatatoapi(tbl_project);
                 }
                 else
                 {
@@ -419,7 +501,7 @@ namespace Cybereum.Controllers
                     var result = IGUtilities.ExecuteGremlinScript(gremlinscript);
                     message = "Updated Successfully";
                     //}
-                    
+
                     string gremlinScript = $"g.V('{tbl_project.projectid}').property('projectname', '{tbl_project.projectname}')" +
                                                 $".property('projectname', '{tbl_project.projectname}')" +
                                                 $".property('startdate', '{tbl_project.startdate.ToString("yyyy-MM-dd")}')" +
@@ -443,13 +525,28 @@ namespace Cybereum.Controllers
             ViewBag.Message = message;
             int pmuserid = Convert.ToInt32(Session["LoggedInUserId"]);
             int roleid = Convert.ToInt32(Session["RoleId"]);
-            List<SelectListItem> user = Filluser(pmuserid, roleid);
-            ViewBag.createdby = user;
-            List<SelectListItem> pm = Filluser(0, Convert.ToInt16(Role.Admin));
+            //List<SelectListItem> user = Filluser(pmuserid, roleid);
+            //ViewBag.createdby = user;
+            List<SelectListItem> pm = Filluser(pmuserid, Convert.ToInt16(Role.Admin));
+            if (tbl_project.projectmembers != null && pm.Count > 0)
+            {
+                foreach (var selectedItem in pm)
+                {
+                    foreach (var item in tbl_project.projectmembers)
+                    {
+                        if (selectedItem.Value.ToString() == item.ToString())
+                        {
+                            selectedItem.Selected = true;
+                        }
+                    }
+                }
+            }
             ViewBag.projectmembers = pm;
+            ViewBag.projectmembersNew = pm;
+            ViewBag.projectmembersSelect = pm;
             return View(tbl_project);
         }
-        
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -466,9 +563,50 @@ namespace Cybereum.Controllers
             return View();
         }
 
+        public void Senddatatoapi(Project project)
+        {
+            try
+            {
+                string apiUrl = ConfigurationManager.AppSettings["nodejsapi"].ToString();// + "addProject";
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(ConfigurationManager.AppSettings["nodejsapi"].ToString());
+                    client.DefaultRequestHeaders.Accept.Clear();                                        
+                    string json = new JavaScriptSerializer().Serialize(new
+                    {
+                        id = project.projectid,
+                        name = project.projectname
+                    });
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+                    client.Timeout = TimeSpan.FromMinutes(120);
+
+                    var response = client.PostAsync("addProject", content).Result;
+                    
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var responseContent = response.Content.ReadAsStringAsync().Result;
+                        
+                        Projectresponse projectlist = new Projectresponse();
+                        projectlist = JsonConvert.DeserializeObject<Projectresponse>(responseContent);
+                        string gremlinScript = $"g.V('{project.projectid}')" +
+                                                    $".property('hashcode', '{projectlist.hash}')" +
+                                                    $".property('type', 'project')";
+                        var results = IGUtilities.ExecuteGremlinScript(gremlinScript);
+                        //IGUtilities.WriteLog(responseContent);
+                    }                    
+                }                
+            }
+            catch (Exception ex)
+            {
+                //throw ex;
+                IGUtilities.WriteLog(ex.Message);
+            }
+        }
+
+
         public async Task<GraphData> getgannchart()
         {
-            GraphService service = new GraphService(gremlinvariables.hostname,gremlinvariables.port,gremlinvariables.authKey,gremlinvariables.database,gremlinvariables.collection);
+            GraphService service = new GraphService(gremlinvariables.hostname, gremlinvariables.port, gremlinvariables.authKey, gremlinvariables.database, gremlinvariables.collection);
             GraphData x = await service.GetGraphData();
             //var x = JsonConvert.SerializeObject(projectdata, Formatting.Indented);
             return x;

@@ -27,9 +27,10 @@
                                 <th>End Date</th>
                                 <th>Project Manager</th>
                                 <th>Created On</th>
+                                <th>Hash ID</th>
                                 <th>Edit</th>
                                 <th>Activity</th>
-                                <th>GANTT Chart</th>
+                                <th>GANTT Chart</th>                                
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -42,6 +43,15 @@
 </div>
 
 @Scripts.Render("~/bundles/jquery")
+<style>
+    .expand-column {
+    max-width: 70px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;    
+}
+</style>
+
 <script type="text/javascript">
     $(document).ajaxSend(function () {
         //$("#overlay").fadeIn(300);
@@ -50,7 +60,6 @@
     $(document).ready(function () {
         $('#liUsers').addClass("active");
 
-        debugger;
         //var reset = 0;
         var value = '@Request.RequestContext.HttpContext.Session["LoggedInUserId"]';
         var value1 = '@Request.RequestContext.HttpContext.Session["RoleId"]';
@@ -85,8 +94,7 @@
                 { 'data': 'projectname', 'name': 'Project Name' },
                 {
                     'data': 'startdate', 'name': 'Start Date',
-                    'render': function (jsonDate) {
-                        debugger;
+                    'render': function (jsonDate) {                        
                         if (jsonDate != null) {
                             var date = new Date(parseInt(jsonDate.substr(6)));
                             var month = ("0" + (date.getMonth() + 1)).slice(-2);
@@ -99,8 +107,7 @@
                 },
                 {
                     'data': 'enddate', 'name': 'End Date',
-                    'render': function (jsonDate) {
-                        debugger;
+                    'render': function (jsonDate) {                        
                         if (jsonDate != null) {
                             var date = new Date(parseInt(jsonDate.substr(6)));
                             var month = ("0" + (date.getMonth() + 1)).slice(-2);
@@ -114,8 +121,7 @@
                 { 'data': 'createdusername', 'name': 'Project Manager' },
                 {
                     'data': 'createdon', 'name': 'Created On',
-                    'render': function (jsonDate) {
-                        debugger;
+                    'render': function (jsonDate) {                        
                         if (jsonDate != null) {
                             var date = new Date(parseInt(jsonDate.substr(6)));
                             var month = ("0" + (date.getMonth() + 1)).slice(-2);
@@ -124,6 +130,16 @@
                         else {
                             return "";
                         }
+                    }
+                },
+                {
+                    'data': 'hashcode', 'name': 'Hash ID','class':'expand-column',
+                    render: function (data, type, row) {
+                        debugger;
+                        return '<span data-toggle="tooltip" title="' + data + '">' + data + "</span>";
+                        //return '<span data-toggle="tooltip" title="' + data + '">' + data.length == 0 ? data : data.substr(0, 10) + '…' + '</span>';
+                        //var trimdata = data.length > 10 ? data.substr(0, 10) + '…': data;
+                        //return '<span data-toggle="tooltip" title="' + data + '">' + trimdata + '</span>';
                     }
                 },
                 {
@@ -154,7 +170,7 @@
                     data: 'projectname', render: function (data, type, row) {
                         return "<button type='submit' onclick=GetChart('" + encodeURIComponent(row.projectid) + "'); class='btn btn' style='background-color: #0D2136; color: white;'>GANTT Chart</button>";
                     }
-                }
+                }                
             ],
             select: {
                 style: 'multi',
@@ -164,8 +180,7 @@
     });
 
 
-    function OnSuccess(response) {
-        debugger;
+    @*function OnSuccess(response) {        
         $("#tblProject").dataTable(
         {
             bLengthChange: true,
@@ -185,8 +200,7 @@
                 { 'data': 'createdusername', 'name': 'Project Manager' },
                 {
                     'data': 'createdon', 'name': 'Created On',
-                    'render': function (jsonDate) {
-                        debugger;
+                    'render': function (jsonDate) {                        
                         if (jsonDate != null) {
                             var date = new Date(parseInt(jsonDate.substr(6)));
                             var month = ("0" + (date.getMonth() + 1)).slice(-2);
@@ -198,9 +212,14 @@
                     }
                 },
                 {
+                    'data': 'hashcode', 'name': 'Hash ID', 'width': '100px',
+                    render: function (data, type, row) {
+                        return '<span data-toggle="tooltip" title="' + data + '">' + data.length == 0 ? data : data.substr(0, 10) + "…" + "</span>";
+                    }
+                },
+                {
                     "render": function (data, type, full, meta) {
-                        {
-                            debugger;
+                        {                            
                             var value1 = '@Request.RequestContext.HttpContext.Session["RoleId"]';
                             var value2 = '@Request.RequestContext.HttpContext.Session["LoggedInUserId"]';
                             if (value1 == '2') {
@@ -233,31 +252,27 @@
                 selector: 'td:first-child'
             },
         });
-    };
+    };*@
 
-    function getProject(id) {
-        debugger;
+    function getProject(id) {        
         location.href = '@Url.Action("AddEditrecord", "Project", new { id = "id" })'.replace('id', id);
         @*location.href = '@Url.Action("Index", "Task")?projectid='+ projectid);*@
     }
 
-    function GetMilestone(projectid) {
-        debugger;
+    function GetMilestone(projectid) {        
         location.href = '@Url.Action("Index", "Activity")?projectid=' + projectid + '';
     }
 
-    function GetChart(projectid) {
-        debugger;
+    function GetChart(projectid) {        
         location.href = '@Url.Action("GANTTChart", "Home")?projectid=' + projectid + '';
     }
 
-    function GetTask(projectid) {
-        debugger;
+    
+    function GetTask(projectid) {        
         location.href = '@Url.Action("Index", "Task")?projectid=' + projectid + '';
     }
 
     function EditData(projectid) {
-        debugger;
         $.ajax(
         {
             url: '@Url.Action("AddEditProject", "Project")?Id=' + projectid,
@@ -270,7 +285,6 @@
             type: "GET",
             success: function (response) {
                 $("#overlay").fadeOut(300);
-                debugger;
                 if (response == "Success")
                     @*window.location = '@Url.Action("Users", "User")?userid=' + userid;
                 else

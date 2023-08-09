@@ -17,6 +17,7 @@ using System.Configuration;
 
 namespace Cybereum.Controllers
 {
+    [Authorize]
     public class ActivityController : Controller
     {
         private cybereumEntities db = new cybereumEntities();

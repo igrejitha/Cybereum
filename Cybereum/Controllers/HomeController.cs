@@ -14,6 +14,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Cybereum.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
 

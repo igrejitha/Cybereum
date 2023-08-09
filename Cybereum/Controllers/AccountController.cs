@@ -1,20 +1,55 @@
-﻿using Cybereum.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
 using System.Linq;
-using System.Net;
-using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.OpenIdConnect;
+using Microsoft.Owin.Security;
+using Cybereum.Models;
 using System.Web.Security;
+using Microsoft.IdentityModel.Protocols;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
+using System.Net;
+using System.Configuration;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
 namespace Cybereum.Controllers
 {
     public class AccountController : Controller
     {
+        public void SignIn()
+        {
+            // Send an OpenID Connect sign-in request.
+            if (!Request.IsAuthenticated)
+            {
+                HttpContext.GetOwinContext().Authentication.Challenge(new AuthenticationProperties { RedirectUri = "/Home/Index" },
+                    OpenIdConnectAuthenticationDefaults.AuthenticationType);
+            }
+        }
+
+        public void SignOut()
+        {
+            string callbackUrl = Url.Action("SignOutCallback", "Account", routeValues: null, protocol: Request.Url.Scheme);
+
+            HttpContext.GetOwinContext().Authentication.SignOut(
+                new AuthenticationProperties { RedirectUri = callbackUrl },
+                OpenIdConnectAuthenticationDefaults.AuthenticationType, CookieAuthenticationDefaults.AuthenticationType);
+        }
+
+        public ActionResult SignOutCallback()
+        {
+            if (Request.IsAuthenticated)
+            {
+                // Redirect to home page if the user is authenticated.
+                return RedirectToAction("Index", "Home");
+            }
+            return RedirectToAction("Login");
+            //return View();
+        }
+
+
         // GET: Account
         public ActionResult Index()
         {
@@ -23,6 +58,12 @@ namespace Cybereum.Controllers
 
         public ActionResult Login()
         {
+            if (Request.IsAuthenticated)
+            {
+                LoginViewModel mod = new LoginViewModel();
+                mod.Email = User.Identity.Name;
+                return View(mod);
+            }
             return View();
         }
 
@@ -45,6 +86,13 @@ namespace Cybereum.Controllers
                 return RedirectToAction("UserLogin");
             else
                 return RedirectToAction("Login");
+
+            //string callbackUrl = Url.Action("SignOutCallback", "Account", routeValues: null, protocol: Request.Url.Scheme);
+
+            //HttpContext.GetOwinContext().Authentication.SignOut(
+            //    new AuthenticationProperties { RedirectUri = callbackUrl },
+            //    OpenIdConnectAuthenticationDefaults.AuthenticationType, CookieAuthenticationDefaults.AuthenticationType);
+            //return RedirectToAction("Login");
         }
 
         [HttpPost]
@@ -52,10 +100,11 @@ namespace Cybereum.Controllers
         public ActionResult Login(LoginViewModel user)
         {
             try
-            {
-                //if (IGUtilities.AuthenticateUser("LDAP://srjigs.com", user.Email, user.password) == false)
+            {                
+                //if (!Request.IsAuthenticated)
                 //{
-
+                //    HttpContext.GetOwinContext().Authentication.Challenge(new AuthenticationProperties { RedirectUri = "/Home/Index" },
+                //        OpenIdConnectAuthenticationDefaults.AuthenticationType);
                 //}
 
                 string message = string.Empty;
@@ -97,13 +146,13 @@ namespace Cybereum.Controllers
                                     {
                                         objAuth.Roles = Role.User.ToString();
                                         Session["RoleName"] = (Role)objList.roleid;
-                                        return RedirectToAction("Dashboard", "Home");
+                                        return RedirectToAction("List", "Project");
                                     }
                             }
                         }
                         else
                         {
-                            message = "Invalid Account";                            
+                            message = "Invalid Account";
                         }
                     }
                     ViewBag.Message = message;
@@ -265,7 +314,7 @@ namespace Cybereum.Controllers
             {
                 IGUtilities.WriteLog(ex.Message);
                 IGUtilities.WriteLog(ex.Data.ToString());
-                if (ex.InnerException != null)  IGUtilities.WriteLog(ex.InnerException.Message);
+                if (ex.InnerException != null) IGUtilities.WriteLog(ex.InnerException.Message);
                 IGUtilities.WriteLog(ex.TargetSite.ToString());
                 throw ex;
             }
@@ -309,13 +358,13 @@ namespace Cybereum.Controllers
                                     string strSubject = "Password Reset Link for Cybereum";
                                     string strSignature = "<br/>Best regards, <br/>The cybereum team.";
                                     string strResetLink = "<a href='" + Url.Action("RecoverPassword", "Account", new { email = objList.emailid, code = Convert.ToString(Codeid) }, "http") + "'>Reset Password</a>";
-                                    string strMessage = "<html><body><span style='font-family:Calibri;font-size: 11pt;'>Hi " + objList.firstname 
+                                    string strMessage = "<html><body><span style='font-family:Calibri;font-size: 11pt;'>Hi " + objList.firstname
                                                         + ",<br><br> You recently requested to reset your password for your Cybereum account. " +
-                                                        " <br> Please click below link to reset the password <br>" + strResetLink + "<br>" 
+                                                        " <br> Please click below link to reset the password <br>" + strResetLink + "<br>"
                                                         + strSignature + "</span></body></html>";
                                     message = "Please check your mail to reset the password.";
                                     IGUtilities.SendEmail(strFromMailId, strToMailId, strSubject, strAttachmentFile, strMessage);
-                                                                        
+
                                     using (cybereumEntities objEnt = new cybereumEntities())
                                     {
                                         tbl_user tbluser = objEnt.tbl_user.Find(objList.userid);
@@ -439,7 +488,7 @@ namespace Cybereum.Controllers
             }
             return View(pwd);
         }
-        
+
         #region Verification from Email Account.    
         public ActionResult UserVerification(string id)
         {
@@ -484,6 +533,5 @@ namespace Cybereum.Controllers
             }
         }
         #endregion
-
     }
 }

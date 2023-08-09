@@ -14,6 +14,7 @@ using Gremlin.Net.Driver;
 using Gremlin.Net.Structure.IO.GraphSON;
 using Cybereum.Models;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 public static class IGUtilities
 {
@@ -440,6 +441,7 @@ public static class IGUtilities
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtp.UseDefaultCredentials = false;
             smtp.Credentials = new NetworkCredential(fromMail.Address, fromEmailpassword);
+            smtp.EnableSsl = true;
 
             var Message = new MailMessage(fromMail, toEmail);
             Message.Subject = "Welcome to Cybereum Project Management - Confirm Your email for Registration";
@@ -457,7 +459,7 @@ public static class IGUtilities
             IGUtilities.WriteLog(ex.Data.ToString());
             if (ex.InnerException != null) IGUtilities.WriteLog(ex.InnerException.Message);
             IGUtilities.WriteLog(ex.TargetSite.ToString());
-            throw ex;
+            //throw ex;
         }
     }
 
@@ -633,7 +635,7 @@ public static class IGUtilities
             return false;
         }
     }
-
+        
     public static GremlinServer gremlinServer = new GremlinServer(gremlinvariables.hostname, gremlinvariables.port, enableSsl: true, username: "/dbs/" + gremlinvariables.database + "/colls/" + gremlinvariables.collection, password: gremlinvariables.authKey);
     public static GremlinClient gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType);
     public static ResultSet<dynamic> ExecuteGremlinScript(string script)

@@ -514,7 +514,7 @@ namespace Cybereum.Models
 
         [Display(Name = "Cost")]
         public string projectcost { get; set; }
-        public string createdby { get; set; }
+        public int createdby { get; set; }
         public string createdusername { get; set; }
         public DateTime createdon { get; set; }
         public List<ProjectActivity> activities { get; set; }
@@ -524,6 +524,10 @@ namespace Cybereum.Models
 
         public string projectstatus { get; set; }
         public string projecttype { get; set; }
+
+        public string members { get; set; }
+
+        public string hashcode { get; set; }
     }
 
     public class ProjectMembers
@@ -638,7 +642,13 @@ namespace Cybereum.Models
         public DateTime createdon { get; set; }
     }
 
-    public class gremlinvariables
+    public class Projectresponse
+    {
+        public string message { get; set; }
+        public string hash { get; set; }        
+    }
+
+        public class gremlinvariables
     {
         //private static string hostname = "gremtest1.gremlin.cosmos.azure.com";
         public static string hostname

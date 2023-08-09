@@ -13,6 +13,7 @@ using System.Configuration;
 
 namespace Cybereum.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         private cybereumEntities db = new cybereumEntities();
@@ -57,7 +58,7 @@ namespace Cybereum.Controllers
             var UserLink = "/Account/login";
             var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, UserLink);
             IGUtilities.SendConfirmationEmailToUser(tbl_user.emailid, tbl_user.firstname + " " + tbl_user.lastname, link);
-            return "Success";
+            return "Success";            
         }
         
         public string RejectUser(int datuserid)

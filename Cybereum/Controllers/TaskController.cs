@@ -11,9 +11,17 @@ using Cybereum.Filters;
 using System.Threading.Tasks;
 using Gremlin.Net.Driver;
 using Gremlin.Net.Structure.IO.GraphSON;
+using System.Configuration;
+using System.IO;
+using System.Web.Script.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Net.Http;
+using System.Text;
 
 namespace Cybereum.Controllers
 {
+    [Authorize]
     public class TaskController : Controller
     {
         private cybereumEntities db = new cybereumEntities();
@@ -347,6 +355,9 @@ namespace Cybereum.Controllers
                     gremlinScript = $"\ng.V('{tbl_task.activityid}').addE('precedes').property('duration', '{tbl_task.durations}').to(g.V('{tbl_task.taskid}'))";
                     result = IGUtilities.ExecuteGremlinScript(gremlinScript);
                     message = "Gremlin script executed successfully";
+
+                    //*************Nodejs API Call*************
+                    Senddatatoapi(tbl_task);
                 }
                 else
                 {
@@ -414,7 +425,41 @@ namespace Cybereum.Controllers
             return View(tbl_task);
         }
 
-        // GET: Task/Create
+
+        public void Senddatatoapi(ProjectTask task)
+        {
+            try
+            {
+                string apiUrl = ConfigurationManager.AppSettings["nodejsapi"].ToString();// + "addProject";
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri(ConfigurationManager.AppSettings["nodejsapi"].ToString());
+
+                    string json = new JavaScriptSerializer().Serialize(new
+                    {
+                        projectId = Session["projectid"],
+                        name = task.taskname,
+                        status = "completed"
+                    });
+                    var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+                    var response = client.PostAsync("addTask", content).Result;
+                    client.Timeout = TimeSpan.FromMinutes(90);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var responseContent = response.Content.ReadAsStringAsync().Result;
+                        IGUtilities.WriteLog(responseContent);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //throw ex;
+            }
+        }
+
+
+            // GET: Task/Create
         [Authorize]
         [SessionTimeout]
         public ActionResult Create(int? taskid, int? milestoneid, TaskViewModel Tasks)
@@ -466,13 +511,58 @@ namespace Cybereum.Controllers
             List<SelectListItem> user = new List<SelectListItem>();
             if (roleid == (int)Role.ProjectManager)
             {
-                user = (from b in db.tbl_user
-                        where b.pmuserid == pmuserid && b.isactive == 1 && b.roleid == 3
-                        select new SelectListItem
+                //user = (from b in db.tbl_user
+                //        where b.pmuserid == pmuserid && b.isactive == 1 && b.roleid == 3
+                //        select new SelectListItem
+                //        {
+                //            Text = b.firstname + " " + b.lastname,
+                //            Value = b.userid.ToString()
+                //        }).Distinct().OrderBy(x => x.Text).ToList();
+                string projectid = Session["ProjectId"].ToString();
+                var gremlinScript = "g.V().has('project','id','"+ projectid + "').project('projectid','projectname','projectmembers').by(id()).by(values('projectname')).by(values('projectmembers').fold())";
+                var results = IGUtilities.ExecuteGremlinScript(gremlinScript);
+                int[] users= { };
+                foreach (var result in results)
+                {
+                    var projectmembers = result["projectmembers"];
+                    var stringlist = JsonConvert.SerializeObject(projectmembers);
+                    var jArray = JArray.Parse(stringlist);
+                    string Users = string.Empty;
+                    foreach (string item in jArray)
+                    {
+                        Users = Users + item + ",";
+                    }
+                    Users = Users.Remove(Users.LastIndexOf(",")).ToString();
+                    if (Users.ToString() != string.Empty)
+                    {
+                        users = Users.Split(',').Select(int.Parse).ToArray();                        
+                    }
+                }
+                var query = users.Select((r, index) => new {
+                    Text = index,
+                    Value = r });
+                var l = new List<SelectListItem>();
+                foreach (var i in query)
+                {
+                    int userid = Convert.ToInt32(i.Value);
+                    var username = (from b in db.tbl_user
+                                   join c in db.tbl_userrole on b.roleid equals c.roleid
+                                   where b.userid == userid
+                                   select new { b.userid, b.firstname,b.lastname,c.rolename}).Take(1);
+                    
+                    if (username != null)
+                    {                        
+                        var sli = new SelectListItem();
+                        sli.Value = i.Value.ToString();
+                        foreach (var item in username)
                         {
-                            Text = b.firstname + " " + b.lastname,
-                            Value = b.userid.ToString()
-                        }).Distinct().OrderBy(x => x.Text).ToList();
+                            sli.Text = item.firstname + ' ' + item.lastname + " - " + item.rolename;
+                        }                        
+                        l.Add(sli);
+                    }
+                    
+                }
+                user = new List<SelectListItem>(l);                
             }
             else if (roleid == (int)Role.Admin)
             {

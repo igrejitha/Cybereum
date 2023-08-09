@@ -11,9 +11,12 @@ using Cybereum.Filters;
 using System.Threading.Tasks;
 using Gremlin.Net.Driver;
 using Gremlin.Net.Structure.IO.GraphSON;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Cybereum.Controllers
 {
+    [Authorize]
     public class SubTaskController : Controller
     {
         private cybereumEntities db = new cybereumEntities();
@@ -275,13 +278,60 @@ namespace Cybereum.Controllers
             }
             else
             {
-                user = (from b in db.tbl_user
-                        where b.pmuserid == pmuserid && b.isactive == 1
-                        select new SelectListItem
+                //user = (from b in db.tbl_user
+                //        where b.pmuserid == pmuserid && b.isactive == 1
+                //        select new SelectListItem
+                //        {
+                //            Text = b.firstname + " " + b.lastname,
+                //            Value = b.userid.ToString()
+                //        }).Distinct().OrderBy(x => x.Text).ToList();
+
+                string projectid = Session["ProjectId"].ToString();
+                var gremlinScript = "g.V().has('project','id','" + projectid + "').project('projectid','projectname','projectmembers').by(id()).by(values('projectname')).by(values('projectmembers').fold())";
+                var results = IGUtilities.ExecuteGremlinScript(gremlinScript);
+                int[] users = { };
+                foreach (var result in results)
+                {
+                    var projectmembers = result["projectmembers"];
+                    var stringlist = JsonConvert.SerializeObject(projectmembers);
+                    var jArray = JArray.Parse(stringlist);
+                    string Users = string.Empty;
+                    foreach (string item in jArray)
+                    {
+                        Users = Users + item + ",";
+                    }
+                    Users = Users.Remove(Users.LastIndexOf(",")).ToString();
+                    if (Users.ToString() != string.Empty)
+                    {
+                        users = Users.Split(',').Select(int.Parse).ToArray();
+                    }
+                }
+                var query = users.Select((r, index) => new {
+                    Text = index,
+                    Value = r
+                });
+                var l = new List<SelectListItem>();
+                foreach (var i in query)
+                {
+                    int userid = Convert.ToInt32(i.Value);
+                    var username = (from b in db.tbl_user
+                                    join c in db.tbl_userrole on b.roleid equals c.roleid
+                                    where b.userid == userid
+                                    select new { b.userid, b.firstname, b.lastname, c.rolename }).Take(1);
+
+                    if (username != null)
+                    {
+                        var sli = new SelectListItem();
+                        sli.Value = i.Value.ToString();
+                        foreach (var item in username)
                         {
-                            Text = b.firstname + " " + b.lastname,
-                            Value = b.userid.ToString()
-                        }).Distinct().OrderBy(x => x.Text).ToList();
+                            sli.Text = item.firstname + ' ' + item.lastname + " - " + item.rolename;
+                        }
+                        l.Add(sli);
+                    }
+
+                }
+                user = new List<SelectListItem>(l);
             }
 
             return user;
