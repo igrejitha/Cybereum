@@ -63,6 +63,26 @@
     .is-hide {
         display: none;
     }
+
+    #divLoader {
+        position: fixed;
+        display: block;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        text-align: center;
+        opacity: 0.7;
+        background-color: #fff;
+        z-index: 99;
+    }
+
+    #loading-image {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 100;
+    }
 </style>
 
 @*<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
@@ -76,6 +96,9 @@
 </div>
 
 <div class="col-12">
+    <div id="divLoader" style="display:none;">
+        <img id="loading-image" src="~/images/Spinner.gif" alt="Loader" />
+    </div>
     <div class="card">
         <div class="card-body">
             <div class="table-responsive">
@@ -106,7 +129,7 @@
 @Scripts.Render("~/bundles/jquery")
 <script type="text/javascript">
     $(document).ajaxSend(function () {
-        //$("#overlay").fadeIn(300);
+        $("#overlay").fadeIn(300);
     });
 
     $(document).ready(function () {
@@ -217,6 +240,7 @@
 
 
     function AcceptData(userid) {
+        $("#divLoader").show();
         debugger;
         $.ajax(
         {
@@ -232,17 +256,23 @@
                 $("#overlay").fadeOut(300);
                 debugger;
                 if (response == "Success") {
-                    msg(response, 'info');
+                    alert(response);
                     window.location = '@Url.Action("PendingUsers", "User")?userid=' + userid;
+                    @*window.location = '@Url.Action("PendingUsers", "User")?userid=' + userid;*@
+                    @*var link = '@Html.Raw(@Url.Action("PendingUsers", "User"));*@                    
+                    window.open(link);
+                    $("#divLoader").hide();
                 }
                 else
-                    msg(response, 'info');
+                    alert(response);
+                    $("#divLoader").hide();
             }
         });
     }
 
     function RejectData(userid) {
         debugger;
+        $("#divLoader").show();
         $.ajax(
         {
             url: '@Url.Action("RejectUser", "User")',
@@ -257,11 +287,14 @@
                 $("#overlay").fadeOut(300);
                 debugger;
                 if (response == "Success") {
-                    msg('Rejected the selected user', 'info');
+                    alert('Rejected the selected user');
                     window.location = '@Url.Action("PendingUsers", "User")?userid=' + userid;
+                    $("#divLoader").hide();
                 }
-                else
-                    msg(response, 'info');
+                else {
+                    alert(response);
+                    $("#divLoader").hide();
+                }
             }
         });
     }

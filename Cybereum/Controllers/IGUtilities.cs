@@ -15,6 +15,8 @@ using Gremlin.Net.Structure.IO.GraphSON;
 using Cybereum.Models;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 public static class IGUtilities
 {
@@ -473,11 +475,11 @@ public static class IGUtilities
 
             var smtp = new SmtpClient();
             smtp.Host = ConfigurationManager.AppSettings["SMTPServer"].ToString();
-            smtp.Port = 25;
+            smtp.Port = 587;
             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
             smtp.UseDefaultCredentials = false;
             smtp.Credentials = new NetworkCredential(fromMail.Address, fromEmailpassword);
-            //smtp.EnableSsl = true;
+            smtp.EnableSsl = true;
 
             var Message = new MailMessage(fromMail, toEmail);
             Message.Subject = "Welcome to cybereum - Your One-Stop Project Management Solution with Cutting Edge Data Analytics and ML";
@@ -563,6 +565,8 @@ public static class IGUtilities
         return noOfDays;
     }
 
+
+
     public static DateTime CalculateDays(DateTime startDate, int Days)
     {
         DateTime[] arrayOfOrgHolidays = new DateTime[] { };//new DateTime(2023, 05, 01)
@@ -584,7 +588,7 @@ public static class IGUtilities
                 i--;
             }
         }
-
+        //startDate = startDate.AddDays(1);
         if (startDate.DayOfWeek == DayOfWeek.Saturday)
         {
             startDate = startDate.AddDays(2);
@@ -594,6 +598,36 @@ public static class IGUtilities
             startDate = startDate.AddDays(1);
         }
         return startDate;
+    }
+
+    public static DateTime AddBusinessDays(this DateTime current, int days)
+    {
+        var sign = Math.Sign(days);
+        var unsignedDays = Math.Abs(days);
+        for (var i = 0; i < unsignedDays; i++)
+        {
+            do
+            {
+                current = current.AddDays(sign);
+            } while (current.DayOfWeek == DayOfWeek.Saturday ||
+                     current.DayOfWeek == DayOfWeek.Sunday);
+        }
+        return current;
+    }
+
+    public static DateTime SubractBusinessDays(this DateTime current, int days)
+    {
+        var sign = Math.Sign(days);
+        var unsignedDays = Math.Abs(days);        
+        for (var i = 1; i < unsignedDays; i++)
+        {
+            do
+            {
+                current = current.AddDays(- sign);
+            } while (current.DayOfWeek == DayOfWeek.Saturday ||
+                     current.DayOfWeek == DayOfWeek.Sunday);
+        }
+        return current;
     }
 
     public static string GeneratePassword()
@@ -635,7 +669,7 @@ public static class IGUtilities
             return false;
         }
     }
-        
+
     public static GremlinServer gremlinServer = new GremlinServer(gremlinvariables.hostname, gremlinvariables.port, enableSsl: true, username: "/dbs/" + gremlinvariables.database + "/colls/" + gremlinvariables.collection, password: gremlinvariables.authKey);
     public static GremlinClient gremlinClient = new GremlinClient(gremlinServer, new GraphSON2Reader(), new GraphSON2Writer(), GremlinClient.GraphSON2MimeType);
     public static ResultSet<dynamic> ExecuteGremlinScript(string script)
@@ -650,4 +684,295 @@ public static class IGUtilities
         return result;
         //}
     }
+
+    #region activity update
+    public static void updateactivityprojectdate(string projectid)
+    {
+        //****************************Update End Activity date****************************
+        string gremlinScript1 = $"g.V().has('activity','projectid','{projectid}').has('activityname',neq('{ ConfigurationManager.AppSettings["EndActivity"] }')).order().by('enddate',decr).project('startdate','enddate').by(values('startdate')).by(values('enddate')).limit(1)";
+        var result1 = IGUtilities.ExecuteGremlinScript(gremlinScript1);
+        DateTime dt1 = DateTime.Now;
+        //DateTime enddate = DateTime.Now.AddBusinessDays(1);
+        if (result1.Count > 0)
+        {
+            foreach (var item in result1)
+            {
+                dt1 = Convert.ToDateTime(item["enddate"]);
+                dt1 = IGUtilities.AddBusinessDays(dt1, 1); //dt1.AddDays(1);
+                //enddate = IGUtilities.AddBusinessDays(dt1, 1); //dt1.AddDays(1);
+            }
+            gremlinScript1 = $"g.V().has('activity','activityname','{ ConfigurationManager.AppSettings["EndActivity"] }').has('activity','projectid','{projectid}').project('id','startdate','enddate').by(values('id')).by(values('startdate')).by(values('enddate'))";
+            result1 = IGUtilities.ExecuteGremlinScript(gremlinScript1);
+            if (result1.Count > 0)
+            {
+                foreach (var item in result1)
+                {
+                    //if (dt1 > Convert.ToDateTime(item["enddate"]))
+                    //{
+                    gremlinScript1 = $"g.V('{item["id"]}')" +
+                                    $".property('startdate', '{dt1.ToString("yyyy-MM-dd")}')" +
+                                    $".property('enddate', '{dt1.ToString("yyyy-MM-dd")}')" +
+                                    $".property('projectid', '{projectid}')" +
+                                    $".property('durations', '{1}')" +
+                                    $".property('updatedon', '{DateTime.Now}')" +
+                                    $".property('type', 'activity')";
+                    result1 = IGUtilities.ExecuteGremlinScript(gremlinScript1);
+                    //}
+                }
+            }
+            //****************************End****************************
+
+            //****************************Update project End date****************************
+            gremlinScript1 = $"g.V().has('project','id','{projectid}').project('id','startdate','enddate').by(values('id')).by(values('startdate')).by(values('enddate'))";
+            result1 = IGUtilities.ExecuteGremlinScript(gremlinScript1);
+            if (result1.Count > 0)
+            {
+                foreach (var item in result1)
+                {
+                    //if (dt1 > Convert.ToDateTime(item["enddate"]))
+                    //{
+                    gremlinScript1 = $"g.V('{item["id"]}')" +
+                                    $".property('enddate', '{dt1.ToString("yyyy-MM-dd")}')" +
+                                    $".property('updatedon', '{DateTime.Now}')" +
+                                    $".property('type', 'project')";
+                    result1 = IGUtilities.ExecuteGremlinScript(gremlinScript1);
+                    //}
+                }
+            }
+        }
+        //****************************End****************************
+    }
+
+    public static void updateactivitydatesbytype(string activityid)
+    {
+        try
+        {
+            string gremlinScript1 = $"g.V().has('activity','id','{activityid}').project('id','activityname','durations','startdate','enddate','predecessors','linktype').by(values('id')).by(values('activityname')).by(values('durations')).by(values('startdate')).by(values('enddate')).by(values('predecessors').fold()).by(values('linktype'))";
+            var result1 = IGUtilities.ExecuteGremlinScript(gremlinScript1);
+            if (result1.Count > 0)
+            {
+                foreach (var item in result1)
+                {
+                    DateTime startdate = DateTime.Now;
+                    int days = 0;
+                    DateTime todate = DateTime.Now;
+                    string linktype = item["linktype"];                    
+                    var predecessors = item["predecessors"];
+                    var stringlist = JsonConvert.SerializeObject(predecessors);
+                    var jArray = JArray.Parse(stringlist);
+                    string tasks = string.Empty;
+                    string[] ints = new string []{ };
+
+                    foreach (string precedor in jArray)
+                    {
+                        tasks = tasks + precedor + ",";
+                    }
+                    if (tasks != "") tasks = tasks.Remove(tasks.LastIndexOf(",")).ToString();
+
+                    if (Convert.ToInt16(item["linktype"]) == (int)LinkType.Finish_to_start)
+                    {
+                        if (tasks.ToString() != string.Empty)
+                        {
+                            ints = tasks.Split(',').ToArray();
+                            startdate = GetPredecesenddate(ints);
+                        }
+                        else
+                        {
+                            startdate = Convert.ToDateTime(item["enddate"]);
+                        }
+                        days = Convert.ToInt16(item["durations"]);
+                        todate = IGUtilities.CalculateDays(startdate, days);
+                    }
+                    else if (Convert.ToInt16(item["linktype"]) == (int)LinkType.Start_to_start)
+                    {
+                        if (tasks.ToString() != string.Empty)
+                        {
+                            ints = tasks.Split(',').ToArray();
+                            startdate = GetPredecesstartdate(ints);
+                        }
+                        else
+                        {
+                            startdate = Convert.ToDateTime(item["startdate"]);
+                        }
+                        days = Convert.ToInt16(item["durations"]);
+                        todate = IGUtilities.CalculateDays(startdate, days);
+                    }
+                    else if (Convert.ToInt16(item["linktype"]) == (int)LinkType.Start_to_finish)
+                    {
+                        if (tasks.ToString() != string.Empty)
+                        {
+                            ints = tasks.Split(',').ToArray();
+                            todate = GetPredecesstartdate(ints);
+                        }
+                        else
+                        {
+                            todate = Convert.ToDateTime(item["startdate"]);
+                        }
+                        days = Convert.ToInt16(item["durations"]);
+                        startdate = SubractBusinessDays(todate, days);
+                    }
+                    else if (Convert.ToInt16(item["linktype"]) == (int)LinkType.Finish_to_finish)
+                    {
+                        if (tasks.ToString() != string.Empty)
+                        {
+                            ints = tasks.Split(',').ToArray();
+                            todate = GetPredecesenddate(ints);
+                        }
+                        else
+                        {
+                            todate = Convert.ToDateTime(item["enddate"]);
+                        }
+                        days = Convert.ToInt16(item["durations"]);
+                        startdate = SubractBusinessDays(todate, days);
+                    }
+
+
+                    var gremlinScripts = $"g.V('{item["id"]}')" +
+                                $".property('startdate', '{startdate.ToString("yyyy-MM-dd")}')" +
+                                $".property('enddate', '{todate.ToString("yyyy-MM-dd")}')" +
+                                $".property('updatedon', '{DateTime.Now}')" +
+                                $".property('type', 'activity')";
+                    var result = IGUtilities.ExecuteGremlinScript(gremlinScripts);
+                }
+            }
+
+
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+    public static void updateprecedingactivitydates(string projectid, string activityid)
+    {
+        try
+        {
+            var gremlinScript = "g.V().has('activity','projectid','" + projectid + "').order().by('startdate',incr).order().by('enddate',incr).project('id','activityname','startdate','enddate','durations','predecessors','linktype').by(id()).by(values('activityname')).by(values('startdate')).by(values('enddate')).by(values('durations')).by(values('predecessors').fold()).by(values('linktype'))";
+            var activitydata = IGUtilities.ExecuteGremlinScript(gremlinScript);
+            string pList = JsonConvert.SerializeObject(activitydata);
+            List<ProjectActivity> Activitylist = JsonConvert.DeserializeObject<List<ProjectActivity>>(pList);
+            Activitylist = Activitylist.OrderBy(a => a.startdate).ThenBy(a => a.enddate).ToList();
+
+            // finding index
+            int index = Activitylist.FindIndex(a => a.id == activityid);
+
+            //Remove previous activities
+            Activitylist.RemoveRange(0, index + 1);
+            //Remove end activity
+            Activitylist.Remove(Activitylist.Find(m => m.activityname == ConfigurationManager.AppSettings["EndActivity"]));
+
+            //********update start and enddate of successor activities
+            foreach (var itemactivity in Activitylist)
+            {
+                string gremlinScript1 = $"g.V().has('activity','id','{itemactivity.id}').project('id','activityname','durations','startdate','enddate','predecessors','linktype').by(values('id')).by(values('activityname')).by(values('durations')).by(values('startdate')).by(values('enddate')).by(values('predecessors').fold()).by(values('linktype'))";
+                var result1 = IGUtilities.ExecuteGremlinScript(gremlinScript1);
+                if (result1.Count > 0)
+                {
+                    foreach (var item in result1)
+                    {
+                        DateTime precedingenddate = DateTime.Now;
+
+                        var predecessors = item["predecessors"];
+                        var stringlist = JsonConvert.SerializeObject(predecessors);
+                        var jArray = JArray.Parse(stringlist);
+                        string tasks = string.Empty;
+
+                        foreach (string precedor in jArray)
+                        {
+                            tasks = tasks + precedor + ",";
+                        }
+                        if (tasks != "") tasks = tasks.Remove(tasks.LastIndexOf(",")).ToString();
+                        if (tasks.ToString() != string.Empty)
+                        {
+                            string[] ints = tasks.Split(',').ToArray();
+                            precedingenddate = GetPredecesenddate(ints);
+                        }
+                        else
+                        {
+                            precedingenddate = Convert.ToDateTime(item["startdate"]);
+                        }
+
+                        int days = Convert.ToInt16(item["durations"]);
+                        DateTime todate = IGUtilities.CalculateDays(precedingenddate, days);
+                        var gremlinScripts = $"g.V('{item["id"]}')" +
+                                    $".property('startdate', '{precedingenddate.ToString("yyyy-MM-dd")}')" +
+                                    $".property('enddate', '{todate.ToString("yyyy-MM-dd")}')" +
+                                    $".property('updatedon', '{DateTime.Now}')" +
+                                    $".property('type', 'activity')";
+                        var result = IGUtilities.ExecuteGremlinScript(gremlinScripts);
+                    }
+                }
+            }
+
+        }
+        catch (Exception ex)
+        {
+            throw ex;
+        }
+    }
+
+
+    public static DateTime GetPredecesenddate(string[] id)
+    {
+        DateTime lastactivityenddate = DateTime.Now;
+        string gremlinScript = string.Empty;
+        if (id != null)
+        {
+            for (int i = 0; i <= id.Length - 1; i++)
+            {
+                gremlinScript = "g.V().has('activity','id','" + id[i] + "').project('enddate').by(values('enddate'))";
+
+                var result = IGUtilities.ExecuteGremlinScript(gremlinScript);
+                if (result.Count > 0)
+                {
+                    foreach (var item in result)
+                    {
+                        DateTime dt1 = Convert.ToDateTime(item["enddate"]);
+                        //dt1 = dt1.AddBusinessDays(1);
+                        if (i == 0)
+                        {
+                            lastactivityenddate = dt1;
+                        }
+                        if (dt1 > lastactivityenddate)
+                            lastactivityenddate = dt1;
+                    }
+
+                }
+            }
+        }
+        return lastactivityenddate;
+    }
+    
+    public static DateTime GetPredecesstartdate(string[] id)
+    {
+        DateTime lastactivitystartdate = DateTime.Now;
+        string gremlinScript = string.Empty;
+        if (id != null)
+        {
+            for (int i = 0; i <= id.Length - 1; i++)
+            {
+                gremlinScript = "g.V().has('activity','id','" + id[i] + "').project('startdate').by(values('startdate'))";
+
+                var result = IGUtilities.ExecuteGremlinScript(gremlinScript);
+                if (result.Count > 0)
+                {
+                    foreach (var item in result)
+                    {
+                        DateTime dt1 = Convert.ToDateTime(item["startdate"]);
+                        //dt1 = dt1.AddBusinessDays(1);
+                        if (i == 0)
+                        {
+                            lastactivitystartdate = dt1;
+                        }
+                        if (dt1 > lastactivitystartdate)
+                            lastactivitystartdate = dt1;
+                    }
+
+                }
+            }
+        }
+        return lastactivitystartdate;
+    }
+    #endregion
 }

@@ -1,0 +1,12 @@
+09/04/2023 10:17:13 AM The underlying provider failed on Open.
+09/04/2023 10:17:13 AM System.Collections.ListDictionaryInternal
+09/04/2023 10:17:13 AM An item with the same key has already been added.
+09/04/2023 10:17:13 AM Void Open()
+09/04/2023 02:01:57 PM The underlying provider failed on Open.
+09/04/2023 02:01:57 PM System.Collections.ListDictionaryInternal
+09/04/2023 02:01:57 PM An item with the same key has already been added.
+09/04/2023 02:01:57 PM Void Open()
+09/04/2023 09:53:24 PM The underlying provider failed on Open.
+09/04/2023 09:53:24 PM System.Collections.ListDictionaryInternal
+09/04/2023 09:53:24 PM An item with the same key has already been added.
+09/04/2023 09:53:24 PM Void Open()

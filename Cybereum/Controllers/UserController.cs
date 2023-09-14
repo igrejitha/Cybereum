@@ -60,6 +60,7 @@ namespace Cybereum.Controllers
             IGUtilities.SendConfirmationEmailToUser(tbl_user.emailid, tbl_user.firstname + " " + tbl_user.lastname, link);
             return "Success";            
         }
+
         
         public string RejectUser(int datuserid)
         {

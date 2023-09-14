@@ -453,6 +453,19 @@ namespace Cybereum.Controllers
                 tbl_subtask.enddate = IGUtilities.CalculateDays(tbl_subtask.startdate, duration);
 
                 long count = 0;
+                //**********Checking for task start and end date*************
+                var enddate = CheckTaskdates(tbl_subtask.taskid,tbl_subtask.startdate, tbl_subtask.enddate);
+                string pList = JsonConvert.SerializeObject(enddate.Data);
+                ProjectSubTask newtask = new ProjectSubTask();
+                newtask = JsonConvert.DeserializeObject<ProjectSubTask>(pList);
+                if (newtask.startdate != Convert.ToDateTime("01/01/0001"))
+                {
+                    tbl_subtask.startdate = newtask.startdate;
+                    tbl_subtask.enddate = newtask.enddate;
+                    tbl_subtask.durations = newtask.durations;
+                }
+                //**********End*********
+
                 if (tbl_subtask.subtaskid == null)
                 {
                     var gremlinScript = "g.V().has('subtask','subtaskname','" + tbl_subtask.subtaskname + "').has('subtask','taskid','" + tbl_subtask.taskid + "').count()";
@@ -482,7 +495,8 @@ namespace Cybereum.Controllers
 
                 if (tbl_subtask.subtaskid == null)
                 {
-                    tbl_subtask.createdby = Session["LoggedInUserId"].ToString();
+                    if (tbl_subtask.createdby == null)
+                        tbl_subtask.createdby = Session["LoggedInUserId"].ToString();
 
                     string gremlinScript = $"g.addV('subtask').property('pk', '{tbl_subtask.subtaskname}')" +
                             $".property('subtaskname', '{tbl_subtask.subtaskname}')" +
@@ -542,11 +556,11 @@ namespace Cybereum.Controllers
                     var result = IGUtilities.ExecuteGremlinScript(gremlinScript);
                     message = "Updated Successfully";
                     
-                    //Remove connection the task to subtask
-                    gremlinScript = $"\ng.V().has('subtask', 'id', '{tbl_subtask.subtaskid}').bothE().drop()";
-                    // Execute the Gremlin script
-                    result = IGUtilities.ExecuteGremlinScript(gremlinScript);
-                    message = "Gremlin script executed successfully";
+                    ////Remove connection the task to subtask
+                    //gremlinScript = $"\ng.V().has('subtask', 'id', '{tbl_subtask.subtaskid}').bothE().drop()";
+                    //// Execute the Gremlin script
+                    //result = IGUtilities.ExecuteGremlinScript(gremlinScript);
+                    //message = "Gremlin script executed successfully";
                     
 
                     //connect the task to subtask
@@ -628,6 +642,26 @@ namespace Cybereum.Controllers
             else
             {
                 subtask.enddate = record;
+            }
+            return Json(subtask, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult CheckTaskdates(string taskid, DateTime startdate, DateTime enddate)
+        {
+            ProjectSubTask subtask = new ProjectSubTask();
+            var gremlinScript = "g.V().has('task','id','" + taskid + "').project('startdate','enddate','durations').by(values('startdate')).by(values('enddate')).by(values('durations'))";
+            var result = IGUtilities.ExecuteGremlinScript(gremlinScript);
+            if (result.Count > 0)
+            {
+                foreach (var item in result)
+                {
+                    if (enddate > Convert.ToDateTime(item["enddate"]) || startdate < Convert.ToDateTime(item["startdate"]))
+                    {
+                        subtask.startdate = Convert.ToDateTime(item["startdate"]);
+                        subtask.enddate = Convert.ToDateTime(item["enddate"]);
+                        subtask.durations = Convert.ToInt16(item["durations"]);
+                    }
+                }
             }
             return Json(subtask, JsonRequestBehavior.AllowGet);
         }

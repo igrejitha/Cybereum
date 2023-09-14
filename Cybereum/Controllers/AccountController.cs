@@ -14,37 +14,75 @@ using System.Data.Entity.Validation;
 using System.Net;
 using System.Configuration;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Microsoft.Azure.ActiveDirectory.GraphClient;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.Graph;
+using System.Net.Http.Headers;
+using MySqlX.XDevAPI;
+using User = Microsoft.Graph.User;
+using Microsoft.Identity.Client;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Security.Principal;
 
 namespace Cybereum.Controllers
 {
     public class AccountController : Controller
     {
+        private string clientId = ConfigurationManager.AppSettings["ida:ClientId"];
+        private string appKey = ConfigurationManager.AppSettings["ida:ClientSecret"];
+        private string aadInstance = ConfigurationManager.AppSettings["ida:AADInstance"];
+        //private string graphResourceID = "https://graph.windows.net";
+        //string authority = "https://login.microsoftonline.com/contoso.com";
+        string[] scopes = new string[] { "user.read" };
+        cybereumEntities objdmsEntities = new cybereumEntities();
+        private static string postLogoutRedirectUri = ConfigurationManager.AppSettings["ida:PostLogoutRedirectUri"];
+        private static string PostLoginRedirectUri = ConfigurationManager.AppSettings["ida:PostLoginRedirectUri"];
+
         public void SignIn()
         {
-            // Send an OpenID Connect sign-in request.
             if (!Request.IsAuthenticated)
             {
+                Session["isAzurelogin"] = true;
                 HttpContext.GetOwinContext().Authentication.Challenge(new AuthenticationProperties { RedirectUri = "/Home/Index" },
                     OpenIdConnectAuthenticationDefaults.AuthenticationType);
+                HttpContext.Response.SuppressFormsAuthenticationRedirect = true;
             }
         }
 
         public void SignOut()
         {
             string callbackUrl = Url.Action("SignOutCallback", "Account", routeValues: null, protocol: Request.Url.Scheme);
-
             HttpContext.GetOwinContext().Authentication.SignOut(
                 new AuthenticationProperties { RedirectUri = callbackUrl },
                 OpenIdConnectAuthenticationDefaults.AuthenticationType, CookieAuthenticationDefaults.AuthenticationType);
         }
 
+        public async Task<List<User>> GetAllUsers()
+        {
+            List<User> userResult = new List<User>();
+
+            GraphServiceClient graphClient = new GraphServiceClient(new AzureAuthenticationProvider());
+            IGraphServiceUsersCollectionPage users = await graphClient.Users.Request().Top(500).GetAsync(); // The hard coded Top(500) is what allows me to pull all the users, the blog post did this on a param passed in
+            userResult.AddRange(users);
+
+            while (users.NextPageRequest != null)
+            {
+                users = await users.NextPageRequest.GetAsync();
+                userResult.AddRange(users);
+            }
+
+            return userResult;
+        }
+
         public ActionResult SignOutCallback()
         {
-            if (Request.IsAuthenticated)
-            {
-                // Redirect to home page if the user is authenticated.
-                return RedirectToAction("Index", "Home");
-            }
+            //if (Request.IsAuthenticated)
+            //{
+            //    // Redirect to home page if the user is authenticated.
+            //    return RedirectToAction("Index", "Home");
+            //}
             return RedirectToAction("Login");
             //return View();
         }
@@ -58,12 +96,135 @@ namespace Cybereum.Controllers
 
         public ActionResult Login()
         {
+            //if (Request.IsAuthenticated)
+            //{
+            //    LoginViewModel mod = new LoginViewModel();
+            //    mod.Email = User.Identity.Name;
+
+            //    var userIdentity = (ClaimsIdentity)User.Identity;
+            //    var claims = userIdentity.Claims;
+            //    var roles = claims.Where(c => c.Type == ClaimTypes.Role).ToList();
+            //    string rolename = string.Empty;
+            //    string organization = string.Empty;
+            //    foreach (var role in roles)
+            //    {
+            //        rolename = role.Value;
+            //    }
+
+            //    gettinguserdet:
+            //    //*****Check for User in COSMOS DB*********
+            //    var gremlinScript = "g.V().has('user','username','" + User.Identity.Name + "')";
+            //    var objList = IGUtilities.ExecuteGremlinScript(gremlinScript);
+            //    string pList = JsonConvert.SerializeObject(objList);
+            //    List<ADUser> userList = JsonConvert.DeserializeObject<List<ADUser>>(pList);
+
+            //    if (userList.Count > 0)
+            //    {
+            //        foreach (var result in userList)
+            //        {
+            //            //if (result.username == User.Identity.Name)
+            //            //{
+            //            Session["LoggedInUserId"] = result.id;
+            //            //Session["RoleId"] = User.Identity.AuthenticationType;
+            //            Session["Username"] = User.Identity.Name;
+
+            //            int roleid = (int)Enum.Parse(typeof(Role), rolename);
+
+            //            AuthorizeAttribute objAuth = new AuthorizeAttribute();
+            //            if (rolename == string.Empty)
+            //            {
+            //                objAuth.Roles = Role.Admin.ToString();
+            //                Session["RoleId"] = Role.Admin;
+            //                Session["RoleName"] = Role.Admin.ToString();
+            //            }
+            //            else
+            //            {
+            //                objAuth.Roles = rolename;
+            //                Session["RoleId"] = roleid;
+            //                Session["RoleName"] = rolename;
+            //            }
+
+            //            if (roleid == (int)Role.Admin)
+            //            {
+            //                return RedirectToAction("Index", "Home");
+            //            }
+            //            else if (roleid == (int)Role.ProjectManager)
+            //            {
+            //                return RedirectToAction("List", "Project");
+            //            }
+            //            else if (roleid == (int)Role.User)
+            //            {
+            //                return RedirectToAction("Dashboard", "Home");
+            //            }
+            //        }
+            //    }
+            //    else
+            //    {
+            //        //*****Add User to COSMOS DB*********
+            //        gremlinScript = $"g.addV('user').property('pk', '{User.Identity.Name}')" +
+            //                    $".property('username', '{User.Identity.Name}')" +
+            //                    $".property('userrole', '{rolename}')" +
+            //                    $".property('organization', '{organization}')" +
+            //                    $".property('createdon', '{DateTime.Now}')" +
+            //                    $".property('type', 'user')";
+            //        var results = IGUtilities.ExecuteGremlinScript(gremlinScript);
+            //        //*****End***********
+            //        goto gettinguserdet;
+            //    }
+            //    return RedirectToAction("Index", "Home");
+            //}
+            //else
+            //{
+            //    string callbackUrl = Url.Action("Index", "Home", routeValues: null, protocol: Request.Url.Scheme);
+            //    if (!Request.IsAuthenticated)
+            //    {
+            //        HttpContext.GetOwinContext().Authentication.Challenge(new AuthenticationProperties { RedirectUri = callbackUrl },
+            //            OpenIdConnectAuthenticationDefaults.AuthenticationType);
+            //    }
+            //}
+
             if (Request.IsAuthenticated)
             {
                 LoginViewModel mod = new LoginViewModel();
                 mod.Email = User.Identity.Name;
-                return View(mod);
+
+                if (Session["uniqueid"] == null)
+                {
+                    FormsAuthentication.SignOut();
+                    HttpContext.User = new GenericPrincipal(new GenericIdentity(string.Empty), null);
+                    Session.Abandon();                    
+                    Session["isAzurelogin"] = false;
+                    return View();
+                }
+
+
+                string uniqueid = Session["uniqueid"].ToString();
+                Session["isAzurelogin"] = true;
+                var objList = objdmsEntities.tbl_user.Where(x => x.emailid == mod.Email && x.username == uniqueid && x.isactive != 2).FirstOrDefault();
+                if (objList != null)
+                {
+                    FormsAuthentication.SetAuthCookie(mod.Email, true);
+                    //Session.Timeout = 90;                                    
+                    Session["LoggedInUserId"] = objList.userid;
+                    Session["RoleId"] = objList.roleid;
+                    Session["Username"] = objList.username;
+                    AuthorizeAttribute objAuth = new AuthorizeAttribute();
+                    if (objList.roleid == (int)Role.Admin)
+                    {
+                        objAuth.Roles = Role.Admin.ToString();
+                        Session["RoleName"] = Role.Admin.ToString();
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        objAuth.Roles = Role.User.ToString();
+                        Session["RoleName"] = (Role)objList.roleid;
+                        return RedirectToAction("List", "Project");
+                    }
+                }
             }
+
+
             return View();
         }
 
@@ -80,19 +241,24 @@ namespace Cybereum.Controllers
         [Authorize]
         public ActionResult Logout()
         {
-            FormsAuthentication.SignOut();
+            if (Convert.ToBoolean(Session["isAzurelogin"]) == true)
+            {
+                string callbackUrl = Url.Action("SignOutCallback", "Account", routeValues: null, protocol: Request.Url.Scheme);
 
+                HttpContext.GetOwinContext().Authentication.SignOut(
+                    new AuthenticationProperties { RedirectUri = callbackUrl },
+                    OpenIdConnectAuthenticationDefaults.AuthenticationType, CookieAuthenticationDefaults.AuthenticationType);
+            }
+            FormsAuthentication.SignOut();
+            Session.Abandon();
+
+            Session["isAzurelogin"] = false;
             if (Convert.ToInt32(Session["RoleId"]) == 3)
                 return RedirectToAction("UserLogin");
             else
                 return RedirectToAction("Login");
 
-            //string callbackUrl = Url.Action("SignOutCallback", "Account", routeValues: null, protocol: Request.Url.Scheme);
 
-            //HttpContext.GetOwinContext().Authentication.SignOut(
-            //    new AuthenticationProperties { RedirectUri = callbackUrl },
-            //    OpenIdConnectAuthenticationDefaults.AuthenticationType, CookieAuthenticationDefaults.AuthenticationType);
-            //return RedirectToAction("Login");
         }
 
         [HttpPost]
@@ -100,13 +266,23 @@ namespace Cybereum.Controllers
         public ActionResult Login(LoginViewModel user)
         {
             try
-            {                
-                //if (!Request.IsAuthenticated)
-                //{
-                //    HttpContext.GetOwinContext().Authentication.Challenge(new AuthenticationProperties { RedirectUri = "/Home/Index" },
-                //        OpenIdConnectAuthenticationDefaults.AuthenticationType);
-                //}
+            {
+                //var tokenStore = new SessionTokenStore(null,
+                //    System.Web.HttpContext.Current, ClaimsPrincipal.Current);
 
+                //if (tokenStore.HasData())
+                //{
+                //    // Add the user to the view bag
+                //    ViewBag.User = tokenStore.GetUserDetails();
+                //}
+                //else
+                //{
+                //    // The session has lost data. This happens often
+                //    // when debugging. Log out so the user can log back in
+                //    Request.GetOwinContext().Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
+                //    //filterContext.Result = RedirectToAction("Index", "Home");
+                //}
+                Session["isAzurelogin"] = false;
                 string message = string.Empty;
                 if (ModelState.IsValid)
                 {
@@ -142,9 +318,21 @@ namespace Cybereum.Controllers
                                         Session["RoleName"] = Role.Admin.ToString();
                                         return RedirectToAction("Index", "Home");
                                     }
-                                    else
+                                    else if (objList.roleid == (int)Role.ProjectManager)
+                                    {
+                                        objAuth.Roles = Role.ProjectManager.ToString();
+                                        Session["RoleName"] = (Role)objList.roleid;
+                                        return RedirectToAction("List", "Project");
+                                    }
+                                    else if (objList.roleid == (int)Role.User)
                                     {
                                         objAuth.Roles = Role.User.ToString();
+                                        Session["RoleName"] = (Role)objList.roleid;
+                                        return RedirectToAction("Dashboard", "Home");
+                                    }
+                                    else 
+                                    {
+                                        objAuth.Roles = Role.ProjectAdmin.ToString();
                                         Session["RoleName"] = (Role)objList.roleid;
                                         return RedirectToAction("List", "Project");
                                     }
@@ -238,6 +426,20 @@ namespace Cybereum.Controllers
             }
         }
 
+        //public async Task<string> GetTokenForApplication()
+        //{
+        //    string signedInUserID = ClaimsPrincipal.Current.FindFirst(ClaimTypes.NameIdentifier).Value;
+        //    string tenantID = ClaimsPrincipal.Current.FindFirst("http://schemas.microsoft.com/identity/claims/tenantid").Value;
+        //    string userObjectID = ClaimsPrincipal.Current.FindFirst("http://schemas.microsoft.com/identity/claims/objectidentifier").Value;
+
+        //    // get a token for the Graph without triggering any user interaction (from the cache, via multi-resource refresh token, etc)
+        //    ClientCredential clientcred = new ClientCredential(clientId, appKey);
+        //    // initialize AuthenticationContext with the token cache of the currently signed in user, as kept in the app's database
+        //    AuthenticationContext authenticationContext = new AuthenticationContext(aadInstance + tenantID, new ADALTokenCache(signedInUserID));
+        //    AuthenticationResult authenticationResult = await authenticationContext.AcquireTokenSilentAsync(graphResourceID, clientcred, new UserIdentifier(userObjectID, UserIdentifierType.UniqueId));
+        //    return authenticationResult.AccessToken;
+        //}
+
         [HttpPost]
         [AllowAnonymous]
         public ActionResult Register(RegisterViewModel user)
@@ -245,6 +447,7 @@ namespace Cybereum.Controllers
             try
             {
                 string message = string.Empty;
+
                 if (ModelState.IsValid)
                 {
                     using (cybereumEntities objdmsEntities = new cybereumEntities())
@@ -288,7 +491,7 @@ namespace Cybereum.Controllers
                                 message = "Verification mail sent to registered mail id";
                                 ViewBag.Message = message;
                                 //user = new RegisterViewModel();
-                                return View(user);
+                                return View();
                             }
                         }
                         else if (objList.emailverification == false)

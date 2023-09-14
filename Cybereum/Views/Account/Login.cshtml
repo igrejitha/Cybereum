@@ -86,14 +86,20 @@
             }
             <div class="new-account mt-3">
                 <p>
+                    @Html.ActionLink("Forgot Password", "ForgotPassword", null, new { @class = "text-primary", @style = "color:#0D2136;" })
+                </p>
+                <p>
                     Don't have an account?
                     @*<a class="text-primary" href="./Register.html" style="color:#0D2136;">*@
-                    @Html.ActionLink("Register", "Register", null, new { @class = "text-primary", @style = "color:#0D2136;" })
+                    @Html.ActionLink("Register", "Register", null, new { @class = "text-primary", @style = "color:#0D2136;" })                     
+                    
                     @*</a>*@
-                </p>
-
-            </div>
-            @*@Html.Partial("_LoginPartial")*@
+                </p>                
+<p>
+(or)
+</p>                
+</div>
+            @Html.Partial("_LoginPartial")
         </div>
     </div>
 </div>

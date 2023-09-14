@@ -29,7 +29,7 @@
                                 <th>Created On</th>
                                 <th>Hash ID</th>
                                 <th>Edit</th>
-                                <th>Activity</th>
+                                @*<th>Activity</th>*@
                                 <th>GANTT Chart</th>                                
                             </tr>
                         </thead>
@@ -94,7 +94,7 @@
                 { 'data': 'projectname', 'name': 'Project Name' },
                 {
                     'data': 'startdate', 'name': 'Start Date',
-                    'render': function (jsonDate) {                        
+                    'render': function (jsonDate) {
                         if (jsonDate != null) {
                             var date = new Date(parseInt(jsonDate.substr(6)));
                             var month = ("0" + (date.getMonth() + 1)).slice(-2);
@@ -107,7 +107,7 @@
                 },
                 {
                     'data': 'enddate', 'name': 'End Date',
-                    'render': function (jsonDate) {                        
+                    'render': function (jsonDate) {
                         if (jsonDate != null) {
                             var date = new Date(parseInt(jsonDate.substr(6)));
                             var month = ("0" + (date.getMonth() + 1)).slice(-2);
@@ -121,7 +121,7 @@
                 { 'data': 'createdusername', 'name': 'Project Manager' },
                 {
                     'data': 'createdon', 'name': 'Created On',
-                    'render': function (jsonDate) {                        
+                    'render': function (jsonDate) {
                         if (jsonDate != null) {
                             var date = new Date(parseInt(jsonDate.substr(6)));
                             var month = ("0" + (date.getMonth() + 1)).slice(-2);
@@ -159,18 +159,18 @@
                         }
                     }
                 }
-                ,
-                {
-                    data: 'projectname', render: function (data, type, row) {
-                        return "<button type='submit' onclick=GetMilestone('" + encodeURIComponent(row.projectid) + "'); class='btn btn' style='background-color: #0D2136; color: white;'>Activity</button>";
-                    }
-                }
+                //,
+                //{
+                //    data: 'projectname', render: function (data, type, row) {
+                //        return "<button type='submit' onclick=GetMilestone('" + encodeURIComponent(row.projectid) + "'); class='btn btn' style='background-color: #0D2136; color: white;'>Activity</button>";
+                //    }
+                //}
                 ,
                 {
                     data: 'projectname', render: function (data, type, row) {
                         return "<button type='submit' onclick=GetChart('" + encodeURIComponent(row.projectid) + "'); class='btn btn' style='background-color: #0D2136; color: white;'>GANTT Chart</button>";
                     }
-                }                
+                }
             ],
             select: {
                 style: 'multi',
@@ -178,97 +178,22 @@
             },
         });
     });
-
-
-    @*function OnSuccess(response) {        
-        $("#tblProject").dataTable(
-        {
-            bLengthChange: true,
-            bFilter: false,
-            bSort: true,
-            bPaginate: true,
-            data: response,
-            bresponsive: true,
-            scrollX: false,
-            aoColumnDefs: [{
-                bSortable: false,
-                aTargets: [-1, -2]
-            }],
-            columns: [{ 'data': 'projectname', 'name': 'Project Name' },
-                { 'data': 'startdate', 'name': 'Start Date' },
-                { 'data': 'enddate', 'name': 'End Date' },
-                { 'data': 'createdusername', 'name': 'Project Manager' },
-                {
-                    'data': 'createdon', 'name': 'Created On',
-                    'render': function (jsonDate) {                        
-                        if (jsonDate != null) {
-                            var date = new Date(parseInt(jsonDate.substr(6)));
-                            var month = ("0" + (date.getMonth() + 1)).slice(-2);
-                            return month + '-' + ("0" + date.getDate()).slice(-2) + '-' + date.getFullYear();
-                        }
-                        else {
-                            return "";
-                        }
-                    }
-                },
-                {
-                    'data': 'hashcode', 'name': 'Hash ID', 'width': '100px',
-                    render: function (data, type, row) {
-                        return '<span data-toggle="tooltip" title="' + data + '">' + data.length == 0 ? data : data.substr(0, 10) + "…" + "</span>";
-                    }
-                },
-                {
-                    "render": function (data, type, full, meta) {
-                        {                            
-                            var value1 = '@Request.RequestContext.HttpContext.Session["RoleId"]';
-                            var value2 = '@Request.RequestContext.HttpContext.Session["LoggedInUserId"]';
-                            if (value1 == '2') {
-                                if (value2 == full.createdby) {
-                                    return '<button class="btn btn" style="background-color: #0D2136; color: white;" onclick=getProject("' + full.projectid + '"); >Edit</button>';
-                                }
-                                else {
-                                    return '<button class="btn btn" style="background-color: #0D2136; color: white;" disabled="disabled" onclick=getProject("' + full.projectid + '"); >Edit</button>';
-                                }
-                            }
-                            else {
-                                return '<button class="btn btn" style="background-color: #0D2136; color: white;" disabled="disabled" onclick=getProject("' + full.projectid + '"); >Edit</button>';
-                            }
-                        }
-                    }
-                },
-            {
-                data: 'projectname', render: function (data, type, row) {
-                    return "<button type='submit' onclick=GetMilestone('" + encodeURIComponent(row.projectid) + "'); class='btn btn'  style='background-color: #0D2136; color: white;'>Activity</button>";
-                }
-            },
-                {
-                    data: 'projectname', render: function (data, type, row) {
-                        return "<button type='submit' onclick=GetChart('" + encodeURIComponent(row.projectid) + "'); class='btn btn'  style='background-color: #0D2136; color: white;'>GANTT Chart</button>";
-                    }
-                }
-            ],
-            select: {
-                style: 'multi',
-                selector: 'td:first-child'
-            },
-        });
-    };*@
-
-    function getProject(id) {        
-        location.href = '@Url.Action("AddEditrecord", "Project", new { id = "id" })'.replace('id', id);
-        @*location.href = '@Url.Action("Index", "Task")?projectid='+ projectid);*@
+    
+    function getProject(id) {
+        location.href = '@Url.Action("AddEditrecord", "Project", new { id = "id" })'.replace('id', id);        
     }
 
-    function GetMilestone(projectid) {        
+    function GetMilestone(projectid) {
         location.href = '@Url.Action("Index", "Activity")?projectid=' + projectid + '';
     }
 
-    function GetChart(projectid) {        
-        location.href = '@Url.Action("GANTTChart", "Home")?projectid=' + projectid + '';
+    function GetChart(projectid) {
+        @*location.href = '@Url.Action("GANTTChart", "Home")?projectid=' + projectid + '';*@
+        location.href = '@Url.Action("GanttChart", "Project")?projectid=' + projectid + '';
     }
 
-    
-    function GetTask(projectid) {        
+
+    function GetTask(projectid) {
         location.href = '@Url.Action("Index", "Task")?projectid=' + projectid + '';
     }
 

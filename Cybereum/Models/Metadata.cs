@@ -492,6 +492,13 @@ namespace Cybereum.Models
         }
     }
 
+    public class ADUser
+    {
+        public string id { get; set; }
+        public string username { get; set; }
+        public DateTime createdon { get; set; }
+    }
+
     public class Project
     {
         public string projectid { get; set; }
@@ -570,6 +577,7 @@ namespace Cybereum.Models
         public string createdusername { get; set; }
         public DateTime createdon { get; set; }
         public List<ProjectTask> tasks { get; set; }
+        public string linktype { get; set; }
     }
 
     public class ProjectTask
@@ -642,13 +650,61 @@ namespace Cybereum.Models
         public DateTime createdon { get; set; }
     }
 
+    public class GanttTask
+    {
+        public string GanttTaskId { get; set; }
+        //[MaxLength(255)]
+        public string taskid { get; set; }
+        public string Text { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public int Duration { get; set; }
+        public decimal Progress { get; set; }
+        public int SortOrder { get; set; }
+        public string Type { get; set; }
+        public string ParentId { get; set; }
+    }
+
+    public class GanttTask1
+    {
+        public string id { get; set; }
+        public string taskid { get; set; }
+        public string text { get; set; }
+        public DateTime start_date { get; set; }
+        public DateTime end_date { get; set; }
+        public int duration { get; set; }
+        public decimal progress { get; set; }
+        public string type { get; set; }
+        public string parent { get; set; }
+        public int sortorder { get; set; }
+    }
+
+    public class GanttLink1
+    {
+        public string id { get; set; }
+        public string task { get; set; }
+        public string type { get; set; }
+        public string source { get; set; }
+        public string target { get; set; }
+    }
+
+    public class GanttLink
+    {
+        public int GanttLinkId { get; set; }
+        //[MaxLength(1)]
+        public string taskid { get; set; }
+        public string Type { get; set; }
+        public string SourceTaskId { get; set; }
+        public string TargetTaskId { get; set; }
+    }
+
     public class Projectresponse
     {
         public string message { get; set; }
-        public string hash { get; set; }        
+        public string hash { get; set; }
     }
 
-        public class gremlinvariables
+    public class gremlinvariables
     {
         //private static string hostname = "gremtest1.gremlin.cosmos.azure.com";
         public static string hostname
@@ -705,10 +761,28 @@ namespace Cybereum.Models
         }
     }
 
+    public class CachedUser
+    {
+        public string DisplayName { get; set; }
+        public string Email { get; set; }
+        public string Avatar { get; set; }
+        public string token { get; set; }
+        public string CompanyName { get; set; }
+    }
+
     public enum Role
     {
         Admin = 1,
         ProjectManager,
-        User
+        User,
+        ProjectAdmin
+    }
+
+    public enum LinkType
+    {
+        Finish_to_start = 0,
+        Start_to_start = 1,
+        Finish_to_finish = 2,
+        Start_to_finish = 3
     }
 }

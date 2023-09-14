@@ -1,0 +1,9 @@
+07/10/2023 10:35:06 AM Object reference not set to an instance of an object.
+07/10/2023 10:35:06 AM System.Collections.ListDictionaryInternal
+07/10/2023 10:35:06 AM Void Insert(TKey, TValue, Boolean)
+07/10/2023 10:35:40 AM Mailbox unavailable. The server response was: Access denied - Invalid HELO name (See RFC2821 4.1.1.1)
+07/10/2023 10:35:40 AM System.Collections.ListDictionaryInternal
+07/10/2023 10:35:40 AM Void CheckResponse(System.Net.Mail.SmtpStatusCode, System.String)
+07/10/2023 10:35:40 AM Mailbox unavailable. The server response was: Access denied - Invalid HELO name (See RFC2821 4.1.1.1)
+07/10/2023 10:35:40 AM System.Collections.ListDictionaryInternal
+07/10/2023 10:35:40 AM Void CheckResponse(System.Net.Mail.SmtpStatusCode, System.String)

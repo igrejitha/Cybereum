@@ -1,0 +1,286 @@
+﻿@{
+    ViewBag.Title = "GanttChart";
+    Layout = null;
+}
+<script src="~/Scripts/dhtmlxgantt/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="~/Content/dhtmlxgantt/dhtmlxgantt.css" type="text/css" />
+<h2><img src="~/images/cyber/Blue_Logo.png" alt="" width="3%"> GanttChart</h2>
+
+<style type="text/css">
+    .error {
+        color: red;
+        display: none;
+    }
+
+    #divLoader {
+        position: fixed;
+        display: block;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        text-align: center;
+        opacity: 0.7;
+        background-color: #fff;
+        z-index: 99;
+    }
+
+    #loading-image {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 100;
+    }
+
+    .nested_task .gantt_add {
+        display: none !important;
+    }
+
+    .hide-link-point .gantt_link_control {
+        display: none;
+    }
+</style>
+<div id="divLoader" style="display:none;">
+    <img id="loading-image" src="~/images/Spinner.gif" alt="Loader" />
+</div>
+@*<button type="button" onclick="window.location.reload()">Refresh Me</button>*@
+<div id="ganttContainer" style="width: 100%; height: 90%;"></div>
+@*@Scripts.Render("~/bundles/jquery")*@
+<script>
+    (function () {
+        // add month scale        
+        var projectid = "@ViewBag.projectid";
+        gantt.config.scale_unit = "month";
+        gantt.config.date_scale = "%F, %Y";
+        gantt.config.step = 1;
+        gantt.templates.date_scale = function (date) {
+            var dateToStr = gantt.date.date_to_str("%d %M");
+            var endDate = gantt.date.add(gantt.date.add(date, 1, "week"), -1, "day");
+            return dateToStr(date) + " - " + dateToStr(endDate);
+        };
+        gantt.config.subscales = [
+            { unit: "day", step: 1, date: "%d-%D" }
+        ];
+        gantt.config.scale_height = 50;
+        // configure milestone description
+        gantt.templates.rightside_text = function (start, end, task) {
+            if (task.type == gantt.config.types.milestone) {
+                return task.text;
+            }
+            return "";
+        };
+        // add section to type selection: task, project or milestone
+        gantt.config.lightbox.sections = [
+            { name: "description", height: 70, map_to: "text", type: "textarea", focus: true },
+            //{ name: "type", type: "typeselect", map_to: "type" },
+            { name: "time", height: 72, type: "duration", map_to: "auto" }
+        ];
+        //var formatter = gantt.ext.formatters.durationFormatter({
+        //    enter: "day",
+        //    store: "day",
+        //    format: "auto"
+        //});
+        const formatter = gantt.ext.formatters.linkFormatter({
+            //default values
+            durationFormatter: gantt.ext.formatters.durationFormatter(),
+            labels: {
+                finish_to_start: "FS",
+                start_to_start: "SS",
+                finish_to_finish: "FF",
+                start_to_finish: "SF"
+            }
+        });
+        //var linksFormatter = gantt.ext.formatters.linkFormatter({ durationFormatter: formatter });
+        var editors = {
+            text: { type: "text", map_to: "text" },
+            //taskid: { type: "text", map_to: "text" },
+            start_date: {
+                type: "date", map_to: "start_date"//,
+                //min: new Date(2018, 0, 1), max: new Date(2019, 0, 1)
+            },
+            end_date: {
+                type: "date", map_to: "end_date"//,
+                //min: new Date(2018, 0, 1), max: new Date(2019, 0, 1)
+            },
+            duration: {
+                type: "duration", map_to: "duration",
+                min: 0, max: 100, formatter: formatter
+            },
+            predecessors: { type: "predecessor", map_to: "auto", formatter: formatter }
+        };
+        gantt.templates.grid_row_class = function (start, end, task) {
+            if (task.$level > 1) {
+                return "nested_task"
+            }
+            return "";
+        };
+
+        gantt.templates.task_class = function (start, end, task) {            
+            if (task.type=="Activity") return ''
+            else return "hide-link-point";
+        };
+
+        gantt.attachEvent("onBeforeLinkAdd", function (id, link) {
+            if (!allow_link) return false;
+            return true;
+        });
+
+
+        var allow_link = true;
+        gantt.attachEvent("onMouseMove", function (id, e) {
+            if (e.target.className == "gantt_task_content") allow_link = false;
+            else allow_link = true;
+        });
+
+        gantt.config.columns = [
+            { name: "text", label: "Name", tree: true, width: 200, resize: true },
+            { name: "taskid", label: "Id", width: 80, align: "center", resize: true },
+            { name: "duration", label: "Duration", width: 80, align: "center", resize: true },
+            { name: "start_date", label: "Start", width: 80, align: "center", resize: true },
+            { name: "end_date", label: "Finish", width: 80, align: "center", resize: true },
+                {
+                    name: "predecessors", label: "Predecessors", width: 80, align: "left",
+                    editor: editors.predecessors, resize: true, template: function (task) {                        
+                        var links = task.$target;
+                        var labels = [];
+                        for (var i = 0; i < links.length; i++) {
+                            debugger;
+                            var link = gantt.getLink(links[i]);
+                            //var sourceTask = gantt.getTask(link.source);
+                            //if (sourceTask != null && sourceTask.sort_order != null) {
+                            //    var taskPredecessors = (sourceTask.sort_order);
+                            labels.push(formatter.format(link));
+                            //}
+                        }
+                        return labels.join(", ")
+                    }
+                },
+            { name: "add", label: "", width: 80, align: "center", resize: true }
+        ];
+        gantt.templates.task_end_date = function (date) {
+            return gantt.templates.task_date(new Date(date.valueOf() - 1));
+        };
+        
+        gantt.config.xml_date = "%Y-%m-%d %H:%i:%s"; // format of dates in XML
+
+        gantt.config.duration_unit = "day";
+        gantt.config.work_time = true;
+        gantt.config.skip_off_time = true;
+        gantt.config.fit_tasks = true;
+        gantt.init("ganttContainer"); // initialize gantt
+        gantt.config.open_tree_initially = true;
+        gantt.plugins({
+            critical_path: true,
+            auto_scheduling: true
+        });
+        gantt.config.highlight_critical_path = true;
+        gantt.config.auto_scheduling = true;
+        router = function (entity, action, data, id) {            
+            return new gantt.Promise(function (resolve, reject) {
+                gantt.load("/Project/GetchartData?projectid=" + projectid, "json");
+            });
+        }
+        
+        gantt.load("/Project/GetchartData?projectid=" + projectid, "json");
+
+        gantt.attachEvent("onLightboxSave", function (id, item) {
+            debugger;
+            if (!item.text) {
+                gantt.message({ type: "error", text: "Enter task description!" });
+                return false;
+            }
+            //if (!item.user) {
+            //    gantt.message({ type: "error", text: "Choose a worker for this task!" });
+            //    return false;
+            //}
+            return true;
+        });
+
+        gantt.attachEvent("onAfterLinkAdd", function (id, item) {
+            window.location.reload();
+        });
+        gantt.attachEvent("onAfterLinkDelete", function (id, item) {
+            window.location.reload();
+        });
+        gantt.attachEvent("onAfterTaskAdd", function (id, item) {
+            window.location.reload();
+        });
+        gantt.attachEvent("onAfterTaskDelete", function (id, item) {
+            window.location.reload();
+        });
+        gantt.attachEvent("onAfterTaskUpdate", function (id, item) {
+            window.location.reload();
+        });
+        var dp = gantt.createDataProcessor(function (entity, action, data, id, taskid) {
+            switch (entity) {
+                case "task":
+                    switch (action) {
+                        case "create":                            
+                            return gantt.ajax.post({
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                url: "/Project/CreateTask",
+                                data: JSON.stringify(data),
+                                callback: function (response) {
+                                    debugger;
+                                    //alert(response.responseText);
+                                }
+                            });                            
+                            break;
+                        case "update":                            
+                            return gantt.ajax.post({
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                url: "/Project/UpdateTask",
+                                data: JSON.stringify(data),
+                                callback: function (response) {
+                                    debugger;
+                                    //alert(response.responseText);
+                                }                                
+                            });
+                            gantt.message({ type: "error", text: result });                                                        
+                            break;
+                        case "delete":                            
+                            return gantt.ajax.del(
+                                  server + "/" + entity + "/" + id
+                            );                            
+                            break;                    }
+                case "link":
+                    switch (action) {
+                        case "create":
+                            return gantt.ajax.post({
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                url: "/Project/CreateLink",
+                                data: JSON.stringify(data),
+                                callback: function (response) {
+                                    debugger;
+                                    //alert(response.responseText);
+                                }
+                            });                            
+                            break;
+                        case "update":
+                            return gantt.ajax.post(
+                                  "/Project/UpdateLink",
+                                 data, entity, id
+                             );
+                            break;
+                        case "delete":
+                            return gantt.ajax.post({
+                                url: "/Project/DeleteLink",
+                                data: { id: id },
+                                callback: function (response) {
+                                    debugger;
+                                    //alert(response.responseText);
+                                }
+                            });                            
+                            break;
+                    }
+            }
+
+        });
+    })();
+</script>

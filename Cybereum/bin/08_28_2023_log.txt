@@ -1,0 +1,24 @@
+08/28/2023 01:36:09 PM Failure sending mail.
+08/28/2023 01:36:09 PM System.Collections.ListDictionaryInternal
+08/28/2023 01:36:09 PM Unable to connect to the remote server
+08/28/2023 01:36:09 PM Void Send(System.Net.Mail.MailMessage)
+08/28/2023 01:37:11 PM Failure sending mail.
+08/28/2023 01:37:11 PM System.Collections.ListDictionaryInternal
+08/28/2023 01:37:11 PM Unable to connect to the remote server
+08/28/2023 01:37:11 PM Void Send(System.Net.Mail.MailMessage)
+08/28/2023 01:44:49 PM Failure sending mail.
+08/28/2023 01:44:49 PM System.Collections.ListDictionaryInternal
+08/28/2023 01:44:49 PM Unable to connect to the remote server
+08/28/2023 01:44:49 PM Void Send(System.Net.Mail.MailMessage)
+08/28/2023 01:46:37 PM Failure sending mail.
+08/28/2023 01:46:37 PM System.Collections.ListDictionaryInternal
+08/28/2023 01:46:37 PM Unable to connect to the remote server
+08/28/2023 01:46:37 PM Void Send(System.Net.Mail.MailMessage)
+08/28/2023 01:54:59 PM Failure sending mail.
+08/28/2023 01:54:59 PM System.Collections.ListDictionaryInternal
+08/28/2023 01:54:59 PM Unable to connect to the remote server
+08/28/2023 01:54:59 PM Void Send(System.Net.Mail.MailMessage)
+08/28/2023 02:39:03 PM Failure sending mail.
+08/28/2023 02:39:04 PM System.Collections.ListDictionaryInternal
+08/28/2023 02:39:06 PM Unable to connect to the remote server
+08/28/2023 02:39:06 PM Void Send(System.Net.Mail.MailMessage)

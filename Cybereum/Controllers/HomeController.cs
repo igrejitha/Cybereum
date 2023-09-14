@@ -20,6 +20,7 @@ namespace Cybereum.Controllers
 
         cybereumEntities entities = new cybereumEntities();
 
+        //[Authorize (Roles = "Default Access")]
         [Authorize]
         [SessionTimeout]
         public ActionResult Index()

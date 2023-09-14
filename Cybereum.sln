@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cybereum", "Cybereum\Cybereum.csproj", "{179BC1CD-92EC-4BF5-A5EF-5440D8580A97}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CybereumAPI", "CybereumAPI\CybereumAPI.csproj", "{B71F9688-A6DF-4E4E-A2AF-38AD94F05B14}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{179BC1CD-92EC-4BF5-A5EF-5440D8580A97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{179BC1CD-92EC-4BF5-A5EF-5440D8580A97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{179BC1CD-92EC-4BF5-A5EF-5440D8580A97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B71F9688-A6DF-4E4E-A2AF-38AD94F05B14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B71F9688-A6DF-4E4E-A2AF-38AD94F05B14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B71F9688-A6DF-4E4E-A2AF-38AD94F05B14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B71F9688-A6DF-4E4E-A2AF-38AD94F05B14}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

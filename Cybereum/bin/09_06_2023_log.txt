@@ -1,0 +1,7 @@
+09/06/2023 10:21:13 AM The underlying provider failed on Open.
+09/06/2023 10:21:13 AM System.Collections.ListDictionaryInternal
+09/06/2023 10:21:13 AM Unable to connect to any of the specified MySQL hosts.
+09/06/2023 10:21:13 AM Void Open()
+09/06/2023 01:31:42 PM Object reference not set to an instance of an object.
+09/06/2023 01:31:42 PM System.Collections.ListDictionaryInternal
+09/06/2023 01:31:42 PM Void Insert(TKey, TValue, Boolean)

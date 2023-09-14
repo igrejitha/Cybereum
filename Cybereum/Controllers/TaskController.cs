@@ -279,6 +279,20 @@ namespace Cybereum.Controllers
                 int duration = Convert.ToInt16(tbl_task.durations);
                 tbl_task.enddate = IGUtilities.CalculateDays(tbl_task.startdate, duration);
 
+                //**********Checking for task start and end date*************
+                var enddate = CheckActivityEnddate(tbl_task.activityid, tbl_task.enddate);
+                string pList = JsonConvert.SerializeObject(enddate.Data);
+                ProjectTask newtask = new ProjectTask();
+                newtask = JsonConvert.DeserializeObject<ProjectTask>(pList);
+                if (newtask.startdate != Convert.ToDateTime("01/01/0001"))
+                {
+                    tbl_task.startdate = newtask.startdate;
+                    tbl_task.enddate = newtask.enddate;
+                    tbl_task.durations = newtask.durations;
+                }
+                //**********End*********
+
+
                 long count = 0;
                 if (tbl_task.taskid == null)
                 {
@@ -304,12 +318,12 @@ namespace Cybereum.Controllers
                             goto endloop;
                         }
                     }
-
                 }
 
                 if (tbl_task.taskid == null)
                 {
-                    tbl_task.createdby = Session["LoggedInUserId"].ToString();
+                    if (tbl_task.createdby == null)
+                        tbl_task.createdby = Session["LoggedInUserId"].ToString();
 
                     string gremlinScript = $"g.addV('task').property('pk', '{tbl_task.taskname}')" +
                             $".property('taskname', '{tbl_task.taskname}')" +
@@ -338,11 +352,11 @@ namespace Cybereum.Controllers
                     }
 
 
-                    //Remove connection the activity to task
-                    gremlinScript = $"\ng.V().has('task', 'id', '{tbl_task.taskid}').bothE().drop()";
-                    // Execute the Gremlin script                    
-                    result = IGUtilities.ExecuteGremlinScript(gremlinScript);
-                    message = "Gremlin script executed successfully";
+                    ////Remove connection the activity to task
+                    //gremlinScript = $"\ng.V().has('task', 'id', '{tbl_task.taskid}').bothE().drop()";
+                    //// Execute the Gremlin script                    
+                    //result = IGUtilities.ExecuteGremlinScript(gremlinScript);
+                    //message = "Gremlin script executed successfully";
 
 
                     //connect the project to activity
@@ -459,7 +473,7 @@ namespace Cybereum.Controllers
         }
 
 
-            // GET: Task/Create
+        // GET: Task/Create
         [Authorize]
         [SessionTimeout]
         public ActionResult Create(int? taskid, int? milestoneid, TaskViewModel Tasks)
@@ -519,9 +533,9 @@ namespace Cybereum.Controllers
                 //            Value = b.userid.ToString()
                 //        }).Distinct().OrderBy(x => x.Text).ToList();
                 string projectid = Session["ProjectId"].ToString();
-                var gremlinScript = "g.V().has('project','id','"+ projectid + "').project('projectid','projectname','projectmembers').by(id()).by(values('projectname')).by(values('projectmembers').fold())";
+                var gremlinScript = "g.V().has('project','id','" + projectid + "').project('projectid','projectname','projectmembers').by(id()).by(values('projectname')).by(values('projectmembers').fold())";
                 var results = IGUtilities.ExecuteGremlinScript(gremlinScript);
-                int[] users= { };
+                int[] users = { };
                 foreach (var result in results)
                 {
                     var projectmembers = result["projectmembers"];
@@ -535,34 +549,36 @@ namespace Cybereum.Controllers
                     Users = Users.Remove(Users.LastIndexOf(",")).ToString();
                     if (Users.ToString() != string.Empty)
                     {
-                        users = Users.Split(',').Select(int.Parse).ToArray();                        
+                        users = Users.Split(',').Select(int.Parse).ToArray();
                     }
                 }
-                var query = users.Select((r, index) => new {
+                var query = users.Select((r, index) => new
+                {
                     Text = index,
-                    Value = r });
+                    Value = r
+                });
                 var l = new List<SelectListItem>();
                 foreach (var i in query)
                 {
                     int userid = Convert.ToInt32(i.Value);
                     var username = (from b in db.tbl_user
-                                   join c in db.tbl_userrole on b.roleid equals c.roleid
-                                   where b.userid == userid
-                                   select new { b.userid, b.firstname,b.lastname,c.rolename}).Take(1);
-                    
+                                    join c in db.tbl_userrole on b.roleid equals c.roleid
+                                    where b.userid == userid
+                                    select new { b.userid, b.firstname, b.lastname, c.rolename }).Take(1);
+
                     if (username != null)
-                    {                        
+                    {
                         var sli = new SelectListItem();
                         sli.Value = i.Value.ToString();
                         foreach (var item in username)
                         {
                             sli.Text = item.firstname + ' ' + item.lastname + " - " + item.rolename;
-                        }                        
+                        }
                         l.Add(sli);
                     }
-                    
+
                 }
-                user = new List<SelectListItem>(l);                
+                user = new List<SelectListItem>(l);
             }
             else if (roleid == (int)Role.Admin)
             {
@@ -605,6 +621,26 @@ namespace Cybereum.Controllers
             else
             {
                 task.enddate = record;
+            }
+            return Json(task, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult CheckActivitydates(string activityid,DateTime startdate, DateTime enddate)
+        {
+            ProjectTask task = new ProjectTask();
+            var gremlinScript = "g.V().has('activity','id','" + activityid + "').project('startdate','enddate','durations').by(values('startdate')).by(values('enddate')).by(values('durations'))";
+            var result = IGUtilities.ExecuteGremlinScript(gremlinScript);
+            if (result.Count > 0)
+            {
+                foreach (var item in result)
+                {
+                    if (enddate > Convert.ToDateTime(item["enddate"]) || startdate < Convert.ToDateTime(item["startdate"]))
+                    {
+                        task.startdate = Convert.ToDateTime(item["startdate"]);
+                        task.enddate = Convert.ToDateTime(item["enddate"]);
+                        task.durations = Convert.ToInt16(item["durations"]);
+                    }
+                }
             }
             return Json(task, JsonRequestBehavior.AllowGet);
         }

@@ -13,7 +13,7 @@ namespace Cybereum.Models
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private string userId;
-        private UserTokenCache Cache;
+        private UserTokenCache Cache;        
 
         public ADALTokenCache(string signedInUserId)
         {

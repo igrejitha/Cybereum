@@ -1,0 +1,6 @@
+08/08/2023 06:49:18 PM {"message":"Added project with id:0x0374b23eaa831c42c6bc6bc23f24b58c6e005b2182f438bdfe9c78bec8fa8c77 to blockchain.","hash":"0xe83c9c45d5276cf7d5a8e82dd9532c1e0aee5d81fc17607d76e0d98c95af8796"}
+08/08/2023 07:00:21 PM {"message":"Added project with id:0x0c404605b6dfc8ec601797c5549866bb833458aa08a70f53363e1a096f93ff18 to blockchain.","hash":"0x4b7596ff69e91ef2476e6cecbbae270dc7b9fc360544a0d71ea54cf8f95c734c"}
+08/08/2023 07:04:07 PM {"message":"Added project with id:0x9f7c1eb5b45144df4a6f3212c4d4ab56bb4df5554dab1e9c6bff93343813d18e to blockchain.","hash":"0xbc0c50a4df022554205fd84d6950887e4e0601a07690ab6ed7193a99a32905b6"}
+08/08/2023 07:09:56 PM {"message":"Added project with id:0x30ae17e34cc4e15502c0aff46735037bc42e39bb1ca56676e02e4fcc12a7e64f to blockchain.","hash":"0x9761eec62295020db0753dd76d79d3e9ac50f017cd469fadbe28a9f9068bb049"}
+08/08/2023 07:14:18 PM {"message":"Added project with id:0x30ae17e34cc4e15502c0aff46735037bc42e39bb1ca56676e02e4fcc12a7e64f to blockchain.","hash":"0x9761eec62295020db0753dd76d79d3e9ac50f017cd469fadbe28a9f9068bb049"}
+08/08/2023 07:14:46 PM {"message":"Added project with id:0x30ae17e34cc4e15502c0aff46735037bc42e39bb1ca56676e02e4fcc12a7e64f to blockchain.","hash":"0x9761eec62295020db0753dd76d79d3e9ac50f017cd469fadbe28a9f9068bb049"}

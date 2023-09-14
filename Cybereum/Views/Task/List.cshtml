@@ -59,13 +59,13 @@
 
 @if (Convert.ToInt32(Session["RoleId"]) == 2)
 {
-    <p>       
+    <p>
         <button type="button" class="btn btn" style="background-color: #0D2136; color: white;" onclick="location.href='@Url.Action("AddEditTask", "Task")?activityid=@ViewBag.activityid&projectid=@ViewBag.projectid'">Add New</button>
         @Html.ActionLink("Back to Activity", "Index", "Activity", new
-    {
-        // routeValues
-        projectid = ViewBag.projectid
-    }, null)
+   {
+       // routeValues
+       projectid = ViewBag.projectid
+   }, null)
     </p>
 }
 
@@ -170,7 +170,8 @@
                     "render": function (data, type, full, meta) {
                         debugger;
                         var value1 = '@Request.RequestContext.HttpContext.Session["RoleId"]';
-                        if (value1 == '3' || value1 == '1') {
+                        //if (value1 == '3' || value1 == '1') {
+                        if (value1 == '1') {
                             return '<button class="btn btn" style="background-color: #0D2136; color: white;" id="btnedit" disabled="disabled" onclick=getTask("' + full.taskid + '"); >Edit</button>';
                         }
                         else {
@@ -218,7 +219,8 @@
                     "render": function (data, type, full, meta) {
                         debugger;
                         var value1 = '@Request.RequestContext.HttpContext.Session["RoleId"]';
-                        if (value1 == '3' && value1 == '1') {
+                        //if (value1 == '3' && value1 == '1') {
+                        if (value1 == '1') {
                             return '<button class="btn btn" style="background-color: #0D2136; color: white;" id="btnedit" disabled="disabled" onclick=getTask("' + full.taskid + '"); >Edit</button>';
                         }
                         else {
