@@ -9,9 +9,6 @@ using System.Web.Mvc;
 using Cybereum.Models;
 using Cybereum.Filters;
 using Newtonsoft.Json;
-//using AppModelv2_WebApp_OpenIDConnect_DotNet.Models;
-//using Microsoft.Azure.Documents;
-//using Microsoft.Azure.Documents.Client;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using Gremlin.Net.Driver;
@@ -303,37 +300,6 @@ namespace Cybereum.Controllers
             return user;
         }
 
-        //public List<SelectListItem> Fillprojectype()
-        //{
-        //    List<SelectListItem> projectype = new List<SelectListItem>();
-        //    SelectListItem item = new SelectListItem();
-        //    item.Text = "Nuclear Power Station";
-        //    item.Value = "Nuclear Power Station";
-        //    projectype.Add(item);
-
-        //    item = new SelectListItem();
-        //    item.Text = "Solar Power Station";
-        //    item.Value = "Solar Power Station";
-        //    projectype.Add(item);
-
-        //    item = new SelectListItem();
-        //    item.Text = "Wind Power Station";
-        //    item.Value = "Wind Power Station";
-        //    projectype.Add(item);
-
-        //    item = new SelectListItem();
-        //    item.Text = "Hydro Power Station";
-        //    item.Value = "Hydro Power Station";
-        //    projectype.Add(item);
-
-        //    item = new SelectListItem();
-        //    item.Text = "Thermal Power Station";
-        //    item.Value = "Thermal Power Station";
-        //    projectype.Add(item);
-
-        //    return projectype;
-        //}
-
         [Authorize]
         [SessionTimeout]
         [HttpPost]
@@ -621,36 +587,6 @@ namespace Cybereum.Controllers
                     }
                 }
             }
-            //string gremlinScript = $"g.addV('activity').property('pk', '{task.text}')" +
-            //        $".property('activityname', '{task.text}')" +
-            //        $".property('startdate', '{task.start_date.ToString("yyyy-MM-dd")}')" +
-            //        $".property('enddate', '{task.end_date.ToString("yyyy-MM-dd")}')" +
-            //        $".property('projectid', '{projectid}')" +
-            //        $".property('durations', '{task.duration}')" +
-            //        $".property('ismilestone', '{ismilestone}')" +
-            //        $".property(list, 'predecessors', '')" +
-            //        $".property('createdby', '{createdby}')" +
-            //        $".property('createdusername', '')" +
-            //        $".property('createdon', '{DateTime.Now}')" +
-            //        $".property('type', 'activity')";
-            //var result = IGUtilities.ExecuteGremlinScript(gremlinScript);
-
-            //gremlinScript = "g.V().has('activity','activityname','" + task.text + "').project('id').by(values('id'))";
-            //string taskid = string.Empty;
-            //result = IGUtilities.ExecuteGremlinScript(gremlinScript);
-            //foreach (var result2 in result)
-            //{
-            //    taskid = Convert.ToString(result2["id"]);
-            //}
-
-            ////connect the project to activity
-            //gremlinScript = $"\ng.V('{projectid}').addE('contains').to(g.V('{taskid}'))";
-            //result = IGUtilities.ExecuteGremlinScript(gremlinScript);
-
-            ////***************update preceding activity dates*************
-            //IGUtilities.updateprecedingactivitydates(projectid, task.taskid);
-            ////****************************End****************************
-            //IGUtilities.updateactivityprojectdate(projectid);
 
             return GetchartData(projectid);
         }
@@ -897,151 +833,6 @@ namespace Cybereum.Controllers
                 return null;
             }
         }
-
-        //public string getlink(string projectid)
-        //{
-        //    DateTime startdate;
-        //    DateTime enddate;
-        //    string connection = string.Empty;
-
-        //    var gremlinScript = "g.V().has('project','id','" + projectid + "').project('id','projectname','startdate','enddate').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate'))";
-        //    var projectdata = IGUtilities.ExecuteGremlinScript(gremlinScript);
-
-        //    List<GanttTask> ganttchartmodellist = new List<GanttTask>();
-        //    List<GanttLink> ganttchartmodellink = new List<GanttLink>();
-        //    int i = 1;
-        //    int linkid = 1;
-        //    foreach (var project in projectdata)
-        //    {
-        //        GanttTask ganttchart = new GanttTask();
-        //        GanttLink ganttlink = new GanttLink();
-
-        //        //ganttchart.GanttTaskId = project["id"].ToString();// i;
-        //        i++;
-        //        //ganttchart.taskid = project["id"].ToString();                
-        //        //ganttchart.Type = "Project";
-        //        //ganttchartmodellist.Add(ganttchart);
-
-        //        //Activity
-        //        gremlinScript = "g.V().has('activity','projectid','" + project["id"] + "').order().by('startdate',incr).order().by('enddate',incr).project('id','activityname','startdate','enddate','durations','predecessors').by(id()).by(values('activityname')).by(values('startdate')).by(values('enddate')).by(values('durations')).by(values('predecessors').fold())";
-        //        var activitydata = IGUtilities.ExecuteGremlinScript(gremlinScript);
-        //        string pList = JsonConvert.SerializeObject(activitydata);
-        //        List<ProjectActivity> Activitylist = JsonConvert.DeserializeObject<List<ProjectActivity>>(pList);
-        //        Activitylist = Activitylist.OrderBy(a => a.startdate).ThenBy(a => a.enddate).ToList();
-        //        int activityindex = 0;
-        //        foreach (var itemactivity in Activitylist)
-        //        {
-        //            ganttchart = new GanttTask();
-        //            ganttchart.GanttTaskId = itemactivity.id;// i;
-        //            i++;
-        //            ganttchart.taskid = itemactivity.id;
-        //            ganttchart.Text = itemactivity.activityname;                    
-        //            ganttchart.Type = "Task";
-
-        //            var predecessors = itemactivity.Predecessors;
-        //            var stringlist = JsonConvert.SerializeObject(predecessors);
-        //            var jArray = JArray.Parse(stringlist);
-        //            string tasks = string.Empty;
-        //            foreach (string item in jArray)
-        //            {
-        //                tasks = tasks + item + ",";
-        //            }
-        //            if (tasks != "") tasks = tasks.Remove(tasks.LastIndexOf(",")).ToString();
-        //            if (tasks.ToString() != string.Empty)
-        //            {
-        //                string[] ints = tasks.Split(',').ToArray();
-        //                if (ints.Count() > 0)
-        //                {
-        //                    for (int j = 0; j <= ints.Count() - 1; j++)
-        //                    {
-        //                        var connector = ganttchartmodellist.Find(a => a.taskid == ints[j]);
-        //                        chartconnector conn = new chartconnector();
-        //                        if (connector != null)
-        //                        {
-        //                            //string parentid = ganttchart.ParentId == null ? "" : ganttchart.ParentId + ",";
-        //                            //ganttchart.ParentId = parentid  + connector.GanttTaskId;
-
-        //                            //ganttchart.ParentId = connector.GanttTaskId;
-
-        //                            //ganttlink = new GanttLink();
-        //                            //ganttlink.GanttLinkId = linkid++;
-        //                            //ganttlink.SourceTaskId = connector.GanttTaskId;
-        //                            //ganttlink.TargetTaskId = itemactivity.id;
-        //                            //ganttlink.taskid = itemactivity.id;
-        //                            //ganttlink.Type = "1";
-        //                            //ganttchartmodellink.Add(ganttlink);
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //            //else
-        //            //{
-        //            //    //ganttchart.ParentId = i-2;
-
-        //            //}
-        //            ganttchartmodellist.Add(ganttchart);
-        //        }
-
-
-        //        //Activity Link
-        //        foreach (var itemactivity in Activitylist)
-        //        {
-        //            ganttchart = new GanttTask();
-        //            var predecessors = itemactivity.Predecessors;
-        //            var stringlist = JsonConvert.SerializeObject(predecessors);
-        //            var jArray = JArray.Parse(stringlist);
-        //            string tasks = string.Empty;
-        //            foreach (string item in jArray)
-        //            {
-        //                tasks = tasks + item + ",";
-        //            }
-        //            if (tasks != "") tasks = tasks.Remove(tasks.LastIndexOf(",")).ToString();
-        //            if (tasks.ToString() != string.Empty)
-        //            {
-        //                string[] ints = tasks.Split(',').ToArray();
-        //                if (ints.Count() > 0)
-        //                {
-        //                    for (int j = 0; j <= ints.Count() - 1; j++)
-        //                    {
-        //                        var connector = ganttchartmodellist.Find(a => a.taskid == ints[j]);
-        //                        chartconnector conn = new chartconnector();
-        //                        if (connector != null)
-        //                        {
-        //                            ganttlink = new GanttLink();
-        //                            ganttlink.GanttLinkId = linkid++;
-        //                            ganttlink.SourceTaskId = connector.GanttTaskId;
-        //                            ganttlink.TargetTaskId = itemactivity.id;
-        //                            ganttlink.taskid = itemactivity.id;
-        //                            ganttlink.Type = "1";
-        //                            ganttchartmodellink.Add(ganttlink);
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //        }
-        //    }
-
-
-        //    int counter = 1;
-        //    var jsonData = new
-        //    {
-        //        // create links array
-        //        links = (
-        //            from l in ganttchartmodellink
-        //            select new
-        //            {
-        //                id = (counter++).ToString(),
-        //                task = l.taskid,
-        //                source = l.SourceTaskId,
-        //                target = l.TargetTaskId,// == null ? counter++ : l.ParentId,
-        //                type = l.Type
-        //            }
-        //        ).ToArray()
-        //    };
-
-        //    var x = JsonConvert.SerializeObject(jsonData, Formatting.Indented);
-        //    return x;
-        //}
         
         [HttpPost]
         public ActionResult DeleteLink(string id)
@@ -1159,12 +950,7 @@ namespace Cybereum.Controllers
                     act.durations = task.duration;
                     activity.AddEditSubTask(act);
                 }
-            //}
-            //catch(Exception ex)
-            //{
-            //    return new JsonResult { Data = "Error" + ex.Message, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-            //}
-            //return new JsonResult { Data = "Success", JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            
             return GetchartData(projectid);
         }
 
@@ -1172,178 +958,6 @@ namespace Cybereum.Controllers
         {
             try
             {
-                //DateTime startdate;
-                //DateTime enddate;
-                //string connection = string.Empty;
-
-                //var gremlinScript = "g.V().has('project','id','" + projectid + "').project('id','projectname','startdate','enddate').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate'))";
-                //var projectdata = IGUtilities.ExecuteGremlinScript(gremlinScript);
-
-                //List<GanttTask> ganttchartmodellist = new List<GanttTask>();
-                //List<GanttLink> ganttchartmodellink = new List<GanttLink>();
-                //int i = 1;
-                //int linkid = 1;
-                //foreach (var project in projectdata)
-                //{
-                //    GanttTask ganttchart = new GanttTask();
-                //    GanttLink ganttlink = new GanttLink();
-                //    int duration = 0;
-                //    //ganttchart.GanttTaskId = project["id"].ToString();// i;
-                //    i++;
-                //    //ganttchart.taskid = project["id"].ToString();
-                //    //ganttchart.Text = project["projectname"].ToString();
-                //    //startdate = Convert.ToDateTime(project["startdate"].ToString());
-                //    //enddate = Convert.ToDateTime(project["enddate"].ToString());
-                //    //int duration = IGUtilities.CalculateDays(startdate.Date, enddate.Date);
-                //    //ganttchart.Duration = duration;
-                //    //ganttchart.StartDate = startdate;
-                //    //ganttchart.EndDate = enddate;
-                //    //ganttchart.SortOrder = 10;
-                //    //ganttchart.Progress = (decimal)0.60;
-                //    ////ganttchart.ParentId = t.ParentId;
-                //    //ganttchart.Type = "Project";
-
-                //    //ganttchartmodellist.Add(ganttchart);
-
-                //    //Activity
-                //    gremlinScript = "g.V().has('activity','projectid','" + project["id"] + "').order().by('startdate',incr).order().by('enddate',incr).project('id','activityname','startdate','enddate','durations','predecessors').by(id()).by(values('activityname')).by(values('startdate')).by(values('enddate')).by(values('durations')).by(values('predecessors').fold())";
-                //    var activitydata = IGUtilities.ExecuteGremlinScript(gremlinScript);
-                //    string pList = JsonConvert.SerializeObject(activitydata);
-                //    List<ProjectActivity> Activitylist = JsonConvert.DeserializeObject<List<ProjectActivity>>(pList);
-                //    Activitylist = Activitylist.OrderBy(a => a.startdate).ThenBy(a => a.enddate).ToList();
-                //    int activityindex = 0;
-                //    foreach (var itemactivity in Activitylist)
-                //    {
-                //        ganttchart = new GanttTask();
-                //        ganttchart.GanttTaskId = itemactivity.id;// i;
-                //        i++;
-                //        ganttchart.taskid = itemactivity.id;
-                //        ganttchart.Text = itemactivity.activityname;
-                //        startdate = Convert.ToDateTime(itemactivity.startdate);
-                //        enddate = Convert.ToDateTime(itemactivity.enddate);
-                //        duration = IGUtilities.CalculateDays(startdate.Date, enddate.Date);
-                //        ganttchart.Duration = duration;
-                //        ganttchart.StartDate = startdate;
-                //        ganttchart.EndDate = enddate;
-                //        ganttchart.SortOrder = 10;
-                //        ganttchart.Progress = (decimal)0.60;
-                //        ganttchart.Type = "Task";
-
-
-                //        //ganttchart.ParentId = 1;
-                //        var predecessors = itemactivity.Predecessors;
-                //        var stringlist = JsonConvert.SerializeObject(predecessors);
-                //        var jArray = JArray.Parse(stringlist);
-                //        string tasks = string.Empty;
-                //        foreach (string item in jArray)
-                //        {
-                //            tasks = tasks + item + ",";
-                //        }
-                //        if (tasks != "") tasks = tasks.Remove(tasks.LastIndexOf(",")).ToString();
-                //        if (tasks.ToString() != string.Empty)
-                //        {
-                //            string[] ints = tasks.Split(',').ToArray();
-                //            if (ints.Count() > 0)
-                //            {
-                //                for (int j = 0; j <= ints.Count() - 1; j++)
-                //                {
-                //                    var connector = ganttchartmodellist.Find(a => a.taskid == ints[j]);
-                //                    chartconnector conn = new chartconnector();
-                //                    if (connector != null)
-                //                    {
-                //                        //string parentid = ganttchart.ParentId == null ? "" : ganttchart.ParentId + ",";
-                //                        //ganttchart.ParentId = parentid  + connector.GanttTaskId;
-
-                //                        //ganttchart.ParentId = connector.GanttTaskId;
-
-                //                        //ganttlink = new GanttLink();
-                //                        //ganttlink.GanttLinkId = linkid++;
-                //                        //ganttlink.SourceTaskId = connector.GanttTaskId;
-                //                        //ganttlink.TargetTaskId = itemactivity.id;
-                //                        //ganttlink.taskid = itemactivity.id;
-                //                        //ganttlink.Type = "1";
-                //                        //ganttchartmodellink.Add(ganttlink);
-                //                    }
-                //                }
-                //            }
-                //        }
-                //        ganttchartmodellist.Add(ganttchart);
-                //    }
-
-
-                //    //Activity Link
-                //    foreach (var itemactivity in Activitylist)
-                //    {
-                //        ganttchart = new GanttTask();
-                //        var predecessors = itemactivity.Predecessors;
-                //        var stringlist = JsonConvert.SerializeObject(predecessors);
-                //        var jArray = JArray.Parse(stringlist);
-                //        string tasks = string.Empty;
-                //        foreach (string item in jArray)
-                //        {
-                //            tasks = tasks + item + ",";
-                //        }
-                //        if (tasks != "") tasks = tasks.Remove(tasks.LastIndexOf(",")).ToString();
-                //        if (tasks.ToString() != string.Empty)
-                //        {
-                //            string[] ints = tasks.Split(',').ToArray();
-                //            if (ints.Count() > 0)
-                //            {
-                //                for (int j = 0; j <= ints.Count() - 1; j++)
-                //                {
-                //                    var connector = ganttchartmodellist.Find(a => a.taskid == ints[j]);
-                //                    chartconnector conn = new chartconnector();
-                //                    if (connector != null)
-                //                    {                                        
-                //                        ganttlink = new GanttLink();
-                //                        ganttlink.GanttLinkId = linkid++;
-                //                        ganttlink.SourceTaskId = connector.GanttTaskId;
-                //                        ganttlink.TargetTaskId = itemactivity.id;
-                //                        ganttlink.taskid = itemactivity.id;
-                //                        ganttlink.Type = "1";
-                //                        ganttchartmodellink.Add(ganttlink);
-                //                    }
-                //                }
-                //            }
-                //        }                        
-                //    }
-                //}
-
-                //int counter = 1;
-                //var jsonData = new
-                //{
-                //    // create tasks array
-                //    tasks = (
-                //        from t in ganttchartmodellist
-                //        select new
-                //        {
-                //            id = t.GanttTaskId,
-                //            text = t.Text,
-                //            start_date = t.StartDate.ToString("u"),
-                //            end_date = t.EndDate.ToString("u"),
-                //            duration = t.Duration,
-                //            order = t.SortOrder,
-                //            progress = t.Progress,
-                //            parent = t.ParentId,
-                //            type = t.Type,
-                //            taskid = t.taskid
-                //        }
-                //    ).ToArray(),
-                //    // create links array
-                //    links = (
-                //        from l in ganttchartmodellink
-                //        select new
-                //        {
-                //            id = (counter++).ToString(),
-                //            task = l.taskid,
-                //            source = l.SourceTaskId,
-                //            target = l.TargetTaskId,// == null ? counter++ : l.ParentId,
-                //            type = l.Type
-                //        }
-                //    ).ToArray()
-                //};
-                //var x = JsonConvert.SerializeObject(jsonData, Formatting.Indented);                
-                //return new JsonResult { Data = jsonData, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
                 var jsonData = getdata(projectid);                
                 return new JsonResult { Data = jsonData, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
