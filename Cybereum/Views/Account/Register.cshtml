@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 ﻿@model Cybereum.Models.RegisterViewModel
 
 @{
@@ -144,3 +145,102 @@
             $.notify(strMsg, mode, { globalPosition: 'top center', clickToHide: true, autoHide: false });
         }
     </script>
+=======
+﻿@model Cybereum.Models.RegisterViewModel
+
+@{
+    ViewBag.Title = "Registration";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<div class="row no-gutters">
+    <div class="col-xl-12">
+        <div class="auth-form">
+            @*<div class="text-center"><img src="~/images/cyber/Blue_Logo.png" alt="" width="15%"></div>
+                <h2 class="text-center mb-4">Registration</h2>*@
+
+            <span class="text-danger" style="align-items:center;">
+                @ViewBag.Message
+            </span>
+            @*@using (Html.BeginForm())*@
+            @using (Html.BeginForm("Register", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "registerForm" }))
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="mb-1"><strong>First Name</strong></label>
+                                    @Html.EditorFor(model => model.firstname, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.firstname, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="mb-1"><strong>Last Name</strong></label>
+                                    @Html.EditorFor(model => model.lastname, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.lastname, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="mb-1"><strong>Email ID</strong></label>
+                                    @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="mb-1"><strong>Password</strong></label>
+                                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="mb-1"><strong>Confirm Password</strong></label>
+                                    @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label class="mb-1"><strong>Organization</strong></label>
+                                    @Html.EditorFor(model => model.organization, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.organization, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mt-5 mb-0">
+                                        <a class="superbtn log-btn ml-2" onclick="registerForm.submit();"><button type="submit" style="display:none;"></button>Register</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div class="new-account mt-3">
+                <p>
+                    Already have an account?
+                    @Html.ActionLink("Login", "Login", null, new { @class = "text-primary", @style = "color:#0D2136;" })
+                </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+>>>>>>> Stashed changes

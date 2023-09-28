@@ -10,41 +10,104 @@
         display: none;
     }
 </style>
+<div class="main-content">
 
-<div class="row">
-    <div class="col-xl-12 col-lg-12">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Add/Edit Task</h4>
-            </div>
-            <div class="card-body">
-                <div class="basic-form">
-                    @using (Html.BeginForm("AddEditTask", "Task", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                    {
-                        @Html.AntiForgeryToken()
+    <div class="page-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xl-12 col-lg-12">
+                    <div class="card">
+                        <div class="form-horizontal">
+                            <h4>Add/Edit Task</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="basic-form">
+                                @using (Html.BeginForm("AddEditTask", "Task", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                {
+                                    @Html.AntiForgeryToken()
 
-                        @*<div class="form-horizontal">
-                            <hr />*@
-                        <span class="text-danger" style="align-items:center;">
-                            @ViewBag.Message
-                            @Html.HiddenFor(model => model.taskid)
-                            @Html.HiddenFor(model => model.activityid)
-                            @Html.HiddenFor(model => model.activityname)
-                            @Html.HiddenFor(model => model.createdby)
-                            @Html.HiddenFor(model => model.createdon)
-                        </span>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                @Html.LabelFor(model => model.taskname, "Task Name", htmlAttributes: new { @class = "" })
-                                @Html.EditorFor(model => model.taskname, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                                @Html.ValidationMessageFor(model => model.taskname, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="form-group col-md-6">
-                                @Html.LabelFor(model => model.startdate, "Start Date", htmlAttributes: new { @class = "" })
-                                @Html.TextBoxFor(model => model.startdate, new { @type = "date", @class = "form-control datepicker", @Value = Model.startdate.ToString("yyyy-MM-dd") })
-                                @Html.ValidationMessageFor(model => model.startdate, "", new { @class = "text-danger" })
+                                    @*<div class="form-horizontal">
+                                        <hr />*@
+                                    <span class="text-danger" style="align-items:center;">
+                                        @ViewBag.Message
+                                        @Html.HiddenFor(model => model.taskid)
+                                        @Html.HiddenFor(model => model.activityid)
+                                        @Html.HiddenFor(model => model.activityname)
+                                        @Html.HiddenFor(model => model.createdby)
+                                        @Html.HiddenFor(model => model.createdon)
+                                        @Html.HiddenFor(model => model.assignedto)
+                                    </span>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            @Html.LabelFor(model => model.taskname, "Task Name", htmlAttributes: new { @class = "" })
+                                            @Html.EditorFor(model => model.taskname, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                                            @Html.ValidationMessageFor(model => model.taskname, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            @Html.LabelFor(model => model.startdate, "Start Date", htmlAttributes: new { @class = "" })
+                                            @Html.TextBoxFor(model => model.startdate, new { @type = "date", @class = "form-control datepicker", @Value = Model.startdate.ToString("yyyy-MM-dd") })
+                                            @Html.ValidationMessageFor(model => model.startdate, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            @Html.LabelFor(model => model.durations, "Duration", htmlAttributes: new { @class = "" })
+                                            @Html.TextBoxFor(model => model.durations, new { @class = "form-control", autocomplete = "off", @type = "number" })
+                                            @Html.ValidationMessageFor(model => model.durations, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            @Html.LabelFor(model => model.enddate, "End Date", htmlAttributes: new { @class = "" })
+                                            @Html.TextBoxFor(model => model.enddate, new { @type = "date", @class = "form-control datepicker", @Value = Model.enddate.ToString("yyyy-MM-dd") })
+                                            @Html.ValidationMessageFor(model => model.enddate, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            @Html.LabelFor(model => model.taskstatus, "Status", htmlAttributes: new { @class = "" })
+                                            @Html.DropDownList("taskstatus", null, htmlAttributes: new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.taskstatus, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            @Html.LabelFor(model => model.tasktype, "Task Type", htmlAttributes: new { @class = "" })
+                                            @Html.DropDownList("tasktype", null, htmlAttributes: new { @class = "form-control", @id = "ddltasktype" })
+                                            @Html.ValidationMessageFor(model => model.tasktype, "", new { @class = "text-danger" })
+                                            <input type="hidden" id="tasktype" name="tasktype" />
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            @Html.LabelFor(model => model.progress, htmlAttributes: new { @class = "" })
+                                            @Html.TextBoxFor(model => model.progress, new { @class = "form-control", autocomplete = "off", @type = "number", @max = "100", @min = "0" })
+                                            @Html.ValidationMessageFor(model => model.progress, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                    @*<div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                @Html.LabelFor(model => model.assignedto, "Assigned To", htmlAttributes: new { @class = "" })
+                                                @Html.DropDownList("assignedto", null, htmlAttributes: new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.assignedto, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>*@
+                                    <div class="row" style="padding-top: 30px;">
+                                        <div class="col-6">
+                                            <h4>
+                                                @Html.ActionLink("Back to List", "List", new
+                                           {
+                                               // routeValues
+                                               activityid = ViewBag.activityid,
+                                               projectid = ViewBag.projectid
+                                           })
+                                            </h4>
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="submit" name="btnSubmit" value="Save" class="btn btn" style="background-color: #0D2136; color: white;" />
+                                        </div>
+
+                                    </div>
+                                }
                             </div>
                         </div>
+<<<<<<< Updated upstream
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 @Html.LabelFor(model => model.durations, "Duration", htmlAttributes: new { @class = "" })
@@ -94,6 +157,9 @@
 
                             </div>
                     }
+=======
+                    </div>
+>>>>>>> Stashed changes
                 </div>
             </div>
         </div>
@@ -124,7 +190,11 @@
                     activityid: "@ViewBag.activityid"
                 },
                 function (data) {
+<<<<<<< Updated upstream
                     debugger;                    
+=======
+                    debugger;
+>>>>>>> Stashed changes
                     var date = new Date(parseInt(data.enddate.substr(6)));
                     var month = ("0" + (date.getMonth() + 1)).slice(-2);
                     date = date.getFullYear() + '-' + month + '-' + ("0" + date.getDate()).slice(-2);
@@ -137,7 +207,11 @@
                     if (date != "1-01-01") {
                         alert("End date should be less than activity's end date");
                         $('#startdate').val(date);
+<<<<<<< Updated upstream
                     }                    
+=======
+                    }
+>>>>>>> Stashed changes
 
                     if (data.durations != 0) {
                         $('#durations').val(data.durations);

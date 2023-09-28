@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 ﻿@using Cybereum.Models
 @model LoginViewModel
 @{
@@ -112,3 +113,68 @@
 @*@section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
     }*@
+=======
+﻿@using Cybereum.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<div class="row no-gutters">
+    <div class="col-xl-12">
+        <div class="auth-form">
+            @*<div class="text-center"><img src="~/images/cyber/Blue_Logo.png" alt="" width="15%"></div>*@
+                <h3 class="text-center mb-4">Login</h3>
+
+            <span class="text-danger" style="align-items:center;">
+                @ViewBag.Message
+            </span>
+
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form",id = "loginForm"  }))
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group mb-4">
+                            @*@Html.LabelFor(m => m.Email, new { @class = "mb-1" })*@
+                            <label class="mb-1"><strong>Email ID</strong></label>
+                            @*<input type="email" class="form-control" placeholder="hello@example.com">*@
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "hello@example.com" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group mb-4">
+                            <label class="mb-1"><strong>Password</strong></label>
+                            @*<input type="password" class="form-control" placeholder="Password">*@
+                            @Html.PasswordFor(m => m.password, new { @class = "form-control", @placeholder = "Password" })
+                            @Html.ValidationMessageFor(m => m.password, "", new { @class = "text-danger" })
+                        </div>
+                        @*<div class="text-center">
+                                <button type="submit" class="btn btn btn-block" href="" style="background-color: #0D2136; color: white;">Login</button>
+                            </div>*@
+                        <div class="mt-5 mb-0">                            
+                            @*<button type="submit" class="btn btn btn-block" href="" style="background-color: #0D2136; color: white;">Login</button>*@
+                            <a class="superbtn log-btn ml-2" onclick="loginForm.submit();"><button type="submit" style="display:none;" ></button>Login</a>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="new-account mt-3">
+                <p>
+                    @Html.ActionLink("Forgot Password?", "ForgotPassword", null, new { @class = "text-primary", @style = "color:#0D2136;" })
+                    @*<a href="auth-recoverpw.html" class="text-muted"><i class="mdi mdi-lock"></i> Forgot your password?</a>*@
+                </p>
+                <p>
+                    Don't have an account?
+                    @Html.ActionLink("Register", "Register", null, new { @class = "text-primary", @style = "color:#0D2136;" })
+                </p>
+                <p>
+                    (or)
+                </p>
+            </div>
+            @Html.Partial("_LoginPartial")
+        </div>
+    </div>
+</div>
+>>>>>>> Stashed changes

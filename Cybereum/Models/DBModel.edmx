@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
   <!-- EF Runtime content -->
@@ -429,4 +430,438 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams></Diagrams>
   </Designer>
+=======
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="cybereumModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tbl_status">
+          <Key>
+            <PropertyRef Name="statusid" />
+          </Key>
+          <Property Name="statusid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="statusname" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="isactive" Type="int" Nullable="false" />
+          <Property Name="createdby" Type="int" Nullable="false" />
+          <Property Name="createdon" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="modifiedby" Type="int" />
+          <Property Name="modifiedon" Type="datetime" Precision="0" />
+        </EntityType>
+        <EntityType Name="tbl_tasktype">
+          <Key>
+            <PropertyRef Name="tasktypeid" />
+          </Key>
+          <Property Name="tasktypeid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tasktypename" Type="varchar" MaxLength="250" Nullable="false" />
+          <Property Name="isactive" Type="int" Nullable="false" />
+          <Property Name="createdby" Type="int" Nullable="false" />
+          <Property Name="createdon" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="modifiedby" Type="int" />
+          <Property Name="modifiedon" Type="datetime" Precision="0" />
+        </EntityType>
+        <EntityType Name="tbl_user">
+          <Key>
+            <PropertyRef Name="userid" />
+          </Key>
+          <Property Name="userid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="100" />
+          <Property Name="password" Type="varchar" MaxLength="5000" Nullable="false" />
+          <Property Name="roleid" Type="int" Nullable="false" />
+          <Property Name="firstname" Type="varchar" MaxLength="100" />
+          <Property Name="lastname" Type="varchar" MaxLength="100" />
+          <Property Name="isactive" Type="int" />
+          <Property Name="emailid" Type="varchar" MaxLength="500" />
+          <Property Name="organization" Type="varchar" MaxLength="500" />
+          <Property Name="createddate" Type="datetime" Precision="0" />
+          <Property Name="emailverification" Type="bit" />
+          <Property Name="otp" Type="varchar" MaxLength="4" />
+          <Property Name="activationcode" Type="varchar" MaxLength="5000" />
+          <Property Name="pmuserid" Type="int" />
+          <Property Name="GUID" Type="varchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="tbl_userrole">
+          <Key>
+            <PropertyRef Name="roleid" />
+          </Key>
+          <Property Name="roleid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="rolename" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="isactive" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_modifiedby">
+          <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="0..1" />
+          <End Role="tbl_tasktype" Type="Self.tbl_tasktype" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_user">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="tbl_tasktype">
+              <PropertyRef Name="modifiedby" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_pmuser">
+          <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="0..1" />
+          <End Role="tbl_user1" Type="Self.tbl_user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_user">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="tbl_user1">
+              <PropertyRef Name="pmuserid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_userrole">
+          <End Role="tbl_userrole" Type="Self.tbl_userrole" Multiplicity="1" />
+          <End Role="tbl_user" Type="Self.tbl_user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_userrole">
+              <PropertyRef Name="roleid" />
+            </Principal>
+            <Dependent Role="tbl_user">
+              <PropertyRef Name="roleid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_FetchApprovedUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="cybereum">
+          <Parameter Name="P_Pageno" Type="int" Mode="In" />
+          <Parameter Name="P_pagesize" Type="int" Mode="In" />
+          <Parameter Name="P_SortColumn" Type="varchar" Mode="In" />
+          <Parameter Name="P_SortOrder" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_FetchLoginDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="cybereum">
+          <Parameter Name="P_email" Type="varchar" Mode="In" />
+          <Parameter Name="P_password" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_FetchPendingUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="cybereum">
+          <Parameter Name="P_Pageno" Type="int" Mode="In" />
+          <Parameter Name="P_pagesize" Type="int" Mode="In" />
+          <Parameter Name="P_SortColumn" Type="varchar" Mode="In" />
+          <Parameter Name="P_SortOrder" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_FetchUserExists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="cybereum">
+          <Parameter Name="P_email" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="sp_FetchUsers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="cybereum">
+          <Parameter Name="P_PMid" Type="int" Mode="In" />
+          <Parameter Name="P_Roleid" Type="int" Mode="In" />
+          <Parameter Name="P_Pageno" Type="int" Mode="In" />
+          <Parameter Name="P_pagesize" Type="int" Mode="In" />
+          <Parameter Name="P_SortColumn" Type="varchar" Mode="In" />
+          <Parameter Name="P_SortOrder" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="cybereumModelStoreContainer">
+          <EntitySet Name="tbl_status" EntityType="Self.tbl_status" Schema="cybereum" store:Type="Tables" />
+          <EntitySet Name="tbl_tasktype" EntityType="Self.tbl_tasktype" Schema="cybereum" store:Type="Tables" />
+          <EntitySet Name="tbl_user" EntityType="Self.tbl_user" Schema="cybereum" store:Type="Tables" />
+          <EntitySet Name="tbl_userrole" EntityType="Self.tbl_userrole" Schema="cybereum" store:Type="Tables" />
+          <AssociationSet Name="FK_modifiedby" Association="Self.FK_modifiedby">
+            <End Role="tbl_user" EntitySet="tbl_user" />
+            <End Role="tbl_tasktype" EntitySet="tbl_tasktype" />
+          </AssociationSet>
+          <AssociationSet Name="fk_pmuser" Association="Self.fk_pmuser">
+            <End Role="tbl_user" EntitySet="tbl_user" />
+            <End Role="tbl_user1" EntitySet="tbl_user" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userrole" Association="Self.FK_userrole">
+            <End Role="tbl_userrole" EntitySet="tbl_userrole" />
+            <End Role="tbl_user" EntitySet="tbl_user" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="cybereumModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="cybereumEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="sp_FetchApprovedUsers" ReturnType="Collection(cybereumModel.sp_FetchApprovedUsers_Result)">
+            <Parameter Name="P_Pageno" Mode="In" Type="Int32" />
+            <Parameter Name="P_pagesize" Mode="In" Type="Int32" />
+            <Parameter Name="P_SortColumn" Mode="In" Type="String" />
+            <Parameter Name="P_SortOrder" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_FetchLoginDetails" ReturnType="Collection(cybereumModel.sp_FetchLoginDetails_Result)">
+            <Parameter Name="P_email" Mode="In" Type="String" />
+            <Parameter Name="P_password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_FetchPendingUsers" ReturnType="Collection(cybereumModel.sp_FetchPendingUsers_Result)">
+            <Parameter Name="P_Pageno" Mode="In" Type="Int32" />
+            <Parameter Name="P_pagesize" Mode="In" Type="Int32" />
+            <Parameter Name="P_SortColumn" Mode="In" Type="String" />
+            <Parameter Name="P_SortOrder" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_FetchUsers" ReturnType="Collection(cybereumModel.sp_FetchUsers_Result)">
+            <Parameter Name="P_PMid" Mode="In" Type="Int32" />
+            <Parameter Name="P_Roleid" Mode="In" Type="Int32" />
+            <Parameter Name="P_Pageno" Mode="In" Type="Int32" />
+            <Parameter Name="P_pagesize" Mode="In" Type="Int32" />
+            <Parameter Name="P_SortColumn" Mode="In" Type="String" />
+            <Parameter Name="P_SortOrder" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_FetchUserExists" ReturnType="Collection(Int16)">
+          <Parameter Name="P_email" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_getganttchart">
+            <Parameter Name="p_roleid" Mode="In" Type="Int32" />
+            <Parameter Name="p_userid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="tbl_user" EntityType="cybereumModel.tbl_user" />
+          <EntitySet Name="tbl_userrole" EntityType="cybereumModel.tbl_userrole" />
+          <AssociationSet Name="fk_pmuser" Association="cybereumModel.fk_pmuser">
+            <End Role="tbl_user" EntitySet="tbl_user" />
+            <End Role="tbl_user1" EntitySet="tbl_user" />
+          </AssociationSet>
+          <AssociationSet Name="FK_userrole" Association="cybereumModel.FK_userrole">
+            <End Role="tbl_userrole" EntitySet="tbl_userrole" />
+            <End Role="tbl_user" EntitySet="tbl_user" />
+          </AssociationSet>
+          <EntitySet Name="tbl_status" EntityType="cybereumModel.tbl_status" />
+          <EntitySet Name="tbl_tasktype" EntityType="cybereumModel.tbl_tasktype" />
+          <AssociationSet Name="FK_modifiedby" Association="cybereumModel.FK_modifiedby">
+            <End Role="tbl_user" EntitySet="tbl_user" />
+            <End Role="tbl_tasktype" EntitySet="tbl_tasktype" />
+          </AssociationSet>
+          </EntityContainer>
+        <ComplexType Name="sp_FetchLoginDetails_Result" >
+          <Property Type="String" Name="emailid" Nullable="false" />
+          <Property Type="Int32" Name="userid" Nullable="false" />
+          <Property Type="Int32" Name="roleid" Nullable="false" />
+          <Property Type="String" Name="username" Nullable="true" />
+          <Property Type="String" Name="organization" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_FetchApprovedUsers_Result" >
+          <Property Type="String" Name="firstname" Nullable="false" />
+          <Property Type="String" Name="lastname" Nullable="false" />
+          <Property Type="String" Name="emailid" Nullable="false" />
+          <Property Type="String" Name="organization" Nullable="false" />
+          <Property Type="Int32" Name="roleid" Nullable="false" />
+          <Property Type="Int32" Name="isactive" Nullable="false" />
+          <Property Type="Int32" Name="TotalRecordCount" Nullable="false" />
+          <Property Type="String" Name="rolename" Nullable="false" />
+          <Property Type="Int32" Name="userid" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_FetchPendingUsers_Result" >
+          <Property Type="String" Name="firstname" Nullable="false" />
+          <Property Type="String" Name="lastname" Nullable="false" />
+          <Property Type="String" Name="emailid" Nullable="false" />
+          <Property Type="String" Name="organization" Nullable="false" />
+          <Property Type="Int32" Name="isactive" Nullable="false" />
+          <Property Type="Int32" Name="TotalRecordCount" Nullable="false" />
+          <Property Type="Int32" Name="roleid" Nullable="false" />
+          <Property Type="String" Name="rolename" Nullable="false" />
+          <Property Type="Int32" Name="userid" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_FetchUsers_Result" >
+          <Property Type="String" Name="emailid" Nullable="false" />
+          <Property Type="String" Name="firstname" Nullable="false" />
+          <Property Type="String" Name="lastname" Nullable="false" />
+          <Property Type="Int32" Name="isactive" Nullable="false" />
+          <Property Type="String" Name="organization" Nullable="false" />
+          <Property Type="Int32" Name="TotalRecordCount" Nullable="false" />
+          <Property Type="Int32" Name="roleid" Nullable="false" />
+          <Property Type="Int32" Name="userid" Nullable="false" />
+          <Property Type="String" Name="rolename" Nullable="false" />
+        </ComplexType>
+        <EntityType Name="tbl_user">
+          <Key>
+            <PropertyRef Name="userid" />
+          </Key>
+          <Property Name="userid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="roleid" Type="Int32" Nullable="false" />
+          <Property Name="firstname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="lastname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="isactive" Type="Int32" />
+          <Property Name="emailid" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="organization" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="createddate" Type="DateTime" />
+          <Property Name="emailverification" Type="Boolean" />
+          <Property Name="otp" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="activationcode" Type="String" MaxLength="5000" FixedLength="false" Unicode="false" />
+          <Property Name="pmuserid" Type="Int32" />
+          <Property Name="GUID" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tbl_user1" Relationship="cybereumModel.fk_pmuser" FromRole="tbl_user" ToRole="tbl_user1" />
+          <NavigationProperty Name="tbl_user2" Relationship="cybereumModel.fk_pmuser" FromRole="tbl_user1" ToRole="tbl_user" />
+          <NavigationProperty Name="tbl_userrole" Relationship="cybereumModel.FK_userrole" FromRole="tbl_user" ToRole="tbl_userrole" />
+          <NavigationProperty Name="tbl_tasktype" Relationship="cybereumModel.FK_modifiedby" FromRole="tbl_user" ToRole="tbl_tasktype" />
+        </EntityType>
+        <EntityType Name="tbl_userrole">
+          <Key>
+            <PropertyRef Name="roleid" />
+          </Key>
+          <Property Name="roleid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="rolename" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="isactive" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tbl_user" Relationship="cybereumModel.FK_userrole" FromRole="tbl_userrole" ToRole="tbl_user" />
+        </EntityType>
+        <Association Name="fk_pmuser">
+          <End Type="cybereumModel.tbl_user" Role="tbl_user" Multiplicity="0..1" />
+          <End Type="cybereumModel.tbl_user" Role="tbl_user1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_user">
+              <PropertyRef Name="userid" />
+            </Principal>
+            <Dependent Role="tbl_user1">
+              <PropertyRef Name="pmuserid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_userrole">
+          <End Type="cybereumModel.tbl_userrole" Role="tbl_userrole" Multiplicity="1" />
+          <End Type="cybereumModel.tbl_user" Role="tbl_user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_userrole">
+              <PropertyRef Name="roleid" />
+            </Principal>
+            <Dependent Role="tbl_user">
+              <PropertyRef Name="roleid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tbl_status">
+          <Key>
+            <PropertyRef Name="statusid" />
+          </Key>
+          <Property Name="statusid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="statusname" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="isactive" Type="Int32" Nullable="false" />
+          <Property Name="createdby" Type="Int32" Nullable="false" />
+          <Property Name="createdon" Type="DateTime" Nullable="false" />
+          <Property Name="modifiedby" Type="Int32" />
+          <Property Name="modifiedon" Type="DateTime" />
+        </EntityType>
+        <EntityType Name="tbl_tasktype">
+          <Key>
+            <PropertyRef Name="tasktypeid" />
+          </Key>
+          <Property Name="tasktypeid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tasktypename" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="isactive" Type="Int32" Nullable="false" />
+          <Property Name="createdby" Type="Int32" Nullable="false" />
+          <Property Name="createdon" Type="DateTime" Nullable="false" />
+          <Property Name="modifiedon" Type="DateTime" />
+          <NavigationProperty Name="tbl_user" Relationship="cybereumModel.FK_modifiedby" FromRole="tbl_tasktype" ToRole="tbl_user" />
+        </EntityType>
+        <Association Name="FK_modifiedby">
+          <End Type="cybereumModel.tbl_user" Role="tbl_user" Multiplicity="0..1" />
+          <End Type="cybereumModel.tbl_tasktype" Role="tbl_tasktype" Multiplicity="*" />
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="cybereumModelStoreContainer" CdmEntityContainer="cybereumEntities">
+          <FunctionImportMapping FunctionImportName="sp_FetchApprovedUsers" FunctionName="cybereumModel.Store.sp_FetchApprovedUsers" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="cybereumModel.sp_FetchApprovedUsers_Result" />
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_FetchLoginDetails" FunctionName="cybereumModel.Store.sp_FetchLoginDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="cybereumModel.sp_FetchLoginDetails_Result" />
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_FetchPendingUsers" FunctionName="cybereumModel.Store.sp_FetchPendingUsers" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="cybereumModel.sp_FetchPendingUsers_Result" />
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_FetchUsers" FunctionName="cybereumModel.Store.sp_FetchUsers" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="cybereumModel.sp_FetchUsers_Result" />
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_FetchUserExists" FunctionName="cybereumModel.Store.sp_FetchUserExists" />
+          <EntitySetMapping Name="tbl_user">
+            <EntityTypeMapping TypeName="cybereumModel.tbl_user">
+              <MappingFragment StoreEntitySet="tbl_user">
+                <ScalarProperty Name="GUID" ColumnName="GUID" />
+                <ScalarProperty Name="pmuserid" ColumnName="pmuserid" />
+                <ScalarProperty Name="activationcode" ColumnName="activationcode" />
+                <ScalarProperty Name="otp" ColumnName="otp" />
+                <ScalarProperty Name="emailverification" ColumnName="emailverification" />
+                <ScalarProperty Name="createddate" ColumnName="createddate" />
+                <ScalarProperty Name="organization" ColumnName="organization" />
+                <ScalarProperty Name="emailid" ColumnName="emailid" />
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="roleid" ColumnName="roleid" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="userid" ColumnName="userid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_userrole">
+            <EntityTypeMapping TypeName="cybereumModel.tbl_userrole">
+              <MappingFragment StoreEntitySet="tbl_userrole">
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+                <ScalarProperty Name="rolename" ColumnName="rolename" />
+                <ScalarProperty Name="roleid" ColumnName="roleid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_status">
+            <EntityTypeMapping TypeName="cybereumModel.tbl_status">
+              <MappingFragment StoreEntitySet="tbl_status">
+                <ScalarProperty Name="modifiedon" ColumnName="modifiedon" />
+                <ScalarProperty Name="modifiedby" ColumnName="modifiedby" />
+                <ScalarProperty Name="createdon" ColumnName="createdon" />
+                <ScalarProperty Name="createdby" ColumnName="createdby" />
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+                <ScalarProperty Name="statusname" ColumnName="statusname" />
+                <ScalarProperty Name="statusid" ColumnName="statusid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_tasktype">
+            <EntityTypeMapping TypeName="cybereumModel.tbl_tasktype">
+              <MappingFragment StoreEntitySet="tbl_tasktype">
+                <ScalarProperty Name="modifiedon" ColumnName="modifiedon" />
+                <ScalarProperty Name="createdon" ColumnName="createdon" />
+                <ScalarProperty Name="createdby" ColumnName="createdby" />
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+                <ScalarProperty Name="tasktypename" ColumnName="tasktypename" />
+                <ScalarProperty Name="tasktypeid" ColumnName="tasktypeid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="FK_modifiedby" TypeName="cybereumModel.FK_modifiedby" StoreEntitySet="tbl_tasktype">
+            <EndProperty Name="tbl_tasktype">
+              <ScalarProperty Name="tasktypeid" ColumnName="tasktypeid" />
+            </EndProperty>
+            <EndProperty Name="tbl_user">
+              <ScalarProperty Name="userid" ColumnName="modifiedby" />
+            </EndProperty>
+            <Condition ColumnName="modifiedby" IsNull="false" />
+          </AssociationSetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="False" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+>>>>>>> Stashed changes
 </edmx:Edmx>

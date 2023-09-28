@@ -1,0 +1,183 @@
+﻿@model List<SelectListItem>
+
+@{
+    ViewBag.Title = "Organization List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*<script src="~/Scripts/jquery-2.1.1.min.js"></script>*@
+
+@*<link rel="stylesheet" href="~/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <script src="~/plugins/datatables/jquery.dataTables.min.js"></script>*@
+
+@*<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.0.1/css/buttons.bootstrap4.min.css" />
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.css" />*@
+
+@*
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>*@
+
+<style>
+    #button {
+        display: block;
+        margin: 20px auto;
+        padding: 10px 30px;
+        background-color: #eee;
+        border: solid #ccc 1px;
+        cursor: pointer;
+    }
+
+    #overlay {
+        position: fixed;
+        top: 0;
+        z-index: 100;
+        width: 100%;
+        height: 100%;
+        display: none;
+        background: rgba(0,0,0,0.6);
+    }
+
+    .cv-spinner {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px #ddd solid;
+        border-top: 4px #2e93e6 solid;
+        border-radius: 50%;
+        animation: sp-anime 0.8s infinite linear;
+    }
+
+    @@keyframes sp-anime {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .is-hide {
+        display: none;
+    }
+
+    #divLoader {
+        position: fixed;
+        display: block;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        text-align: center;
+        opacity: 0.7;
+        background-color: #fff;
+        z-index: 99;
+    }
+
+    #loading-image {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 100;
+    }
+</style>
+
+<div class="main-content">
+
+    <div class="page-content">
+        <div class="container-fluid">
+            <div class="form-horizontal">
+                <h4>Organization List</h4>
+                <hr />
+            </div>
+
+            <div class="col-12">
+                <div id="divLoader" style="display:none;">
+                    <img id="loading-image" src="~/images/Spinner.gif" alt="Loader" />
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="tblPendingUser" class="table table-hover mb-0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Organization Name</th>
+                                        <th>Project</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*<div id="msg">
+
+    </div>*@
+
+@Scripts.Render("~/bundles/jquery")
+<script type="text/javascript">
+    $(document).ajaxSend(function () {
+        $("#overlay").fadeIn(300);
+    });
+
+    $(document).ready(function () {
+        $('#liFiles').addClass("active");
+        
+
+        debugger;
+        var reset = 0;
+        var objFilter = {
+        }
+
+        $("#tblPendingUser").DataTable(
+        {
+            processing: true,
+            serverSide: true,
+            filter: false,
+            paging: false,
+            orderMulti: false,            
+            Sort: true,
+            "ajax": {
+                url: '@Url.Action("GetOrganization", "User")',
+                type: 'POST'
+            },            
+            aoColumnDefs: [{
+                bSortable: false,
+                aTargets: [-1, -2]
+            }],
+            "bAutoWidth": false,
+            "info": true,
+            columns: [
+                { 'data': 'organization', 'name': 'Organization Name' },
+                {
+                    data: 'organization', render: function (data, type, row) {                        
+                        return '<a> <button type="button" class="btn btn-outline-primary btn-sm waves-effect waves-light" onclick=ProjectData("' + encodeURIComponent(row.organization) + '")>Project</button></a>';
+                    }
+                }
+            ],
+            select: {
+                style: 'multi',
+                selector: 'td:first-child'
+            },
+        });
+    });
+
+    function ProjectData(data) {
+        debugger;
+        location.href = '@Url.Action("OrganizationProjectList", "Project", new { organization = "id" })'.replace('id', data);
+    }
+
+    function msg(strMsg, mode) {
+        $.notify(strMsg, mode, { globalPosition: 'top center', clickToHide: true, autoHide: false });
+    }
+
+
+</script>

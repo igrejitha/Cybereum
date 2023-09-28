@@ -2,8 +2,14 @@
     ViewBag.Title = "GanttChart";
     Layout = null;
 }
+<<<<<<< Updated upstream
 <script src="~/Scripts/dhtmlxgantt/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
 <link rel="stylesheet" href="~/Content/dhtmlxgantt/dhtmlxgantt.css" type="text/css" />
+=======
+
+<script src="~/codebase/dhtmlxgantt.js?v=8.0.4"></script>
+<link rel="stylesheet" href="~/codebase/dhtmlxgantt.css?v=8.0.4">
+>>>>>>> Stashed changes
 <h2><img src="~/images/cyber/Blue_Logo.png" alt="" width="3%"> GanttChart</h2>
 
 <style type="text/css">
@@ -36,19 +42,53 @@
         display: none !important;
     }
 
+<<<<<<< Updated upstream
     .hide-link-point .gantt_link_control {
         display: none;
     }
+=======
+    .nested_task .gantt_add {
+        display: none !important;
+    }
+
+    .hide-link-point .gantt_link_control {
+        display: none;
+    }
+
+    .gantt_task_progress {
+        text-align: left;
+        color: white;
+        font-weight: bold;
+        overflow: visible !important;
+    }
+
+    .hide_progress_drag .gantt_task_progress_drag {
+        display: none !important;
+    }
+
+    .circle_task .gantt_link_control,
+    .circle_task .gantt_task_progress_drag {
+        display: none;
+    }
+>>>>>>> Stashed changes
 </style>
 <div id="divLoader" style="display:none;">
     <img id="loading-image" src="~/images/Spinner.gif" alt="Loader" />
 </div>
 @*<button type="button" onclick="window.location.reload()">Refresh Me</button>*@
+<<<<<<< Updated upstream
 <div id="ganttContainer" style="width: 100%; height: 90%;"></div>
 @*@Scripts.Render("~/bundles/jquery")*@
 <script>
     (function () {
         // add month scale        
+=======
+<div id="ganttContainer" style="width: 100%; height: 100vh;"></div>
+@*@Scripts.Render("~/bundles/jquery")*@
+<script>
+    (function () {
+        // add month scale
+>>>>>>> Stashed changes
         var projectid = "@ViewBag.projectid";
         gantt.config.scale_unit = "month";
         gantt.config.date_scale = "%F, %Y";
@@ -62,6 +102,7 @@
             { unit: "day", step: 1, date: "%d-%D" }
         ];
         gantt.config.scale_height = 50;
+<<<<<<< Updated upstream
         // configure milestone description
         gantt.templates.rightside_text = function (start, end, task) {
             if (task.type == gantt.config.types.milestone) {
@@ -71,15 +112,79 @@
         };
         // add section to type selection: task, project or milestone
         gantt.config.lightbox.sections = [
+=======
+        //// configure milestone description
+        //gantt.templates.rightside_text = function (start, end, task) {
+        //    if (task.type == gantt.config.types.milestone) {
+        //        return task.text;
+        //    }
+        //    return "";
+        //};
+
+        // Search function will loop owners to find label fow owner_id
+        function getUser(user_id) {
+            for (var i = 0; i < users.length; i++) {
+                if (users[i].key == user_id) {
+                    return users[i].label;
+                }
+            }
+            return "";
+        }
+
+        //// Array of owners for options(in the lightbox)
+        var users = [
+        //  //{ key: '0', label: "" },
+        //  //{ key: '1', label: "Ozzy Osbourne" },
+        //  //{ key: '2', label: "Bonnie Tyler" },
+        //  //{ key: '3', label: "Gene Pitney" },
+        ];
+        gantt.ajax.get("/Project/FillProjectMember?id=" + projectid, function (r) {
+            var xml = r.xmlDoc.response;
+            var user = JSON.parse(r.xmlDoc.response);
+            for (var q = 0; q < user.items.length; q++) {
+                users.push({
+                    key: user.items[q]["key"],
+                    label: user.items[q]["label"]
+                });
+            }
+        });
+
+        gantt.form_blocks.select.set_value = function (node, value, ev) {
+            node.firstChild.value = value || "";
+            if (ev.type == "Activity" || ev.parent == 0) {
+                var style = ev.some_property ? "" : "none";
+                node.style.display = style; // editor area
+                node.previousSibling.style.display = style; //section header
+                gantt.resizeLightbox(); //correct size of lightbox
+            }
+            else {
+                var style = ev.some_property ? "" : "block";
+                node.style.display = style; // editor area
+                node.previousSibling.style.display = style; //section header
+                gantt.resizeLightbox(); //correct size of lightbox
+            }
+        }
+
+        gantt.locale.labels.section_description = "Owner";
+
+        // add section to type selection: task, project or milestone
+        gantt.config.lightbox.sections = [
+            // Owners section, will map to owner_id
+            { name: "users", height: 22, map_to: "user_id", type: "select", options: users },
+>>>>>>> Stashed changes
             { name: "description", height: 70, map_to: "text", type: "textarea", focus: true },
             //{ name: "type", type: "typeselect", map_to: "type" },
             { name: "time", height: 72, type: "duration", map_to: "auto" }
         ];
+<<<<<<< Updated upstream
         //var formatter = gantt.ext.formatters.durationFormatter({
         //    enter: "day",
         //    store: "day",
         //    format: "auto"
         //});
+=======
+
+>>>>>>> Stashed changes
         const formatter = gantt.ext.formatters.linkFormatter({
             //default values
             durationFormatter: gantt.ext.formatters.durationFormatter(),
@@ -115,10 +220,17 @@
             return "";
         };
 
+<<<<<<< Updated upstream
         gantt.templates.task_class = function (start, end, task) {            
             if (task.type=="Activity") return ''
             else return "hide-link-point";
         };
+=======
+        //gantt.templates.task_class = function (start, end, task) {
+        //    if (task.type == "Activity") return ''
+        //    else return "hide-link-point";
+        //};
+>>>>>>> Stashed changes
 
         gantt.attachEvent("onBeforeLinkAdd", function (id, link) {
             if (!allow_link) return false;
@@ -133,6 +245,7 @@
         });
 
         gantt.config.columns = [
+<<<<<<< Updated upstream
             { name: "text", label: "Name", tree: true, width: 200, resize: true },
             { name: "taskid", label: "Id", width: 80, align: "center", resize: true },
             { name: "duration", label: "Duration", width: 80, align: "center", resize: true },
@@ -151,6 +264,29 @@
                             //    var taskPredecessors = (sourceTask.sort_order);
                             labels.push(formatter.format(link));
                             //}
+=======
+            { name: "wbs", label: "#", width: 40, align: "center", template: gantt.getWBSCode },
+            { name: "text", label: "Name", tree: true, width: 200, resize: true },
+            { name: "taskid", label: "id", width: 80, align: "center", resize: true },
+            { name: "duration", label: "Duration", width: 80, align: "center", resize: true },
+            { name: "start_date", label: "Start", width: 80, align: "center", resize: true },
+            // Owners column
+            {
+                name: "user_id", label: "Owner", template: function (obj) {
+                    return getUser(obj.user_id);
+                }, align: "center", resize: true
+            },
+            { name: "end_date", label: "Finish", width: 80, align: "center", resize: true },
+                {
+                    name: "predecessors", label: "Predecessors", width: 80, align: "left",
+                    //editor: editors.predecessors,
+                    resize: true, template: function (task) {
+                        var links = task.$target;
+                        var labels = [];
+                        for (var i = 0; i < links.length; i++) {
+                            var link = gantt.getLink(links[i]);
+                            labels.push(formatter.format(link));
+>>>>>>> Stashed changes
                         }
                         return labels.join(", ")
                     }
@@ -160,13 +296,29 @@
         gantt.templates.task_end_date = function (date) {
             return gantt.templates.task_date(new Date(date.valueOf() - 1));
         };
+<<<<<<< Updated upstream
         
         gantt.config.xml_date = "%Y-%m-%d %H:%i:%s"; // format of dates in XML
 
+=======
+
+        gantt.templates.progress_text = function (start, end, task) {
+            return `<span style='text-align:left; padding-left: 5px;'>${Math.round(task.progress * 100)}%</span>`;
+        };
+
+        gantt.config.xml_date = "%Y-%m-%d %H:%i:%s"; // format of dates in XML
+        //gantt.config.auto_types = true;
+>>>>>>> Stashed changes
         gantt.config.duration_unit = "day";
         gantt.config.work_time = true;
         gantt.config.skip_off_time = true;
         gantt.config.fit_tasks = true;
+<<<<<<< Updated upstream
+=======
+        gantt.locale.labels.section_users = "Owner";
+        gantt.config.show_progress = true;
+        gantt.config.show_loading = true;
+>>>>>>> Stashed changes
         gantt.init("ganttContainer"); // initialize gantt
         gantt.config.open_tree_initially = true;
         gantt.plugins({
@@ -175,20 +327,33 @@
         });
         gantt.config.highlight_critical_path = true;
         gantt.config.auto_scheduling = true;
+<<<<<<< Updated upstream
         router = function (entity, action, data, id) {            
+=======
+        gantt.autoSchedule();
+        router = function (entity, action, data, id) {
+>>>>>>> Stashed changes
             return new gantt.Promise(function (resolve, reject) {
                 gantt.load("/Project/GetchartData?projectid=" + projectid, "json");
             });
         }
+<<<<<<< Updated upstream
         
         gantt.load("/Project/GetchartData?projectid=" + projectid, "json");
 
         gantt.attachEvent("onLightboxSave", function (id, item) {
             debugger;
+=======
+
+        gantt.load("/Project/GetchartData?projectid=" + projectid, "json");
+
+        gantt.attachEvent("onLightboxSave", function (id, item) {
+>>>>>>> Stashed changes
             if (!item.text) {
                 gantt.message({ type: "error", text: "Enter task description!" });
                 return false;
             }
+<<<<<<< Updated upstream
             //if (!item.user) {
             //    gantt.message({ type: "error", text: "Choose a worker for this task!" });
             //    return false;
@@ -196,6 +361,87 @@
             return true;
         });
 
+=======
+            return true;
+        });
+
+        //gantt.attachEvent("onBeforeTaskDrag", function (id, mode, e) {
+        //    debugger;
+        //    if (gantt.getGlobalTaskIndex(id) % 2 == 0) {
+        //        return false;      //denies dragging if the global task index is odd
+        //    }
+        //    return true;           //allows dragging if the global task index is even
+        //});
+
+        //gantt.attachEvent("onBeforeTaskDisplay", (id, task) => {
+        //    debugger;
+        //    if (gantt.hasChild(task.id) && task.parent == "0") {
+        //        task.progress.style.display = "none";
+        //        return false;
+        //    }
+        //    task.progress.style.display = "block";
+        //    return true;
+        //});
+        gantt.templates.task_class = function (start, end, task) {
+            debugger;
+            if (gantt.hasChild(task.id)) {
+                //var children = gantt.getChildren(task.id);
+                //var child_progress = 0;
+                //for (var i = 0; i < children.length; i++) {
+                //    var child = gantt.getTask(children[i])
+                //    child_progress += (child.progress * 100);
+                //}                    
+                //if (child_progress == 0) {
+                //    return "hide_progress_drag"
+                //}
+                if (task.type == "Activity") return 'hide_progress_drag'
+                else return "circle_task";
+            }
+            else {
+                if (task.type == "SubTask" || task.type == "Task") return 'hide-link-point'
+                else return "circle_task";
+            };
+        };
+
+        //function parent_progress(id) {
+        //    debugger;            
+        //    gantt.eachParent(function (task) {
+        //        var children = gantt.getChildren(task.id);
+        //        var child_progress = 0;
+        //        for (var i = 0; i < children.length; i++) {
+        //            var child = gantt.getTask(children[i])
+        //            child_progress += (child.progress * 100);
+        //        }
+        //        debugger;
+        //        task.progress = child_progress / children.length / 100;
+        //        //gantt.updateTask(task.id);
+        //    }, id)            
+        //    gantt.render();
+        //}
+
+        //gantt.attachEvent("onAfterTaskUpdate", function (id, item) {            
+        //    if (item.parent == 0) {
+        //        return;
+        //    }
+
+        //    var parentTask = gantt.getTask(item.parent); //console.log(parent.id);return;
+
+        //    var childs = gantt.getChildren(parentTask.id);
+        //    var totProgress = 0;
+
+        //    var tempTask;
+        //    for (i = 0; i < childs.length; i++) { //console.log(childs[i]);
+        //        tempTask = gantt.getTask(childs[i]);
+        //        totProgress += parseFloat(tempTask.progress);
+        //    }
+        //    //console.log(totProgress);
+
+        //    parentTask.progress = (totProgress / childs.length).toFixed(2);
+        //    debugger;
+        //    //gantt.updateTask(parentTask.id);            
+        //});
+
+>>>>>>> Stashed changes
         gantt.attachEvent("onAfterLinkAdd", function (id, item) {
             window.location.reload();
         });
@@ -209,13 +455,21 @@
             window.location.reload();
         });
         gantt.attachEvent("onAfterTaskUpdate", function (id, item) {
+<<<<<<< Updated upstream
+=======
+            //parent_progress(id);
+>>>>>>> Stashed changes
             window.location.reload();
         });
         var dp = gantt.createDataProcessor(function (entity, action, data, id, taskid) {
             switch (entity) {
                 case "task":
                     switch (action) {
+<<<<<<< Updated upstream
                         case "create":                            
+=======
+                        case "create":
+>>>>>>> Stashed changes
                             return gantt.ajax.post({
                                 headers: {
                                     "Content-Type": "application/json"
@@ -223,12 +477,19 @@
                                 url: "/Project/CreateTask",
                                 data: JSON.stringify(data),
                                 callback: function (response) {
+<<<<<<< Updated upstream
                                     debugger;
                                     //alert(response.responseText);
                                 }
                             });                            
                             break;
                         case "update":                            
+=======
+                                }
+                            });
+                            break;
+                        case "update":
+>>>>>>> Stashed changes
                             return gantt.ajax.post({
                                 headers: {
                                     "Content-Type": "application/json"
@@ -236,6 +497,7 @@
                                 url: "/Project/UpdateTask",
                                 data: JSON.stringify(data),
                                 callback: function (response) {
+<<<<<<< Updated upstream
                                     debugger;
                                     //alert(response.responseText);
                                 }                                
@@ -247,6 +509,18 @@
                                   server + "/" + entity + "/" + id
                             );                            
                             break;                    }
+=======
+                                }
+                            });
+                            gantt.message({ type: "error", text: result });
+                            break;
+                        case "delete":
+                            return gantt.ajax.del(
+                                  server + "/" + entity + "/" + id
+                            );
+                            break;
+                    }
+>>>>>>> Stashed changes
                 case "link":
                     switch (action) {
                         case "create":
@@ -257,10 +531,16 @@
                                 url: "/Project/CreateLink",
                                 data: JSON.stringify(data),
                                 callback: function (response) {
+<<<<<<< Updated upstream
                                     debugger;
                                     //alert(response.responseText);
                                 }
                             });                            
+=======
+                                    //alert(response.responseText);
+                                }
+                            });
+>>>>>>> Stashed changes
                             break;
                         case "update":
                             return gantt.ajax.post(
@@ -273,10 +553,16 @@
                                 url: "/Project/DeleteLink",
                                 data: { id: id },
                                 callback: function (response) {
+<<<<<<< Updated upstream
                                     debugger;
                                     //alert(response.responseText);
                                 }
                             });                            
+=======
+                                    //alert(response.responseText);
+                                }
+                            });
+>>>>>>> Stashed changes
                             break;
                     }
             }

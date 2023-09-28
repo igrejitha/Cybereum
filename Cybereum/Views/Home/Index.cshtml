@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 ﻿@{
     ViewBag.Title = "Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -174,3 +175,163 @@
     </div>
 </div>
 
+=======
+﻿@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main-content">
+
+    <div class="page-content">
+        <div class="container-fluid">
+            <div class="box">
+                <div class="container">
+                    <div class="row">
+
+                        @if (Convert.ToInt32(Session["RoleId"]) == 1)
+                        {
+                            <div class="col-sm-6 col-xl-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <h5 class="font-size-14">Approved Users</h5>
+                                            </div>
+                                            <div class="avatar-xs">
+                                                <span class="avatar-title rounded-circle bg-primary">
+                                                    <i class="dripicons-box"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <h2 class="m-0 align-self-center">
+                                            <a href="@Url.Action("ApprovedUsers", "User")">
+                                                @if (ViewBag.countApproved != null)
+                                                {
+                                                    @ViewBag.countApproved;
+                                                }
+                                            </a>
+                                        </h2>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-xl-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <h5 class="font-size-14">Pending for Approval</h5>
+                                            </div>
+                                            <div class="avatar-xs">
+                                                <span class="avatar-title rounded-circle bg-primary">
+                                                    <i class="dripicons-box"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <h2 class="m-0 align-self-center">
+                                            <a href="@Url.Action("PendingUsers", "User")">
+                                                @if (ViewBag.countPending != null)
+                                                {
+                                                    @ViewBag.countPending;
+                                                }
+                                            </a>
+
+                                        </h2>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-xl-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <h5 class="font-size-14">Organization</h5>
+                                            </div>
+                                            <div class="avatar-xs">
+                                                <span class="avatar-title rounded-circle bg-primary">
+                                                    <i class="dripicons-box"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <h2 class="m-0 align-self-center">
+                                            <a href="@Url.Action("OrganizationList", "User")">
+                                                @if (ViewBag.countOrganization != null)
+                                                {
+                                                    @ViewBag.countOrganization;
+                                                }
+                                            </a>
+                                        </h2>
+
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        @if (Convert.ToInt32(Session["RoleId"]) == 4 || Convert.ToInt32(Session["RoleId"]) == 5)
+                        {
+                            <div class="col-sm-6 col-xl-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <h5 class="font-size-14">Users</h5>
+                                            </div>
+                                            <div class="avatar-xs">
+                                                <span class="avatar-title rounded-circle bg-primary">
+                                                    <i class="dripicons-box"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <h2 class="m-0 align-self-center">
+                                            <a href="@Url.Action("Index", "User")">
+                                                @if (ViewBag.countUser != null)
+                                                {
+                                                    @ViewBag.countUser;
+                                                }
+                                            </a>
+                                        </h2>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6 col-xl-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <h5 class="font-size-14">Projects</h5>
+                                            </div>
+                                            <div class="avatar-xs">
+                                                <span class="avatar-title rounded-circle bg-primary">
+                                                    <i class="dripicons-box"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <h2 class="m-0 align-self-center">
+                                            <a href="@Url.Action("projectportfoliodashboard", "projectportfoliodashboard")">
+                                                @if (ViewBag.countProject != null)
+                                                {
+                                                    @ViewBag.countProject;
+                                                }
+                                            </a>
+
+                                        </h2>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+>>>>>>> Stashed changes

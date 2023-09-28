@@ -1,0 +1,12 @@
+09/27/2023 01:28:46 PM The underlying provider failed on Open.
+09/27/2023 01:28:46 PM System.Collections.ListDictionaryInternal
+09/27/2023 01:28:46 PM Unable to connect to any of the specified MySQL hosts.
+09/27/2023 01:28:46 PM Void Open()
+09/27/2023 01:30:15 PM The underlying provider failed on Open.
+09/27/2023 01:30:15 PM System.Collections.ListDictionaryInternal
+09/27/2023 01:30:15 PM Unable to connect to any of the specified MySQL hosts.
+09/27/2023 01:30:15 PM Void Open()
+09/27/2023 09:18:39 PM The underlying provider failed on Open.
+09/27/2023 09:18:39 PM System.Collections.ListDictionaryInternal
+09/27/2023 09:18:39 PM Fatal error encountered during data read.
+09/27/2023 09:18:39 PM Void Open()

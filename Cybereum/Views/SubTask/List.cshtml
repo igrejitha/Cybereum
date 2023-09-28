@@ -51,41 +51,38 @@
         display: none;
     }
 </style>
+<div class="main-content">
 
-<div class="form-horizontal">
-    <h4>SubTask List</h4>
-    <hr />
-</div>
-@if (Convert.ToInt32(Session["RoleId"]) != 1)
-{
-    <p>        
-    <button type="button" class="btn btn" style="background-color: #0D2136; color: white;" onclick="location.href='@Url.Action("AddEditSubTask", "SubTask")?taskid=@ViewBag.taskid'">Add New</button>
-        @Html.ActionLink("Back to Task", "List", "Task", new
-   {
-       // routeValues
-       activityid = ViewBag.activityid,
-       projectid = ViewBag.projectid
-   }, null)
-    </p>
-}
+    <div class="page-content">
+        <div class="container-fluid">
+            <div class="form-horizontal">
+                <h4>SubTask List</h4>
+                <hr />
+            </div>
 
-<div class="col-12">
-    <div class="card">
-        <div class="card-body">
-            <div class="table-responsive">
-                <table id="tblSubTask" class="display min-w850">
-                    <thead>
-                        <tr>
-                            <th>SubTask Name</th>
-                            <th>Task Name</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Assigned To</th>
-                            <th>Edit</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="tblSubTask" class="table table-hover mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>SubTask Name</th>
+                                        <th>Task Name</th>
+                                        <th>Activity Name</th>
+                                        <th>Project Name</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                        <th>Assigned To</th>
+                                        <th>Edit</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -117,16 +114,13 @@
             serverSide: true,
             filter: false,
             orderMulti: false,
-            pageLength: 75,
+            paging: false,
             Sort: true,
             "ajax": {
                 url: '@Url.Action("subtasklist", "SubTask")',
                 type: 'POST',
                 data: objFilter
             },
-            aLengthMenu: [[75, 100, 500, 1000, -1], [75, 100, 500, 1000, "All"]],
-            iDisplayLength: 75,
-            //scrollY: 400,
             aoColumnDefs: [{
                 bSortable: false,
                 aTargets: [-1, -2]
@@ -136,6 +130,8 @@
             columns: [
                 { 'data': 'subtaskname', 'name': 'SubTask Name' },
                 { 'data': 'taskname', 'name': 'Task Name' },
+                { 'data': 'activityname', 'name': 'Activity Name' },
+                { 'data': 'projectname', 'name': 'Project Name' },
                 {
                     'data': 'startdate', 'name': 'Start Date',
                     'render': function (jsonDate) {
@@ -166,15 +162,14 @@
                 },
                 { 'data': 'assignedusername', 'name': 'Assigned To' },
                 {
-                    "render": function (data, type, full, meta)
-                    {
+                    "render": function (data, type, full, meta) {
                         //return '<button class="btn btn" style="background-color: #0D2136; color: white;" onclick=getSubTask("' + full.subtaskid + '"); >Edit</button>';
                         var value1 = '@Request.RequestContext.HttpContext.Session["RoleId"]';
                         if (value1 == '1') {
-                            return '<button class="btn btn" style="background-color: #0D2136; color: white;" disabled="disabled" onclick=getSubTask("' + full.subtaskid + '"); >Edit</button>';
+                            return '<a><button class="btn btn-outline-primary btn-sm waves-effect waves-light" disabled="disabled" onclick=getSubTask("' + full.subtaskid + '"); >Edit</button></a>';
                         }
                         else {
-                            return '<button class="btn btn" style="background-color: #0D2136; color: white;" onclick=getSubTask("' + full.subtaskid + '"); >Edit</button>';
+                            return '<a><button class="btn btn-outline-primary btn-sm waves-effect waves-light" onclick=getSubTask("' + full.subtaskid + '"); >Edit</button></a>';
                         }
                     }
                 }
@@ -208,8 +203,7 @@
                 { 'data': 'enddate', 'name': 'End Date' },
                 { 'data': 'assignedusername', 'name': 'Assigned To' },
                 {
-                    "render": function (data, type, full, meta)
-                    {
+                    "render": function (data, type, full, meta) {
                         //return '<button class="btn btn" style="background-color: #0D2136; color: white;" onclick=getSubTask("' + full.subtaskid + '"); >Edit</button>';
                         var value1 = '@Request.RequestContext.HttpContext.Session["RoleId"]';
                         if (value1 == '1') {

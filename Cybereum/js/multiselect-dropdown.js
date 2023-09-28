@@ -1,6 +1,7 @@
 var style = document.createElement('style');
 style.setAttribute("id","multiselect_dropdown_styles");
 style.innerHTML = `
+<<<<<<< Updated upstream
 .multiselect-dropdown{
     width:100% !important;
   display: inline-block;
@@ -14,6 +15,34 @@ style.innerHTML = `
   background-position: right .75rem center;
   background-size: 16px 12px;
   font-size:0.8em;
+=======
+//.multiselect-dropdown{
+//    width:100% !important;
+//  display: inline-block;
+//  padding: 8px 5px 6px 5px;
+//  border-radius: 4px;  
+//  background-color: #08375e;
+//  position: relative;
+//  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+//  background-repeat: no-repeat;
+//  background-position: right .75rem center;
+//  background-size: 16px 12px;
+//  font-size:0.8em;
+//}
+.multiselect-dropdown {
+    width: 100% !important;
+    display: inline-block;
+    padding: 8px 5px 6px 5px;
+    border-radius: 4px;
+    background-color: #0e2841 !important;
+    position: relative;
+    background-image: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e);
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 16px 12px;
+    font-size: 0.8em;
+    color: #828f97;
+>>>>>>> Stashed changes
 }
 .multiselect-dropdown span.optext, .multiselect-dropdown span.placeholder{
   margin-right:0.5em; 
@@ -23,7 +52,11 @@ style.innerHTML = `
   display:inline-block;
 }
 .multiselect-dropdown span.optext{
+<<<<<<< Updated upstream
   background-color:lightgray;
+=======
+  //background-color:lightgray;
+>>>>>>> Stashed changes
     padding:1px 0.75em;     
 }
 .multiselect-dropdown span.optext .optdel {
@@ -38,6 +71,7 @@ style.innerHTML = `
 .multiselect-dropdown span.placeholder{
   color:#ced4da;
 }
+<<<<<<< Updated upstream
 .multiselect-dropdown-list-wrapper{
   box-shadow: gray 0 3px 8px;
   z-index: 100;
@@ -51,15 +85,57 @@ style.innerHTML = `
   left: 0;
   right: 0;
   background: white;
+=======
+//.multiselect-dropdown-list-wrapper{  
+//  z-index: 100;
+//  padding:2px;
+//  border-radius: 4px;
+//  border: solid 1px #ced4da;
+//  display: none;
+//  margin: -1px;  
+//  top:0;
+//  left: 0;
+//  right: 0;
+//  background: white;
+//}
+.multiselect-dropdown-list-wrapper {
+    z-index: 100;
+    padding: 2px;
+    border-radius: 4px;
+    border: solid 1px #ced4da;
+    display: none;
+    margin: -1px;
+    top: 0;
+    left: 0;
+    right: 0;
+    /* background: white; */
+    /* height: 231px; */
+    magin-bottom: 40px !important;
+>>>>>>> Stashed changes
 }
 .multiselect-dropdown-list-wrapper .multiselect-dropdown-search{
   margin-bottom:5px;
 }
+<<<<<<< Updated upstream
 .multiselect-dropdown-list{
   padding:2px;
   height: 20rem;
   overflow-y:auto;
   overflow-x: hidden;
+=======
+//.multiselect-dropdown-list{
+//  padding:2px;
+//  height: 20rem;
+//  overflow-y:auto;
+//  overflow-x: hidden;
+//}
+.multiselect-dropdown-list {
+    padding: 2px;
+    height: 20rem !important;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: #08375e;
+>>>>>>> Stashed changes
 }
 .multiselect-dropdown-list::-webkit-scrollbar {
   width: 6px;

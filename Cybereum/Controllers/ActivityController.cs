@@ -49,7 +49,7 @@ namespace Cybereum.Controllers
             ViewBag.Message = "Edit Activity";
             //ProjectActivity activity = new ProjectActivity();
 
-            var activity = getactivitybyid(Id);
+            var activity = getactivitybyid(Id);            
             return RedirectToAction("Create", activity.Result);
         }
 
@@ -397,6 +397,7 @@ namespace Cybereum.Controllers
                 int duration = Convert.ToInt16(tbl_activity.durations);
                 tbl_activity.enddate = IGUtilities.CalculateDays(tbl_activity.startdate, duration);
 
+<<<<<<< Updated upstream
 
                 //**********Checking for task start and end date*************
                 var enddate = Getstartactivitydate(tbl_activity.projectid, tbl_activity.startdate);
@@ -410,6 +411,23 @@ namespace Cybereum.Controllers
                     tbl_activity.durations = newtask.durations;
                 }
                 //**********End*********
+=======
+                if (tbl_activity.activityname != ConfigurationManager.AppSettings["StartActivity"].ToString())
+                {
+                    //**********Checking for task start and end date*************
+                    var enddate = Getstartactivitydate(tbl_activity.projectid, tbl_activity.startdate);
+                    string pList = JsonConvert.SerializeObject(enddate.Data);
+                    ProjectTask newtask = new ProjectTask();
+                    newtask = JsonConvert.DeserializeObject<ProjectTask>(pList);
+                    if (newtask.startdate != Convert.ToDateTime("01/01/0001"))
+                    {
+                        tbl_activity.startdate = newtask.startdate;
+                        tbl_activity.enddate = newtask.enddate;
+                        tbl_activity.durations = newtask.durations;
+                    }
+                    //**********End*********
+                }
+>>>>>>> Stashed changes
 
 
                 string a = "";
@@ -465,6 +483,7 @@ namespace Cybereum.Controllers
                             $".property('enddate', '{tbl_activity.enddate.ToString("yyyy-MM-dd")}')" +
                             $".property('projectid', '{tbl_activity.projectid}')" +
                             $".property('durations', '{duration}')" +
+                            $".property('progress', '{tbl_activity.progress}')" +
                             $".property('ismilestone', '{tbl_activity.ismilestone}')" +
                             $".property('linktype','0')" +
                             $".property('createdby', '{Convert.ToInt32(tbl_activity.createdby)}')" +
@@ -476,36 +495,44 @@ namespace Cybereum.Controllers
                     var result = IGUtilities.ExecuteGremlinScript(gremlinScript);
                     message = "Added Successfully";
 
-                    gremlinScript = "g.V().has('activity','activityname','" + tbl_activity.activityname + "').project('id').by(values('id'))";
+                    //gremlinScript = "g.V().has('activity','activityname','" + tbl_activity.activityname + "').has('activity','projectid','"+ tbl_activity.projectid +"').project('id').by(values('id'))";
+                    //result = IGUtilities.ExecuteGremlinScript(gremlinScript);
+                    //foreach (var result2 in result)
+                    //{
+                    //    tbl_activity.id = Convert.ToString(result2["id"]);
+                    //}
+                    tbl_activity.id = IGUtilities.getlastactivityid(tbl_activity.activityname, tbl_activity.projectid);
 
+<<<<<<< Updated upstream
                     result = IGUtilities.ExecuteGremlinScript(gremlinScript);
                     foreach (var result2 in result)
                     {
                         tbl_activity.id = Convert.ToString(result2["id"]);
                     }
 
+=======
+>>>>>>> Stashed changes
                     ////Remove connection the project to activity
                     //gremlinScript = $"\ng.V().has('activity', 'id', '{tbl_activity.id}').bothE().drop()";
                     //result = IGUtilities.ExecuteGremlinScript(gremlinScript);
                     //message = "Gremlin script executed successfully";
 
                     //connect the project to activity
-                    gremlinScript = $"\ng.V('{tbl_activity.projectid}').addE('contains').to(g.V('{tbl_activity.id}'))";
+                    gremlinScript = $"\ng.V('{tbl_activity.id}').addE('contains').to(g.V('{tbl_activity.projectid}'))";
                     result = IGUtilities.ExecuteGremlinScript(gremlinScript);
 
                     //Connect the predeccesors to succesors                    
-                    if (tbl_activity.Predecessors != null)
-                    {
-                        for (int i = 0; i < tbl_activity.Predecessors.Length; i++)
-                        {
-                            if (tbl_activity.Predecessors[i] != "" && tbl_activity.Predecessors[i] != "System.String[]")
-                            {
-                                gremlinScript = $"\ng.V('{tbl_activity.id}').addE('precedes').property('duration', '{tbl_activity.durations}').to(g.V('{tbl_activity.Predecessors[i]}'))";
-                                result = IGUtilities.ExecuteGremlinScript(gremlinScript);
-                            }
-                        }
-                    }
-
+                    //if (tbl_activity.Predecessors != null)
+                    //{
+                    //    for (int i = 0; i < tbl_activity.Predecessors.Length; i++)
+                    //    {
+                    //        if (tbl_activity.Predecessors[i] != "" && tbl_activity.Predecessors[i] != "System.String[]")
+                    //        {
+                    //            gremlinScript = $"\ng.V('{tbl_activity.id}').addE('precedes').property('duration', '{tbl_activity.durations}').to(g.V('{tbl_activity.Predecessors[i]}'))";
+                    //            result = IGUtilities.ExecuteGremlinScript(gremlinScript);
+                    //        }
+                    //    }
+                    //}
                 }
                 else
                 {
@@ -518,9 +545,13 @@ namespace Cybereum.Controllers
                                             $".property('enddate', '{tbl_activity.enddate.ToString("yyyy-MM-dd")}')" +
                                             $".property('projectid', '{tbl_activity.projectid}')" +
                                             $".property('durations', '{duration}')" +
+                                            $".property('progress', '{tbl_activity.progress}')" +
                                             $".property('ismilestone', '{tbl_activity.ismilestone}')" + a +
+<<<<<<< Updated upstream
                                             //$".property('createdby', '{Convert.ToInt32(tbl_activity.createdby)}')" +
                                             //$".property('createdusername', '')" +
+=======
+>>>>>>> Stashed changes
                                             $".property('linktype','{tbl_activity.linktype}')" +
                                             $".property('updatedon', '{DateTime.Now}')" +
                                             $".property('type', 'activity')";
@@ -532,27 +563,27 @@ namespace Cybereum.Controllers
                     //result = IGUtilities.ExecuteGremlinScript(gremlinScript);
 
                     //connect the project to activity
-                    gremlinScript = $"\ng.V('{tbl_activity.projectid}').addE('contains').to(g.V('{tbl_activity.id}'))";
-                    result = IGUtilities.ExecuteGremlinScript(gremlinScript);
+                    //gremlinScript = $"\ng.V('{tbl_activity.id}').addE('contains').to(g.V('{tbl_activity.projectid}'))";
+                    //result = IGUtilities.ExecuteGremlinScript(gremlinScript);
 
                     //Connect the predeccesors to succesors
-                    //foreach (var predecessor in tbl_activity.Predecessors)
+                    
+                    //if (tbl_activity.Predecessors != null)
                     //{
-                    if (tbl_activity.Predecessors != null)
-                    {
-                        for (int i = 0; i < tbl_activity.Predecessors.Length; i++)
-                        {
-                            if (tbl_activity.Predecessors[i] != "" && tbl_activity.Predecessors[i] != "System.String[]")
-                            {
-                                gremlinScript = $"\ng.V('{tbl_activity.id}').addE('precedes').property('duration', '{duration}').to(g.V('{tbl_activity.Predecessors[i]}'))";
-                                result = IGUtilities.ExecuteGremlinScript(gremlinScript);
-                            }
-                        }
-                    }
-                    //}
+                    //    for (int i = 0; i < tbl_activity.Predecessors.Length; i++)
+                    //    {
+                    //        if (tbl_activity.Predecessors[i] != "" && tbl_activity.Predecessors[i] != "System.String[]")
+                    //        {
+                    //            gremlinScript = $"\ng.V('{tbl_activity.id}').addE('precedes').property('duration', '{duration}').to(g.V('{tbl_activity.Predecessors[i]}'))";
+                    //            result = IGUtilities.ExecuteGremlinScript(gremlinScript);
+                    //        }
+                    //    }
+                    //}                    
                     //***************update preceding activity dates*************
                     IGUtilities.updateprecedingactivitydates(tbl_activity.projectid, tbl_activity.id);
                     //****************************End****************************
+                    //***************update Task dates*************
+                    IGUtilities.updateTaskdates(tbl_activity.id);                    
                 }
 
                 ////****************************Update End Activity date****************************

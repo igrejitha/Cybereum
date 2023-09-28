@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 ﻿
 <!DOCTYPE html>
 <html lang="en">
@@ -284,4 +285,1690 @@
 </script>
 </body>
 
+=======
+﻿@*@{
+        Layout = null;
+    }*@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>CYBEREUM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="Themesdesign" name="author" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="~/assets/images/favicon.png">
+
+
+
+    <!-- slick css -->
+    <link href="~/assets/libs/slick-slider/slick/slick.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/libs/slick-slider/slick/slick-theme.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/libs/chartist/chartist.min.css" rel="stylesheet">  <!-- master dashboard -->
+    <!-- jvectormap -->
+    <link href="~/assets/libs/jqvmap/jqvmap.min.css" rel="stylesheet" />
+
+    <!-- Bootstrap Css -->
+    <link href="~/assets/css/bootstrap-dark.min.css" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="~/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="~/assets/css/app-dark.min.css" rel="stylesheet" type="text/css" />
+    <!-- Custom Css-->
+    <link href="~/assets/css/custom.css" rel="stylesheet" type="text/css" />
+    <!-- gant chart-->
+    <link href="https://playground.anychart.com/gallery/src/Gantt_General_Features/Gantt_Custom_Coloring/iframe"
+          rel="canonical">
+    <meta content="AJAX Chart,Chart from JSON,Custom Drawing,Gantt Chart,Gantt Project Chart,Graphics,JSON Chart,JSON Plot,Project Management"
+          name="keywords">
+    <meta content="AnyChart - JavaScript Charts designed to be embedded and integrated" name="description">
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+    <link href="https://cdn.anychart.com/releases/v8/css/anychart-ui.min.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.anychart.com/releases/v8/fonts/css/anychart-font.min.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>  <!---detailedplanning-->
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>  <!---Project-Overview-->
+    <script type="text/javascript" src="https://unpvis-networkkg.com//standalone/umd/vis-network.min.js"></script> <!---Projectdashboard-->
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/vis-network/dist/vis-network.min.css" /> <!---TeamHub-->
+    <!-- index start page -->
+    <style>
+        #mynetwork {
+            width: 100%;
+            height: 400px;
+            border: 1px solid #0f3b61;
+            background-color: #0f3b61;
+        }
+    </style>
+    <!-- index start page -->
+    <!-- Project-Overview start page -->
+    <style>
+        .custom-file-label::after {
+            background-color: #0e2841 !important;
+            border: 1px solid rgba(255, 255, 255, 0.308);
+        }
+
+        a.search-btn:after {
+            width: 200px !important;
+            height: 50.5px !important;
+        }
+
+        a.com-btn:after {
+            width: 221px !important;
+        }
+    </style>
+    <!-- Project-Overview start page -->
+    <!-- TeamHub start page -->
+    <style>
+        a.search-btn:after {
+            width: 183px !important;
+            height: 54.5px !important;
+        }
+    </style>
+    <!-- TeamHub End page -->
+</head>
+
+<body data-sidebar="dark">
+
+    <!-- Begin page -->
+    <div id="layout-wrapper">
+
+        <header id="page-topbar">
+            <div class="navbar-header">
+                <div class="d-flex">
+                    <!-- LOGO -->
+                    <div class="navbar-brand-box">
+                        <a href="index.html" class="logo logo-dark">
+                            <span class="logo-sm">
+                                <img src="~/assets/images/logo-sm-dark.png" alt="" height="22">
+                            </span>
+                            <span class="logo-lg">
+                                <img src="~/assets/images/logo-dark.png" alt="" height="20">
+                            </span>
+                        </a>
+
+                        <a href="index.html" class="logo logo-light">
+                            <span class="logo-sm">
+                                <img class="w-100 object-fit-cover" src="~/assets/images/logo-sm-light.png" alt=""
+                                     height="22">
+                            </span>
+                            <span class="logo-lg">
+                                <img class="w-100 object-fit-cover" src="~/assets/images/logo-light.png" alt=""
+                                     height="20">
+                            </span>
+                        </a>
+                    </div>
+
+                    <button type="button" class="btn btn-sm px-3 font-size-24 header-item waves-effect"
+                            id="vertical-menu-btn">
+                        <i class="mdi mdi-backburger"></i>
+                    </button>
+
+                </div>
+
+                <div class="d-flex">
+
+                    <div class="dropdown d-inline-block d-lg-none ml-2">
+                        <button type="button" class="btn header-item noti-icon waves-effect"
+                                id="page-header-search-dropdown" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                            <i class="mdi mdi-magnify"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right p-0"
+                             aria-labelledby="page-header-search-dropdown">
+                            <form class="p-3">
+                                <div class="form-group m-0">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Search ..."
+                                               aria-label="Recipient's username">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="submit">
+                                                <i class="mdi mdi-magnify"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="dropdown d-inline-block">
+                        <div class="dropdown d-inline-block">
+                            <button type="button" class="btn header-item waves-effect" id="page-header-user-dropdown"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="d-none d-sm-inline-block ml-1">
+                                    @HttpContext.Current.User.Identity.Name
+                                    <br />
+                                    <span class="d-none d-sm-inline-block ml-1">@Session["RoleName"]</span>
+                                </span>
+                                <i class="mdi mdi-chevron-down d-none d-sm-inline-block"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <!-- item-->
+                                @*<a class="dropdown-item" href="#">*@
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    @Html.ActionLink("Change Password", "changepassword", "User", new { userid = Session["LoggedInUserId"] }, new { @class = "dropdown-item" });
+                                }
+                                @*</a>*@
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    @Html.ActionLink("Log out", "Logout", "Account", null, new { @class = "dropdown-item ai-icon" });
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+        </header>
+
+        <!-- ========== Left Sidebar Start ========== -->
+        <div class="vertical-menu">
+
+            <div data-simplebar class="h-100">
+
+                <!--- Sidemenu -->
+                <div id="sidebar-menu">
+                    <!-- Left Menu Start -->
+                    <ul class="metismenu list-unstyled" id="side-menu">
+                        <li class="menu-title">Menu</li>
+                        <li>
+                            @if (Convert.ToInt32(Session["RoleId"]) == 1 || Convert.ToInt32(Session["RoleId"]) == 4 || Convert.ToInt32(Session["RoleId"]) == 5)
+                            {
+                                <a href="@Url.Action("Index", "Home")" class="" aria-expanded="false">
+                                    <i class="mdi mdi-chart-gantt"></i>
+                                    <span class="nav-text">Dashboard</span>
+                                </a>
+                            }
+                            else if (Convert.ToInt32(Session["RoleId"]) == 3)
+                            {
+                                <a href="@Url.Action("Dashboard", "Home")" class="" aria-expanded="false">
+                                    <i class="mdi mdi-chart-gantt"></i>
+                                    <span class="nav-text">Dashboard</span>
+                                </a>
+                            }
+                        </li>
+                        @if (Convert.ToInt32(Session["RoleId"]) == 1 || Convert.ToInt32(Session["RoleId"]) == 4 || Convert.ToInt32(Session["RoleId"]) == 5)
+                        {
+                            <li>
+                                <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                                    <i class="mdi dripicons-meter"></i>
+                                    <span class="nav-text">User Management</span>
+                                </a>
+                                <ul aria-expanded="false">
+                                    @if (Convert.ToInt32(Session["RoleId"]) == 1)
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("ApprovedUsers", "User")">Approved Users</a>
+                                        </li>
+                                        <li>
+                                            <a class="" href="@Url.Action("PendingUsers", "User")">Pending Users</a>
+                                        </li>
+                                    }
+                                    @if (Convert.ToInt32(Session["RoleId"]) == 4 || Convert.ToInt32(Session["RoleId"]) == 5)
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("Index", "User")">Users List</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+                        @if (Convert.ToInt32(Session["RoleId"]) != 1)
+                        {
+                            <li>
+                                <a href="@Url.Action("projectportfoliodashboard", "projectportfoliodashboard")" class="waves-effect">
+                                    <i class="mdi mdi-certificate"></i>
+                                    <span>Project portfolio</span>
+                                </a>
+                            </li>
+                        }
+                        @if (Convert.ToInt32(Session["RoleId"]) == 2)
+                        {
+                            <li>
+                                <a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                                    <i class="mdi mdi-chart-arc"></i>
+                                    <span class="nav-text">Task Management</span>
+                                </a>
+                                <ul aria-expanded="false">
+                                    <li><a href="@Url.Action("List", "Task")">Task</a></li>
+                                    <li><a href="@Url.Action("List", "SubTask")">Sub-Task</a></li>
+                                </ul>
+                            </li>
+                        }
+                        @*<li>
+                                <a href="@Url.Action("TeamHub","projectportfoliodashboard")" class="waves-effect">
+                                    <i class="mdi mdi-chart-timeline"></i>
+                                    <span>Team Hub</span>
+                                </a>
+
+                            </li>*@
+
+
+                    </ul>
+
+                </div>
+                <!-- Sidebar -->
+            </div>
+        </div>
+
+
+    </div>
+    <!-- Sidebar -->
+    <!-- Left Sidebar End -->
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <!-- end main content-->
+    <!-- END layout-wrapper -->
+    <div>
+        @RenderBody()
+    </div>
+
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    @DateTime.Now.Year © Cybereum.
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+    <!-- Right Sidebar -->
+    <div class="right-bar">
+        <div data-simplebar class="h-100">
+
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs nav-tabs-custom rightbar-nav-tab nav-justified" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link py-3 active" data-toggle="tab" href="#chat-tab" role="tab">
+                        <i class="mdi mdi-message-text font-size-22"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link py-3" data-toggle="tab" href="#tasks-tab" role="tab">
+                        <i class="mdi mdi-format-list-checkbox font-size-22"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link py-3" data-toggle="tab" href="#settings-tab" role="tab">
+                        <span class="d-block d-sm-none"><i class="far fa-envelope"></i></span>
+                        <i class="mdi mdi-settings font-size-22"></i>
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content text-muted">
+                <div class="tab-pane active" id="chat-tab" role="tabpanel">
+
+                    <form class="search-bar py-4 px-3">
+                        <div class="position-relative">
+                            <input type="text" class="form-control" placeholder="Search...">
+                            <span class="mdi mdi-magnify"></span>
+                        </div>
+                    </form>
+
+                    <h6 class="font-weight-medium px-4 mt-2 text-uppercase">Group Chats</h6>
+
+                    <div class="p-2">
+                        <a href="javascript: void(0);" class="text-reset notification-item pl-3 mb-2 d-block">
+                            <i class="mdi mdi-checkbox-blank-circle-outline mr-1 text-success"></i>
+                            <span class="mb-0 mt-1">App Development</span>
+                        </a>
+
+                        <a href="javascript: void(0);" class="text-reset notification-item pl-3 mb-2 d-block">
+                            <i class="mdi mdi-checkbox-blank-circle-outline mr-1 text-warning"></i>
+                            <span class="mb-0 mt-1">Office Work</span>
+                        </a>
+
+                        <a href="javascript: void(0);" class="text-reset notification-item pl-3 mb-2 d-block">
+                            <i class="mdi mdi-checkbox-blank-circle-outline mr-1 text-danger"></i>
+                            <span class="mb-0 mt-1">Personal Group</span>
+                        </a>
+
+                        <a href="javascript: void(0);" class="text-reset notification-item pl-3 d-block">
+                            <i class="mdi mdi-checkbox-blank-circle-outline mr-1"></i>
+                            <span class="mb-0 mt-1">Freelance</span>
+                        </a>
+                    </div>
+
+                    <h6 class="font-weight-medium px-4 mt-4 text-uppercase">Favourites</h6>
+
+                    <div class="p-2">
+                        <a href="javascript: void(0);" class="text-reset notification-item">
+                            <div class="media">
+                                <div class="position-relative mr-3">
+                                    <img src="~/assets/images/users/avatar-10.jpg" class="rounded-circle avatar-xs"
+                                         alt="user-pic">
+                                    <i class="mdi mdi-circle user-status online"></i>
+                                </div>
+                                <div class="media-body overflow-hidden">
+                                    <h6 class="mt-0 mb-1">Andrew Mackie</h6>
+                                    <div class="font-size-12 text-muted">
+                                        <p class="mb-0 text-truncate">It will seem like simplified English.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="javascript: void(0);" class="text-reset notification-item">
+                            <div class="media">
+                                <div class="position-relative mr-3">
+                                    <img src="~/assets/images/users/avatar-1.jpg" class="rounded-circle avatar-xs"
+                                         alt="user-pic">
+                                    <i class="mdi mdi-circle user-status away"></i>
+                                </div>
+                                <div class="media-body overflow-hidden">
+                                    <h6 class="mt-0 mb-1">Rory Dalyell</h6>
+                                    <div class="font-size-12 text-muted">
+                                        <p class="mb-0 text-truncate">
+                                            To an English person, it will seem like simplified
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="javascript: void(0);" class="text-reset notification-item">
+                            <div class="media">
+                                <div class="position-relative mr-3">
+                                    <img src="~/assets/images/users/avatar-9.jpg" class="rounded-circle avatar-xs"
+                                         alt="user-pic">
+                                    <i class="mdi mdi-circle user-status busy"></i>
+                                </div>
+                                <div class="media-body overflow-hidden">
+                                    <h6 class="mt-0 mb-1">Jaxon Dunhill</h6>
+                                    <div class="font-size-12 text-muted">
+                                        <p class="mb-0 text-truncate">To achieve this, it would be necessary.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <h6 class="font-weight-medium px-4 mt-4 text-uppercase">Other Chats</h6>
+
+                    <div class="p-2 pb-4">
+                        <a href="javascript: void(0);" class="text-reset notification-item">
+                            <div class="media">
+                                <div class="position-relative mr-3">
+                                    <img src="~/assets/images/users/avatar-2.jpg" class="rounded-circle avatar-xs"
+                                         alt="user-pic">
+                                    <i class="mdi mdi-circle user-status online"></i>
+                                </div>
+                                <div class="media-body overflow-hidden">
+                                    <h6 class="mt-0 mb-1">Jackson Therry</h6>
+                                    <div class="font-size-12 text-muted">
+                                        <p class="mb-0 text-truncate">Everyone realizes why a new common language.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="javascript: void(0);" class="text-reset notification-item">
+                            <div class="media">
+                                <div class="position-relative mr-3">
+                                    <img src="~/assets/images/users/avatar-4.jpg" class="rounded-circle avatar-xs"
+                                         alt="user-pic">
+                                    <i class="mdi mdi-circle user-status away"></i>
+                                </div>
+                                <div class="media-body overflow-hidden">
+                                    <h6 class="mt-0 mb-1">Charles Deakin</h6>
+                                    <div class="font-size-12 text-muted">
+                                        <p class="mb-0 text-truncate">The languages only differ in their grammar.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="javascript: void(0);" class="text-reset notification-item">
+                            <div class="media">
+                                <div class="position-relative mr-3">
+                                    <img src="~/assets/images/users/avatar-5.jpg" class="rounded-circle avatar-xs"
+                                         alt="user-pic">
+                                    <i class="mdi mdi-circle user-status online"></i>
+                                </div>
+                                <div class="media-body overflow-hidden">
+                                    <h6 class="mt-0 mb-1">Ryan Salting</h6>
+                                    <div class="font-size-12 text-muted">
+                                        <p class="mb-0 text-truncate">
+                                            If several languages coalesce the grammar of the
+                                            resulting.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="javascript: void(0);" class="text-reset notification-item">
+                            <div class="media">
+                                <div class="position-relative mr-3">
+                                    <img src="~/assets/images/users/avatar-6.jpg" class="rounded-circle avatar-xs"
+                                         alt="user-pic">
+                                    <i class="mdi mdi-circle user-status online"></i>
+                                </div>
+                                <div class="media-body overflow-hidden">
+                                    <h6 class="mt-0 mb-1">Sean Howse</h6>
+                                    <div class="font-size-12 text-muted">
+                                        <p class="mb-0 text-truncate">It will seem like simplified English.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="javascript: void(0);" class="text-reset notification-item">
+                            <div class="media">
+                                <div class="position-relative mr-3">
+                                    <img src="~/assets/images/users/avatar-7.jpg" class="rounded-circle avatar-xs"
+                                         alt="user-pic">
+                                    <i class="mdi mdi-circle user-status busy"></i>
+                                </div>
+                                <div class="media-body overflow-hidden">
+                                    <h6 class="mt-0 mb-1">Dean Coward</h6>
+                                    <div class="font-size-12 text-muted">
+                                        <p class="mb-0 text-truncate">The new common language will be more simple.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="javascript: void(0);" class="text-reset notification-item">
+                            <div class="media">
+                                <div class="position-relative mr-3">
+                                    <img src="~/assets/images/users/avatar-8.jpg" class="rounded-circle avatar-xs"
+                                         alt="user-pic">
+                                    <i class="mdi mdi-circle user-status away"></i>
+                                </div>
+                                <div class="media-body overflow-hidden">
+                                    <h6 class="mt-0 mb-1">Hayley East</h6>
+                                    <div class="font-size-12 text-muted">
+                                        <p class="mb-0 text-truncate">One could refuse to pay expensive translators.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+
+                <div class="tab-pane" id="tasks-tab" role="tabpanel">
+                    <h6 class="font-weight-medium px-3 mb-0 mt-4">Working Tasks</h6>
+
+                    <div class="p-2">
+                        <a href="javascript: void(0);" class="text-reset item-hovered d-block p-3">
+                            <p class="text-muted mb-0">App Development<span class="float-right">75%</span></p>
+                            <div class="progress mt-2" style="height: 4px;">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 75%"
+                                     aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </a>
+
+                        <a href="javascript: void(0);" class="text-reset item-hovered d-block p-3">
+                            <p class="text-muted mb-0">Database Repair<span class="float-right">37%</span></p>
+                            <div class="progress mt-2" style="height: 4px;">
+                                <div class="progress-bar bg-info" role="progressbar" style="width: 37%"
+                                     aria-valuenow="37" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </a>
+
+                        <a href="javascript: void(0);" class="text-reset item-hovered d-block p-3">
+                            <p class="text-muted mb-0">Backup Create<span class="float-right">52%</span></p>
+                            <div class="progress mt-2" style="height: 4px;">
+                                <div class="progress-bar bg-warning" role="progressbar" style="width: 52%"
+                                     aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <h6 class="font-weight-medium px-3 mb-0 mt-4">Upcoming Tasks</h6>
+
+                    <div class="p-2">
+                        <a href="javascript: void(0);" class="text-reset item-hovered d-block p-3">
+                            <p class="text-muted mb-0">Sales Reporting<span class="float-right">12%</span></p>
+                            <div class="progress mt-2" style="height: 4px;">
+                                <div class="progress-bar bg-danger" role="progressbar" style="width: 12%"
+                                     aria-valuenow="12" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </a>
+
+                        <a href="javascript: void(0);" class="text-reset item-hovered d-block p-3">
+                            <p class="text-muted mb-0">Redesign Website<span class="float-right">67%</span></p>
+                            <div class="progress mt-2" style="height: 4px;">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: 67%"
+                                     aria-valuenow="67" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </a>
+
+                        <a href="javascript: void(0);" class="text-reset item-hovered d-block p-3">
+                            <p class="text-muted mb-0">New Admin Design<span class="float-right">84%</span></p>
+                            <div class="progress mt-2" style="height: 4px;">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 84%"
+                                     aria-valuenow="84" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="p-3 mt-2">
+                        <a href="javascript: void(0);" class="btn btn-success btn-block waves-effect waves-light">
+                            Create
+                            Task
+                        </a>
+                    </div>
+
+                </div>
+                <div class="tab-pane" id="settings-tab" role="tabpanel">
+                    <h6 class="font-weight-medium px-4 py-3 text-uppercase bg-light">General Settings</h6>
+
+                    <div class="p-4">
+                        <h6 class="font-weight-medium">Online Status</h6>
+                        <div class="custom-control custom-switch mb-1">
+                            <input type="checkbox" class="custom-control-input" id="settings-check1"
+                                   name="settings-check1" checked="">
+                            <label class="custom-control-label font-weight-normal" for="settings-check1">
+                                Show your
+                                status to all
+                            </label>
+                        </div>
+
+                        <h6 class="font-weight-medium mt-4">Auto Updates</h6>
+                        <div class="custom-control custom-switch mb-1">
+                            <input type="checkbox" class="custom-control-input" id="settings-check2"
+                                   name="settings-check2" checked="">
+                            <label class="custom-control-label font-weight-normal" for="settings-check2">
+                                Keep up to
+                                date
+                            </label>
+                        </div>
+
+                        <h6 class="font-weight-medium mt-4">Backup Setup</h6>
+                        <div class="custom-control custom-switch mb-1">
+                            <input type="checkbox" class="custom-control-input" id="settings-check3"
+                                   name="settings-check3">
+                            <label class="custom-control-label font-weight-normal" for="settings-check3">
+                                Auto
+                                backup
+                            </label>
+                        </div>
+
+                    </div>
+
+                    <h6 class="font-weight-medium px-4 py-3 mt-2 text-uppercase bg-light">Advanced Settings</h6>
+
+                    <div class="p-4">
+                        <h6 class="font-weight-medium">Application Alerts</h6>
+                        <div class="custom-control custom-switch mb-1">
+                            <input type="checkbox" class="custom-control-input" id="settings-check4"
+                                   name="settings-check4" checked="">
+                            <label class="custom-control-label font-weight-normal" for="settings-check4">
+                                Email
+                                Notifications
+                            </label>
+                        </div>
+
+                        <div class="custom-control custom-switch mb-1">
+                            <input type="checkbox" class="custom-control-input" id="settings-check5"
+                                   name="settings-check5">
+                            <label class="custom-control-label font-weight-normal" for="settings-check5">
+                                SMS
+                                Notifications
+                            </label>
+                        </div>
+
+                        <h6 class="font-weight-medium mt-4">API</h6>
+                        <div class="custom-control custom-switch mb-1">
+                            <input type="checkbox" class="custom-control-input" id="settings-check6"
+                                   name="settings-check6">
+                            <label class="custom-control-label font-weight-normal" for="settings-check6">
+                                Enable
+                                access
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div> <!-- end slimscroll-menu-->
+    </div>
+    <!-- /Right-bar -->
+    <!-- Right bar overlay-->
+    <div class="rightbar-overlay"></div>
+
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-base.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-ui.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-exports.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-gantt.min.js"></script>
+    <script src="https://cdn.anychart.com/releases/v8/js/anychart-data-adapter.min.js"></script>
+    <script type="text/javascript">
+        anychart.onDocumentReady(function () {
+            anychart.data.loadJsonFile(
+                // The data used in this sample can be obtained from the CDN
+                'https://cdn.anychart.com/samples-data/gantt-general-features/gantt-custom-coloring/data.json',
+                function (data) {
+                    // create data tree on raw data
+                    var treeData = anychart.data.tree(data, 'as-table');
+
+                    // create ganttProject chart
+                    var chart = anychart.ganttProject();
+
+                    // set chart data
+                    chart.data(treeData);
+
+                    // set chart row's height
+                    chart.defaultRowHeight(30);
+
+                    // set start splitter position settings
+                    chart.splitterPosition(324);
+
+                    // get chart data grid
+                    var dataGrid = chart.dataGrid();
+
+                    // set data grid's first column settings
+                    dataGrid.column(0).width(30).labels({
+                        hAlign: 'center'
+                    });
+
+                    // set data grid's seconds column settings
+                    dataGrid
+                        .column(1)
+                        .collapseExpandButtons(false) // disable collapse/expand buttons
+                        .width(180);
+
+                    // create data grid's third column and set it's settings
+                    dataGrid.column(2).width(80).title('Progress');
+
+                    // create column with collapse/expand buttons
+                    dataGrid
+                        .column(3)
+                        .title(null)
+                        .width(30)
+                        .collapseExpandButtons(true);
+
+                    // set column labels overrider
+                    dataGrid.column(0).labelsOverrider(labelsTextSettings);
+                    dataGrid.column(1).labelsOverrider(labelsTextSettings);
+                    dataGrid.column(2).labelsOverrider(labelsTextSettings);
+
+
+                    // set labels formatter for the third column
+                    dataGrid
+                        .column(2)
+                        .labels()
+                        .format(function () {
+                            if (this.item.numChildren()) {
+                                // formatter for groupping tasks data grid labels
+                                if (this.progress !== 0) {
+                                    return this.progress < 1 ? 'In progress' : 'Done';
+                                }
+                            }
+                            if (this.item.get('actualEnd')) {
+                                // format labels in group
+                                return Math.round(this.progress * 100) + '%';
+                            }
+                            if (this.item.getParent()) {
+                                // formatter for milestones
+                                return parseInt(
+                                    this.item.getParent().get('progressValue')
+                                ) === 100
+                                    ? 'Ok'
+                                    : '';
+                            }
+                        });
+
+                    // get data grid buttons
+                    var button = dataGrid.buttons();
+
+                    // set buttons width and height
+                    button.width(20).height(15);
+
+                    // disable button's background for every state
+                    button.background(false);
+                    button.hovered().background(false);
+                    button.selected().background(false);
+
+                    // set data grid button's content using function
+                    var buttonContent = function (path) {
+                        // get center of button's path
+                        var centerX = this.width / 2;
+                        var centerY = this.height / 2;
+
+                        // draw arrow in path
+                        if (this.state === 'selected') {
+                            path
+                                .clear()
+                                .moveTo(3, 4)
+                                .lineTo(centerX, this.height - 2)
+                                .lineTo(this.width - 3, 4)
+                                .stroke('#00a8e0', 3, 'solid', 'miter', 'round');
+                        } else {
+                            path
+                                .clear()
+                                .moveTo(6, 2)
+                                .lineTo(this.width - 4, centerY + 1)
+                                .lineTo(6, this.height)
+                                .stroke('#748a8d', 3, 'solid', 'miter', 'round');
+                        }
+                    };
+
+                    // set function as content of button
+                    button.content(buttonContent);
+                    button.selected().content(buttonContent);
+
+                    // get timeline
+                    var timeline = chart.getTimeline();
+
+                    // get timeline's scale
+                    var scale = timeline.scale();
+
+                    // hide groupping tasks progress bars
+                    timeline.groupingTasks().progress().fill(null).stroke(null);
+
+                    timeline
+                        .groupingTasks()
+                        .progress()
+                        .selected()
+                        .fill(null)
+                        .stroke(null);
+
+                    // set shapes for groupping tasks rendering
+                    timeline
+                        .groupingTasks()
+                        .rendering()
+                        .shapes([
+                            {
+                                name: 'task',
+                                shapeType: 'path',
+                                disablePointerEvents: false
+                            }
+                        ]);
+
+                    // set custom drawer for groupping tasks
+                    timeline.groupingTasks().rendering().drawer(groupingTaskDrawer);
+
+                    // set groupping tasks bar's position
+                    timeline.groupingTasks().anchor('center').position('center');
+
+                    // set groupping tasks labels settings
+                    timeline
+                        .groupingTasks()
+                        .labels()
+                        .format(function () {
+                            return this.name;
+                        })
+                        .fontWeight('bold')
+                        .fontColor('#fff')
+                        .anchor('center')
+                        .position('center');
+
+                    // set timeline tasks fill and stroke settings
+                    timeline.tasks().selected().fill('#1876d1');
+                    // timeline.tasks().selected().fill.hovered('#1876d1');
+                    timeline.tasks().selected().stroke('#1876d1');
+
+                    // set timeline tasks progress fill and stroke settings
+                    timeline.tasks().progress().selected().fill('#203951');
+                    timeline.tasks().progress().selected().stroke('#203951');
+
+                    // set container id for the chart
+                    chart.container('container');
+                    // chart.path.fill('#203951')
+                    // initiate chart drawing
+                    chart.draw();
+                    chart.background().fill({
+                        keys: ["#08375e", "#08375e", "#08375e"],
+                        angle: 130,
+                    });
+                    dataGrid.headerFill("#08375e 0.2");
+                    dataGrid.rowHoverFill("#1876d1 0.3");
+                    // Set scale maximum and minimum.
+                    scale.minimumGap(0.08);
+                    scale.maximumGap(0.25);
+
+                    // zoom chart all dates range
+                    chart.fitAll();
+
+                    // set "collapsed" data value after row collapse/expand
+                    chart.listen('rowCollapseExpand', function (e) {
+                        e.item.set('collapsed', e.collapsed);
+                    });
+
+                    // custom drawer function for the groupping tasks
+                    function groupingTaskDrawer() {
+                        var path;
+                        var itemBounds;
+
+                        // get path from shapes
+                        path = this.shapes.task;
+
+                        // get recommended bounds for drawing
+                        var bounds = this.predictedBounds;
+
+                        // get shift value
+                        var shift = halfShift(path.strokeThickness());
+
+                        // set bar's bounds
+                        itemBounds = anychart.math.rect(
+                            Math.round(bounds.left) - shift,
+                            Math.round(bounds.top) - 5 - shift,
+                            Math.round(bounds.width) - shift,
+                            21 - shift
+                        );
+
+                        // get progress value from data
+                        var progress = parseInt(this.item.get('progressValue')) / 100;
+                        // set path's fill and stroke settings
+                        path.fill(function () {
+                            if (progress !== 0) {
+                                return progress < 1 ? '#f4a700' : '#27a858';
+                            }
+                            return '#e51a23';
+                        });
+                        path.stroke('null');
+
+                        // draw rounded rectangle on the path
+                        anychart.graphics.vector.primitives.roundedRect(
+                            path,
+                            itemBounds,
+                            0
+                        );
+                    }
+
+                    function halfShift(strokeThickness) {
+                        return strokeThickness % 2 ? 0.5 : 0;
+                    }
+
+                    // labels overrider function
+                    function labelsTextSettings(label, item) {
+                        //  filter data items with "collapsed" = true
+                        var collapsedItems = chart.data().filter(function (item) {
+                            return item.get('collapsed');
+                        });
+                        if (item.numChildren()) {
+                            // override only groupping tasks labels
+                            // set label's weight
+                            label.fontWeight('bold');
+
+                            // set label's color
+                            label.fontColor(
+                                collapsedItems.indexOf(item) > -1 ? '#748a8d' : '#00a8e0'
+                            );
+                        }
+                    }
+                }
+            );
+        });</script>
+
+    <!-- index start page -->
+    <script>
+
+        // create an array with nodes
+        var nodes = new vis.DataSet([
+          { id: 1, label: "Node 1" },
+          { id: 2, label: "Node 2" },
+          { id: 3, label: "Node 3" },
+          { id: 4, label: "Node 4" },
+          { id: 5, label: "Node 5" },
+        ]);
+
+        // create an array with edges
+        var edges = new vis.DataSet([
+          { from: 1, to: 3 },
+          { from: 1, to: 2 },
+          { from: 2, to: 4 },
+          { from: 2, to: 5 },
+          { from: 3, to: 3 },
+        ]);
+
+        // create a network
+        var container = document.getElementById("mynetwork");
+        var data = {
+            nodes: nodes,
+            edges: edges,
+        };
+        var options = {};
+        var network = new vis.Network(container, data, options);
+
+    </script>
+    <!-- index End page -->
+    <!-- project-Overview start page -->
+    <script>
+        // create an array with nodes
+        var nodes = [
+          { id: 1, value: 2, label: "obstacle6", x: 0, y: 0, physics: false },
+          { id: 2, label: "Drag me", x: 150, y: 130, physics: false },
+          { id: 3, label: "Obstacle", x: -80, y: 80, physics: false, mass: 10 },
+           { id: 4, label: "Obstacle2", x: 20, y: -70, physics: false, mass: 10 },
+           { id: 5, label: "Obstacle4", x: -60, y: -80, physics: false, mass: 10 },
+        ];
+
+        // create an array with edges
+        var edges = [{ from: 1, to: 2, arrows: "to" }, { from: 1, to: 3, arrows: "to" }, { from: 2, to: 3, arrows: "to" }, { from: 4, to: 1, arrows: "to" }, { from: 5, to: 1, arrows: "to" }];
+
+        // create a network
+        var container = document.getElementById("mynetwork");
+        var data = {
+            nodes: nodes,
+            edges: edges,
+        };
+        var options = {
+            physics: false,
+
+
+        };
+        var network = new vis.Network(container, data, options);
+
+    </script>
+    <script>
+        // create an array with nodes
+        var nodes = [
+          { id: 1, value: 2, label: "obstacle6", x: 0, y: 0, physics: false },
+          { id: 2, label: "Drag me", x: 150, y: 130, physics: false },
+          { id: 3, label: "Obstacle", x: -80, y: 80, physics: false, mass: 10 },
+           { id: 4, label: "Obstacle2", x: 20, y: -70, physics: false, mass: 10 },
+           { id: 5, label: "Obstacle4", x: -60, y: -80, physics: false, mass: 10 },
+        ];
+
+        // create an array with edges
+        var edges = [{ from: 1, to: 2, arrows: "to" }, { from: 1, to: 3, arrows: "to" }, { from: 2, to: 3, arrows: "to" }, { from: 4, to: 1, arrows: "to" }, { from: 5, to: 1, arrows: "to" }];
+
+        // create a network
+        var container = document.getElementById("mynetwork2");
+        var data = {
+            nodes: nodes,
+            edges: edges,
+        };
+        var options = {
+            physics: false,
+
+
+        };
+        var network = new vis.Network(container, data, options);
+
+    </script>
+    <script>
+        // create an array with nodes
+        var nodes = new vis.DataSet([
+        { id: 1, label: "Node 1" },
+        { id: 2, label: "Node 2" },
+        { id: 3, label: "Node 3" },
+        { id: 4, label: "Node 4" },
+        { id: 5, label: "Node 5" },
+        ]);
+
+        // create an array with edges
+        var edges = new vis.DataSet([
+        { from: 1, to: 3 },
+        { from: 1, to: 2 },
+        { from: 2, to: 4 },
+        { from: 2, to: 5 },
+        { from: 3, to: 3 },
+        ]);
+
+        // create a network
+        var container = document.getElementById("mynetwork5");
+        var data = {
+            nodes: nodes,
+            edges: edges,
+        };
+        var options = {};
+        var network = new vis.Network(container, data, options);
+
+    </script>
+    <!-- project-Overview end page -->
+
+    <script type="text/javascript" src="https://unpkg.com/vis-network/dist/vis-network.min.js"></script> <!--Team hub page---->
+    <!-- JAVASCRIPT -->
+    <script src="~/assets/libs/jquery/jquery.min.js"></script>
+    <script src="~/assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/libs/metismenu/metisMenu.min.js"></script>
+    <script src="~/assets/libs/simplebar/simplebar.min.js"></script>
+    <script src="~/assets/libs/node-waves/waves.min.js"></script>
+
+    <!-- apexcharts -->
+    <script src="~/assets/libs/apexcharts/apexcharts.min.js"></script>
+
+    <script src="~/assets/libs/slick-slider/slick/slick.min.js"></script>
+
+    <!-- Chart JS -->
+    <script src="~/assets/libs/chart.js/Chart.bundle.min.js"></script>
+    <script src="~/assets/js/pages/chartjs.init.js"></script>
+
+    <!-- Jq vector map -->
+    <script src="~/assets/libs/jqvmap/jquery.vmap.min.js"></script>
+    <script src="~/assets/libs/jqvmap/maps/jquery.vmap.usa.js"></script>
+
+    <script src="~/assets/js/pages/dashboard.init.js"></script>
+
+    <!-- Plugin Js-->
+    <script src="~/assets/libs/morris.js/morris.min.js"></script>
+    <script src="~/assets/libs/raphael/raphael.min.js"></script>
+
+    <!-- demo js-->
+    <script src="~/assets/js/pages/morris.init.js"></script>
+
+    <!-- Plugin Js-->
+    <script src="~/assets/libs/apexcharts/apexcharts.min.js"></script>
+    <script src="~/assets/libs/chartist/chartist.min.js"></script> <!--Master-project page---->
+    <script src="~/assets/libs/chartist-plugin-tooltips-updated/chartist-plugin-tooltip.min.js"></script> <!--Master-project page---->
+    <!-- demo js-->
+    <script src="~/assets/js/pages/apex.init.js"></script>
+    <script src="~/assets/js/pages/chartist.init.js"></script> <!--Master-project page---->
+    <!-- flot plugins -->
+    <script src="~/assets/libs/flot-charts/jquery.flot.js"></script> <!--project-Overview page---->
+    <script src="~/assets/libs/flot-charts/jquery.flot.time.js"></script> <!--project-Overview page---->
+    <script src="~/assets/libs/jquery.flot.tooltip/js/jquery.flot.tooltip.min.js"></script> <!--project-Overview page---->
+    <script src="~/assets/libs/flot-charts/jquery.flot.resize.js"></script> <!--project-Overview page---->
+    <script src="~/assets/libs/flot-charts/jquery.flot.pie.js"></script> <!--project-Overview page---->
+    <script src="~/assets/libs/flot-charts/jquery.flot.selection.js"></script> <!--project-Overview page---->
+    <script src="~/assets/libs/flot-charts/jquery.flot.stack.js"></script> <!--project-Overview page---->
+    <script src="~/assets/libs/flot-spline/js/jquery.flot.spline.min.js"></script> <!--project-Overview page---->
+    <script src="~/assets/libs/flot-charts/jquery.flot.crosshair.js"></script> <!--project-Overview page---->
+    <!-- flot init -->
+    <script src="~/assets/js/pages/flot.init.js"></script> <!--project-Overview page---->
+    <script src="~/assets/js/app.js"></script>
+
+    <!-- Datatable -->
+    <script src="~/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/js/plugins-init/datatables.init.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+    <!--Master dashboard start page---->
+    <script>
+        var ctx = document.getElementById("myChart").getContext('2d');
+
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ["Engineering", "Construction", "Procurement", "Management"],
+                datasets: [{
+                    data: [500, 50, 2424, 14040], // Specify the data values array
+                    borderColor: ['#2196f38c', '#f443368c', '#3f51b570', '#00968896'], // Add custom color border
+                    backgroundColor: ['#2196f38c', '#f443368c', '#3f51b570', '#00968896'], // Add custom color background (Points and Fill)
+                    borderWidth: 1 // Specify bar border width
+                }]
+            },
+            options: {
+                responsive: true, // Instruct chart js to respond nicely.
+                maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height
+            }
+        });
+        myChart.canvas.parentNode.style.height = '330px';
+
+
+        var ctx = document.getElementById("mybarChart").getContext("2d");
+
+        var mybarChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Budget', 'Actual'],
+                datasets: [{
+                    label: 'Budget',
+                    backgroundColor: "#000080",
+                    data: [550, 0, 0]
+                }, {
+                    label: 'Actual Cost',
+                    backgroundColor: "#d3d3d3",
+                    data: [0, 70, 0]
+                }]
+            },
+
+            options: {
+                legend: {
+                    display: true,
+                    position: 'top',
+                    labels: {
+                        fontColor: "#fff",
+                    }
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+        mybarChart.canvas.parentNode.style.height = '330px';
+    </script> <!--Master dashboard---->
+    <!--Master dashboard end page---->
+    <!--project dashboard start page---->
+    <script>
+        var countTask = 0,
+            taskItem = 0,
+            closeIcon = '<svg height="14px" style="margin-top:3px" viewBox="0 0 311 311.07733" width="14px" xmlns="http://www.w3.org/2000/svg"><path d="m16.035156 311.078125c-4.097656 0-8.195312-1.558594-11.308594-4.695313-6.25-6.25-6.25-16.382812 0-22.632812l279.0625-279.0625c6.25-6.25 16.382813-6.25 22.632813 0s6.25 16.382812 0 22.636719l-279.058594 279.058593c-3.136719 3.117188-7.234375 4.695313-11.328125 4.695313zm0 0"/><path d="m295.117188 311.078125c-4.097657 0-8.191407-1.558594-11.308594-4.695313l-279.082032-279.058593c-6.25-6.253907-6.25-16.386719 0-22.636719s16.382813-6.25 22.636719 0l279.058594 279.0625c6.25 6.25 6.25 16.382812 0 22.632812-3.136719 3.117188-7.230469 4.695313-11.304687 4.695313zm0 0"/></svg>',
+            closeSmall = '<svg height="10px" style="margin-top:3px" viewBox="0 0 311 311.07733" width="10px" xmlns="http://www.w3.org/2000/svg"><path d="m16.035156 311.078125c-4.097656 0-8.195312-1.558594-11.308594-4.695313-6.25-6.25-6.25-16.382812 0-22.632812l279.0625-279.0625c6.25-6.25 16.382813-6.25 22.632813 0s6.25 16.382812 0 22.636719l-279.058594 279.058593c-3.136719 3.117188-7.234375 4.695313-11.328125 4.695313zm0 0"/><path d="m295.117188 311.078125c-4.097657 0-8.191407-1.558594-11.308594-4.695313l-279.082032-279.058593c-6.25-6.253907-6.25-16.386719 0-22.636719s16.382813-6.25 22.636719 0l279.058594 279.0625c6.25 6.25 6.25 16.382812 0 22.632812-3.136719 3.117188-7.230469 4.695313-11.304687 4.695313zm0 0"/></svg>';
+
+        var taskList = {
+            "task_01": {
+                "name": "To-Do",
+                "task_items": {
+                    "items_001": {
+                        "name": "Ui/UX Research",
+                        "desc": "\r\nLorem ipsum, dolor sit amet consectetur adipisicing elit. Maxime ratione minima quibusdam eligendi vitae voluptate eum suscipit quasi perspiciatis at expedita, rerum quos est tempore, aliquam deleniti nobis nisi deserunt.",
+                        "priority": "medium"
+                    },
+                    "items_002": {
+                        "name": "BackEnd Developing",
+                        "desc": "\r\nLorem ipsum, dolor sit amet consectetur adipisicing elit. Maxime ratione minima quibusdam eligendi vitae voluptate eum suscipit quasi perspiciatis at expedita, rerum quos est tempore, aliquam deleniti nobis nisi deserunt.",
+                        "priority": "low"
+                    },
+                    "items_003": {
+                        "name": "Api required for login",
+                        "desc": "\r\nLorem ipsum, dolor sit amet consectetur adipisicing elit. Maxime ratione minima quibusdam eligendi vitae voluptate eum suscipit quasi perspiciatis at expedita, rerum quos est tempore, aliquam deleniti nobis nisi deserunt.",
+                        "priority": "high"
+                    }
+                }
+            },
+            "task_02": {
+                "name": "In-Progress",
+                "task_items": {
+
+                }
+            },
+            "task_03": {
+                "name": "Review",
+                "task_items": {
+                    "items_004": {
+                        "name": "Bug fixing in Api ",
+                        "desc": "\r\nLorem ipsum, dolor sit amet consectetur adipisicing elit. Maxime ratione minima quibusdam eligendi vitae voluptate eum suscipit quasi perspiciatis at expedita, rerum quos est tempore, aliquam deleniti nobis nisi deserunt.",
+                        "priority": "high"
+                    }
+                }
+            },
+            "task_04": {
+                "name": "Done",
+                "task_items": {
+                    "items_005": {
+                        "name": "SRR Documentation",
+                        "desc": "\r\nLorem ipsum, dolor sit amet consectetur adipisicing elit. Maxime ratione minima quibusdam eligendi vitae voluptate eum suscipit quasi perspiciatis at expedita, rerum quos est tempore, aliquam deleniti nobis nisi deserunt.",
+                        "priority": "low"
+                    }
+                }
+            }
+        };
+
+        Object.size = function (obj) {
+            var size,
+                key;
+            size = 0
+            for (key in obj) {
+                if (obj.hasOwnProperty(key)) size++;
+            }
+            return size;
+        };
+
+        taskList = getTask("task_board") ? JSON.parse(getTask("task_board")) : taskList;
+        countTask = Object.size(taskList);
+
+        Init(taskList);
+        function Init(taskList) {
+            var i, j;
+            for (i in taskList) {
+                $(".btn-board").before(createTaskboard(taskList[i].name, i));
+                for (j in taskList[i].task_items) {
+                    $("[task-board=" + i + "]").append(createTask(taskList[i].task_items[j], j));
+
+                }
+            }
+            setTask(taskList);
+        }
+
+        function serach(value) {
+            var filter,
+                i, li,
+                txtValue;
+            filter = value.toUpperCase();
+            li = $("li");
+            for (i = 0; i < li.length; i++) {
+                txtValue = $(li[i]).find("h4").text();
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    li[i].style.display = "";
+                } else {
+                    li[i].style.display = "none";
+                }
+            }
+        }
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+            ev.dataTransfer.setData("parent_id", $(ev.target.closest("ul")).attr("task-board"));
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            var data,
+                prev_id,
+                new_id;
+
+            data = ev.dataTransfer.getData("text");
+            prev_id = ev.dataTransfer.getData("parent_id");
+
+            if ($(ev.target).closest("li").length > 0) {
+                $(ev.target).closest("li").before(document.getElementById(data));
+
+            } else {
+                $(ev.target).closest("ul").append(document.getElementById(data));
+            }
+            new_id = $(ev.target).closest("ul").attr('task-board');
+            taskList[new_id]['task_items'][data] = taskList[prev_id]['task_items'][data];
+            delete taskList[prev_id]['task_items'][data];
+            setTask(taskList);
+
+        }
+        function createTaskboard(title, id) {
+            var taskBoard, taskList_content;
+
+            taskList_content = '<div class="header"><h4 class="mb-0 font-size-18" >' + title + '</h4>' +
+                '<div class="d-flex"><button id="' + id + '" class="add-task btn btn-primary">Add Task </button>' +
+                '<button class="task-close btn btn-danger text-white ml-2 ">' +
+                '<svg height="14px" fill="white" style="margin-top:3px" viewBox="0 0 311 311.07733" width="14px" xmlns="http://www.w3.org/2000/svg"><path d="m16.035156 311.078125c-4.097656 0-8.195312-1.558594-11.308594-4.695313-6.25-6.25-6.25-16.382812 0-22.632812l279.0625-279.0625c6.25-6.25 16.382813-6.25 22.632813 0s6.25 16.382812 0 22.636719l-279.058594 279.058593c-3.136719 3.117188-7.234375 4.695313-11.328125 4.695313zm0 0"/><path d="m295.117188 311.078125c-4.097657 0-8.191407-1.558594-11.308594-4.695313l-279.082032-279.058593c-6.25-6.253907-6.25-16.386719 0-22.636719s16.382813-6.25 22.636719 0l279.058594 279.0625c6.25 6.25 6.25 16.382812 0 22.632812-3.136719 3.117188-7.230469 4.695313-11.304687 4.695313zm0 0"/></svg>'
+                + '</button></div></div>' +
+                '<ul task-board="' + id + '" class="list" ondrop="drop(event)" ondragover="allowDrop(event)"></ul> ';
+
+            taskBoard = document.createElement("div");
+            $(taskBoard).html(taskList_content).addClass("task-list");
+            countTask++;
+            return taskBoard;
+        }
+        function createTask(name, priority, desc, id) {
+            var li;
+
+            li = '<li id="' + id + '" draggable="true" ondragstart="drag(event)" class="task-item">' +
+                '<h5>' + name + '</h5>' +
+                '<p>' + desc + '</p><span class="task-item-close">' +
+                '<svg height="10px" style="margin-top:3px" viewBox="0 0 311 311.07733" width="10px" xmlns="http://www.w3.org/2000/svg"><path d="m16.035156 311.078125c-4.097656 0-8.195312-1.558594-11.308594-4.695313-6.25-6.25-6.25-16.382812 0-22.632812l279.0625-279.0625c6.25-6.25 16.382813-6.25 22.632813 0s6.25 16.382812 0 22.636719l-279.058594 279.058593c-3.136719 3.117188-7.234375 4.695313-11.328125 4.695313zm0 0"></path><path d="m295.117188 311.078125c-4.097657 0-8.191407-1.558594-11.308594-4.695313l-279.082032-279.058593c-6.25-6.253907-6.25-16.386719 0-22.636719s16.382813-6.25 22.636719 0l279.058594 279.0625c6.25 6.25 6.25 16.382812 0 22.632812-3.136719 3.117188-7.230469 4.695313-11.304687 4.695313zm0 0"></path></svg></span>' +
+                '<span class="status ' + priority + '">' + priority + '</span></li>';
+            li = $.parseHTML(li);
+            taskItem++;
+            return li;
+        }
+        @*/**
+         *  create Dom by json
+         *
+         * @param   {[type]}  val     [val description]
+         * @param   {[type]}  parent  [parent description]
+         *
+         * @return  {[type]}          [return description]
+         */*@
+        //'    function createViews(val, parent = null) {
+        var i, j, s, node;
+
+        for (i in val) {
+
+            s = val[i];
+            node = document.createElement(s.tagName);
+            node.setAttribute("id", i);
+
+            if (s.children) {
+                createViews(s.children, node);
+            }
+            for (j in s) {
+                if (j.localeCompare("children") != 0) {
+                    if (j === "text") {
+                        node.innerHTML = s[j];
+                    }
+                    else if (j != "tagName") {
+                        node.setAttribute(j, s[j]);
+                    }
+                }
+            }
+            if (parent != null) {
+                if (parent.firstElementChild == null) {
+                    parent.appendChild(node);
+                }
+                else {
+                    parent.insertBefore(node, parent.firstElementChild.nextSibling);
+                }
+            }
+        }
+        //    return node;
+        //}
+
+        function setTask(value) {
+            localStorage.setItem("task_board", JSON.stringify(value));
+        }
+
+        function getTask(val) {
+            var x = localStorage.getItem(val);
+            return x;
+        }
+
+        function JsontoHTML(val, parent) {
+            var i, s, j, node;
+
+            for (i in val) {
+                s = val[i];
+                node = document.createElement(i);
+                for (j in s) {
+                    if (j !== "child") {
+                        node.setAttribute(j, s[j]);
+                    }
+                    else {
+                        createViews(s[j], node);
+                    }
+                }
+            }
+            parent.appendChild(node);
+        }
+
+
+
+
+
+        $(".board")
+            .on("click", ".task-close", function (e) {
+                if (confirm(" Are you sure want to delete Task board")) {
+                    var temp, ids;
+                    temp = $(e.target).closest(".task-list");
+                    ids = $(temp).find("[task-board]").attr("task-board");
+                    delete taskList[ids];
+                    temp.remove();
+                    setTask(taskList);
+                }
+            })
+            .on("click", ".task-item-close", function (e) {
+                if (confirm(" Are you sure want to delete Task")) {
+                    var li,
+                        taskBoard,
+                        itemId;
+
+                    li = $(e.target).closest(".task-item");
+                    taskBoard = $(li.closest("ul")).attr("task-board");
+                    itemId = $(li).attr("id");
+                    delete taskList[taskBoard]["task_items"][itemId];
+                    li.remove();
+                    setTask(taskList);
+                }
+            })
+            .on("click", ".task-item", function (e) {
+                var items_id,
+                    parent_id,
+                    editVal;
+                items_id = $(e.target).closest("li").attr("id");
+                parent_id = $(e.target).closest("ul").attr("task-board");
+
+                editVal = taskList[parent_id]['task_items'][items_id];
+
+                $("#edit-task").attr("data-target", parent_id)
+                    .attr("data-task-id", items_id);
+
+                $("#edit-task [name='title']").val(editVal.name);
+                $("#edit-task [name='desc']").val(editVal.desc);
+                $("#edit-task [name='priority']").val(editVal.priority);
+                $("#edit-task").show();
+            })
+            .on("click", ".add-task", function (e) {
+                $("#new-task").attr("data-target", $(e.target).attr("id"));
+                $("#new-task").show();
+            });
+
+
+        $("#update-task").on("click", function (e) {
+            var val, values;
+            val = $("#editfrm-task").serializeArray();
+            values = {
+                name: val[0].value,
+                desc: val[1].value,
+                priority: val[2].value
+            };
+
+            var task_item = $("#edit-task").attr("data-task-id")
+            target = $("#edit-task").attr("data-target");
+
+            taskList[target]["task_items"][task_item] = values;
+            $("#" + task_item).replaceWith(createTask(values, task_item));
+            setTask(taskList);
+            $("#edit-task").hide();
+        });
+
+
+        $(".popup .close").on("click", function (e) {
+            $(".popup").hide();
+        })
+
+        $(".add-task-board").on("click", function (e) {
+            $("#new-task-board").show();
+
+        });
+
+        $("#new-task-board .primary").on("click", function (e) {
+            var title, taskB_id;
+            title = $("[name='task-board-title']").val();
+            taskB_id = "task_" + countTask;
+            $(".btn-board").before(createTaskboard(title, taskB_id));
+            taskList[taskB_id] = {
+                name: title,
+                task_items: {
+                }
+            };
+            setTask(taskList);
+            $("[name='task-board-title']").val("");
+            $("#new-task-board").hide();
+
+        });
+
+
+
+        $("#search-input").keyup(function (e) {
+            var search;
+            search = e.target.value
+            serach(search);
+        });
+
+        $("#bt-task").on("click", function (e) {
+            var val,
+                item,
+                target,
+                values;
+            val = $("#add-task").serializeArray();
+            values = {
+                name: val[0].value,
+                desc: val[1].value,
+                priority: val[2].value
+            };
+
+            item = createTask(values, "items_00" + taskItem);
+            target = $("#new-task").attr("data-target");
+            console.log(target);
+            console.log(taskList[target]);
+            taskList[target]["task_items"]["items_00" + taskItem] = values;
+
+            setTask(taskList);
+            $("[task-board='" + target + "']").prepend(item);
+            $("#add-task").trigger("reset");
+            $("#new-task").hide();
+        });
+
+
+    </script>
+    <script>
+        // create an array with nodes
+        var nodes = new vis.DataSet([
+            { id: 1, label: "node\none", shape: "box", color: "#97C2FC", font: "12px arial white" },
+            { id: 2, label: "node\ntwo", shape: "circle", color: "#FFFF00", font: "12px arial white" },
+            { id: 3, label: "node\nthree", shape: "diamond", color: "#FB7E81", font: "12px arial white" },
+            {
+                id: 4,
+                label: "node\nfour",
+                shape: "dot",
+                size: 10,
+                color: "#7BE141", font: "12px arial white",
+            },
+            { id: 5, label: "node\nfive", shape: "ellipse", color: "#6E6EFD", font: "12px arial white" },
+            { id: 6, label: "node\nsix", shape: "star", color: "#C2FABC", font: "12px arial white" },
+            { id: 7, label: "node\nseven", shape: "triangle", color: "#FFA807", font: "12px arial white" },
+            {
+                id: 8,
+                label: "node\neight",
+                shape: "triangleDown",
+                color: "#6E6EFD", font: "12px arial white"
+            },
+        ]);
+
+        // create an array with edges
+        var edges = new vis.DataSet([
+            { from: 1, to: 8, color: { color: "red" } },
+            { from: 1, to: 3, color: "rgb(20,24,200)" },
+            {
+                from: 1,
+                to: 2,
+                color: { color: "rgba(30,30,30,0.2)", highlight: "blue" },
+            },
+            { from: 2, to: 4, color: { inherit: "to" } },
+            { from: 2, to: 5, color: { inherit: "from" } },
+            { from: 5, to: 6, color: { inherit: "both" } },
+            { from: 6, to: 7, color: { color: "#ff0000", opacity: 0.3 } },
+            { from: 6, to: 8, color: { opacity: 0.3 } },
+        ]);
+
+        // create a network
+        var container = document.getElementById("mynetwork");
+        var data = {
+            nodes: nodes,
+            edges: edges,
+        };
+        var options = {
+            nodes: {
+                shape: "circle",
+            },
+        };
+        var network = new vis.Network(container, data, options);
+
+    </script>
+    <!--project dashboard End page---->
+    <!--Team-Hub Start page---->
+    <script>
+        var ctx = document.getElementById("myChart").getContext('2d');
+
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ["Design", "Construction", "Procurement", "commissioning"],
+                datasets: [{
+                    data: [500, 50, 2424, 14040], // Specify the data values array
+                    borderColor: ['#2196f38c', '#f443368c', '#3f51b570', '#00968896'], // Add custom color border
+                    backgroundColor: ['#2196f38c', '#f443368c', '#3f51b570', '#00968896'], // Add custom color background (Points and Fill)
+                    borderWidth: 1 // Specify bar border width
+                }]
+            },
+            options: {
+                responsive: true, // Instruct chart js to respond nicely.
+                maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height
+            }
+        });
+        myChart.canvas.parentNode.style.height = '330px';
+
+
+        var ctx = document.getElementById("mybarChart").getContext("2d");
+
+        var mybarChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Budget', 'Actual'],
+                datasets: [{
+                    label: 'Budget',
+                    backgroundColor: "#000080",
+                    data: [550, 0, 0]
+                }, {
+                    label: 'Actual Cost',
+                    backgroundColor: "#d3d3d3",
+                    data: [0, 70, 0]
+                }]
+            },
+
+            options: {
+                legend: {
+                    display: true,
+                    position: 'top',
+                    labels: {
+                        fontColor: "#fff",
+                    }
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+        mybarChart.canvas.parentNode.style.height = '330px';
+
+
+        // pie
+
+        var ctx = document.getElementById("myChart1").getContext('2d');
+
+        var myChart1 = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ["Design", "Construction", "Procurement", "commissioning"],
+                datasets: [{
+                    data: [500, 50, 2424, 14040], // Specify the data values array
+                    borderColor: ['#2196f38c', '#f443368c', '#3f51b570', '#00968896'], // Add custom color border
+                    backgroundColor: ['#2196f38c', '#f443368c', '#3f51b570', '#00968896'], // Add custom color background (Points and Fill)
+                    borderWidth: 1 // Specify bar border width
+                }]
+            },
+            options: {
+                responsive: true, // Instruct chart js to respond nicely.
+                maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height
+            }
+        });
+        myChart1.canvas.parentNode.style.height = '320px';
+
+
+        var ctx = document.getElementById("mybarChart").getContext("2d");
+
+        var mybarChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Budget', 'Actual'],
+                datasets: [{
+                    label: 'Budget',
+                    backgroundColor: "#000080",
+                    data: [550, 0, 0]
+                }, {
+                    label: 'Actual Cost',
+                    backgroundColor: "#d3d3d3",
+                    data: [0, 70, 0]
+                }]
+            },
+
+            options: {
+                legend: {
+                    display: true,
+                    position: 'top',
+                    labels: {
+                        fontColor: "#fff",
+                    }
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+        mybarChart.canvas.parentNode.style.height = '450px';
+
+    </script>
+    <!--Team-Hub End page---->
+
+</body>
+
+>>>>>>> Stashed changes
 </html>

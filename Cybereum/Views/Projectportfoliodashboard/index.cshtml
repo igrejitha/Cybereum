@@ -1,0 +1,859 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/codebase/dhtmlxgantt.js?v=8.0.4"></script>
+<link rel="stylesheet" href="~/codebase/dhtmlxgantt.css?v=8.0.4">
+<h2><img src="~/images/cyber/Blue_Logo.png" alt="" width="3%"> GanttChart</h2>
+
+<style type="text/css">
+    .error {
+        color: red;
+        display: none;
+    }
+
+    #divLoader {
+        position: fixed;
+        display: block;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        text-align: center;
+        opacity: 0.7;
+        background-color: #fff;
+        z-index: 99;
+    }
+
+    #loading-image {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 100;
+    }
+
+    .nested_task .gantt_add {
+        display: none !important;
+    }
+
+    .nested_task .gantt_add {
+        display: none !important;
+    }
+
+    .hide-link-point .gantt_link_control {
+        display: none;
+    }
+
+    .gantt_task_progress {
+        text-align: left;
+        color: white;
+        font-weight: bold;
+        overflow: visible !important;
+    }
+
+    .hide_progress_drag .gantt_task_progress_drag {
+        display: none !important;
+    }
+
+    .hide-link-point .gantt_link_control {
+        display: none !important;
+    }
+
+    .circle_task .gantt_link_control,
+    .circle_task .gantt_task_progress_drag {
+        display: none !important;
+    }
+
+    .gantt_grid_scale, .gantt_task_scale, .gantt_task_vscroll, .gantt_grid, .gantt_grid_scale, .gantt_grid_head_cell, .gantt_grid_data, .gantt_row.odd, .gantt_row, .gantt_row.gantt_row_task, .gantt_row.gantt_row_project, .gantt_row.gantt_row_milestone, gantt_cell.gantt_cell_tree, .gantt_tree_indent, .gantt_tree_icon.gantt_close, .gantt_tree_icon.gantt_open, .gantt_tree_content, gantt_cell, .gantt_tree_content, .gantt_task_scale, .gantt_scale_line, .gantt_scale_cell, .gantt_task_cell, .gantt_data_area {
+        background-color: #08375e;
+        color: #a6a6a6;
+    }
+
+    .gantt_grid-row:hover .gantt_grid-cell {
+        background-color: #08375e;
+        color: #a6a6a6;
+    }
+</style>
+<div id="divLoader" style="display:none;">
+    <img id="loading-image" src="~/images/Spinner.gif" alt="Loader" />
+</div>
+<div class="main-content">
+
+    <div class="page-content">
+        <div class="container-fluid">
+
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-flex align-items-center justify-content-between">
+                        <h4 class="mb-0 font-size-18">Dashboard</h4>
+
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">Cybereum</a></li>
+                                <li class="breadcrumb-item active">Dashboard</li>
+                            </ol>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+
+            <div class="row">
+                <div class="col-xl-4 col-sm-12">
+
+                    <div class="col-sm-6 col-xl-12">
+                        <div class="card">
+
+                            <div class="card-body p-4 border-bottom">
+                                <h4 class="header-title mb-4">Project Core KPIS</h4>
+                                <div class="media align-items-center">
+                                    <div class="media-body">
+                                        <p class="font-size-14 text-white mb-1">Budget (ratio)</p>
+                                        <h4 class="m-0 align-self-center">0.65ϕ</h4>
+                                    </div>
+                                    <div class="avatar-xs">
+                                        <span class="avatar-title rounded-circle bg-primary">
+                                            <i class="mdi mdi-square-inc-cash"></i>
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="card-body p-4 border-bottom">
+                                <div class="media align-items-center">
+                                    <div class="media-body">
+                                        <p class="font-size-14 text-white mb-1">Schedule (percentage)</p>
+                                        <h4 class="m-0 align-self-center">45.5%</h4>
+                                    </div>
+                                    <div class="avatar-xs">
+                                        <span class="avatar-title rounded-circle bg-primary">
+                                            <i class="mdi mdi-timetable"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body p-4">
+                                <div class="media align-items-center">
+                                    <div class="media-body">
+                                        <p class="font-size-14 text-white mb-1">Scope (ratio)</p>
+                                        <h4 class="m-0 align-self-center">0.35ϕ</h4>
+                                    </div>
+                                    <div class="avatar-xs">
+                                        <span class="avatar-title rounded-circle bg-primary">
+                                            <i class="mdi mdi-target"></i>
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-sm-6 col-xl-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="header-title mb-4">Task Completion Status</h4>
+                                <div id="morris-donut-example" class="morris-chart" dir="ltr"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-xl-5 px-xl-0 col-sm-12">
+                    <div class="col-sm-6 col-xl-12 px-xl-0">
+                        <div class="card">
+
+                            <div class="card-body pb-0 ">
+                                <h4 class="header-title mb-4">KEY INTERNAL MILESTONE</h4>
+                            </div>
+                            <div class="card-body px-4 pt-0 pb-4">
+                                <div class="">
+                                    @foreach (var keyinternal in ViewBag.Keyinternal)
+                                    {
+                                        <p class="font-size-14 text-white mb-2">@keyinternal.activityname</p>
+                                        <div class="progress mb-4">
+                                            <div class="progress-bar progress-bar-striped bg-success progress-bar-animated" role="progressbar"
+                                                 style="width: @keyinternal.progress%" aria-valuenow="10" aria-valuemin="0"
+                                                 aria-valuemax="100">@keyinternal.progress%</div>
+                                            </div>
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-xl-3 col-sm-12">
+                    <div class="col-sm-6 col-xl-12">
+                        <div class="card">
+
+                            <div class="card-body border-bottom">
+                                <h4 class="header-title mb-4">Key Deliverables</h4>
+                                <div class="media align-items-center">
+                                    <div class="media-body">
+                                        <h5 class="font-size-14 mb-1">Project Execution Plan</h5>
+                                        <p class="text-danger mb-0 font-size-13">
+                                            <i class="mdi mdi-trending-down mr-1"></i>Due Tomorrow
+                                        </p>
+                                    </div>
+                                    <div class="avatar-xs">
+                                        <span class="avatar-title rounded-circle bg-primary">
+                                            <i class="mdi mdi-projector-screen"></i>
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="card-body border-bottom">
+                                <div class="media align-items-center">
+                                    <div class="media-body">
+                                        <h5 class="font-size-14 mb-1">Design Loads <br>Report</h5>
+                                        <p class="mb-0 font-size-13 text-warning">
+                                            <i class="mdi mdi-trending-down mr-1"></i> Due in 7 Days
+                                        </p>
+                                    </div>
+                                    <div class="avatar-xs">
+                                        <span class="avatar-title rounded-circle bg-primary">
+                                            <i class="mdi mdi-pencil-box-multiple"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="media align-items-center">
+                                    <div class="media-body">
+                                        <h5 class="font-size-14 mb-1">Procurement <br>Plan</h5>
+                                        <p class="mb-0 font-size-13 text-success">
+                                            <i class="mdi mdi-trending-up mr-1"></i> Due in 30 Days
+                                        </p>
+                                    </div>
+                                    <div class="avatar-xs">
+                                        <span class="avatar-title rounded-circle bg-primary">
+                                            <i class="mdi mdi-code-equal"></i>
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-6 col-xl-12">
+                        <div class="card milestones-wrapper">
+                            <div class="card-body">
+                                <h4 class="header-title mb-4">External Milestone Communication</h4>
+
+                                <ul class="verti-timeline list-unstyled mb-0" data-simplebar
+                                    style="max-height: 322px;">
+                                    <li class="event-list">
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p class="font-size-14 text-white mb-1">Permit Approval</p>
+                                                <h4 class="m-0 align-self-center">40</h4>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="event-list">
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p class="font-size-14 text-white mb-1">Site Inspection </p>
+                                                <h4 class="m-0 align-self-center">64</h4>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="event-list">
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p class="font-size-14 text-white mb-1">Safety Audit</p>
+                                                <h4 class="m-0 align-self-center">45</h4>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="event-list">
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p class="font-size-14 text-white mb-1">Material Delivery</p>
+                                                <h4 class="m-0 align-self-center">78</h4>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="event-list">
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p class="font-size-14 text-white mb-1">Material Delivery</p>
+                                                <h4 class="m-0 align-self-center">25</h4>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="event-list">
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p class="font-size-14 text-white mb-1">
+                                                    Sub Contractor
+                                                    Mobilization
+                                                </p>
+                                                <h4 class="m-0 align-self-center">89</h4>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- end row -->
+
+            <div class="row">
+                <div class="col-12 px-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="header-title mb-4">Gantt Chart</h4>
+                            <div style="height: 450px;background: #08375e ;" id="ganttContainer"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-6 col-xl-6 px-4">
+                    <div class="card pb-5">
+                        <div class="card-body">
+
+                            <h4 class="header-title mb-4">Project Schedule Dashboard</h4>
+
+                            <canvas id="myChart"></canvas>
+
+
+                        </div> <!-- end card-body-->
+                    </div> <!-- end card-->
+                </div>
+                <div class="col-6 col-xl-6 pl-0 pr-4">
+                    <div class="card pb-5">
+                        <div class="card-body">
+
+                            <h4 class="header-title mb-4">Project Schedule Dashboard</h4>
+
+                            <canvas id="mybarChart"></canvas>
+
+
+                        </div> <!-- end card-body-->
+                    </div> <!-- end card-->
+                </div>
+            </div>
+
+            <div class="row pl-3">
+                <div class="col-12">
+                    <div class="page-title-box d-flex align-items-center justify-content-between">
+                        <h4 class="mb-0 font-size-18">Risk Matrix</h4>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="row pl-3">
+                <div class="col-12 col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div class="table-responsive">
+                                <table class="table  table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th style="color: aliceblue;">Milestone Risk</th>
+                                            <th style="color: aliceblue;">Probability</th>
+                                            <th style="color: aliceblue;">Impact</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+
+                                            <td>Milestone 5</td>
+                                            <td>0.8</td>
+                                            <td>Low</td>
+
+                                        </tr>
+                                        <tr>
+
+                                            <td>RMilestone 6</td>
+                                            <td>0.5</td>
+                                            <td>Medium</td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>Milestone 8</td>
+                                            <td>0.2</td>
+                                            <td>High</td>
+
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="row mx-1">
+                <div class="col-xl-6">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <h4 class="header-title">Risk Matrix</h4>
+
+
+                            <div id="scatter-diagram" class="ct-chart ct-golden-section" dir="ltr"></div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6">
+                    <div class="card" style="padding-bottom: 7px;">
+                        <div class="card-body">
+
+
+                            <div class="table-responsive">
+                                <table class="table table-borderless mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th style="color: white;">Risk</th>
+                                            <th style="color: white;">Probability</th>
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Supply Chain Disruption</th>
+                                            <td>Low</td>
+
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Budget Overrun</th>
+                                            <td>Medium</td>
+
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Scope Creep</th>
+                                            <td>Low</td>
+
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Tchnical Failure</th>
+                                            <td>High</td>
+
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Regulatory Changes</th>
+                                            <td>High</td>
+
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Safety Incident</th>
+                                            <td>Low</td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row pl-3">
+                <div class="col-6 col-xl-6">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <h4 class="header-title" style="padding-bottom: 49px;">Milestone Distribution</h4>
+
+
+                            <div id="overlapping-bars" class="ct-chart ct-golden-section" dir="ltr"></div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-xl-6">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <h4 class="header-title">Path Distribution</h4>
+
+                            <div id="morris-bar-example" class="morris-chart" dir="ltr"></div>
+
+                        </div> <!-- end card-body-->
+                    </div> <!-- end card-->
+                </div> <!-- end col -->
+            </div>
+
+
+            <!-- end row -->
+            <!-- end page title -->
+
+
+
+
+            <h4 class=" header-title mb-3 pl-3" style=""> Critical Activity-Group Network Visualization</h4>
+            <div class="row mb-4 pl-3">
+                <div class="col-lg-12">
+                    <div id="mynetwork">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row pl-3">
+                <div class="col-lg-12 col-xl-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="header-title mb-4">Forecasting with machine learning and RCF</h4>
+
+                            <div id="line_chart_dashed" class="apex-charts" dir="ltr"></div>
+                        </div>
+                    </div><!--end card-->
+                </div>
+
+            </div>
+
+        </div> <!-- container-fluid -->
+    </div>
+    <!-- End Page-content -->
+</div>
+
+<!-- Gantt Chart -->
+<script>
+    (function () {
+        // add month scale
+        var projectid = "@ViewBag.projectid";
+        gantt.config.scale_unit = "month";
+        gantt.config.date_scale = "%F, %Y";
+        gantt.config.step = 1;
+        gantt.templates.date_scale = function (date) {
+            var dateToStr = gantt.date.date_to_str("%d %M");
+            var endDate = gantt.date.add(gantt.date.add(date, 1, "week"), -1, "day");
+            return dateToStr(date) + " - " + dateToStr(endDate);
+        };
+        gantt.config.subscales = [
+            { unit: "day", step: 1, date: "%d-%D" }
+        ];
+        gantt.config.scale_height = 50;
+        //// configure milestone description
+        //gantt.templates.rightside_text = function (start, end, task) {
+        //    if (task.type == gantt.config.types.milestone) {
+        //        return task.text;
+        //    }
+        //    return "";
+        //};
+
+        // Search function will loop owners to find label fow owner_id
+        function getUser(user_id) {
+            for (var i = 0; i < users.length; i++) {
+                if (users[i].key == user_id) {
+                    return users[i].label;
+                }
+            }
+            return "";
+        }
+
+        //// Array of owners for options(in the lightbox)
+        var users = [
+        //  //{ key: '0', label: "" },
+        //  //{ key: '1', label: "Ozzy Osbourne" },
+        //  //{ key: '2', label: "Bonnie Tyler" },
+        //  //{ key: '3', label: "Gene Pitney" },
+        ];
+        gantt.ajax.get("/Project/FillProjectMember?id=" + projectid, function (r) {
+            var xml = r.xmlDoc.response;
+            var user = JSON.parse(r.xmlDoc.response);
+            for (var q = 0; q < user.items.length; q++) {
+                users.push({
+                    key: user.items[q]["key"],
+                    label: user.items[q]["label"]
+                });
+            }
+        });
+
+        gantt.form_blocks.select.set_value = function (node, value, ev) {
+            node.firstChild.value = value || "";
+            if (ev.type == "Activity" || ev.parent == 0) {
+                var style = ev.some_property ? "" : "none";
+                node.style.display = style; // editor area
+                node.previousSibling.style.display = style; //section header
+                gantt.resizeLightbox(); //correct size of lightbox
+            }
+            else {
+                var style = ev.some_property ? "" : "block";
+                node.style.display = style; // editor area
+                node.previousSibling.style.display = style; //section header
+                gantt.resizeLightbox(); //correct size of lightbox
+            }
+        }
+
+        //gantt.locale.labels.section_description = "Owner";
+
+        // add section to type selection: task, project or milestone
+        gantt.config.lightbox.sections = [
+            // Owners section, will map to owner_id
+            { name: "users", height: 22, map_to: "user_id", type: "select", options: users },
+            { name: "description", height: 70, map_to: "text", type: "textarea", focus: true },
+            //{ name: "type", type: "typeselect", map_to: "type" },
+            { name: "time", height: 72, type: "duration", map_to: "auto" }
+        ];
+
+        const formatter = gantt.ext.formatters.linkFormatter({
+            //default values
+            durationFormatter: gantt.ext.formatters.durationFormatter(),
+            labels: {
+                finish_to_start: "FS",
+                start_to_start: "SS",
+                finish_to_finish: "FF",
+                start_to_finish: "SF"
+            }
+        });
+        //var linksFormatter = gantt.ext.formatters.linkFormatter({ durationFormatter: formatter });
+        var editors = {
+            text: { type: "text", map_to: "text" },
+            //taskid: { type: "text", map_to: "text" },
+            start_date: {
+                type: "date", map_to: "start_date"//,
+                //min: new Date(2018, 0, 1), max: new Date(2019, 0, 1)
+            },
+            end_date: {
+                type: "date", map_to: "end_date"//,
+                //min: new Date(2018, 0, 1), max: new Date(2019, 0, 1)
+            },
+            duration: {
+                type: "duration", map_to: "duration",
+                min: 0, max: 100, formatter: formatter
+            },
+            predecessors: { type: "predecessor", map_to: "auto", formatter: formatter }
+        };
+        gantt.templates.grid_row_class = function (start, end, task) {
+            if (task.$level > 1) {
+                return "nested_task"
+            }
+            return "";
+        };
+
+        gantt.attachEvent("onBeforeLinkAdd", function (id, link) {
+            if (!allow_link) return false;
+            return true;
+        });
+
+
+        var allow_link = true;
+        gantt.attachEvent("onMouseMove", function (id, e) {
+            if (e.target.className == "gantt_task_content") allow_link = false;
+            else allow_link = true;
+        });
+
+        gantt.config.columns = [
+            { name: "wbs", label: "#", width: 40, align: "center", template: gantt.getWBSCode },
+            { name: "text", label: "Name", tree: true, width: 200, resize: true },
+            //{ name: "taskid", label: "id", width: 80, align: "center", resize: true },
+            { name: "duration", label: "Duration", width: 80, align: "center", resize: true },
+            { name: "start_date", label: "Start", width: 80, align: "center", resize: true },
+            // Owners column
+            {
+                name: "user_id", label: "Owner", template: function (obj) {
+                    return getUser(obj.user_id);
+                }, align: "center", resize: true
+            },
+            { name: "end_date", label: "Finish", width: 80, align: "center", resize: true },
+                {
+                    name: "predecessors", label: "Predecessors", width: 80, align: "left",
+                    //editor: editors.predecessors,
+                    resize: true, template: function (task) {
+                        var links = task.$target;
+                        var labels = [];
+                        for (var i = 0; i < links.length; i++) {
+                            var link = gantt.getLink(links[i]);
+                            labels.push(formatter.format(link));
+                        }
+                        return labels.join(", ")
+                    }
+                },
+            { name: "add", label: "", width: 80, align: "center", resize: true }
+        ];
+        gantt.templates.task_end_date = function (date) {
+            return gantt.templates.task_date(new Date(date.valueOf() - 1));
+        };
+
+        gantt.templates.progress_text = function (start, end, task) {
+            return `<span style='text-align:left; padding-left: 5px;'>${Math.round(task.progress * 100)}%</span>`;
+        };
+
+        gantt.config.xml_date = "%Y-%m-%d %H:%i:%s"; // format of dates in XML
+        gantt.config.duration_unit = "day";
+        gantt.config.work_time = true;
+        gantt.config.skip_off_time = true;
+        gantt.config.fit_tasks = true;
+        gantt.locale.labels.section_users = "Owner";
+        gantt.config.show_progress = true;
+        gantt.config.show_loading = true;
+        gantt.init("ganttContainer"); // initialize gantt
+        gantt.config.open_tree_initially = true;
+        gantt.plugins({
+            critical_path: true,
+            auto_scheduling: true
+        });
+        gantt.config.highlight_critical_path = true;
+        gantt.config.auto_scheduling = true;
+        gantt.autoSchedule();
+        router = function (entity, action, data, id) {
+            return new gantt.Promise(function (resolve, reject) {
+                gantt.load("/Project/GetchartData?projectid=" + projectid, "json");
+            });
+        }
+        
+        gantt.load("/Project/GetchartData?projectid=" + projectid, "json");
+
+        gantt.attachEvent("onLightboxSave", function (id, item) {
+            if (!item.text) {
+                gantt.message({ type: "error", text: "Enter task description!" });
+                return false;
+            }
+            return true;
+        });
+
+        gantt.templates.task_class = function (start, end, task) {            
+            if (gantt.hasChild(task.id)) {
+                if (task.type == "Activity") return 'hide_progress_drag'
+                else return "circle_task";
+            }
+            else {
+                if (task.type == "SubTask" || task.type == "Task") return 'hide-link-point'
+                else return "";
+            };
+        };
+
+        gantt.attachEvent("onAfterLinkAdd", function (id, item) {
+            window.location.reload();
+        });
+        gantt.attachEvent("onAfterLinkDelete", function (id, item) {
+            window.location.reload();
+        });
+        gantt.attachEvent("onAfterTaskAdd", function (id, item) {
+            window.location.reload();
+        });
+        gantt.attachEvent("onAfterTaskDelete", function (id, item) {
+            window.location.reload();
+        });
+        gantt.attachEvent("onAfterTaskUpdate", function (id, item) {
+            window.location.reload();
+        });
+        var dp = gantt.createDataProcessor(function (entity, action, data, id, taskid) {
+            switch (entity) {
+                case "task":
+                    switch (action) {
+                        case "create":
+                            return gantt.ajax.post({
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                url: "/Project/CreateTask",
+                                data: JSON.stringify(data),
+                                callback: function (response) {
+                                }
+                            });
+                            break;
+                        case "update":
+                            return gantt.ajax.post({
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                url: "/Project/UpdateTask",
+                                data: JSON.stringify(data),
+                                callback: function (response) {
+                                }
+                            });
+                            gantt.message({ type: "error", text: result });
+                            break;
+                        case "delete":
+                            return gantt.ajax.del(
+                                  server + "/" + entity + "/" + id
+                            );
+                            break;
+                    }
+                case "link":
+                    switch (action) {
+                        case "create":
+                            return gantt.ajax.post({
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                url: "/Project/CreateLink",
+                                data: JSON.stringify(data),
+                                callback: function (response) {
+                                }
+                            });
+                            break;
+                        case "update":
+                            return gantt.ajax.post(
+                                  "/Project/UpdateLink",
+                                 data, entity, id
+                             );
+                            break;
+                        case "delete":
+                            return gantt.ajax.post({
+                                url: "/Project/DeleteLink",
+                                data: { id: id },
+                                callback: function (response) {
+                                }
+                            });
+                            break;
+                    }
+            }
+
+        });
+    })();
+</script>
+
+<!-- Task completion Status-->
+@Scripts.Render("~/bundles/jquery")
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script type="text/javascript">
+    var $ = jQuery.noConflict();
+    $(document).ready(function () {
+        Morris.Donut({
+            element: 'morris-donut-example',
+            data: $.parseJSON(Graph()),
+            resize: true
+        });
+    });
+
+    function Graph() {        
+        var data = "";
+        $.ajax({
+            type: 'POST',
+            @*url: '@Url.Action("GettaskcompletionData", "Projectportfoliodashboard")?projectid=' + @ViewBag.Projectid,//'Projectportfoliodashboard/GettaskcompletionData?projectid='+ @ViewBag.Projectid + '',*@
+            url: "/Projectportfoliodashboard/GettaskcompletionData?projectid='+ @ViewBag.Projectid + ''",
+            dataType: 'json',
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            data: {},
+            success: function (result) {
+                debugger;
+                    data = result.d;
+                },
+            error: function (xhr, status, error) {
+                    //alert(error);
+                }
+            });
+
+        return data;
+    }
+</script>

@@ -1,0 +1,154 @@
+﻿@model List<SelectListItem>
+
+@{
+    ViewBag.Title = "Project List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="main-content">
+
+    <div class="page-content">
+        <div class="container-fluid">
+            <div class="form-horizontal">
+                <h4>Project List</h4>
+                <hr />
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="tblProject" class="table table-hover mb-0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Project Name</th>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                            <th>Project Manager</th>
+                                            <th>Created On</th>
+                                            <th>Hash ID</th>
+                                            @*<th>GANTT Chart</th>*@
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+<style>
+    .expand-column {
+        max-width: 70px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+</style>
+
+<script type="text/javascript">
+    $(document).ajaxSend(function () {
+        //$("#overlay").fadeIn(300);
+    });
+
+    $(document).ready(function () {
+        $('#liUsers').addClass("active");
+
+        var value = '@Request.RequestContext.HttpContext.Session["Organization"]';
+        var objFilter = {
+            organization: value
+        }
+        debugger;
+        $("#tblProject").DataTable(
+        {
+            processing: true,
+            serverSide: true,
+            filter: false,
+            orderMulti: false,
+            paging: false,
+            Sort: true,
+            "ajax": {
+                url: '@Url.Action("projectlistfororganization", "Project")',
+                type: 'POST',
+                data: objFilter
+            },
+            aLengthMenu: [[75, 100, 500, 1000, -1], [75, 100, 500, 1000, "All"]],
+            iDisplayLength: 75,
+            //scrollY: 400,
+            aoColumnDefs: [{
+                bSortable: false,
+                aTargets: [-1, -2]
+            }],
+            "bAutoWidth": false,
+            "info": true,
+            columns: [
+                { 'data': 'projectname', 'name': 'Project Name' },
+                {
+                    'data': 'startdate', 'name': 'Start Date',
+                    'render': function (jsonDate) {
+                        if (jsonDate != null) {
+                            var date = new Date(parseInt(jsonDate.substr(6)));
+                            var month = ("0" + (date.getMonth() + 1)).slice(-2);
+                            return month + '-' + ("0" + date.getDate()).slice(-2) + '-' + date.getFullYear();
+                        }
+                        else {
+                            return "";
+                        }
+                    }
+                },
+                {
+                    'data': 'enddate', 'name': 'End Date',
+                    'render': function (jsonDate) {
+                        debugger;
+                        if (jsonDate != null) {
+                            var date = new Date(parseInt(jsonDate.substr(6)));
+                            var month = ("0" + (date.getMonth() + 1)).slice(-2);
+                            return month + '-' + ("0" + date.getDate()).slice(-2) + '-' + date.getFullYear();
+                        }
+                        else {
+                            return "";
+                        }
+                    }
+                },
+                { 'data': 'createdusername', 'name': 'Project Manager' },
+                {
+                    'data': 'createdon', 'name': 'Created On',
+                    'render': function (jsonDate) {
+                        if (jsonDate != null) {
+                            var date = new Date(parseInt(jsonDate.substr(6)));
+                            var month = ("0" + (date.getMonth() + 1)).slice(-2);
+                            return month + '-' + ("0" + date.getDate()).slice(-2) + '-' + date.getFullYear();
+                        }
+                        else {
+                            return "";
+                        }
+                    }
+                },
+                {
+                    'data': 'hashcode', 'name': 'Hash ID', 'class': 'expand-column',
+                    render: function (data, type, row) {
+                        debugger;
+                        return '<span data-toggle="tooltip" title="' + data + '">' + data + "</span>";
+                        //return '<span data-toggle="tooltip" title="' + data + '">' + data.length == 0 ? data : data.substr(0, 10) + '…' + '</span>';
+                        //var trimdata = data.length > 10 ? data.substr(0, 10) + '…': data;
+                        //return '<span data-toggle="tooltip" title="' + data + '">' + trimdata + '</span>';
+                    }
+                }
+            ],
+            select: {
+                style: 'multi',
+                selector: 'td:first-child'
+            },
+        });
+    });
+
+
+    function msg(strMsg, mode) {
+        $.notify(strMsg, mode, { globalPosition: 'top center', clickToHide: true, autoHide: false });
+    }
+</script>

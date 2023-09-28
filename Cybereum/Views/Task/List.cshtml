@@ -50,7 +50,9 @@
         display: none;
     }
 </style>
+<div class="main-content">
 
+<<<<<<< Updated upstream
 <div class="form-horizontal">
     <h4>Task List</h4>
     <hr />
@@ -87,22 +89,50 @@
                     </thead>
                     <tbody></tbody>
                 </table>
+=======
+    <div class="page-content">
+        <div class="container-fluid">
+            <div class="form-horizontal">
+                <h4>Task List</h4>
+                <hr />
+            </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="tblTask" class="table table-hover mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Task Name</th>
+                                        <th>Activity Name</th>
+                                        <th>Project Name</th>
+                                        <th>Start Date</th>
+                                        <th>End Date</th>
+                                        <th>Assigned To</th>
+                                        <th>Edit</th>
+                                        @*<th>Sub Task</th>*@
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+>>>>>>> Stashed changes
             </div>
         </div>
     </div>
 </div>
-
 @Scripts.Render("~/bundles/jquery")
 <script type="text/javascript">
     $(document).ajaxSend(function () {
-        //$("#overlay").fadeIn(300);
+        
     });
 
     $(document).ready(function () {
         $('#liUsers').addClass("active");
 
-        debugger;
-        //var reset = 0;
+        debugger;        
         var value = '@Request.RequestContext.HttpContext.Session["LoggedInUserId"]';
         var value1 = '@Request.RequestContext.HttpContext.Session["RoleId"]';
         var value2 = '@ViewBag.activityid';
@@ -118,16 +148,13 @@
             serverSide: true,
             filter: false,
             orderMulti: false,
-            pageLength: 75,
+            paging: false,
             Sort: true,
             "ajax": {
                 url: '@Url.Action("tasklist", "Task")',
                 type: 'POST',
                 data: objFilter
             },
-            aLengthMenu: [[75, 100, 500, 1000, -1], [75, 100, 500, 1000, "All"]],
-            iDisplayLength: 75,
-            //scrollY: 400,
             aoColumnDefs: [{
                 bSortable: false,
                 aTargets: [-1, -2]
@@ -137,6 +164,7 @@
             columns: [
                 { 'data': 'taskname', 'name': 'Task Name' },
                 { 'data': 'activityname', 'name': 'Activity Name' },
+                { 'data': 'projectname', 'name': 'Project Name' },
                 {
                     'data': 'startdate', 'name': 'Start Date',
                     'render': function (jsonDate) {
@@ -170,22 +198,21 @@
                     "render": function (data, type, full, meta) {
                         debugger;
                         var value1 = '@Request.RequestContext.HttpContext.Session["RoleId"]';
+<<<<<<< Updated upstream
                         //if (value1 == '3' || value1 == '1') {
                         if (value1 == '1') {
                             return '<button class="btn btn" style="background-color: #0D2136; color: white;" id="btnedit" disabled="disabled" onclick=getTask("' + full.taskid + '"); >Edit</button>';
+=======
+                        if (value1 == '1') {
+                            return '<a><button type="button" class="btn btn-outline-primary btn-sm waves-effect waves-light" id="btnedit" disabled="disabled" onclick=getProjectTask("' + full.taskid + '"); >Edit</button></a>';
+>>>>>>> Stashed changes
                         }
                         else {
-                            return '<button class="btn btn" style="background-color: #0D2136; color: white;" id="btnedit" onclick=getTask("' + full.taskid + '"); >Edit</button>';
+                            return '<a><button type="button" class="btn btn-outline-primary btn-sm waves-effect waves-light" id="btnedit" onclick=getProjectTask("' + full.taskid + '"); >Edit</button></a>';
                         }
                     }
 
-                }
-                ,
-                {
-                    data: 'taskname', render: function (data, type, row) {
-                        return "<button type='submit' onclick=GetSubTask('" + encodeURIComponent(row.taskid) + "'); class='btn btn' style='background-color: #0D2136; color: white;'>Sub-Task</button>";
-                    }
-                }
+                }                
             ],
             select: {
                 style: 'multi',
@@ -194,6 +221,7 @@
         });
     });
 
+<<<<<<< Updated upstream
 
     function OnSuccess(response) {
         $("#tblTask").dataTable(
@@ -242,6 +270,9 @@
     };
 
     function getTask(id) {
+=======
+    function getProjectTask(id) {
+>>>>>>> Stashed changes
         debugger;
         var projectid = "@ViewBag.projectid";
         location.href = '@Url.Action("AddEditrecord", "Task", new { id = "id",projectid="value"})'.replace('id', id).replace('value', projectid);

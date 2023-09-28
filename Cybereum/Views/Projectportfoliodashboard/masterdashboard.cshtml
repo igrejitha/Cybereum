@@ -1,0 +1,172 @@
+﻿
+@{
+Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main-content">
+
+    <div class="page-content">
+        <div class="container-fluid">
+
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-flex align-items-center justify-content-between">
+                        <h4 class="mb-0 font-size-18">Master Dashboard</h4>
+
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">Cybereum</a></li>
+                                <li class="breadcrumb-item active">Master Dashboard</li>
+                            </ol>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+            <div class="position-relative master-report">
+                <div class="row">
+                    <div class="col-6 pr-4 pb-4 border-right">
+                        <a href="@Url.Action("ProjectOverview", "Projectportfoliodashboard")">                            
+                                <div class="card mb-0" style="height:456px;">
+                                    <div class="card-body">
+                                        <h4 class="header-title mb-2">Master Project (Integrated)</h4>
+                                        <p style="color: #7b919e;">
+                                            Display the DLT related master schedule and other metrics for the entire
+                                            project to the
+                                            entire project network as the single trusted source of truth
+                                        </p>
+                                        <div class="d-flex mt-4">
+                                            <div class=" w-50">
+                                                <h5 class="text-center">Project Progress</h5>
+                                                <div id="pie_chart" class="apex-charts" dir="ltr"></div>
+                                            </div>
+                                            <div class="w-50">
+                                                <h5 class="text-center">Task Status</h5>
+                                                <div id="pie_chart1" class="apex-charts " dir="ltr"></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </a>
+</div>
+                    <div class="col-6 pl-4 pb-4">
+                        <a href="@Url.Action("index", "Projectportfoliodashboard", new { projectid = ViewBag.Projectid })">
+                            <div class="card mb-0" style="height:456px;">
+                                <div class="card-body">
+                                    <h4 class="header-title mb-2">Detailed Project Planning (Internal)</h4>
+                                    <p style="color: #7b919e;">
+                                        The scheduling system and gantt chart for detailed planning for individual
+                                        project participants connecting to a cloud
+                                        graph database backend.
+                                    </p>
+                                    <div id="scrollX" style="height: auto; overflow-x:scroll;">
+                                        <div style="height: 294px;width: 800px;background: #08375e;" id="container"
+                                             class="simplebar-content"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+                <img class="position-absolute master-center-icon" src="./~assets/images/favicon.png" alt="">
+                <div class="row ">
+
+                    <div class="col-6 pr-4 pt-4 border-right border-top">
+                        <a href="@Url.Action("projectdashboard", "Projectportfoliodashboard")">
+                            <div class="card mb-0" style="height:456px;">
+                                <div class="card-body">
+                                    <h4 class="header-title mb-2">Advanced Metrics (Internal)</h4>
+                                    <p style="color: #7b919e;">
+                                        A dashboard for advanced metrics and forecasting using detailed data
+                                        analytics and machine learning at the detailed planning level for individual
+                                        participants. It is connected to the Gantt chart in the other quadrant.
+                                    </p>
+
+                                    <div id="overlapping-bars" class="ct-chart ct-golden-section" dir="ltr"></div>
+
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-6 pl-4 pt-4 border-top">
+                        <a href="@Url.Action("TeamHub", "Projectportfoliodashboard")">
+                            <div class="card mb-0" style="height:456px;">
+                                <div class="card-body">
+                                    <h4 class="header-title mb-2">Team Hub [integrated]</h4>
+                                    <p style="color: #7b919e;">A team management, communication and collaboration hub integrating the internal and external team.</p>
+                                    <h4 class="header-title mb-2">Project Team</h4>
+                                    <p style="color: #7b919e;">Team Members allocated - across all companies.</p>
+                                    <div id="scrollY" style="overflow: scroll;height: 280px;">
+                                        <div class="">
+                                            <table class="table  table-hover mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="color: aliceblue;">Name</th>
+                                                        <th style="color: aliceblue;">Department</th>
+                                                        <th style="color: aliceblue;">Role</th>
+                                                        <th style="color: aliceblue;">Company</th>
+                                                        <th style="color: aliceblue;">Supervisor</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+
+                                                        <td>Jonh Deo </td>
+                                                        <td>Engineering</td>
+                                                        <td>Project Engineer</td>
+                                                        <td>ABC Crop</td>
+                                                        <td>Jane Smith</td>
+                                                    </tr>
+                                                    <tr>
+
+                                                        <td>Jane</td>
+                                                        <td>Construction</td>
+                                                        <td>Site Manager</td>
+                                                        <td>ABC Crop</td>
+                                                        <td>Jim Brown</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Jonh Deo </td>
+                                                        <td>Engineering</td>
+                                                        <td>Project Engineer</td>
+                                                        <td>ABC Crop</td>
+                                                        <td>Jane Smith</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Jane</td>
+                                                        <td>Construction</td>
+                                                        <td>Site Manager</td>
+                                                        <td>ABC Crop</td>
+                                                        <td>Jim Brown</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Jonh Deo </td>
+                                                        <td>Engineering</td>
+                                                        <td>Project Engineer</td>
+                                                        <td>ABC Crop</td>
+                                                        <td>Jane Smith</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div> <!-- container-fluid -->
+    </div>
+    <!-- End Page-content -->
+</div>
+

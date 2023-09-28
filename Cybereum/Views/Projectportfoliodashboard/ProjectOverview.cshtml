@@ -1,0 +1,1208 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="main-content">
+
+    <div class="page-content">
+        <div class="container-fluid">
+
+            <!-- start page title -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box d-flex align-items-center justify-content-between">
+                        <h4 class="mb-0 font-size-18">Project Statistics</h4>
+
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="javascript: void(0);">Cybereum</a></li>
+                                <li class="breadcrumb-item active">Project Overview</li>
+                            </ol>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- end page title -->
+            <!-- end row -->
+            <!-- end row -->
+            <!-- project overvie starts -->
+            <div class="row">
+                <div class="col-sm-4 col-xl-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="media-body">
+                                    <h5 class="font-size-14">Start Date</h5>
+                                </div>
+                                <div class="avatar-xs">
+                                    <span class="avatar-title rounded-circle bg-primary">
+                                        <i class="dripicons-box"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <h4 class="m-0 align-self-center">Jan 01,2023</h4>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4 col-xl-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="media-body">
+                                    <h5 class="font-size-14">Estimated End Date</h5>
+                                </div>
+                                <div class="avatar-xs">
+                                    <span class="avatar-title rounded-circle bg-primary">
+                                        <i class="dripicons-briefcase"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <h4 class="m-0 align-self-center">Dec 31, 2023</h4>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4 col-xl-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="media-body">
+                                    <h5 class="font-size-14">Participants</h5>
+                                </div>
+                                <div class="avatar-xs">
+                                    <span class="avatar-title rounded-circle bg-primary">
+                                        <i class="dripicons-tags"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <h4 class="m-0 align-self-center">10 Companies</h4>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body" style="padding: 28px !important;">
+
+                            <h4 class="header-title">Project Performance</h4>
+                            <p class="card-title-desc"></p>
+
+                            <canvas id="lineChart"></canvas>
+
+                        </div> <!-- end card-body-->
+                    </div> <!-- end card-->
+                </div>
+                <div class="col-xl-6">
+
+
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="header-title">Project Phases</h4>
+                            <p class="card-title-desc" style="margin-bottom: 2px !important; color: white;">Design : Completed</p>
+
+                            <div class="position-relative">
+                                <div class="progress-label text-success border-success mb-2">Completed</div>
+                                <div class="progress progress-sm progress-animate mb-4">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="86" aria-valuemin="0" aria-valuemax="100">
+                                        <div class="progress-value">
+                                            <h5 class="mb-1 text-dark font-size-14">86%</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="card-title-desc" style="margin-bottom: 2px !important; color: white;">Construction : Inprogress</p>
+                            <div class="position-relative">
+                                <div class="progress-label text-primary border-primary mb-2">Inprogress : 85%</div>
+                                <div class="progress progress-sm progress-animate mb-4">
+                                    <div class="progress-bar" role="progressbar" style="width: 72%" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100">
+                                        <div class="progress-value">
+                                            <h5 class="mb-1 text-dark font-size-14">72%</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="card-title-desc" style="margin-bottom: 2px !important; color: white;">Testing and Commissioning: Upcoming</p>
+                            <div class="position-relative">
+                                <div class="progress-label text-danger border-danger mb-2">Upcoming</div>
+                                <div class="progress progress-sm progress-animate">
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 0%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
+                                        <div class="progress-value">
+                                            <h5 class="mb-1 text-dark font-size-14">65%</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div> <!-- end col -->
+            </div>
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <h5>Project Forecasts</h5>
+                    <div class="row">
+
+                        <div class="col-sm-6 col-xl-6">
+
+                            <div class="card">
+
+                                <div class="card-body">
+
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h5 class="font-size-14">Expected Completion Date</h5>
+                                        </div>
+                                        <div class="avatar-xs">
+
+                                        </div>
+                                    </div>
+                                    <h4 class="m-0 align-self-center">Jan 15,2023</h4>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-xl-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h5 class="font-size-14">Performance <br>Index</h5>
+                                        </div>
+                                        <div class="avatar-xs">
+
+                                        </div>
+                                    </div>
+                                    <h4 class="m-0 align-self-center">0.06</h4>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                    </div>
+
+
+
+                </div>
+                <div class="col-lg-6">
+                    <h5>Budget Statistics</h5>
+                    <div class="row">
+
+                        <div class="col-sm-12 col-xl-12">
+
+                            <div class="card">
+
+                                <div class="card-body" style="padding-bottom: 29px;">
+
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <h5 class="font-size-14">Budget | Spent | Ranking </h5>
+                                        </div>
+                                        <div class="avatar-xs">
+
+                                        </div>
+                                    </div>
+                                    <h4 class="m-0 align-self-center">$100,000 | $30.000 | $600.000</h4>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+                    </div>
+
+
+
+                </div>
+
+
+
+            </div>
+            <h5>Upcoming Milestone</h5>
+            <div class="row">
+
+
+
+                <div class="col-sm-4 col-xl-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="media-body">
+                                    <h5 class="font-size-14">Fish Foundation Work</h5>
+                                </div>
+                                <div class="avatar-xs">
+                                    <span class="avatar-title rounded-circle bg-primary">
+                                        <i class="dripicons-box"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <h4 class="m-0 align-self-center">Jan 01,2023</h4>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4 col-xl-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="media-body">
+                                    <h5 class="font-size-14">Complete electrical wiring </h5>
+                                </div>
+                                <div class="avatar-xs">
+                                    <span class="avatar-title rounded-circle bg-primary">
+                                        <i class="dripicons-briefcase"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <h4 class="m-0 align-self-center">Dec 31, 2023</h4>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-4 col-xl-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="media-body">
+                                    <h5 class="font-size-14">Complete Plumbing Installations</h5>
+                                </div>
+                                <div class="avatar-xs">
+                                    <span class="avatar-title rounded-circle bg-primary">
+                                        <i class="dripicons-tags"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <h4 class="m-0 align-self-center">10 Companies</h4>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <h4 class="header-title mb-4">Project Leads</h4>
+
+
+            <div class="row">
+                <div class="col-md-4 col-xl-4">
+
+                    <div class="card">
+
+                        <div class="card-body" style="border-top: 1px solid white;">
+                            <a href="#" class="card-link" style="color: white;">Company</a>
+                            <a href="#" class="card-link">Company A</a>
+                        </div>
+                        <div class="card-body" style="border-top: 1px solid white;">
+                            <a href="#" class="card-link" style="color: white;">Name</a>
+                            <a href="#" class="card-link">John Deo</a>
+                        </div>
+                        <div class="card-body" style="border-top: 1px solid white;">
+                            <a href="#" class="card-link" style="color: white;">Email</a>
+                            <a href="#" class="card-link">
+
+                                John.deo@example.com
+                            </a>
+                        </div>
+                        <div class="card-body" style="border-top: 1px solid white;">
+                            <a href="#" class="card-link" style="color: white;">Phone</a>
+                            <a href="#" class="card-link">
+
+                                (123) 456-7890
+                            </a>
+                        </div>
+                    </div>
+
+                </div><!-- end col -->
+                <div class="col-md-4 col-xl-4">
+
+                    <div class="card">
+
+                        <div class="card-body" style="border-top: 1px solid white;">
+                            <a href="#" class="card-link" style="color: white;">Company</a>
+                            <a href="#" class="card-link">Company B</a>
+                        </div>
+                        <div class="card-body" style="border-top: 1px solid white;">
+                            <a href="#" class="card-link" style="color: white;">Name</a>
+                            <a href="#" class="card-link">John Deo</a>
+                        </div>
+                        <div class="card-body" style="border-top: 1px solid white;">
+                            <a href="#" class="card-link" style="color: white;">Email</a>
+                            <a href="#" class="card-link">
+
+                                John.deo@example.com
+                            </a>
+                        </div>
+                        <div class="card-body" style="border-top: 1px solid white;">
+                            <a href="#" class="card-link" style="color: white;">Phone</a>
+                            <a href="#" class="card-link">
+
+                                (123) 456-7890
+                            </a>
+                        </div>
+                    </div>
+
+                </div><!-- end col -->
+                <div class="col-md-4 col-xl-4">
+
+                    <div class="card">
+
+                        <div class="card-body" style="border-top: 1px solid white;">
+                            <a href="#" class="card-link" style="color: white;">Company</a>
+                            <a href="#" class="card-link">Company C</a>
+                        </div>
+                        <div class="card-body" style="border-top: 1px solid white;">
+                            <a href="#" class="card-link" style="color: white;">Name</a>
+                            <a href="#" class="card-link">John Deo</a>
+                        </div>
+                        <div class="card-body" style="border-top: 1px solid white;">
+                            <a href="#" class="card-link" style="color: white;">Email</a>
+                            <a href="#" class="card-link">
+
+                                John.deo@example.com
+                            </a>
+                        </div>
+                        <div class="card-body" style="border-top: 1px solid white;">
+                            <a href="#" class="card-link" style="color: white;">Phone</a>
+                            <a href="#" class="card-link">
+
+                                (123) 456-7890
+                            </a>
+                        </div>
+                    </div>
+
+                </div><!-- end col -->
+
+            </div>
+            <h5>Project Risks</h5>
+            <div class="row">
+
+
+
+                <div class="col-sm-6 col-xl-6">
+                    <div class="card">
+                        <div class="card-body" style="padding-bottom: 44px
+                    !important
+                    ;">
+                            <div class="media">
+                                <div class="media-body">
+                                    <h5 class="font-size-14">Weather Delays</h5>
+                                </div>
+                                <div class="avatar-xs">
+                                    <span class="avatar-title rounded-circle bg-primary">
+                                        <i class="dripicons-box"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <h4 class="m-0 align-self-center">
+                                Possible Stroms in September
+                            </h4>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 col-xl-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="media">
+                                <div class="media-body">
+                                    <h5 class="font-size-14">Supply Shortages </h5>
+                                </div>
+                                <div class="avatar-xs">
+                                    <span class="avatar-title rounded-circle bg-primary">
+                                        <i class="dripicons-briefcase"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <h4 class="m-0 align-self-center">Possible Shortage in Construction material</h4>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <h4 class="header-title">Time Spent By Phase</h4>
+
+
+                            <div id="flot-line-3" style="height: 320px"></div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- end col -->
+
+
+
+            </div>
+
+
+
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="header-title">Project Key Tasks</h4>
+
+                            <div class="">
+                                <div class="progress" style="height: 24px !important; margin-bottom: 20px;
+                        ">
+                                    <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <!-- <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div> -->
+                                    <!-- <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div> -->
+                                    <p style="color: white;font-size: 14px;height: 20px;padding-left: 5px;">Company R 40</p>
+
+                                </div>
+                                <div class="progress" style="height: 24px !important; margin-bottom: 20px;
+                        ">
+                                    <div class="progress-bar" role="progressbar" style="width: 45%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <!-- <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div> -->
+                                    <p style="color: white;font-size: 14px;height: 20px;padding-left: 5px;">Company R 70</p>
+
+                                </div>
+                                <div class="progress" style="height: 24px !important; margin-bottom: 20px;
+                        ">
+                                    <div class="progress-bar" role="progressbar" style="width: 65%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar bg-info" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <!-- <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div> -->
+                                    <p style="color: white;font-size: 14px;height: 20px;padding-left: 5px;">Company R 85</p>
+
+                                </div>
+                                <div class="progress" style="height: 24px !important; margin-bottom: 20px;
+                            ">
+                                    <div class="progress-bar" role="progressbar" style="width: 45%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 40%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <!-- <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div> -->
+                                    <p style="color: white;font-size: 14px;height: 20px;padding-left: 5px;">Company R 60</p>
+
+                                </div>
+                                <div class="progress" style="height: 24px !important; margin-bottom: 20px;
+                                ">
+                                    <div class="progress-bar" role="progressbar" style="width: 35%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 20%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <!-- <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div> -->
+                                    <p style="color: white;font-size: 14px;height: 20px;padding-left: 5px;">Company R 50</p>
+
+                                </div>
+                                <div class="progress" style="height: 24px !important; margin-bottom: 20px;
+                                ">
+                                    <div class="progress-bar" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 15%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <!-- <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div> -->
+                                    <p style="color: white;font-size: 14px;height: 20px;padding-left: 5px;">Company R 45</p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="card">
+                        <div class="card-body" style="padding-bottom: 46px;">
+                            <h4 class="header-title mb-4">Task Distribution By Company</h4>
+                            <p style="color: white;">50% Completed out of 250 Task</p>
+                            <div id="donut_chart" class="apex-charts" dir="ltr"></div>
+                        </div>
+                    </div>
+                </div> <!-- end col -->
+
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="header-title mb-4">Completion Rate By Phases</h4>
+
+                            <div id="column_chart" class="apex-charts" dir="ltr"></div>
+                        </div>
+                    </div><!--end card-->
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-6">
+                    <div class="card">
+                        <div class="card-body" style="padding-bottom: 46px;">
+                            <h5>Smart Contract Network</h5>
+                            <div id="mynetwork"></div>
+                        </div>
+                    </div>
+                </div> <!-- end col -->
+
+                <div class="col-xl-6">
+                    <div class="card">
+                        <div class="card-body" style="padding-bottom: 46px;">
+                            <h4 class=" header-title mb-3 pl-3" style=""> Critical Activity-Group Network Visualization</h4>
+                            <div class="row mb-4 pl-3">
+                                <div class="col-lg-12">
+                                    <div id="mynetwork5" style="height: 310px !important;">
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div><!--end card-->
+                </div>
+            </div>
+            <h5>Milestone Smart Contract Status</h5>
+            <p> Click a milestone  node in the network above and then click "Check Status" to see the status of corresponding milestone smart contract</p>
+
+            <div class="row">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+
+
+
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-md-12 col-form-label">Milestone ID</label>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="text" placeholder="Enter Milestone ID" id="example-text-input" style="background-color: #0e2841 !important;
+                                border-color: #0e2841 !important;">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="example-date-input" class="col-md-12 col-form-label">Start Date</label>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="date" placeholder="2019-08-19" id="example-date-input" style="background-color: #0e2841 !important;
+                                border-color: #0e2841 !important;">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div class="form-group row">
+                                <label for="example-date-input" class="col-md-12 col-form-label">End Date</label>
+                                <div class="col-md-12">
+                                    <input class="form-control bg-white" type="date" placeholder="2019-08-19" id="example-date-input" style="background-color: #0e2841 !important;
+                                border-color: #0e2841 !important;">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-tel-input" class="col-md-12 col-form-label">Duration</label>
+                                <div class="col-md-12">
+                                    <input class="form-control bg-white" type="tel" placeholder="Duration" id="example-tel-input" style="background-color: #0e2841 !important;
+                                border-color: #0e2841 !important;">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- end col -->
+            </div>
+            <button type="button" class="btn btn-outline-primary btn-lg waves-effect waves-light">
+                <i class="mdi mdi-playlist-check"></i> Check Status
+            </button>
+            <div class="row mt-4">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="header-title pb-4">Smart Contracts</h4>
+
+
+                            <div class="table-responsive">
+                                <table class="table table-striped mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Contract </th>
+                                            <th>Parties</th>
+                                            <th>Trigger</th>
+                                            <th> Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">Fund Release on Task Comnpletion</th>
+                                            <td>Company R, Company B</td>
+                                            <td>Task A Completion</td>
+                                            <td>Active</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Dispute Resolution</th>
+                                            <td>Company B, Company C</td>
+                                            <td>Task A Completion</td>
+                                            <td>Pending</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Release of Final Payments</th>
+                                            <td>Company C, Company B</td>
+                                            <td>Task A Completion</td>
+                                            <td>Pending</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Extra Work Order</th>
+                                            <td>Company C, Company B</td>
+                                            <td>Task A Completion</td>
+                                            <td>Resolved</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Quality Assurance</th>
+                                            <td>Company C, Company B</td>
+                                            <td>Task A Completion</td>
+                                            <td>Resolved</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">Time Extension Request</th>
+                                            <td>Company C, Company B</td>
+                                            <td>Task A Completion</td>
+                                            <td>Pending</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h5>Dispute Resolution</h5>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card card-body">
+                        <h3 class="card-title font-size-16 mt-0">Dispute Resolution</h3>
+                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto ipsam assumenda veritatis neque. Quo dolores porro pariatur, esse debitis labore.</p>
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card card-body">
+                        <h3 class="card-title font-size-16 mt-0">Dispute Resolution Process</h3>
+                        <p class="card-text">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odit quibusdam magnam quo recusandae? Dignissimos nostrum iusto, esse neque similique voluptas.</p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="header-title pb-4">Dispute Resolution</h4>
+
+
+                            <div class="table-responsive">
+                                <table class="table table-striped mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>Dispute ID </th>
+                                            <th>Parties</th>
+                                            <th>Description</th>
+                                            <th> Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">DR001</th>
+                                            <td>Company R, Company B</td>
+                                            <td>Delayed Payment</td>
+                                            <td>Resolved</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">DR002</th>
+                                            <td>Company C, Company D</td>
+                                            <td>Quality Assurance issue</td>
+                                            <td>Liver Investigation</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">DR003</th>
+                                            <td>Company C, Company B</td>
+                                            <td>Scope Change Request</td>
+                                            <td>Active</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">DR004</th>
+                                            <td>Company C, Company B</td>
+                                            <td>Task A Completion</td>
+                                            <td>Resolved</td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">DR005</th>
+                                            <td>Company C, Company B</td>
+                                            <td>Task A Completion</td>
+                                            <td>Active</td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h5>DLT - Based Milestone Managemnt</h5>
+            <p>Propose, accept, and validate project milestones with DLT - based smart contracts.</p>
+            <div class="row">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body" style="padding-bottom: 29px;">
+
+
+
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-md-12 col-form-label">Proposal ID</label>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="text" placeholder="Enter Proposal ID" id="example-text-input" style="background-color: #0e2841 !important;
+                            border-color: #0e2841 !important;">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Milestone Description</label>
+                                <div>
+                                    <textarea required class="form-control" rows="1" style="background-color: #0e2841 !important;
+                            border-color: #0e2841 !important;"></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-md-12 col-form-label">Add Participants ID</label>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="text" placeholder="Enter Participants ID" id="example-text-input" style="background-color: #0e2841 !important;
+                            border-color: #0e2841 !important;">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-tel-input" class="col-md-12 col-form-label">Add Participants</label>
+                                <div class="col-md-12">
+                                    <button type="button" class="btn btn-outline-secondary waves-effect waves-light" style="width: 100%;">Add Participants</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- end col -->
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+
+
+
+                            <div class="form-group row">
+                                <label for="example-date-input" class="col-md-12 col-form-label">Estimation Complete Date</label>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="date" placeholder="2019-08-19" id="example-date-input" style="background-color: #0e2841 !important;
+                            border-color: #0e2841 !important;">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="example-date-input" class="col-md-12 col-form-label">Planned Date of Achivement</label>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="date" placeholder="2019-08-19" id="example-date-input" style="background-color: #0e2841 !important;
+                            border-color: #0e2841 !important;">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div class="form-group row">
+                                <label for="example-date-input" class="col-md-12 col-form-label">Milestone Budget</label>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="text" placeholder="Enter Milestone Budget" id="example-text-input" style="background-color: #0e2841 !important;
+                            border-color: #0e2841 !important;">
+                                </div>
+                            </div>
+                            <div class="form-group row" style="padding: 0 12px 10px 12px !important;">
+                                <label>Zip</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="validationCustomFile" required="" style="background-color:#0e2841 !important;">
+                                    <label class="custom-file-label" for="validationCustomFile" style="background-color:#0e2841 !important; border-color: #0e2841 !important;
+                                                    ">Choose file...</label>
+                                    <div class="invalid-feedback">
+                                        Example invalid custom file feedback
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- end col -->
+            </div>
+
+
+
+            <div class="col-lg-12">
+                <form class="app-search d-none d-lg-block p-0">
+                    <div class="d-flex">
+
+                        <div class="mt-1"> <a href="#" class='superBtn search-btn' style="padding: 13px !important;">Propose Milestone</a></div>
+                        <button type="button" class="btn btn-outline-primary btn-lg waves-effect waves-light" style="padding: 10px;
+                    margin-left: 20px;">
+                            <i class="mdi mdi-playlist-check"></i> Reset Form
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <h5 class="pt-4">Validate Milestone Smart Contract</h5>
+            <p>Validate the completion of milestone.</p>
+
+            <div class="row">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+
+
+
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-md-12 col-form-label">Validator ID</label>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="text" placeholder="Enter Validator ID" id="example-text-input" style="background-color: #0e2841 !important;
+                        border-color: #0e2841 !important;">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-md-12 col-form-label">Milestone ID</label>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="text" placeholder="Enter Milestone ID" id="example-text-input" style="background-color: #0e2841 !important;
+                        border-color: #0e2841 !important;">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Proposed Milestone Description</label>
+                                <div>
+                                    <textarea required class="form-control" rows="1" style="background-color: #0e2841 !important;
+                        border-color: #0e2841 !important;"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-date-input" class="col-md-12 col-form-label">Proposed Estimated Completion Date</label>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="date" placeholder="2019-08-19" id="example-date-input" style="background-color: #0e2841 !important;
+                        border-color: #0e2841 !important;">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-md-12 col-form-label">Proposed Milestone Budget</label>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="text" placeholder="Enter Milestone Budget" id="example-text-input" style="background-color: #0e2841 !important;
+                        border-color: #0e2841 !important;">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+
+
+
+                            <div class="form-group" style="padding-top: 10px;">
+                                <label>Validation Comment</label>
+                                <div>
+                                    <textarea required class="form-control" rows="1" style="background-color: #0e2841 !important;
+                        border-color: #0e2841 !important;"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-md-12 col-form-label">Proposed Milestone Title</label>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="text" placeholder="Enter Proposed Title" id="example-text-input" style="background-color: #0e2841 !important;
+                        border-color: #0e2841 !important;">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-md-12 col-form-label">Proposed Participants</label>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="text" placeholder="Enter Proposed Participants" id="example-text-input" style="background-color: #0e2841 !important;
+                        border-color: #0e2841 !important;">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="example-date-input" class="col-md-12 col-form-label">Proposed Planned Date of Achivements</label>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="date" placeholder="2019-08-19" id="example-date-input" style="background-color: #0e2841 !important;
+                        border-color: #0e2841 !important;">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Propose Change</label>
+                                <div>
+                                    <textarea required class="form-control" rows="1" style="background-color: #0e2841 !important;
+                        border-color: #0e2841 !important;"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-12">
+                <form class="app-search d-none d-lg-block p-0">
+                    <div class="d-flex">
+
+                        <div class="mt-1"> <a href="#" class='superBtn search-btn' style="padding: 13px !important;">Validate Milestone</a></div>
+                        <button type="button" class="btn btn-outline-primary btn-lg waves-effect waves-light" style="padding: 10px;
+            margin-left: 20px !important;">
+                            <i class="mdi mdi-playlist-check"></i> Reset Form
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <!-- <button type="button" class="btn btn-primary waves-effect waves-light" style="margin-left: 5px;">Reset Form</button> -->
+
+            <h5 class="pt-4">Propose Milestone Completion</h5>
+            <p>Propose the completion of amilestone and attach relevant signed documents </p>
+
+
+            <div class="row">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+
+
+
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-md-12 col-form-label">Milestone ID</label>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="text" placeholder="Enter Milestone ID" id="example-text-input" style="background-color: #0e2841 !important;
+                            border-color: #0e2841 !important;">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-md-12 col-form-label">Current Contract State</label>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="text" placeholder=" Enter Current Contract State" id="example-text-input" style="background-color: #0e2841 !important;
+                            border-color: #0e2841 !important;">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-md-12 col-form-label">Proposed Contract State</label>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="text" placeholder=" Enter Proposed Contract State" id="example-text-input" style="background-color: #0e2841 !important;
+                            border-color: #0e2841 !important;">
+                                </div>
+                            </div>
+                            <div class="form-group row" style="padding: 0 12px 10px 12px !important;">
+                                <label>Upload Signed Documents</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="validationCustomFile" required="" style="background-color:#0e2841 !important;">
+                                    <label class="custom-file-label" for="validationCustomFile" style="background-color:#0e2841 !important; border-color: #0e2841 !important;
+                                                    ">Choose file...</label>
+                                    <div class="invalid-feedback">
+                                        Example invalid custom file feedback
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- end col -->
+            </div>
+            <div class="col-lg-12">
+                <div class="mt-1"> <a href="#" class='superBtn com-btn'>Propose Completion</a></div>
+            </div>
+            <h5 class="pt-4">Approve Reject Milestone Completion</h5>
+            <p>Review a Proposed Milestone Completion and Approve or reject it. </p>
+            <div class="mt-4 mt-lg-0 mb-4">
+
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-outline-primary active">
+                        <input type="radio" name="options" id="option1" checked> Accept
+                    </label>
+                    <label class="btn btn-outline-primary">
+                        <input type="radio" name="options" id="option2"> Reject
+                    </label>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <div class="card">
+                        <div class="card-body">
+
+
+
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-md-12 col-form-label">Milestone ID</label>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="text" placeholder="Enter Milestone ID" id="example-text-input" style="background-color: #0e2841 !important;
+                            border-color: #0e2841 !important;">
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div class="form-group row" style="padding: 10px 12px 0px 12px !important;">
+                                <label>Upload Signed Documents</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="validationCustomFile" required="" style="background-color:#0e2841 !important;">
+                                    <label class="custom-file-label" for="validationCustomFile" style="background-color:#0e2841 !important; border-color: #0e2841 !important;
+                                                    ">Choose file...</label>
+                                    <div class="invalid-feedback">
+                                        Example invalid custom file feedback
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="card">
+                        <div class="card-body">
+
+
+                            <div class="form-group row">
+                                <label for="example-text-input" class="col-md-12 col-form-label">Enter Role in Project</label>
+                                <div class="col-md-12">
+                                    <input class="form-control" type="text" placeholder="Enter Role in Project" id="example-text-input" style="background-color: #0e2841 !important;
+                            border-color: #0e2841 !important;">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- end col -->
+            </div>
+            <h4 class="mb-0 font-size-18 pb-3">Transcation History</h4>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+
+
+                            <div class="table-responsive">
+                                <table class="table mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th style="color: aliceblue;">Transaction ID</th>
+                                            <th style="color: aliceblue;">Sender</th>
+                                            <th style="color: aliceblue;">Receiver</th>
+                                            <th style="color: aliceblue;">Amount</th>
+                                            <th style="color: aliceblue;">Timestamp</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+
+                                            <td>TX001</td>
+                                            <td>Company R</td>
+                                            <td>Company B</td>
+                                            <td>$200,000</td>
+                                            <td>2023-01-01 12.00.00</td>
+                                        </tr>
+                                        <tr>
+
+                                            <td>TX002</td>
+                                            <td>Company F</td>
+                                            <td>Company B</td>
+                                            <td>$300,000</td>
+                                            <td>2023-01-01 12.00.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td>TX003</td>
+                                            <td>Company B</td>
+                                            <td>Company C</td>
+                                            <td>$500,000</td>
+                                            <td>2023-01-01 12.00.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td>TX004</td>
+                                            <td>Company D</td>
+                                            <td>Company B</td>
+                                            <td>$100,000</td>
+                                            <td>2023-01-01 12.00.00</td>
+                                        </tr>
+                                        <tr>
+                                            <td>TX005</td>
+                                            <td>Company R</td>
+                                            <td>Company B</td>
+                                            <td>$400,000</td>
+                                            <td>2023-01-01 12.00.00</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div> <!-- container-fluid -->
+    </div>
+    <!-- End Page-content -->
+</div>
+
