@@ -25,6 +25,7 @@
                 </div>
             </div>
             <!-- end page title -->
+<<<<<<< Updated upstream
             <div class="row">
                 <div class="col-lg-12">
                     <form class="app-search d-none d-lg-block p-0">
@@ -68,10 +69,41 @@
                                     <div id="bar_chart1" class="apex-charts" dir="ltr"></div>
 
                                 </div>
+=======
+            <div class="col-md-12 mt-3 mb-0">
+                <div class="card mb-0">
+                    <div class="card-body">
+                        <h4 class="header-title mb-4">Portfolio Metrics</h4>
+                        <div class="row">
+                            <div class="col-6">
+                                <h5 class="font-size-12">Project Completion Status by Phase</h5>
+                                <div id="donut_chart" class="apex-charts" dir="ltr"></div>
+
+                            </div>
+                            <div class="col-6">
+                                <h5 class="font-size-12">Project Risk Levels</h5>
+                                <div id="bar_chart" class="apex-charts" dir="ltr"></div>
+
+
+                            </div>
+                            <div class="col-6 mt-2">
+                                <h5 class="font-size-12">Project Completion Status</h5>
+                                <div id="pie_chart" class="apex-charts" dir="ltr"></div>
+
+
+                            </div>
+                            <div class="col-6 mt-2">
+                                <h5 class="font-size-12">
+                                    Project Status Counts
+                                </h5>
+                                <div id="bar_chart1" class="apex-charts" dir="ltr"></div>
+
+>>>>>>> Stashed changes
                             </div>
                         </div>
                     </div>
                 </div>
+<<<<<<< Updated upstream
                 <div class="col-12 mt-3">
                     @if (Convert.ToInt32(Session["RoleId"]) == 2 || Convert.ToInt32(Session["RoleId"]) == 4)
                     {
@@ -81,6 +113,32 @@
                     }
 
                 </div>
+=======
+            </div>
+            <div class="col-12 mt-3">
+                @if (Convert.ToInt32(Session["RoleId"]) == 2 || Convert.ToInt32(Session["RoleId"]) == 4 || Convert.ToInt32(Session["RoleId"]) == 5)
+                {
+                    <button type="button" class="btn btn-outline-primary btn-lg waves-effect waves-light" onclick="location.href='@Url.Action("AddEditProject", "Project")'">
+                        <i class="mdi mdi-shape-square-plus"></i> Create New Project
+                    </button>
+                }
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <form class="app-search d-none d-lg-block p-0">
+                    <div class="d-flex">
+                        <div class="position-relative w-75 mr-3">
+                            <input style=" height 49.5px;" type="search"
+                                   class="form-control bg-lite rounded-lg" placeholder="Search for projects..."
+                                   id="example-search-input">
+                            <span class="mdi mdi-magnify"></span>
+                        </div>
+                        <div class="mt-1"> <a id="btnSearch" class='superBtn search1-btn'>Search</a></div>
+                    </div>
+                </form>
+>>>>>>> Stashed changes
             </div>
             <div class="row mt-3">
                 <div class="col-lg-12">
@@ -146,6 +204,13 @@
         text-overflow: ellipsis;
         white-space: nowrap;
     }
+<<<<<<< Updated upstream
+=======
+
+    .dataTables_filter, .dataTables_info {
+        display: none;
+    }
+>>>>>>> Stashed changes
 </style>
 
 <script type="text/javascript">
@@ -157,13 +222,25 @@
         $('#liUsers').addClass("active");
 
         //var reset = 0;
+<<<<<<< Updated upstream
         var value = '@Request.RequestContext.HttpContext.Session["LoggedInUserId"]';
+=======
+        @*var value = '@Request.RequestContext.HttpContext.Session["LoggedInUserId"]';
+>>>>>>> Stashed changes
         var value1 = '@Request.RequestContext.HttpContext.Session["RoleId"]';
         var objFilter = {
             userid: value,
             roleid: value1
+<<<<<<< Updated upstream
         }
 
+=======
+        }*@
+        var value1 = $('#example-search-input').val();
+        var objFilter = {
+            organization: value1
+        }
+>>>>>>> Stashed changes
         debugger;
         $("#tblProject").DataTable(
         {
@@ -171,6 +248,7 @@
             serverSide: true,
             filter: false,
             orderMulti: false,
+<<<<<<< Updated upstream
             paging:false,
             //pageLength: 75,
             //Sort: true,
@@ -263,6 +341,101 @@
             style: 'multi',
             selector: 'td:first-child'
         },
+=======
+            paging: false,
+            "bFilter": true,
+            //pageLength: 75,
+            //Sort: true,
+            "ajax": {
+                url: '@Url.Action("projectlist", "Project")',
+                type: 'POST',
+                data: objFilter
+            },
+            //aLengthMenu: [[75, 100, 500, 1000, -1], [75, 100, 500, 1000, "All"]],
+            //iDisplayLength: 75,
+            aoColumnDefs: [{
+                bSortable: false,
+                aTargets: [-1, -2]
+            }],
+            "bAutoWidth": false,
+            "info": true,
+            columns: [
+                { 'data': 'projectname', 'name': 'Project Name' },
+                { 'data': 'createdusername', 'name': 'Project Manager' },
+                {
+                    'data': 'startdate', 'name': 'Start Date',
+                    'render': function (jsonDate) {
+                        if (jsonDate != null) {
+                            var date = new Date(parseInt(jsonDate.substr(6)));
+                            var month = ("0" + (date.getMonth() + 1)).slice(-2);
+                            return month + '-' + ("0" + date.getDate()).slice(-2) + '-' + date.getFullYear();
+                        }
+                        else {
+                            return "";
+                        }
+                    }
+                },
+                {
+                    'data': 'enddate', 'name': 'End Date',
+                    'render': function (jsonDate) {
+                        if (jsonDate != null) {
+                            var date = new Date(parseInt(jsonDate.substr(6)));
+                            var month = ("0" + (date.getMonth() + 1)).slice(-2);
+                            return month + '-' + ("0" + date.getDate()).slice(-2) + '-' + date.getFullYear();
+                        }
+                        else {
+                            return "";
+                        }
+                    }
+                },
+                { 'data': 'projectstatus', 'name': 'Project Status' },
+                {
+                    data: 'projectname', render: function (data, type, full, row) {
+                        return '<div class="progress"><div class="progress-bar progress-bar-table" role="progressbar" style="width: "' + full.progress + '"%;" aria-valuenow="' + full.progress + '" aria-valuemin="0" aria-valuemax="100">' + full.progress + '%</div></div>';
+                    }
+                },
+                {
+                    "render": function (data, type, full, meta) {
+
+                        var value1 = '@Request.RequestContext.HttpContext.Session["RoleId"]';
+                        var value2 = '@Request.RequestContext.HttpContext.Session["LoggedInUserId"]';
+                        if (value1 == '2' || value1 == '4' || value1 == '3' || value1 == '5') {
+                            if (value2 == full.createdby || value1 == 4) {
+                                return '<a style="padding-right:3px;"> <button type="button" class="btn btn-outline-primary btn-sm waves-effect waves-light" onclick=getProject("' + full.projectid + '")>Edit</button></a>' +
+                                '<a style="padding-right:3px;"><button type="button" class="btn btn-outline-secondary btn-sm waves-effect waves-light" onclick=OpenProject("' + full.projectid + '")>Open</button></a>' +
+                                '<button type="button" class="btn btn-outline-danger btn-sm waves-effect waves-light">Delete</button>';
+                            }
+                            else {
+                                return '<a style="padding-right:3px;"> <button type="button" class="btn btn-outline-primary btn-sm waves-effect waves-light" disable="disabled" onclick=getProject("' + full.projectid + '")>Edit</button></a>' +
+                                '<a style="padding-right:3px;"><button type="button" class="btn btn-outline-secondary btn-sm waves-effect waves-light" onclick=OpenProject("' + full.projectid + '")>Open</button></a>' +
+                                '<button type="button" class="btn btn-outline-danger btn-sm waves-effect waves-light">Delete</button>';
+                            }
+                        }
+                        else {
+                            return '<a style="padding-right:3px;"> <button type="button" class="btn btn-outline-primary btn-sm waves-effect waves-light" disable="disabled" onclick=getProject("' + full.projectid + '")>Edit</button></a>' +
+                                '<a style="padding-right:3px;"><button type="button" class="btn btn-outline-secondary btn-sm waves-effect waves-light" onclick=OpenProject("' + full.projectid + '")>Open</button></a>' +
+                                '<button type="button" class="btn btn-outline-danger btn-sm waves-effect waves-light">Delete</button>';
+                        }
+                    }
+                }
+                //,
+                //{
+                //    data: 'projectname', render: function (data, type, row) {
+                //        return '<a onclick=return OpenProject("' + encodeURIComponent(row.projectid) + '"); type="button" class="btn btn-outline-secondary btn-sm waves-effect waves-light">Open</a>';
+                //    }
+                //}
+                //,
+                //{
+                //    data: 'projectname', render: function (data, type, row) {
+                //        return "<button type='button' class='btn btn-outline-danger btn-sm waves-effect waves-light'>Delete</button>";
+                //    }
+                //}
+            ],
+            select: {
+                style: 'multi',
+                selector: 'td:first-child'
+            },
+>>>>>>> Stashed changes
         });
     });
 
@@ -270,7 +443,11 @@
     //<a href="master-dashboard.html" type="button" class="btn btn-outline-secondary btn-sm waves-effect waves-light">Open</a>
     //<button type="button" class="btn btn-outline-danger btn-sm waves-effect waves-light">Delete</button>
     function getProject(id) {
+<<<<<<< Updated upstream
         debugger;
+=======
+
+>>>>>>> Stashed changes
         location.href = '@Url.Action("AddEditrecord", "Project", new { id = "id" })'.replace('id', id);
         //location.href = '@Url.Action("AddEditrecord", "Project")?id=' + projectid + '';
     }
@@ -295,8 +472,37 @@
         return false;
     }
 
+<<<<<<< Updated upstream
+=======
+    //$('#example-search-input').keyup(function () {
+    //    $('#tblProject').search($(this).val()).draw();
+    //})
+    //$("#tblProject_filter").addClass("hidden"); // hidden search input
+
+    //$("#btnSearch").on("click", function (e) {
+    //    e.preventDefault();
+    //    $('#tblProject').DataTable().search($(this).val()).draw();
+    //});
+
+    $("#btnSearch").click(function () {
+        debugger;
+        var search = $('#example-search-input').val();
+        //alert(search);
+        $("#tblProject").DataTable().column(0).search(search).draw();
+        $("#tblProject").DataTable().search(search).draw();
+    });
+
+    //var oTable = $('#tblProject').DataTable();
+    //$('#example-search-input').keyup(function () {
+    //    oTable.search($(this).val()).draw();
+    //})
+
+>>>>>>> Stashed changes
     function msg(strMsg, mode) {
         $.notify(strMsg, mode, { globalPosition: 'top center', clickToHide: true, autoHide: false });
     }
 </script>
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes

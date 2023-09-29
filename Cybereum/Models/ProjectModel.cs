@@ -21,8 +21,13 @@ namespace Cybereum.Models
 
     public class tbltaskcompletion
     {
+<<<<<<< Updated upstream
         public string status { get; set; }
         public int taskcount { get; set; }
+=======
+        public string label { get; set; }
+        public int value { get; set; }
+>>>>>>> Stashed changes
     }
 
 }

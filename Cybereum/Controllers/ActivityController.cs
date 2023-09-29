@@ -398,6 +398,7 @@ namespace Cybereum.Controllers
                 tbl_activity.enddate = IGUtilities.CalculateDays(tbl_activity.startdate, duration);
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
                 //**********Checking for task start and end date*************
                 var enddate = Getstartactivitydate(tbl_activity.projectid, tbl_activity.startdate);
@@ -412,6 +413,8 @@ namespace Cybereum.Controllers
                 }
                 //**********End*********
 =======
+=======
+>>>>>>> Stashed changes
                 if (tbl_activity.activityname != ConfigurationManager.AppSettings["StartActivity"].ToString())
                 {
                     //**********Checking for task start and end date*************
@@ -427,6 +430,9 @@ namespace Cybereum.Controllers
                     }
                     //**********End*********
                 }
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
 
@@ -504,12 +510,15 @@ namespace Cybereum.Controllers
                     tbl_activity.id = IGUtilities.getlastactivityid(tbl_activity.activityname, tbl_activity.projectid);
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                     result = IGUtilities.ExecuteGremlinScript(gremlinScript);
                     foreach (var result2 in result)
                     {
                         tbl_activity.id = Convert.ToString(result2["id"]);
                     }
 
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
                     ////Remove connection the project to activity
@@ -548,8 +557,11 @@ namespace Cybereum.Controllers
                                             $".property('progress', '{tbl_activity.progress}')" +
                                             $".property('ismilestone', '{tbl_activity.ismilestone}')" + a +
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                                             //$".property('createdby', '{Convert.ToInt32(tbl_activity.createdby)}')" +
                                             //$".property('createdusername', '')" +
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
                                             $".property('linktype','{tbl_activity.linktype}')" +

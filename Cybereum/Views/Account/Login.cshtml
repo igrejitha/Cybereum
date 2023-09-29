@@ -124,28 +124,41 @@
 <div class="row no-gutters">
     <div class="col-xl-12">
         <div class="auth-form">
+<<<<<<< Updated upstream
             @*<div class="text-center"><img src="~/images/cyber/Blue_Logo.png" alt="" width="15%"></div>*@
                 <h3 class="text-center mb-4">Login</h3>
+=======
+            <h3 class="text-center mb-4">Login</h3>
+>>>>>>> Stashed changes
 
             <span class="text-danger" style="align-items:center;">
                 @ViewBag.Message
             </span>
 
+<<<<<<< Updated upstream
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form",id = "loginForm"  }))
+=======
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "loginForm" }))
+>>>>>>> Stashed changes
             {
                 <div class="row">
                     <div class="col-md-12">
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                         <div class="form-group mb-4">
+<<<<<<< Updated upstream
                             @*@Html.LabelFor(m => m.Email, new { @class = "mb-1" })*@
                             <label class="mb-1"><strong>Email ID</strong></label>
                             @*<input type="email" class="form-control" placeholder="hello@example.com">*@
+=======
+                            <label class="mb-1"><strong>Email ID</strong></label>
+>>>>>>> Stashed changes
                             @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "hello@example.com" })
                             @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                         </div>
                         <div class="form-group mb-4">
                             <label class="mb-1"><strong>Password</strong></label>
+<<<<<<< Updated upstream
                             @*<input type="password" class="form-control" placeholder="Password">*@
                             @Html.PasswordFor(m => m.password, new { @class = "form-control", @placeholder = "Password" })
                             @Html.ValidationMessageFor(m => m.password, "", new { @class = "text-danger" })
@@ -156,6 +169,13 @@
                         <div class="mt-5 mb-0">                            
                             @*<button type="submit" class="btn btn btn-block" href="" style="background-color: #0D2136; color: white;">Login</button>*@
                             <a class="superbtn log-btn ml-2" onclick="loginForm.submit();"><button type="submit" style="display:none;" ></button>Login</a>
+=======
+                            @Html.PasswordFor(m => m.password, new { @class = "form-control", @placeholder = "Password" })
+                            @Html.ValidationMessageFor(m => m.password, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="mt-5 mb-0">
+                            <a class="superbtn log-btn ml-2" onclick="loginForm.submit();"><button type="submit" style="display:none;"></button>Login</a>
+>>>>>>> Stashed changes
                         </div>
                     </div>
                 </div>
@@ -163,7 +183,10 @@
             <div class="new-account mt-3">
                 <p>
                     @Html.ActionLink("Forgot Password?", "ForgotPassword", null, new { @class = "text-primary", @style = "color:#0D2136;" })
+<<<<<<< Updated upstream
                     @*<a href="auth-recoverpw.html" class="text-muted"><i class="mdi mdi-lock"></i> Forgot your password?</a>*@
+=======
+>>>>>>> Stashed changes
                 </p>
                 <p>
                     Don't have an account?
@@ -177,4 +200,7 @@
         </div>
     </div>
 </div>
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes

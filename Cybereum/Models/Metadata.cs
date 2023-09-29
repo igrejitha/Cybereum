@@ -1507,6 +1507,10 @@ namespace Cybereum.Models
         public string ParentId { get; set; }
         public int user_id { get; set; }
         public string color { get; set; }
+<<<<<<< Updated upstream
+=======
+        public bool ismilestone { get; set; }
+>>>>>>> Stashed changes
     }
 
     public class GanttUser
@@ -1527,7 +1531,12 @@ namespace Cybereum.Models
         public string type { get; set; }
         public string parent { get; set; }
         public int sortorder { get; set; }
+<<<<<<< Updated upstream
         public int user_id { get; set; }        
+=======
+        public int user_id { get; set; }
+        public bool ismilestone { get; set; }
+>>>>>>> Stashed changes
     }
 
     public class GanttLink1
@@ -1628,6 +1637,24 @@ namespace Cybereum.Models
         User,
         OrganizationAdmin,
         SeniorProjectManager
+<<<<<<< Updated upstream
+=======
+    }
+
+    public enum LinkType
+    {
+        Finish_to_start = 0,
+        Start_to_start = 1,
+        Finish_to_finish = 2,
+        Start_to_finish = 3
+    }
+
+    public enum TaskSubTaskStatus
+    {
+        ToDo = 1,
+        Completed ,
+        Inprogress
+>>>>>>> Stashed changes
     }
 
     public enum LinkType

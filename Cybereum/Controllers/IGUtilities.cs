@@ -1497,6 +1497,46 @@ public static class IGUtilities
             IGUtilities.WriteLog(ex.Message);
             IGUtilities.WriteLog(ex.Data.ToString());
             if (ex.InnerException != null) IGUtilities.WriteLog(ex.InnerException.Message);
+<<<<<<< Updated upstream
+=======
+            IGUtilities.WriteLog(ex.TargetSite.ToString());
+            throw ex;
+        }
+    }
+
+
+    public static void SendRejectEmailToUser(string emailId, string name)
+    {
+        try
+        {
+            var fromMail = new MailAddress(ConfigurationManager.AppSettings["SMTPUserName"].ToString()); // set your email    
+            var fromEmailpassword = ConfigurationManager.AppSettings["SMTPPassword"].ToString(); // Set your password     
+            var toEmail = new MailAddress(emailId);
+
+            var smtp = new SmtpClient();
+            smtp.Host = ConfigurationManager.AppSettings["SMTPServer"].ToString();
+            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = new NetworkCredential(fromMail.Address, fromEmailpassword);
+            smtp.Port = ConfigurationManager.AppSettings["SMTPPort"].ToInt();
+            smtp.EnableSsl = Convert.ToBoolean(ConfigurationManager.AppSettings["SMTPSSL"]);
+
+            var Message = new MailMessage(fromMail, toEmail);
+            
+            Message.Subject = "Cybereum - Registration Rejected";
+            Message.Body = "<br/> Hello " + name + "," +
+                            "<br/> Your request for Cybereum platform access is rejected. Contact anand@cybereum.io for further information." +
+                            "<br/><br/> Best regards," +
+                            "<br/> The cybereum team.";
+            Message.IsBodyHtml = true;
+            smtp.Send(Message);
+        }
+        catch (Exception ex)
+        {
+            IGUtilities.WriteLog(ex.Message);
+            IGUtilities.WriteLog(ex.Data.ToString());
+            if (ex.InnerException != null) IGUtilities.WriteLog(ex.InnerException.Message);
+>>>>>>> Stashed changes
             IGUtilities.WriteLog(ex.TargetSite.ToString());
             throw ex;
         }
@@ -2167,15 +2207,35 @@ public static class IGUtilities
         //Update Task progress
         var gremlinScript = "g.V().has('subtask','taskid','" + taskid + "').project('progress').by(values('progress'))";
         var results = ExecuteGremlinScript(gremlinScript);
+<<<<<<< Updated upstream
         int progress = 0;
+=======
+        int progress = 0;        
+>>>>>>> Stashed changes
         foreach (var result in results)
         {
             progress += Convert.ToInt16(result["progress"]);
         }
         progress = (progress / results.Count);
+<<<<<<< Updated upstream
         //if (progress > 0)
         {
             gremlinScript = $"g.V('{taskid}').property('progress', '{progress}')";
+=======
+        
+        //if (progress > 0)
+        {
+            if (progress == 100)
+            {
+                int taskstatus = (int)TaskSubTaskStatus.Completed;
+                gremlinScript = $"g.V('{taskid}').property('progress', '{progress}').property('taskstatus','{taskstatus}')";
+            }
+            else
+            {
+                gremlinScript = $"g.V('{taskid}').property('progress', '{progress}')";
+            }
+            
+>>>>>>> Stashed changes
             var res = IGUtilities.ExecuteGremlinScript(gremlinScript);
 
             gremlinScript = $"g.V('task','id','{taskid}').project('id','activityid').by(id()).by(values('activityid'))";
@@ -2200,7 +2260,20 @@ public static class IGUtilities
         progress = progress / results.Count;
         //if (progress > 0)
         {
+<<<<<<< Updated upstream
             gremlinScript = $"g.V('{activityid}').property('progress', '{progress}')";
+=======
+            if (progress == 100)
+            {
+                int taskstatus = (int)TaskSubTaskStatus.Completed;
+                gremlinScript = $"g.V('{activityid}').property('progress', '{progress}').property('activitystatus','{taskstatus}')";
+            }
+            else
+            {
+                gremlinScript = $"g.V('{activityid}').property('progress', '{progress}')";
+            }
+            
+>>>>>>> Stashed changes
             var res = IGUtilities.ExecuteGremlinScript(gremlinScript);
 
             gremlinScript = $"g.V('activity','id','{activityid}').project('id','projectid').by(id()).by(values('projectid'))";

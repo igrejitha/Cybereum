@@ -69,9 +69,19 @@
         color: #a6a6a6;
     }
 
+<<<<<<< Updated upstream
     .gantt_grid-row:hover .gantt_grid-cell {
         background-color: #08375e;
         color: #a6a6a6;
+=======
+    /*.gantt_grid-row:hover .gantt_grid-cell {
+        background-color: #08375e;
+        color: #a6a6a6;
+    }*/
+
+    .gantt_grid_data .gantt_row.odd:hover, .gantt_grid_data .gantt_row:hover {
+        background-color: #08375e;        
+>>>>>>> Stashed changes
     }
 </style>
 <div id="divLoader" style="display:none;">
@@ -586,6 +596,10 @@
         });
 
         gantt.form_blocks.select.set_value = function (node, value, ev) {
+<<<<<<< Updated upstream
+=======
+            debugger;
+>>>>>>> Stashed changes
             node.firstChild.value = value || "";
             if (ev.type == "Activity" || ev.parent == 0) {
                 var style = ev.some_property ? "" : "none";
@@ -601,6 +615,27 @@
             }
         }
 
+<<<<<<< Updated upstream
+=======
+        gantt.form_blocks.checkbox.set_value = function (node, value, ev) {
+            debugger;
+            node.firstChild.value = value || "";
+            if (ev.type == "Activity" || ev.parent == 0) {
+                var style = ev.some_property ? "" : "block";
+                //node.querySelector("[name='check1']").checked = ev.checked || "";
+                node.style.display = style; // editor area
+                node.previousSibling.style.display = style; //section header
+                gantt.resizeLightbox(); //correct size of lightbox
+            }
+            else {
+                var style = ev.some_property ? "" : "none";
+                node.style.display = style; // editor area
+                node.previousSibling.style.display = style; //section header
+                gantt.resizeLightbox(); //correct size of lightbox
+            }
+        }
+        
+>>>>>>> Stashed changes
         //gantt.locale.labels.section_description = "Owner";
 
         // add section to type selection: task, project or milestone
@@ -609,6 +644,10 @@
             { name: "users", height: 22, map_to: "user_id", type: "select", options: users },
             { name: "description", height: 70, map_to: "text", type: "textarea", focus: true },
             //{ name: "type", type: "typeselect", map_to: "type" },
+<<<<<<< Updated upstream
+=======
+            { name: "ismilestone", height: 20, map_to: "ismilestone", type: "checkbox" },
+>>>>>>> Stashed changes
             { name: "time", height: 72, type: "duration", map_to: "auto" }
         ];
 
@@ -701,6 +740,10 @@
         gantt.config.skip_off_time = true;
         gantt.config.fit_tasks = true;
         gantt.locale.labels.section_users = "Owner";
+<<<<<<< Updated upstream
+=======
+        gantt.locale.labels.section_ismilestone = "Is Milestone?";
+>>>>>>> Stashed changes
         gantt.config.show_progress = true;
         gantt.config.show_loading = true;
         gantt.init("ganttContainer"); // initialize gantt
@@ -717,7 +760,11 @@
                 gantt.load("/Project/GetchartData?projectid=" + projectid, "json");
             });
         }
+<<<<<<< Updated upstream
         
+=======
+
+>>>>>>> Stashed changes
         gantt.load("/Project/GetchartData?projectid=" + projectid, "json");
 
         gantt.attachEvent("onLightboxSave", function (id, item) {
@@ -728,7 +775,11 @@
             return true;
         });
 
+<<<<<<< Updated upstream
         gantt.templates.task_class = function (start, end, task) {            
+=======
+        gantt.templates.task_class = function (start, end, task) {
+>>>>>>> Stashed changes
             if (gantt.hasChild(task.id)) {
                 if (task.type == "Activity") return 'hide_progress_drag'
                 else return "circle_task";
@@ -829,23 +880,39 @@
     var $ = jQuery.noConflict();
     $(document).ready(function () {
         Morris.Donut({
+<<<<<<< Updated upstream
             element: 'morris-donut-example',
             data: $.parseJSON(Graph()),
+=======
+            resize: !0,
+            colors: ["#0e9f80", "#d8a93b", "#cf523d"],
+            element: 'morris-donut-example',
+            data: Graph(),
+>>>>>>> Stashed changes
             resize: true
         });
     });
 
+<<<<<<< Updated upstream
     function Graph() {        
+=======
+    function Graph() {
+>>>>>>> Stashed changes
         var data = "";
         $.ajax({
             type: 'POST',
             @*url: '@Url.Action("GettaskcompletionData", "Projectportfoliodashboard")?projectid=' + @ViewBag.Projectid,//'Projectportfoliodashboard/GettaskcompletionData?projectid='+ @ViewBag.Projectid + '',*@
+<<<<<<< Updated upstream
             url: "/Projectportfoliodashboard/GettaskcompletionData?projectid='+ @ViewBag.Projectid + ''",
+=======
+            url: "/Projectportfoliodashboard/GettaskcompletionData?projectid=@ViewBag.Projectid",
+>>>>>>> Stashed changes
             dataType: 'json',
             async: false,
             contentType: "application/json; charset=utf-8",
             data: {},
             success: function (result) {
+<<<<<<< Updated upstream
                 debugger;
                     data = result.d;
                 },
@@ -855,5 +922,16 @@
             });
 
         return data;
+=======
+                data = result;
+            },
+            error: function (xhr, status, error) {
+                alert(error);
+            }
+        });
+        var graphdata = $.parseJSON(data);
+        debugger;
+        return graphdata;
+>>>>>>> Stashed changes
     }
 </script>

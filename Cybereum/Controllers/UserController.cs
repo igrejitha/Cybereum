@@ -554,6 +554,10 @@ using System.Configuration;
 namespace Cybereum.Controllers
 {
     [Authorize]
+<<<<<<< Updated upstream
+=======
+    [SessionTimeout]
+>>>>>>> Stashed changes
     public class UserController : Controller
     {
         private cybereumEntities db = new cybereumEntities();
@@ -678,6 +682,7 @@ namespace Cybereum.Controllers
             tbl_user.isactive = 2;
             db.Entry(tbl_user).State = EntityState.Modified;
             db.SaveChanges();
+            IGUtilities.SendRejectEmailToUser (tbl_user.emailid, tbl_user.firstname + " " + tbl_user.lastname);
             return "Success";
         }
 

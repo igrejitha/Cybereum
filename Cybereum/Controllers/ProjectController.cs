@@ -1185,18 +1185,36 @@ namespace Cybereum.Controllers
             List<Project> projectlist = new List<Project>();
             try
             {
+<<<<<<< Updated upstream
                 int pmuserid = Convert.ToInt16(Session["LoggedInUserId"]);
 
                 var gremlinScript = string.Empty;//= $"g.V().hasLabel('project').project('projectid','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon','hashcode').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('hashcode'))";
                 if (Convert.ToInt32(Session["RoleID"]) == (int)Role.ProjectManager || Convert.ToInt32(Session["RoleID"]) == (int)Role.User)
                 {
                     gremlinScript = $"g.V().has('project','projectmanager','{pmuserid}').project('projectid','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon','hashcode','projectmanager','projectstatus','progress').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('hashcode')).by(values('projectmanager')).by(values('projectstatus')).by(values('progress'))";
+=======
+                var search = Request.Form.GetValues("search[value]")[0];
+                int pmuserid = Convert.ToInt16(Session["LoggedInUserId"]);
+                string projectnamesearch = string.Empty;
+                if (search != "")
+                {
+                    projectnamesearch = $".has('project','projectname',containing('{search}'))";
+                }
+                var gremlinScript = string.Empty;//= $"g.V().hasLabel('project').project('projectid','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon','hashcode').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('hashcode'))";
+                if (Convert.ToInt32(Session["RoleID"]) == (int)Role.ProjectManager || Convert.ToInt32(Session["RoleID"]) == (int)Role.User)
+                {
+                    gremlinScript = $"g.V().has('project','projectmanager','{pmuserid}')" + projectnamesearch + ".project('projectid','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon','hashcode','projectmanager','projectstatus','progress').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('hashcode')).by(values('projectmanager')).by(values('projectstatus')).by(values('progress'))";
+>>>>>>> Stashed changes
                 }
                 else
                 {
                     string projectmember = IGUtilities.getprojectmembers(pmuserid);
                     if (projectmember == "") projectmember = "''";
+<<<<<<< Updated upstream
                     gremlinScript = $"g.V().has('project','projectmanager',within({projectmember})).project('projectid','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon','hashcode','projectmanager','projectstatus','progress').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('hashcode')).by(values('projectmanager')).by(values('projectstatus')).by(values('progress'))";
+=======
+                    gremlinScript = $"g.V().has('project','projectmanager',within({projectmember}))" + projectnamesearch + ".project('projectid','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon','hashcode','projectmanager','projectstatus','progress').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('hashcode')).by(values('projectmanager')).by(values('projectstatus')).by(values('progress'))";
+>>>>>>> Stashed changes
                 }
 
                 try
@@ -1225,7 +1243,11 @@ namespace Cybereum.Controllers
                                          projectstatus = m.projectstatus,
                                          projecttype = m.projecttype,
                                          hashcode = m.hashcode,
+<<<<<<< Updated upstream
                                          progress=m.progress
+=======
+                                         progress = m.progress
+>>>>>>> Stashed changes
                                      };
 
                     var projectresult = this.Json(new { data = joinedData, recordsTotal = projectlist.Count(), recordsFiltered = projectlist.Count() }, JsonRequestBehavior.AllowGet);
@@ -1267,11 +1289,19 @@ namespace Cybereum.Controllers
                 var gremlinScript = string.Empty;//= $"g.V().hasLabel('project').project('projectid','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon','hashcode').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('hashcode'))";
                 if (Convert.ToInt32(Session["RoleID"]) == (int)Role.ProjectManager || Convert.ToInt32(Session["RoleID"]) == (int)Role.User)
                 {
+<<<<<<< Updated upstream
                     gremlinScript = $"g.V().has('project','projectmanager','{pmuserid}').project('projectid','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon','hashcode','projectmanager').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('hashcode')).by(values('projectmanager'))";
                 }
                 else
                 {
                     gremlinScript = $"g.V().has('project','projectmanager',within({projectmember})).project('projectid','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon','hashcode','projectmanager').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('hashcode')).by(values('projectmanager'))";
+=======
+                    gremlinScript = $"g.V().has('project','projectmanager','{pmuserid}').project('projectid','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon','hashcode','projectmanager','projectstatus').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('hashcode')).by(values('projectmanager')).by(values('projectstatus'))";
+                }
+                else
+                {
+                    gremlinScript = $"g.V().has('project','projectmanager',within({projectmember})).project('projectid','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon','hashcode','projectmanager','projectstatus').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('hashcode')).by(values('projectmanager')).by(values('projectstatus'))";
+>>>>>>> Stashed changes
                 }
 
                 try
@@ -1299,7 +1329,11 @@ namespace Cybereum.Controllers
                                          organization = m.organization,
                                          projectstatus = m.projectstatus,
                                          projecttype = m.projecttype,
+<<<<<<< Updated upstream
                                          hashcode = m.hashcode
+=======
+                                         hashcode = m.hashcode                                         
+>>>>>>> Stashed changes
                                      };
                     var projectresult = this.Json(new { data = joinedData, recordsTotal = projectlist.Count(), recordsFiltered = projectlist.Count() }, JsonRequestBehavior.AllowGet);
                     return projectresult;
@@ -1545,7 +1579,11 @@ namespace Cybereum.Controllers
                             $".property('projectmanager', '{tbl_project.projectmanager}')" +
                             $".property('organization', '{Session["Organization"].ToString()}')" +
                             $".property('hashcode', '')" +
+<<<<<<< Updated upstream
                             $".property('progress', '0')" +
+=======
+                            $".property('progress', '0')" +                            
+>>>>>>> Stashed changes
                             $".property('createdby', '{Convert.ToInt32(tbl_project.createdby)}')" +
                             $".property('createdusername', '')" +
                             $".property('createdon', '{DateTime.Now}')" +
@@ -1581,6 +1619,10 @@ namespace Cybereum.Controllers
                             $".property('enddate', '{tbl_activity.enddate.ToString("yyyy-MM-dd")}')" +
                             $".property('projectid', '{tbl_activity.projectid}')" +
                             $".property('durations', '{1}')" +
+<<<<<<< Updated upstream
+=======
+                            $".property('activitystatus', '{1}')" +
+>>>>>>> Stashed changes
                             $".property('progress', '{0}')" +
                             $".property('ismilestone', '{false}')" +
                             $".property('createdby', '{Convert.ToInt32(tbl_activity.createdby)}')" +
@@ -1621,6 +1663,10 @@ namespace Cybereum.Controllers
                             $".property('enddate', '{tbl_activity.enddate.ToString("yyyy-MM-dd")}')" +
                             $".property('projectid', '{tbl_activity.projectid}')" +
                             $".property('durations', '{1}')" +
+<<<<<<< Updated upstream
+=======
+                            $".property('activitystatus', '{1}')" +
+>>>>>>> Stashed changes
                             $".property('progress', '{0}')" +
                             $".property('ismilestone', '{false}')" +
                             $".property('createdby', '{Convert.ToInt32(tbl_activity.createdby)}')" +
@@ -1670,7 +1716,7 @@ namespace Cybereum.Controllers
                     var results = IGUtilities.ExecuteGremlinScript(gremlinScript);
                     message = "Updated Successfully";
                 }
-                return RedirectToAction("List");
+                return RedirectToAction("Projectportfoliodashboard", "Projectportfoliodashboard");
             }
 
             endloop:
@@ -1733,7 +1779,11 @@ namespace Cybereum.Controllers
             string projectid = HttpUtility.ParseQueryString(Request.UrlReferrer.Query)["projectid"].ToString();
             if (task.parent == "0")
             {
+<<<<<<< Updated upstream
                 Boolean ismilestone = false;
+=======
+                //Boolean ismilestone = false;
+>>>>>>> Stashed changes
                 ActivityController activity = new ActivityController();
                 ProjectActivity act = new ProjectActivity();
                 act.activityname = task.text;
@@ -1741,7 +1791,11 @@ namespace Cybereum.Controllers
                 act.enddate = task.end_date;
                 act.projectid = projectid;
                 act.durations = task.duration;
+<<<<<<< Updated upstream
                 act.ismilestone = ismilestone;
+=======
+                act.ismilestone = task.ismilestone;
+>>>>>>> Stashed changes
                 act.createdby = createdby;
                 activity.Create(act);
             }
@@ -1883,7 +1937,11 @@ namespace Cybereum.Controllers
                     //ganttchartmodellist.Add(ganttchart);
 
                     //Activity
+<<<<<<< Updated upstream
                     gremlinScript = "g.V().has('activity','projectid','" + project["id"] + "').order().by('startdate',incr).order().by('enddate',incr).project('id','activityname','startdate','enddate','durations','predecessors','linktype','progress').by(id()).by(values('activityname')).by(values('startdate')).by(values('enddate')).by(values('durations')).by(values('predecessors').fold()).by(values('linktype')).by(values('progress'))";
+=======
+                    gremlinScript = "g.V().has('activity','projectid','" + project["id"] + "').order().by('startdate',incr).order().by('enddate',incr).project('id','activityname','startdate','enddate','durations','predecessors','linktype','progress','ismilestone').by(id()).by(values('activityname')).by(values('startdate')).by(values('enddate')).by(values('durations')).by(values('predecessors').fold()).by(values('linktype')).by(values('progress')).by(values('ismilestone'))";
+>>>>>>> Stashed changes
                     var activitydata = IGUtilities.ExecuteGremlinScript(gremlinScript);
                     string pList = JsonConvert.SerializeObject(activitydata);
                     List<ProjectActivity> Activitylist = JsonConvert.DeserializeObject<List<ProjectActivity>>(pList);
@@ -1906,6 +1964,10 @@ namespace Cybereum.Controllers
                         ganttchart.SortOrder = 10;
                         ganttchart.Progress = Convert.ToDecimal(Convert.ToDecimal(itemactivity.progress) / 100);
                         ganttchart.Type = "Activity";
+<<<<<<< Updated upstream
+=======
+                        ganttchart.ismilestone = itemactivity.ismilestone;
+>>>>>>> Stashed changes
                         //ganttchart.color = "blue";
                         ganttchartmodellist.Add(ganttchart);
 
@@ -2063,7 +2125,12 @@ namespace Cybereum.Controllers
                             type = t.Type,
                             taskid = t.taskid,
                             user_id = t.user_id,
+<<<<<<< Updated upstream
                             color = t.color
+=======
+                            color = t.color,
+                            ismilestone = t.ismilestone
+>>>>>>> Stashed changes
                         }
                     ).ToArray(),
                     // create links array
@@ -2145,7 +2212,11 @@ namespace Cybereum.Controllers
             string projectid = HttpUtility.ParseQueryString(Request.UrlReferrer.Query)["projectid"].ToString();
             //try
             //{                
+<<<<<<< Updated upstream
             Boolean ismilestone = false;
+=======
+            //Boolean ismilestone = false;
+>>>>>>> Stashed changes
             if (task.type == "Activity")
             {
                 ActivityController activity = new ActivityController();
@@ -2158,7 +2229,11 @@ namespace Cybereum.Controllers
                 act.enddate = task.end_date;
                 act.projectid = projectid;
                 act.durations = task.duration;
+<<<<<<< Updated upstream
                 act.ismilestone = ismilestone;
+=======
+                act.ismilestone = task.ismilestone;
+>>>>>>> Stashed changes
                 decimal progress = task.progress * 100;
                 act.progress = Convert.ToInt16(progress);
                 activity.Create(act);
@@ -2351,7 +2426,11 @@ namespace Cybereum.Controllers
 
         public void XMLImport()
         {
+<<<<<<< Updated upstream
             var postedFile = Request.Files[0];            
+=======
+            var postedFile = Request.Files[0];
+>>>>>>> Stashed changes
             System.Xml.XmlDocument xdc = new System.Xml.XmlDocument();
 
             string filePath = string.Empty;

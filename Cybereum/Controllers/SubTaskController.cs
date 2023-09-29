@@ -214,7 +214,11 @@ namespace Cybereum.Controllers
             }
             return null;
         }
+<<<<<<< Updated upstream
        
+=======
+
+>>>>>>> Stashed changes
 
         public List<SelectListItem> Filluser(int? pmuserid, int? roleid)
         {
@@ -242,6 +246,7 @@ namespace Cybereum.Controllers
             else
             {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 //user = (from b in db.tbl_user
                 //        where b.pmuserid == pmuserid && b.isactive == 1
                 //        select new SelectListItem
@@ -252,6 +257,9 @@ namespace Cybereum.Controllers
 
 =======
                 
+>>>>>>> Stashed changes
+=======
+
 >>>>>>> Stashed changes
                 string projectid = Session["ProjectId"].ToString();
                 var gremlinScript = "g.V().has('project','id','" + projectid + "').project('projectid','projectname','projectmembers').by(id()).by(values('projectname')).by(values('projectmembers').fold())";
@@ -274,7 +282,12 @@ namespace Cybereum.Controllers
                     }
                 }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 var query = users.Select((r, index) => new {
+=======
+                var query = users.Select((r, index) => new
+                {
+>>>>>>> Stashed changes
 =======
                 var query = users.Select((r, index) => new
                 {
@@ -411,7 +424,11 @@ namespace Cybereum.Controllers
                 long count = 0;
                 //**********Checking for task start and end date*************
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 var enddate = CheckTaskdates(tbl_subtask.taskid,tbl_subtask.startdate, tbl_subtask.enddate);
+=======
+                var enddate = CheckTaskdates(tbl_subtask.taskid, tbl_subtask.startdate, tbl_subtask.enddate);
+>>>>>>> Stashed changes
 =======
                 var enddate = CheckTaskdates(tbl_subtask.taskid, tbl_subtask.startdate, tbl_subtask.enddate);
 >>>>>>> Stashed changes
@@ -494,6 +511,10 @@ namespace Cybereum.Controllers
                 }
                 else
                 {
+                    if (tbl_subtask.progress == 100)
+                    {
+                        tbl_subtask.taskstatus =(int)TaskSubTaskStatus.Completed;
+                    }
                     string gremlinScript = $"g.V('{tbl_subtask.subtaskid}').property('subtaskname', '{tbl_subtask.subtaskname}')" +
                                             $".property('subtaskname', '{tbl_subtask.subtaskname}')" +
                                             $".property('startdate', '{tbl_subtask.startdate.ToString("yyyy-MM-dd")}')" +
@@ -511,6 +532,7 @@ namespace Cybereum.Controllers
                     var result = IGUtilities.ExecuteGremlinScript(gremlinScript);
 <<<<<<< Updated upstream
                     message = "Updated Successfully";
+<<<<<<< Updated upstream
                     
                     ////Remove connection the task to subtask
                     //gremlinScript = $"\ng.V().has('subtask', 'id', '{tbl_subtask.subtaskid}').bothE().drop()";
@@ -538,6 +560,10 @@ namespace Cybereum.Controllers
                 {
                     IGUtilities.updatetaskprogress(tbl_subtask.taskid);
                 }
+>>>>>>> Stashed changes
+=======
+                }                
+                IGUtilities.updatetaskprogress(tbl_subtask.taskid);
 >>>>>>> Stashed changes
                 return RedirectToAction("List", new { taskid = tbl_subtask.taskid, activityid = Session["Activityid"], projectid = Session["Projectid"] });
             }

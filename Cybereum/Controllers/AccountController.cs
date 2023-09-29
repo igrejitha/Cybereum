@@ -1,4 +1,5 @@
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -739,6 +740,8 @@ namespace Cybereum.Controllers
         #endregion
     }
 =======
+=======
+>>>>>>> Stashed changes
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -846,7 +849,11 @@ namespace Cybereum.Controllers
                 {
                     FormsAuthentication.SignOut();
                     HttpContext.User = new GenericPrincipal(new GenericIdentity(string.Empty), null);
+<<<<<<< Updated upstream
                     Session.Abandon();                    
+=======
+                    Session.Abandon();
+>>>>>>> Stashed changes
                     Session["isAzurelogin"] = false;
                     return View();
                 }
@@ -882,8 +889,50 @@ namespace Cybereum.Controllers
             return View();
         }
 
-        public ActionResult UserLogin()
+        public ActionResult AuthLogin()
         {
+            if (Request.IsAuthenticated)
+            {
+                LoginViewModel mod = new LoginViewModel();
+                mod.Email = User.Identity.Name;
+
+                if (Session["uniqueid"] == null)
+                {
+                    FormsAuthentication.SignOut();
+                    HttpContext.User = new GenericPrincipal(new GenericIdentity(string.Empty), null);
+                    Session.Abandon();
+                    Session["isAzurelogin"] = false;
+                    return View();
+                }
+
+
+                string uniqueid = Session["uniqueid"].ToString();
+                Session["isAzurelogin"] = true;
+                var objList = objdmsEntities.tbl_user.Where(x => x.emailid == mod.Email && x.username == uniqueid && x.isactive != 2).FirstOrDefault();
+                if (objList != null)
+                {
+                    FormsAuthentication.SetAuthCookie(mod.Email, true);
+                    //Session.Timeout = 90;                                    
+                    Session["LoggedInUserId"] = objList.userid;
+                    Session["RoleId"] = objList.roleid;
+                    Session["Username"] = objList.username;
+                    AuthorizeAttribute objAuth = new AuthorizeAttribute();
+                    if (objList.roleid == (int)Role.Admin)
+                    {
+                        objAuth.Roles = Role.Admin.ToString();
+                        Session["RoleName"] = Role.Admin.ToString();
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        objAuth.Roles = Role.User.ToString();
+                        Session["RoleName"] = (Role)objList.roleid;
+                        return RedirectToAction("List", "Project");
+                    }
+                }
+            }
+
+
             return View();
         }
 
@@ -895,6 +944,7 @@ namespace Cybereum.Controllers
         [Authorize]
         public ActionResult Logout()
         {
+<<<<<<< Updated upstream
             if (Convert.ToBoolean(Session["isAzurelogin"]) == true)
             {
                 string callbackUrl = Url.Action("SignOutCallback", "Account", routeValues: null, protocol: Request.Url.Scheme);
@@ -912,6 +962,30 @@ namespace Cybereum.Controllers
             //else
             return RedirectToAction("Login");
 
+=======
+            int roleid = 0;
+            if (Convert.ToInt32(Session["RoleId"]) == (int)Role.OrganizationAdmin)
+            {
+                roleid = (int)Role.OrganizationAdmin;
+            }
+            if (Convert.ToBoolean(Session["isAzurelogin"]) == true)
+            {
+                string callbackUrl = Url.Action("SignOutCallback", "Account", routeValues: null, protocol: Request.Url.Scheme);
+
+                HttpContext.GetOwinContext().Authentication.SignOut(
+                    new AuthenticationProperties { RedirectUri = callbackUrl },
+                    OpenIdConnectAuthenticationDefaults.AuthenticationType, CookieAuthenticationDefaults.AuthenticationType);
+            }
+            FormsAuthentication.SignOut();
+            Session.Abandon();
+
+            Session["isAzurelogin"] = false;
+            if (roleid == 4)
+                return RedirectToAction("AuthLogin");
+            else
+                return RedirectToAction("Login");
+
+>>>>>>> Stashed changes
         }
 
         [HttpPost]
@@ -919,6 +993,7 @@ namespace Cybereum.Controllers
         public ActionResult Login(LoginViewModel user)
         {
             try
+<<<<<<< Updated upstream
             {
                 //var tokenStore = new SessionTokenStore(null,
                 //    System.Web.HttpContext.Current, ClaimsPrincipal.Current);
@@ -935,6 +1010,9 @@ namespace Cybereum.Controllers
                 //    Request.GetOwinContext().Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
                 //    //filterContext.Result = RedirectToAction("Index", "Home");
                 //}
+=======
+            {                
+>>>>>>> Stashed changes
                 Session["isAzurelogin"] = false;
                 string message = string.Empty;
                 if (ModelState.IsValid)
@@ -990,7 +1068,11 @@ namespace Cybereum.Controllers
                                         Session["RoleName"] = (Role)objList.roleid;
                                         return RedirectToAction("Index", "Home");
                                     }
+<<<<<<< Updated upstream
                                     else 
+=======
+                                    else
+>>>>>>> Stashed changes
                                     {
                                         objAuth.Roles = Role.OrganizationAdmin.ToString();
                                         Session["RoleName"] = (Role)objList.roleid;
@@ -1022,15 +1104,11 @@ namespace Cybereum.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult UserLogin(LoginViewModel user)
+        public ActionResult AuthLogin(LoginViewModel user)
         {
             try
             {
-                //if (IGUtilities.AuthenticateUser("LDAP://srjigs.com", user.Email, user.password) == false)
-                //{
-
-                //}
-
+                Session["isAzurelogin"] = false;
                 string message = string.Empty;
                 if (ModelState.IsValid)
                 {
@@ -1041,33 +1119,61 @@ namespace Cybereum.Controllers
 
                         EncryptDecrypt encrypt = new EncryptDecrypt();
                         string password = encrypt.Encrypt(user.password);
-                        var objList = objdmsEntities.tbl_user.Where(x => x.emailid == user.Email && x.password == password && x.isactive == 1 && x.roleid == 3).FirstOrDefault();
+                        //var objList = objdmsEntities.tbl_user.Where(x => x.emailid == user.Email && x.password == password).FirstOrDefault();                        
+                        var objList = objdmsEntities.sp_FetchLoginDetails(user.Email, password).FirstOrDefault();
                         if (objList != null)
                         {
-                            if (objList.userid > 0)
+                            switch (objList.userid)
                             {
-                                FormsAuthentication.SetAuthCookie(user.Email, true);
-                                //Session.Timeout = 90;                                    
-                                Session["LoggedInUserId"] = objList.userid;
-                                Session["RoleId"] = objList.roleid;
-                                AuthorizeAttribute objAuth = new AuthorizeAttribute();
-                                if (objList.roleid == (int)Role.User)
-                                {
-                                    objAuth.Roles = Role.User.ToString();
-                                    Session["RoleName"] = (Role)objList.roleid;
-                                    return RedirectToAction("Dashboard", "Home");
-                                }
-                                else
-                                {
-                                    objAuth.Roles = Role.User.ToString();
-                                    Session["RoleName"] = (Role)objList.roleid;
-                                    return RedirectToAction("Dashboard", "Home");
-                                }
+                                case -1:
+                                    message = "Username and/or password is incorrect.";
+                                    break;
+                                case -2:
+                                    message = "Account has not been activated.";
+                                    break;
+                                default:
+                                    FormsAuthentication.SetAuthCookie(user.Email, true);
+                                    //Session.Timeout = 90;                                    
+                                    Session["LoggedInUserId"] = objList.userid;
+                                    Session["RoleId"] = objList.roleid;
+                                    Session["Username"] = objList.username;
+                                    Session["Organization"] = objList.organization;
+                                    AuthorizeAttribute objAuth = new AuthorizeAttribute();
+                                    if (objList.roleid == (int)Role.Admin)
+                                    {
+                                        objAuth.Roles = Role.Admin.ToString();
+                                        Session["RoleName"] = Role.Admin.ToString();
+                                        return RedirectToAction("Index", "Home");
+                                    }
+                                    else if (objList.roleid == (int)Role.ProjectManager)
+                                    {
+                                        objAuth.Roles = Role.ProjectManager.ToString();
+                                        Session["RoleName"] = (Role)objList.roleid;
+                                        return RedirectToAction("projectportfoliodashboard", "projectportfoliodashboard");
+                                    }
+                                    else if (objList.roleid == (int)Role.User)
+                                    {
+                                        objAuth.Roles = Role.User.ToString();
+                                        Session["RoleName"] = (Role)objList.roleid;
+                                        return RedirectToAction("Dashboard", "Home");
+                                    }
+                                    else if (objList.roleid == (int)Role.SeniorProjectManager)
+                                    {
+                                        objAuth.Roles = Role.SeniorProjectManager.ToString();
+                                        Session["RoleName"] = (Role)objList.roleid;
+                                        return RedirectToAction("Index", "Home");
+                                    }
+                                    else
+                                    {
+                                        objAuth.Roles = Role.OrganizationAdmin.ToString();
+                                        Session["RoleName"] = (Role)objList.roleid;
+                                        return RedirectToAction("Index", "Home");
+                                    }
                             }
                         }
                         else
                         {
-                            message = "Username and/or password is incorrect.";
+                            message = "Invalid Account";
                         }
                     }
                     ViewBag.Message = message;
@@ -1086,6 +1192,7 @@ namespace Cybereum.Controllers
             }
         }
 
+<<<<<<< Updated upstream
         //public async Task<string> GetTokenForApplication()
         //{
         //    string signedInUserID = ClaimsPrincipal.Current.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -1099,6 +1206,8 @@ namespace Cybereum.Controllers
         //    AuthenticationResult authenticationResult = await authenticationContext.AcquireTokenSilentAsync(graphResourceID, clientcred, new UserIdentifier(userObjectID, UserIdentifierType.UniqueId));
         //    return authenticationResult.AccessToken;
         //}
+=======
+>>>>>>> Stashed changes
 
         [HttpPost]
         [AllowAnonymous]
@@ -1267,7 +1376,7 @@ namespace Cybereum.Controllers
                         ViewBag.Message2 = message;
                     else
                         ViewBag.Message = message;
-                    //return RedirectToAction("Login");                
+
                     return View(user);
                 }
 
@@ -1330,6 +1439,7 @@ namespace Cybereum.Controllers
                             roleid = tbluser.roleid;
                             break;
                         default:
+<<<<<<< Updated upstream
                             //if (roleid == 3)
                             //{
                             //    return RedirectToAction("UserLogin");
@@ -1348,6 +1458,26 @@ namespace Cybereum.Controllers
                 //{
                     return RedirectToAction("Login");
                 //}
+=======
+                            if (roleid == (int)Role.OrganizationAdmin)
+                            {
+                                return RedirectToAction("Login");
+                            }
+                            else
+                            {
+                                return RedirectToAction("AuthLogin");
+                            }
+                    }
+                }
+                if (roleid == (int)Role.OrganizationAdmin)
+                {
+                    return RedirectToAction("Login");
+                }
+                else
+                {
+                    return RedirectToAction("AuthLogin");
+                }
+>>>>>>> Stashed changes
             }
             return View(pwd);
         }
@@ -1360,7 +1490,11 @@ namespace Cybereum.Controllers
                 bool Status = false;
 
                 cybereumEntities objEnt = new cybereumEntities();
+<<<<<<< Updated upstream
                 EncryptDecrypt encrypt=new EncryptDecrypt();
+=======
+                EncryptDecrypt encrypt = new EncryptDecrypt();
+>>>>>>> Stashed changes
                 objEnt.Configuration.ValidateOnSaveEnabled = false; // Ignore to password confirmation     
                 var IsVerify = objEnt.tbl_user.Where(u => u.activationcode == new Guid(id).ToString()).FirstOrDefault();
                 if (IsVerify != null)
@@ -1382,7 +1516,11 @@ namespace Cybereum.Controllers
                             ViewBag.Status = true;
                             var UserLink = "/Account/login";
                             var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, UserLink);
+<<<<<<< Updated upstream
                             IGUtilities.SendConfirmationEmailToUser(IsVerify.emailid, IsVerify.firstname + " " + IsVerify.lastname, link,encrypt.Decrypt(IsVerify.password));
+=======
+                            IGUtilities.SendConfirmationEmailToUser(IsVerify.emailid, IsVerify.firstname + " " + IsVerify.lastname, link, encrypt.Decrypt(IsVerify.password));
+>>>>>>> Stashed changes
                         }
                         else
                         {
@@ -1391,7 +1529,11 @@ namespace Cybereum.Controllers
                             objEnt.SaveChanges();
                             ViewBag.Message = "Email verified successfully! Please await approval from our Cybereum administrative team. Upon approval, you'll receive an email confirmation to access the platform.";
                             ViewBag.Status = true;
+<<<<<<< Updated upstream
                             IGUtilities.SendEmail(ConfigurationManager.AppSettings["SMTPUserName"], "ananth.natarajan@cybereum.io", "Approve Pending Users",null, "Hello Cybereum,</br>You have received a new access request from "+ IsVerify.organization +".");
+=======
+                            IGUtilities.SendEmail(ConfigurationManager.AppSettings["SMTPUserName"], "ananth.natarajan@cybereum.io", "Approve Pending Users", null, "Hello Cybereum,</br>You have received a new access request from " + IsVerify.organization + ".");
+>>>>>>> Stashed changes
                         }
                     }
                 }

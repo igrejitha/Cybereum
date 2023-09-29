@@ -95,7 +95,11 @@ namespace Cybereum.Models
             httpContext.Session["uniqueid"] = user.token;
             //Save to User table
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             var objList = objdmsEntities.tbl_user.Where(x => x.emailid == user.Email && x.username==user.token && x.isactive != 2).FirstOrDefault();
+=======
+            var objList = objdmsEntities.tbl_user.Where(x => x.emailid == user.Email && x.username == user.token && x.isactive != 2).FirstOrDefault();
+>>>>>>> Stashed changes
 =======
             var objList = objdmsEntities.tbl_user.Where(x => x.emailid == user.Email && x.username == user.token && x.isactive != 2).FirstOrDefault();
 >>>>>>> Stashed changes
@@ -109,8 +113,13 @@ namespace Cybereum.Models
                 usertbl.password = "";
                 usertbl.createddate = DateTime.Now;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 usertbl.organization = "Cybereum";
                 usertbl.roleid = (int)Role.ProjectManager;
+=======
+                usertbl.organization = string.IsNullOrEmpty(user.CompanyName) ? "Cybereum" : user.CompanyName;
+                usertbl.roleid = (int)Role.OrganizationAdmin;
+>>>>>>> Stashed changes
 =======
                 usertbl.organization = string.IsNullOrEmpty(user.CompanyName) ? "Cybereum" : user.CompanyName;
                 usertbl.roleid = (int)Role.OrganizationAdmin;
@@ -133,7 +142,11 @@ namespace Cybereum.Models
         {
             sessionLock.EnterReadLock();
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             var cachedUser = JsonConvert.DeserializeObject<CachedUser>((string)httpContext.Session[userCacheKey]);                                                
+=======
+            var cachedUser = JsonConvert.DeserializeObject<CachedUser>((string)httpContext.Session[userCacheKey]);
+>>>>>>> Stashed changes
 =======
             var cachedUser = JsonConvert.DeserializeObject<CachedUser>((string)httpContext.Session[userCacheKey]);
 >>>>>>> Stashed changes

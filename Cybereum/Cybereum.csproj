@@ -3208,11 +3208,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Google.Protobuf, Version=3.21.9.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
@@ -6998,7 +6998,7 @@
     <Content Include="Views\User\EditUser.cshtml" />
     <Content Include="Views\User\AddUsers.cshtml" />
     <Content Include="Views\Home\GANTTChart.cshtml" />
-    <Content Include="Views\Account\UserLogin.cshtml" />
+    <Content Include="Views\Account\AuthLogin.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\RecoverPassword.cshtml" />
     <Content Include="scss\abstracts\_abstracts.scss" />
@@ -7216,6 +7216,10 @@
     <Content Include="Views\Projectportfoliodashboard\ProjectOverview.cshtml" />
     <Content Include="Views\Projectportfoliodashboard\Projectportfoliodashboard.cshtml" />
     <Content Include="Views\Projectportfoliodashboard\TeamHub.cshtml" />
+<<<<<<< Updated upstream
+=======
+    <Content Include="Views\User\View.cshtml" />
+>>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ajax\" />

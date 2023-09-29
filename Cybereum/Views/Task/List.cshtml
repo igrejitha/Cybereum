@@ -53,6 +53,7 @@
 <div class="main-content">
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 <div class="form-horizontal">
     <h4>Task List</h4>
     <hr />
@@ -90,6 +91,8 @@
                     <tbody></tbody>
                 </table>
 =======
+=======
+>>>>>>> Stashed changes
     <div class="page-content">
         <div class="container-fluid">
             <div class="form-horizontal">
@@ -118,6 +121,9 @@
                         </div>
                     </div>
                 </div>
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
             </div>
         </div>
@@ -199,9 +205,14 @@
                         debugger;
                         var value1 = '@Request.RequestContext.HttpContext.Session["RoleId"]';
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                         //if (value1 == '3' || value1 == '1') {
                         if (value1 == '1') {
                             return '<button class="btn btn" style="background-color: #0D2136; color: white;" id="btnedit" disabled="disabled" onclick=getTask("' + full.taskid + '"); >Edit</button>';
+=======
+                        if (value1 == '1') {
+                            return '<a><button type="button" class="btn btn-outline-primary btn-sm waves-effect waves-light" id="btnedit" disabled="disabled" onclick=getProjectTask("' + full.taskid + '"); >Edit</button></a>';
+>>>>>>> Stashed changes
 =======
                         if (value1 == '1') {
                             return '<a><button type="button" class="btn btn-outline-primary btn-sm waves-effect waves-light" id="btnedit" disabled="disabled" onclick=getProjectTask("' + full.taskid + '"); >Edit</button></a>';
@@ -221,6 +232,7 @@
         });
     });
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 
     function OnSuccess(response) {
@@ -270,6 +282,9 @@
     };
 
     function getTask(id) {
+=======
+    function getProjectTask(id) {
+>>>>>>> Stashed changes
 =======
     function getProjectTask(id) {
 >>>>>>> Stashed changes
