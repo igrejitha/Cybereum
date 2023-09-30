@@ -70,10 +70,13 @@
     }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     .gantt_grid-row:hover .gantt_grid-cell {
         background-color: #08375e;
         color: #a6a6a6;
 =======
+=======
+>>>>>>> Stashed changes
     /*.gantt_grid-row:hover .gantt_grid-cell {
         background-color: #08375e;
         color: #a6a6a6;
@@ -81,6 +84,9 @@
 
     .gantt_grid_data .gantt_row.odd:hover, .gantt_grid_data .gantt_row:hover {
         background-color: #08375e;        
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     }
 </style>
@@ -597,6 +603,10 @@
 
         gantt.form_blocks.select.set_value = function (node, value, ev) {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+            debugger;
+>>>>>>> Stashed changes
 =======
             debugger;
 >>>>>>> Stashed changes
@@ -616,15 +626,25 @@
         }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
         gantt.form_blocks.checkbox.set_value = function (node, value, ev) {
             debugger;
             node.firstChild.value = value || "";
             if (ev.type == "Activity" || ev.parent == 0) {
+<<<<<<< Updated upstream
                 var style = ev.some_property ? "" : "block";
                 //node.querySelector("[name='check1']").checked = ev.checked || "";
                 node.style.display = style; // editor area
                 node.previousSibling.style.display = style; //section header
+=======
+                var style = ev.some_property ? "" : "block";                
+                node.style.display = style; // editor area
+                node.previousSibling.style.display = style; //section header
+                //node.querySelector("#input_1696009733229").value = ev.ismilestone || "";
+>>>>>>> Stashed changes
                 gantt.resizeLightbox(); //correct size of lightbox
             }
             else {
@@ -633,8 +653,12 @@
                 node.previousSibling.style.display = style; //section header
                 gantt.resizeLightbox(); //correct size of lightbox
             }
+<<<<<<< Updated upstream
         }
         
+>>>>>>> Stashed changes
+=======
+        }        
 >>>>>>> Stashed changes
         //gantt.locale.labels.section_description = "Owner";
 
@@ -643,12 +667,23 @@
             // Owners section, will map to owner_id
             { name: "users", height: 22, map_to: "user_id", type: "select", options: users },
             { name: "description", height: 70, map_to: "text", type: "textarea", focus: true },
+<<<<<<< Updated upstream
             //{ name: "type", type: "typeselect", map_to: "type" },
 <<<<<<< Updated upstream
 =======
             { name: "ismilestone", height: 20, map_to: "ismilestone", type: "checkbox" },
 >>>>>>> Stashed changes
             { name: "time", height: 72, type: "duration", map_to: "auto" }
+=======
+            //{ name: "type", type: "typeselect", map_to: "type" },            
+            { name: "time", height: 30, type: "duration", map_to: "auto" },
+            //{ name: "ismilestone", height: 20, map_to: "ismilestone", type: "checkbox" }
+            {
+                name: "ismilestone", type: "checkbox", map_to: "ismilestone", options: [
+            { key: "ismilestone", label: "" }
+                ]
+            },
+>>>>>>> Stashed changes
         ];
 
         const formatter = gantt.ext.formatters.linkFormatter({
@@ -741,6 +776,10 @@
         gantt.config.fit_tasks = true;
         gantt.locale.labels.section_users = "Owner";
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+        gantt.locale.labels.section_ismilestone = "Is Milestone?";
+>>>>>>> Stashed changes
 =======
         gantt.locale.labels.section_ismilestone = "Is Milestone?";
 >>>>>>> Stashed changes
@@ -761,7 +800,11 @@
             });
         }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         
+=======
+
+>>>>>>> Stashed changes
 =======
 
 >>>>>>> Stashed changes
@@ -776,7 +819,11 @@
         });
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         gantt.templates.task_class = function (start, end, task) {            
+=======
+        gantt.templates.task_class = function (start, end, task) {
+>>>>>>> Stashed changes
 =======
         gantt.templates.task_class = function (start, end, task) {
 >>>>>>> Stashed changes
@@ -881,20 +928,30 @@
     $(document).ready(function () {
         Morris.Donut({
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             element: 'morris-donut-example',
             data: $.parseJSON(Graph()),
 =======
+=======
+>>>>>>> Stashed changes
             resize: !0,
             colors: ["#0e9f80", "#d8a93b", "#cf523d"],
             element: 'morris-donut-example',
             data: Graph(),
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
             resize: true
         });
     });
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     function Graph() {        
+=======
+    function Graph() {
+>>>>>>> Stashed changes
 =======
     function Graph() {
 >>>>>>> Stashed changes
@@ -903,7 +960,11 @@
             type: 'POST',
             @*url: '@Url.Action("GettaskcompletionData", "Projectportfoliodashboard")?projectid=' + @ViewBag.Projectid,//'Projectportfoliodashboard/GettaskcompletionData?projectid='+ @ViewBag.Projectid + '',*@
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             url: "/Projectportfoliodashboard/GettaskcompletionData?projectid='+ @ViewBag.Projectid + ''",
+=======
+            url: "/Projectportfoliodashboard/GettaskcompletionData?projectid=@ViewBag.Projectid",
+>>>>>>> Stashed changes
 =======
             url: "/Projectportfoliodashboard/GettaskcompletionData?projectid=@ViewBag.Projectid",
 >>>>>>> Stashed changes
@@ -912,6 +973,7 @@
             contentType: "application/json; charset=utf-8",
             data: {},
             success: function (result) {
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
                 debugger;
                     data = result.d;
@@ -923,6 +985,8 @@
 
         return data;
 =======
+=======
+>>>>>>> Stashed changes
                 data = result;
             },
             error: function (xhr, status, error) {
@@ -932,6 +996,9 @@
         var graphdata = $.parseJSON(data);
         debugger;
         return graphdata;
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     }
 </script>

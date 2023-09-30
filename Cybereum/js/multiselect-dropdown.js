@@ -3,6 +3,7 @@ style.setAttribute("id","multiselect_dropdown_styles");
 style.innerHTML = `
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 .multiselect-dropdown{
     width:100% !important;
   display: inline-block;
@@ -17,6 +18,8 @@ style.innerHTML = `
   background-size: 16px 12px;
   font-size:0.8em;
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 //.multiselect-dropdown{
@@ -46,6 +49,9 @@ style.innerHTML = `
     font-size: 0.8em;
     color: #828f97;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -60,7 +66,11 @@ style.innerHTML = `
 .multiselect-dropdown span.optext{
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   background-color:lightgray;
+=======
+  //background-color:lightgray;
+>>>>>>> Stashed changes
 =======
   //background-color:lightgray;
 >>>>>>> Stashed changes
@@ -83,6 +93,7 @@ style.innerHTML = `
 }
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 .multiselect-dropdown-list-wrapper{
   box-shadow: gray 0 3px 8px;
   z-index: 100;
@@ -97,6 +108,8 @@ style.innerHTML = `
   right: 0;
   background: white;
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 //.multiselect-dropdown-list-wrapper{  
@@ -125,6 +138,9 @@ style.innerHTML = `
     /* height: 231px; */
     magin-bottom: 40px !important;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -134,12 +150,15 @@ style.innerHTML = `
 }
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 .multiselect-dropdown-list{
   padding:2px;
   height: 20rem;
   overflow-y:auto;
   overflow-x: hidden;
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 //.multiselect-dropdown-list{
@@ -155,6 +174,9 @@ style.innerHTML = `
     overflow-x: hidden;
     background-color: #08375e;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes

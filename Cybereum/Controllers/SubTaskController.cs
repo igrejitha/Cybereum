@@ -218,6 +218,9 @@ namespace Cybereum.Controllers
        
 =======
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
         public List<SelectListItem> Filluser(int? pmuserid, int? roleid)
@@ -247,6 +250,7 @@ namespace Cybereum.Controllers
             {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 //user = (from b in db.tbl_user
                 //        where b.pmuserid == pmuserid && b.isactive == 1
                 //        select new SelectListItem
@@ -257,6 +261,9 @@ namespace Cybereum.Controllers
 
 =======
                 
+>>>>>>> Stashed changes
+=======
+
 >>>>>>> Stashed changes
 =======
 
@@ -283,7 +290,12 @@ namespace Cybereum.Controllers
                 }
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 var query = users.Select((r, index) => new {
+=======
+                var query = users.Select((r, index) => new
+                {
+>>>>>>> Stashed changes
 =======
                 var query = users.Select((r, index) => new
                 {
@@ -425,7 +437,11 @@ namespace Cybereum.Controllers
                 //**********Checking for task start and end date*************
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 var enddate = CheckTaskdates(tbl_subtask.taskid,tbl_subtask.startdate, tbl_subtask.enddate);
+=======
+                var enddate = CheckTaskdates(tbl_subtask.taskid, tbl_subtask.startdate, tbl_subtask.enddate);
+>>>>>>> Stashed changes
 =======
                 var enddate = CheckTaskdates(tbl_subtask.taskid, tbl_subtask.startdate, tbl_subtask.enddate);
 >>>>>>> Stashed changes
@@ -533,6 +549,7 @@ namespace Cybereum.Controllers
 <<<<<<< Updated upstream
                     message = "Updated Successfully";
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                     
                     ////Remove connection the task to subtask
                     //gremlinScript = $"\ng.V().has('subtask', 'id', '{tbl_subtask.subtaskid}').bothE().drop()";
@@ -560,6 +577,10 @@ namespace Cybereum.Controllers
                 {
                     IGUtilities.updatetaskprogress(tbl_subtask.taskid);
                 }
+>>>>>>> Stashed changes
+=======
+                }                
+                IGUtilities.updatetaskprogress(tbl_subtask.taskid);
 >>>>>>> Stashed changes
 =======
                 }                

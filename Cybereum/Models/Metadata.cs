@@ -1508,6 +1508,10 @@ namespace Cybereum.Models
         public int user_id { get; set; }
         public string color { get; set; }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+        public bool ismilestone { get; set; }
+>>>>>>> Stashed changes
 =======
         public bool ismilestone { get; set; }
 >>>>>>> Stashed changes
@@ -1532,7 +1536,12 @@ namespace Cybereum.Models
         public string parent { get; set; }
         public int sortorder { get; set; }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         public int user_id { get; set; }        
+=======
+        public int user_id { get; set; }
+        public bool ismilestone { get; set; }
+>>>>>>> Stashed changes
 =======
         public int user_id { get; set; }
         public bool ismilestone { get; set; }
@@ -1638,7 +1647,25 @@ namespace Cybereum.Models
         OrganizationAdmin,
         SeniorProjectManager
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+    }
+
+    public enum LinkType
+    {
+        Finish_to_start = 0,
+        Start_to_start = 1,
+        Finish_to_finish = 2,
+        Start_to_finish = 3
+    }
+
+    public enum TaskSubTaskStatus
+    {
+        ToDo = 1,
+        Completed ,
+        Inprogress
+>>>>>>> Stashed changes
     }
 
     public enum LinkType

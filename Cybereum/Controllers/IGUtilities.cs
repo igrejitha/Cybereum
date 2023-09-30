@@ -1498,7 +1498,10 @@ public static class IGUtilities
             IGUtilities.WriteLog(ex.Data.ToString());
             if (ex.InnerException != null) IGUtilities.WriteLog(ex.InnerException.Message);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
             IGUtilities.WriteLog(ex.TargetSite.ToString());
             throw ex;
         }
@@ -1536,6 +1539,9 @@ public static class IGUtilities
             IGUtilities.WriteLog(ex.Message);
             IGUtilities.WriteLog(ex.Data.ToString());
             if (ex.InnerException != null) IGUtilities.WriteLog(ex.InnerException.Message);
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
             IGUtilities.WriteLog(ex.TargetSite.ToString());
             throw ex;
@@ -2208,7 +2214,11 @@ public static class IGUtilities
         var gremlinScript = "g.V().has('subtask','taskid','" + taskid + "').project('progress').by(values('progress'))";
         var results = ExecuteGremlinScript(gremlinScript);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         int progress = 0;
+=======
+        int progress = 0;        
+>>>>>>> Stashed changes
 =======
         int progress = 0;        
 >>>>>>> Stashed changes
@@ -2218,10 +2228,13 @@ public static class IGUtilities
         }
         progress = (progress / results.Count);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         //if (progress > 0)
         {
             gremlinScript = $"g.V('{taskid}').property('progress', '{progress}')";
 =======
+=======
+>>>>>>> Stashed changes
         
         //if (progress > 0)
         {
@@ -2235,6 +2248,9 @@ public static class IGUtilities
                 gremlinScript = $"g.V('{taskid}').property('progress', '{progress}')";
             }
             
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
             var res = IGUtilities.ExecuteGremlinScript(gremlinScript);
 
@@ -2261,8 +2277,11 @@ public static class IGUtilities
         //if (progress > 0)
         {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             gremlinScript = $"g.V('{activityid}').property('progress', '{progress}')";
 =======
+=======
+>>>>>>> Stashed changes
             if (progress == 100)
             {
                 int taskstatus = (int)TaskSubTaskStatus.Completed;
@@ -2273,6 +2292,9 @@ public static class IGUtilities
                 gremlinScript = $"g.V('{activityid}').property('progress', '{progress}')";
             }
             
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
             var res = IGUtilities.ExecuteGremlinScript(gremlinScript);
 

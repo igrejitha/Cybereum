@@ -23,11 +23,14 @@ namespace Cybereum.Controllers
             ViewBag.projectid = projectid;
             Session["ProjectId"] = ViewBag.projectid;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             return View();
         }
         public ActionResult projectdashboard()
         {
 =======
+=======
+>>>>>>> Stashed changes
             ViewBag.Keyinternal = getkeyinternal(projectid);
             return View();
         }
@@ -40,21 +43,30 @@ namespace Cybereum.Controllers
             ViewBag.TotalActivity = getTotalMilestone(projectid, false);
             ViewBag.TotalMilestoneacheived = getTotalMilestoneacheived(projectid, true);
             ViewBag.TotalActivityCompleted = getTotalMilestoneacheived(projectid, false);
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
             return View();
         }
         public ActionResult index(string projectid)
         {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             ViewBag.projectid = projectid;
             Session["ProjectId"] = ViewBag.projectid;
             ViewBag.Keyinternal = getkeyinternal(projectid);
             ViewBag.Taskcompletion = GettaskcompletionData(projectid);
 =======
+=======
+>>>>>>> Stashed changes
             ViewBag.Projectid = projectid;
             Session["ProjectId"] = ViewBag.Projectid;
             ViewBag.Keyinternal = getkeyinternal(projectid);
             //ViewBag.Taskcompletion = GettaskcompletionData(projectid);
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
             return View();
         }
@@ -91,12 +103,15 @@ namespace Cybereum.Controllers
         }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         public string GettaskcompletionData(string projectid)
         {
             try
             {
                 var gremlinScript = $"g.V().has('activity','projectid','{projectid}').project('id').by(values('id'))";
 =======
+=======
+>>>>>>> Stashed changes
         public string getparticipant(string projectid)
         {
             try
@@ -187,11 +202,15 @@ namespace Cybereum.Controllers
             try
             {
                 var gremlinScript = $"g.V().has('activity','projectid','{projectid}').project('id').by(id())";
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
                 var activitydata = IGUtilities.ExecuteGremlinScript(gremlinScript);
                 List<tbltaskcompletion> taskcompletionlist = new List<tbltaskcompletion>();
                 foreach (var result in activitydata)
                 {
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
                     gremlinScript = $"g.V().has('task','activityid','{result["id"]}').project('taskstatus').by(values('taskstatus'))";
                     var res = IGUtilities.ExecuteGremlinScript(gremlinScript);
@@ -214,6 +233,8 @@ namespace Cybereum.Controllers
                             }
                             task.taskcount = 1;
 =======
+=======
+>>>>>>> Stashed changes
                     foreach (var enumValue in Enum.GetValues(typeof(TaskSubTaskStatus)))
                     {
                         int taskstatus = (int)enumValue;
@@ -224,13 +245,20 @@ namespace Cybereum.Controllers
                             tbltaskcompletion task = new tbltaskcompletion();
                             task.label = enumValue.ToString();
                             task.value = (int)item;
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
                             taskcompletionlist.Add(task);
                         }
                     }
                 }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 var numberGroups = taskcompletionlist.GroupBy(n => n.status).Select(c => new { Key = c.Key, total = c.Count() });
+=======
+                var numberGroups = taskcompletionlist.GroupBy(t => t.label).Select(t => new { Key = t.Key, total = t.Sum(u => u.value) }).ToList();
+>>>>>>> Stashed changes
 =======
                 var numberGroups = taskcompletionlist.GroupBy(t => t.label).Select(t => new { Key = t.Key, total = t.Sum(u => u.value) }).ToList();
 >>>>>>> Stashed changes
@@ -238,6 +266,7 @@ namespace Cybereum.Controllers
                 foreach (var grp in numberGroups)
                 {
                     tbltaskcompletion task = new tbltaskcompletion();
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
                     task.status = grp.Key;
                     task.taskcount = grp.total;
@@ -250,6 +279,8 @@ namespace Cybereum.Controllers
                 //List<tbltaskcompletion> list = JsonConvert.DeserializeObject<List<tbltaskcompletion>>(pList);
                 //return new JsonResult { Data = list, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 =======
+=======
+>>>>>>> Stashed changes
                     task.label = grp.Key;
                     task.value = grp.total;
                     taskcompletionlist.Add(task);
@@ -257,6 +288,9 @@ namespace Cybereum.Controllers
 
                 string pList = JsonConvert.SerializeObject(taskcompletionlist);
                 return new JsonResult { Data = pList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
             }
             catch (Exception ex)

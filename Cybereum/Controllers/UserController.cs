@@ -555,6 +555,10 @@ namespace Cybereum.Controllers
 {
     [Authorize]
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+    [SessionTimeout]
+>>>>>>> Stashed changes
 =======
     [SessionTimeout]
 >>>>>>> Stashed changes

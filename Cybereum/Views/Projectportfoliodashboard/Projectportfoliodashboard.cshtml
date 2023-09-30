@@ -26,6 +26,7 @@
             </div>
             <!-- end page title -->
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             <div class="row">
                 <div class="col-lg-12">
                     <form class="app-search d-none d-lg-block p-0">
@@ -40,6 +41,9 @@
                         </div>
                     </form>
                 </div>
+=======
+            <div class="row">                
+>>>>>>> Stashed changes
                 <div class="col-md-12 mt-3 mb-0">
                     <div class="card mb-0">
                         <div class="card-body">
@@ -69,6 +73,7 @@
                                     <div id="bar_chart1" class="apex-charts" dir="ltr"></div>
 
                                 </div>
+<<<<<<< Updated upstream
 =======
             <div class="col-md-12 mt-3 mb-0">
                 <div class="card mb-0">
@@ -99,13 +104,20 @@
                                 <div id="bar_chart1" class="apex-charts" dir="ltr"></div>
 
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
                             </div>
                         </div>
                     </div>
                 </div>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 <div class="col-12 mt-3">
                     @if (Convert.ToInt32(Session["RoleId"]) == 2 || Convert.ToInt32(Session["RoleId"]) == 4)
+=======
+                <div class="col-12 mt-3">
+                    @if (Convert.ToInt32(Session["RoleId"]) == 2 || Convert.ToInt32(Session["RoleId"]) == 4 || Convert.ToInt32(Session["RoleId"]) == 5)
+>>>>>>> Stashed changes
                     {
                         <button type="button" class="btn btn-outline-primary btn-lg waves-effect waves-light" onclick="location.href='@Url.Action("AddEditProject", "Project")'">
                             <i class="mdi mdi-shape-square-plus"></i> Create New Project
@@ -113,6 +125,7 @@
                     }
 
                 </div>
+<<<<<<< Updated upstream
 =======
             </div>
             <div class="col-12 mt-3">
@@ -138,6 +151,21 @@
                         <div class="mt-1"> <a id="btnSearch" class='superBtn search1-btn'>Search</a></div>
                     </div>
                 </form>
+>>>>>>> Stashed changes
+=======
+                <div class="col-lg-12">
+                    <form class="app-search d-none d-lg-block p-0">
+                        <div class="d-flex">
+                            <div class="position-relative w-75 mr-3">
+                                <input style=" height 49.5px;" type="search"
+                                       class="form-control bg-lite rounded-lg" placeholder="Search for projects..."
+                                       id="example-search-input">
+                                <span class="mdi mdi-magnify"></span>
+                            </div>
+                            <div class="mt-1"> <a id="btnSearch" class='superBtn search1-btn'>Search</a></div>
+                        </div>
+                    </form>
+                </div>
 >>>>>>> Stashed changes
             </div>
             <div class="row mt-3">
@@ -205,11 +233,16 @@
         white-space: nowrap;
     }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
 
     .dataTables_filter, .dataTables_info {
         display: none;
     }
+>>>>>>> Stashed changes
+=======
+
+    .dataTables_filter, .dataTables_info { display: none; }
 >>>>>>> Stashed changes
 </style>
 
@@ -223,7 +256,11 @@
 
         //var reset = 0;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         var value = '@Request.RequestContext.HttpContext.Session["LoggedInUserId"]';
+=======
+        @*var value = '@Request.RequestContext.HttpContext.Session["LoggedInUserId"]';
+>>>>>>> Stashed changes
 =======
         @*var value = '@Request.RequestContext.HttpContext.Session["LoggedInUserId"]';
 >>>>>>> Stashed changes
@@ -232,24 +269,37 @@
             userid: value,
             roleid: value1
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         }
 
 =======
+=======
+>>>>>>> Stashed changes
         }*@
         var value1 = $('#example-search-input').val();
         var objFilter = {
             organization: value1
         }
+<<<<<<< Updated upstream
 >>>>>>> Stashed changes
         debugger;
         $("#tblProject").DataTable(
+=======
+        debugger;
+        $("#tblProject").DataTable(            
+>>>>>>> Stashed changes
         {
             processing: true,
             serverSide: true,
             filter: false,
             orderMulti: false,
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             paging:false,
+=======
+            paging: false,
+            "bFilter": true ,
+>>>>>>> Stashed changes
             //pageLength: 75,
             //Sort: true,
             "ajax": {
@@ -296,29 +346,49 @@
             },
             { 'data': 'projectstatus', 'name': 'Project Status' },
             {
+<<<<<<< Updated upstream
                 data: 'projectname', render: function (data, type, row) {
                     return '<div class="progress"><div class="progress-bar progress-bar-table" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div></div>';
+=======
+                data: 'projectname', render: function (data, type,full, row) {
+                    return '<div class="progress"><div class="progress-bar progress-bar-table" role="progressbar" style="width: "' + full.progress + '"%;" aria-valuenow="' + full.progress + '" aria-valuemin="0" aria-valuemax="100">' + full.progress + '%</div></div>';
+>>>>>>> Stashed changes
                 }
             },
             {
                 "render": function (data, type, full, meta) {
+<<<<<<< Updated upstream
                     debugger;
                     var value1 = '@Request.RequestContext.HttpContext.Session["RoleId"]';
                     var value2 = '@Request.RequestContext.HttpContext.Session["LoggedInUserId"]';
                     if (value1 == '2' || value1 == '4' || value1 == '3') {
+=======
+
+                    var value1 = '@Request.RequestContext.HttpContext.Session["RoleId"]';
+                    var value2 = '@Request.RequestContext.HttpContext.Session["LoggedInUserId"]';
+                    if (value1 == '2' || value1 == '4' || value1 == '3' || value1 == '5') {
+>>>>>>> Stashed changes
                         if (value2 == full.createdby || value1 == 4) {
                             return '<a style="padding-right:3px;"> <button type="button" class="btn btn-outline-primary btn-sm waves-effect waves-light" onclick=getProject("' + full.projectid + '")>Edit</button></a>' +
                             '<a style="padding-right:3px;"><button type="button" class="btn btn-outline-secondary btn-sm waves-effect waves-light" onclick=OpenProject("' + full.projectid + '")>Open</button></a>' +
                             '<button type="button" class="btn btn-outline-danger btn-sm waves-effect waves-light">Delete</button>';
                         }
                         else {
+<<<<<<< Updated upstream
                             return '<a style="padding-right:3px;"> <button type="button" class="btn btn-outline-primary disabled="disabled" btn-sm waves-effect waves-light" onclick=getProject("' + full.projectid + '")>Edit</button></a>' +
+=======
+                            return '<a style="padding-right:3px;"> <button type="button" class="btn btn-outline-primary btn-sm waves-effect waves-light" disable="disabled" onclick=getProject("' + full.projectid + '")>Edit</button></a>' +
+>>>>>>> Stashed changes
                             '<a style="padding-right:3px;"><button type="button" class="btn btn-outline-secondary btn-sm waves-effect waves-light" onclick=OpenProject("' + full.projectid + '")>Open</button></a>' +
                             '<button type="button" class="btn btn-outline-danger btn-sm waves-effect waves-light">Delete</button>';
                         }
                     }
                     else {
+<<<<<<< Updated upstream
                         return '<a style="padding-right:3px;"> <button type="button" class="btn btn-outline-primary disabled="disabled" btn-sm waves-effect waves-light" onclick=getProject("' + full.projectid + '")>Edit</button></a>' +
+=======
+                        return '<a style="padding-right:3px;"> <button type="button" class="btn btn-outline-primary btn-sm waves-effect waves-light" disable="disabled" onclick=getProject("' + full.projectid + '")>Edit</button></a>' +
+>>>>>>> Stashed changes
                             '<a style="padding-right:3px;"><button type="button" class="btn btn-outline-secondary btn-sm waves-effect waves-light" onclick=OpenProject("' + full.projectid + '")>Open</button></a>' +
                             '<button type="button" class="btn btn-outline-danger btn-sm waves-effect waves-light">Delete</button>';
                     }
@@ -341,6 +411,7 @@
             style: 'multi',
             selector: 'td:first-child'
         },
+<<<<<<< Updated upstream
 =======
             paging: false,
             "bFilter": true,
@@ -436,6 +507,8 @@
                 selector: 'td:first-child'
             },
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
         });
     });
 
@@ -444,7 +517,11 @@
     //<button type="button" class="btn btn-outline-danger btn-sm waves-effect waves-light">Delete</button>
     function getProject(id) {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         debugger;
+=======
+
+>>>>>>> Stashed changes
 =======
 
 >>>>>>> Stashed changes
@@ -473,7 +550,10 @@
     }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
     //$('#example-search-input').keyup(function () {
     //    $('#tblProject').search($(this).val()).draw();
     //})
@@ -497,12 +577,19 @@
     //    oTable.search($(this).val()).draw();
     //})
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     function msg(strMsg, mode) {
         $.notify(strMsg, mode, { globalPosition: 'top center', clickToHide: true, autoHide: false });
     }
 </script>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
 =======
+>>>>>>> Stashed changes
+=======
+
 >>>>>>> Stashed changes

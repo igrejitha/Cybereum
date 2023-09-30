@@ -4,8 +4,14 @@
 }
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 <script src="~/Scripts/dhtmlxgantt/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
 <link rel="stylesheet" href="~/Content/dhtmlxgantt/dhtmlxgantt.css" type="text/css" />
+=======
+
+<script src="~/codebase/dhtmlxgantt.js?v=8.0.4"></script>
+<link rel="stylesheet" href="~/codebase/dhtmlxgantt.css?v=8.0.4">
+>>>>>>> Stashed changes
 =======
 
 <script src="~/codebase/dhtmlxgantt.js?v=8.0.4"></script>
@@ -50,10 +56,13 @@
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     .hide-link-point .gantt_link_control {
         display: none;
     }
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
     .nested_task .gantt_add {
@@ -80,6 +89,9 @@
         display: none;
     }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -90,6 +102,7 @@
 @*<button type="button" onclick="window.location.reload()">Refresh Me</button>*@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 <div id="ganttContainer" style="width: 100%; height: 90%;"></div>
 @*@Scripts.Render("~/bundles/jquery")*@
 <script>
@@ -98,12 +111,17 @@
 =======
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 <div id="ganttContainer" style="width: 100%; height: 100vh;"></div>
 @*@Scripts.Render("~/bundles/jquery")*@
 <script>
     (function () {
         // add month scale
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -122,6 +140,7 @@
         gantt.config.scale_height = 50;
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         // configure milestone description
         gantt.templates.rightside_text = function (start, end, task) {
             if (task.type == gantt.config.types.milestone) {
@@ -132,6 +151,8 @@
         // add section to type selection: task, project or milestone
         gantt.config.lightbox.sections = [
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
         //// configure milestone description
@@ -193,6 +214,7 @@
             // Owners section, will map to owner_id
             { name: "users", height: 22, map_to: "user_id", type: "select", options: users },
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 >>>>>>> Stashed changes
             { name: "description", height: 70, map_to: "text", type: "textarea", focus: true },
             //{ name: "type", type: "typeselect", map_to: "type" },
@@ -208,11 +230,16 @@
 
 >>>>>>> Stashed changes
 =======
+=======
+>>>>>>> Stashed changes
             { name: "description", height: 70, map_to: "text", type: "textarea", focus: true },
             //{ name: "type", type: "typeselect", map_to: "type" },            
             { name: "time", height: 72, type: "duration", map_to: "auto" }
         ];
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         const formatter = gantt.ext.formatters.linkFormatter({
             //default values
@@ -251,6 +278,7 @@
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         gantt.templates.task_class = function (start, end, task) {            
             if (task.type=="Activity") return ''
             else return "hide-link-point";
@@ -263,6 +291,8 @@
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 
         gantt.attachEvent("onBeforeLinkAdd", function (id, link) {
             if (!allow_link) return false;
@@ -270,6 +300,7 @@
         });
 
 
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
         var allow_link = true;
         gantt.attachEvent("onMouseMove", function (id, e) {
@@ -301,6 +332,9 @@
 =======
         gantt.config.columns = [
 >>>>>>> Stashed changes
+=======
+        gantt.config.columns = [
+>>>>>>> Stashed changes
             { name: "wbs", label: "#", width: 40, align: "center", template: gantt.getWBSCode },
             { name: "text", label: "Name", tree: true, width: 200, resize: true },
             { name: "taskid", label: "id", width: 80, align: "center", resize: true },
@@ -323,6 +357,9 @@
                             var link = gantt.getLink(links[i]);
                             labels.push(formatter.format(link));
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -337,10 +374,13 @@
         };
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         
         gantt.config.xml_date = "%Y-%m-%d %H:%i:%s"; // format of dates in XML
 
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 
@@ -351,6 +391,9 @@
         gantt.config.xml_date = "%Y-%m-%d %H:%i:%s"; // format of dates in XML
         //gantt.config.auto_types = true;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -360,6 +403,12 @@
         gantt.config.fit_tasks = true;
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+        gantt.locale.labels.section_users = "Owner";
+        gantt.config.show_progress = true;
+        gantt.config.show_loading = true;
+>>>>>>> Stashed changes
 =======
         gantt.locale.labels.section_users = "Owner";
         gantt.config.show_progress = true;
@@ -380,7 +429,12 @@
         gantt.config.auto_scheduling = true;
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         router = function (entity, action, data, id) {            
+=======
+        gantt.autoSchedule();
+        router = function (entity, action, data, id) {
+>>>>>>> Stashed changes
 =======
         gantt.autoSchedule();
         router = function (entity, action, data, id) {
@@ -395,6 +449,7 @@
         }
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         
         gantt.load("/Project/GetchartData?projectid=" + projectid, "json");
 
@@ -403,11 +458,16 @@
 =======
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 
         gantt.load("/Project/GetchartData?projectid=" + projectid, "json");
 
         gantt.attachEvent("onLightboxSave", function (id, item) {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -415,6 +475,7 @@
                 gantt.message({ type: "error", text: "Enter task description!" });
                 return false;
             }
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
             //if (!item.user) {
@@ -458,12 +519,17 @@
                 //    return "hide_progress_drag"
                 //}
 =======
+=======
+>>>>>>> Stashed changes
             return true;
         });
                 
         gantt.templates.task_class = function (start, end, task) {
             debugger;
             if (gantt.hasChild(task.id)) {                
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
                 if (task.type == "Activity") return 'hide_progress_drag'
                 else return "circle_task";
@@ -473,6 +539,7 @@
                 else return "circle_task";
             };
         };
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 
         //function parent_progress(id) {
@@ -517,6 +584,9 @@
 =======
                 
 >>>>>>> Stashed changes
+=======
+                
+>>>>>>> Stashed changes
         gantt.attachEvent("onAfterLinkAdd", function (id, item) {
             window.location.reload();
         });
@@ -530,10 +600,14 @@
             window.location.reload();
         });
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         gantt.attachEvent("onAfterTaskUpdate", function (id, item) {
 <<<<<<< Updated upstream
 =======
             //parent_progress(id);
+>>>>>>> Stashed changes
+=======
+        gantt.attachEvent("onAfterTaskUpdate", function (id, item) {            
 >>>>>>> Stashed changes
 =======
         gantt.attachEvent("onAfterTaskUpdate", function (id, item) {            
@@ -546,7 +620,11 @@
                     switch (action) {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                         case "create":                            
+=======
+                        case "create":
+>>>>>>> Stashed changes
 =======
                         case "create":
 >>>>>>> Stashed changes
@@ -562,6 +640,7 @@
                                 callback: function (response) {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                                     debugger;
                                     //alert(response.responseText);
                                 }
@@ -571,11 +650,16 @@
 =======
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
                                 }
                             });
                             break;
                         case "update":
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -586,6 +670,7 @@
                                 url: "/Project/UpdateTask",
                                 data: JSON.stringify(data),
                                 callback: function (response) {
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
                                     debugger;
@@ -602,6 +687,8 @@
 =======
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
                                 }
                             });
                             gantt.message({ type: "error", text: result });
@@ -613,6 +700,9 @@
                             break;
                     }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -628,10 +718,16 @@
                                 callback: function (response) {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                                     debugger;
                                     //alert(response.responseText);
                                 }
                             });                            
+=======
+                                    //alert(response.responseText);
+                                }
+                            });
+>>>>>>> Stashed changes
 =======
                                     //alert(response.responseText);
                                 }
@@ -656,10 +752,16 @@
                                 callback: function (response) {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                                     debugger;
                                     //alert(response.responseText);
                                 }
                             });                            
+=======
+                                    //alert(response.responseText);
+                                }
+                            });
+>>>>>>> Stashed changes
 =======
                                     //alert(response.responseText);
                                 }

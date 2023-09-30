@@ -7217,6 +7217,10 @@
     <Content Include="Views\Projectportfoliodashboard\Projectportfoliodashboard.cshtml" />
     <Content Include="Views\Projectportfoliodashboard\TeamHub.cshtml" />
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+    <Content Include="Views\User\View.cshtml" />
+>>>>>>> Stashed changes
 =======
     <Content Include="Views\User\View.cshtml" />
 >>>>>>> Stashed changes

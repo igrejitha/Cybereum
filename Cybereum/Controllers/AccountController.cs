@@ -1,5 +1,6 @@
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -742,6 +743,8 @@ namespace Cybereum.Controllers
 =======
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -850,7 +853,11 @@ namespace Cybereum.Controllers
                     FormsAuthentication.SignOut();
                     HttpContext.User = new GenericPrincipal(new GenericIdentity(string.Empty), null);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                     Session.Abandon();                    
+=======
+                    Session.Abandon();
+>>>>>>> Stashed changes
 =======
                     Session.Abandon();
 >>>>>>> Stashed changes
@@ -945,6 +952,14 @@ namespace Cybereum.Controllers
         public ActionResult Logout()
         {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+            int roleid = 0;
+            if (Convert.ToInt32(Session["RoleId"]) == (int)Role.OrganizationAdmin)
+            {
+                roleid = (int)Role.OrganizationAdmin;
+            }
+>>>>>>> Stashed changes
             if (Convert.ToBoolean(Session["isAzurelogin"]) == true)
             {
                 string callbackUrl = Url.Action("SignOutCallback", "Account", routeValues: null, protocol: Request.Url.Scheme);
@@ -957,6 +972,7 @@ namespace Cybereum.Controllers
             Session.Abandon();
 
             Session["isAzurelogin"] = false;
+<<<<<<< Updated upstream
             //if (Convert.ToInt32(Session["RoleId"]) == 3)
             //    return RedirectToAction("UserLogin");
             //else
@@ -980,11 +996,16 @@ namespace Cybereum.Controllers
             Session.Abandon();
 
             Session["isAzurelogin"] = false;
+=======
+>>>>>>> Stashed changes
             if (roleid == 4)
                 return RedirectToAction("AuthLogin");
             else
                 return RedirectToAction("Login");
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         }
 
@@ -993,6 +1014,7 @@ namespace Cybereum.Controllers
         public ActionResult Login(LoginViewModel user)
         {
             try
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
             {
                 //var tokenStore = new SessionTokenStore(null,
@@ -1010,6 +1032,9 @@ namespace Cybereum.Controllers
                 //    Request.GetOwinContext().Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
                 //    //filterContext.Result = RedirectToAction("Index", "Home");
                 //}
+=======
+            {                
+>>>>>>> Stashed changes
 =======
             {                
 >>>>>>> Stashed changes
@@ -1069,7 +1094,11 @@ namespace Cybereum.Controllers
                                         return RedirectToAction("Index", "Home");
                                     }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                                     else 
+=======
+                                    else
+>>>>>>> Stashed changes
 =======
                                     else
 >>>>>>> Stashed changes
@@ -1193,6 +1222,7 @@ namespace Cybereum.Controllers
         }
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         //public async Task<string> GetTokenForApplication()
         //{
         //    string signedInUserID = ClaimsPrincipal.Current.FindFirst(ClaimTypes.NameIdentifier).Value;
@@ -1206,6 +1236,8 @@ namespace Cybereum.Controllers
         //    AuthenticationResult authenticationResult = await authenticationContext.AcquireTokenSilentAsync(graphResourceID, clientcred, new UserIdentifier(userObjectID, UserIdentifierType.UniqueId));
         //    return authenticationResult.AccessToken;
         //}
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 
@@ -1440,6 +1472,7 @@ namespace Cybereum.Controllers
                             break;
                         default:
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                             //if (roleid == 3)
                             //{
                             //    return RedirectToAction("UserLogin");
@@ -1459,6 +1492,8 @@ namespace Cybereum.Controllers
                     return RedirectToAction("Login");
                 //}
 =======
+=======
+>>>>>>> Stashed changes
                             if (roleid == (int)Role.OrganizationAdmin)
                             {
                                 return RedirectToAction("Login");
@@ -1470,8 +1505,15 @@ namespace Cybereum.Controllers
                     }
                 }
                 if (roleid == (int)Role.OrganizationAdmin)
+<<<<<<< Updated upstream
+=======
                 {
                     return RedirectToAction("Login");
+                }
+                else
+>>>>>>> Stashed changes
+                {
+                    return RedirectToAction("AuthLogin");
                 }
                 else
                 {
@@ -1491,7 +1533,11 @@ namespace Cybereum.Controllers
 
                 cybereumEntities objEnt = new cybereumEntities();
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 EncryptDecrypt encrypt=new EncryptDecrypt();
+=======
+                EncryptDecrypt encrypt = new EncryptDecrypt();
+>>>>>>> Stashed changes
 =======
                 EncryptDecrypt encrypt = new EncryptDecrypt();
 >>>>>>> Stashed changes
@@ -1517,7 +1563,11 @@ namespace Cybereum.Controllers
                             var UserLink = "/Account/login";
                             var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, UserLink);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                             IGUtilities.SendConfirmationEmailToUser(IsVerify.emailid, IsVerify.firstname + " " + IsVerify.lastname, link,encrypt.Decrypt(IsVerify.password));
+=======
+                            IGUtilities.SendConfirmationEmailToUser(IsVerify.emailid, IsVerify.firstname + " " + IsVerify.lastname, link, encrypt.Decrypt(IsVerify.password));
+>>>>>>> Stashed changes
 =======
                             IGUtilities.SendConfirmationEmailToUser(IsVerify.emailid, IsVerify.firstname + " " + IsVerify.lastname, link, encrypt.Decrypt(IsVerify.password));
 >>>>>>> Stashed changes
@@ -1530,7 +1580,11 @@ namespace Cybereum.Controllers
                             ViewBag.Message = "Email verified successfully! Please await approval from our Cybereum administrative team. Upon approval, you'll receive an email confirmation to access the platform.";
                             ViewBag.Status = true;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                             IGUtilities.SendEmail(ConfigurationManager.AppSettings["SMTPUserName"], "ananth.natarajan@cybereum.io", "Approve Pending Users",null, "Hello Cybereum,</br>You have received a new access request from "+ IsVerify.organization +".");
+=======
+                            IGUtilities.SendEmail(ConfigurationManager.AppSettings["SMTPUserName"], "ananth.natarajan@cybereum.io", "Approve Pending Users", null, "Hello Cybereum,</br>You have received a new access request from " + IsVerify.organization + ".");
+>>>>>>> Stashed changes
 =======
                             IGUtilities.SendEmail(ConfigurationManager.AppSettings["SMTPUserName"], "ananth.natarajan@cybereum.io", "Approve Pending Users", null, "Hello Cybereum,</br>You have received a new access request from " + IsVerify.organization + ".");
 >>>>>>> Stashed changes

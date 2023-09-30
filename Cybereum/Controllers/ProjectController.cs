@@ -1186,6 +1186,7 @@ namespace Cybereum.Controllers
             try
             {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 int pmuserid = Convert.ToInt16(Session["LoggedInUserId"]);
 
                 var gremlinScript = string.Empty;//= $"g.V().hasLabel('project').project('projectid','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon','hashcode').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('hashcode'))";
@@ -1198,12 +1199,22 @@ namespace Cybereum.Controllers
                 string projectnamesearch = string.Empty;
                 if (search != "")
                 {
+=======
+                var search = Request.Form.GetValues("search[value]")[0];
+                int pmuserid = Convert.ToInt16(Session["LoggedInUserId"]);
+                string projectnamesearch = string.Empty;
+                if (search != "")
+                {
+>>>>>>> Stashed changes
                     projectnamesearch = $".has('project','projectname',containing('{search}'))";
                 }
                 var gremlinScript = string.Empty;//= $"g.V().hasLabel('project').project('projectid','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon','hashcode').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('hashcode'))";
                 if (Convert.ToInt32(Session["RoleID"]) == (int)Role.ProjectManager || Convert.ToInt32(Session["RoleID"]) == (int)Role.User)
                 {
                     gremlinScript = $"g.V().has('project','projectmanager','{pmuserid}')" + projectnamesearch + ".project('projectid','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon','hashcode','projectmanager','projectstatus','progress').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('hashcode')).by(values('projectmanager')).by(values('projectstatus')).by(values('progress'))";
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
                 }
                 else
@@ -1211,7 +1222,11 @@ namespace Cybereum.Controllers
                     string projectmember = IGUtilities.getprojectmembers(pmuserid);
                     if (projectmember == "") projectmember = "''";
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                     gremlinScript = $"g.V().has('project','projectmanager',within({projectmember})).project('projectid','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon','hashcode','projectmanager','projectstatus','progress').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('hashcode')).by(values('projectmanager')).by(values('projectstatus')).by(values('progress'))";
+=======
+                    gremlinScript = $"g.V().has('project','projectmanager',within({projectmember}))" + projectnamesearch + ".project('projectid','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon','hashcode','projectmanager','projectstatus','progress').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('hashcode')).by(values('projectmanager')).by(values('projectstatus')).by(values('progress'))";
+>>>>>>> Stashed changes
 =======
                     gremlinScript = $"g.V().has('project','projectmanager',within({projectmember}))" + projectnamesearch + ".project('projectid','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon','hashcode','projectmanager','projectstatus','progress').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('hashcode')).by(values('projectmanager')).by(values('projectstatus')).by(values('progress'))";
 >>>>>>> Stashed changes
@@ -1244,7 +1259,11 @@ namespace Cybereum.Controllers
                                          projecttype = m.projecttype,
                                          hashcode = m.hashcode,
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                                          progress=m.progress
+=======
+                                         progress = m.progress
+>>>>>>> Stashed changes
 =======
                                          progress = m.progress
 >>>>>>> Stashed changes
@@ -1290,17 +1309,23 @@ namespace Cybereum.Controllers
                 if (Convert.ToInt32(Session["RoleID"]) == (int)Role.ProjectManager || Convert.ToInt32(Session["RoleID"]) == (int)Role.User)
                 {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                     gremlinScript = $"g.V().has('project','projectmanager','{pmuserid}').project('projectid','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon','hashcode','projectmanager').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('hashcode')).by(values('projectmanager'))";
                 }
                 else
                 {
                     gremlinScript = $"g.V().has('project','projectmanager',within({projectmember})).project('projectid','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon','hashcode','projectmanager').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('hashcode')).by(values('projectmanager'))";
 =======
+=======
+>>>>>>> Stashed changes
                     gremlinScript = $"g.V().has('project','projectmanager','{pmuserid}').project('projectid','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon','hashcode','projectmanager','projectstatus').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('hashcode')).by(values('projectmanager')).by(values('projectstatus'))";
                 }
                 else
                 {
                     gremlinScript = $"g.V().has('project','projectmanager',within({projectmember})).project('projectid','projectname','startdate','enddate','noofresource','projectcost','createdby','createdusername','createdon','hashcode','projectmanager','projectstatus').by(id()).by(values('projectname')).by(values('startdate')).by(values('enddate')).by(values('noofresource')).by(values('projectcost')).by(values('createdby')).by(values('createdusername')).by(values('createdon')).by(values('hashcode')).by(values('projectmanager')).by(values('projectstatus'))";
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
                 }
 
@@ -1330,7 +1355,11 @@ namespace Cybereum.Controllers
                                          projectstatus = m.projectstatus,
                                          projecttype = m.projecttype,
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                                          hashcode = m.hashcode
+=======
+                                         hashcode = m.hashcode                                         
+>>>>>>> Stashed changes
 =======
                                          hashcode = m.hashcode                                         
 >>>>>>> Stashed changes
@@ -1580,7 +1609,11 @@ namespace Cybereum.Controllers
                             $".property('organization', '{Session["Organization"].ToString()}')" +
                             $".property('hashcode', '')" +
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                             $".property('progress', '0')" +
+=======
+                            $".property('progress', '0')" +                            
+>>>>>>> Stashed changes
 =======
                             $".property('progress', '0')" +                            
 >>>>>>> Stashed changes
@@ -1620,6 +1653,10 @@ namespace Cybereum.Controllers
                             $".property('projectid', '{tbl_activity.projectid}')" +
                             $".property('durations', '{1}')" +
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+                            $".property('activitystatus', '{1}')" +
+>>>>>>> Stashed changes
 =======
                             $".property('activitystatus', '{1}')" +
 >>>>>>> Stashed changes
@@ -1664,6 +1701,10 @@ namespace Cybereum.Controllers
                             $".property('projectid', '{tbl_activity.projectid}')" +
                             $".property('durations', '{1}')" +
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+                            $".property('activitystatus', '{1}')" +
+>>>>>>> Stashed changes
 =======
                             $".property('activitystatus', '{1}')" +
 >>>>>>> Stashed changes
@@ -1780,7 +1821,11 @@ namespace Cybereum.Controllers
             if (task.parent == "0")
             {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 Boolean ismilestone = false;
+=======
+                //Boolean ismilestone = false;
+>>>>>>> Stashed changes
 =======
                 //Boolean ismilestone = false;
 >>>>>>> Stashed changes
@@ -1792,7 +1837,11 @@ namespace Cybereum.Controllers
                 act.projectid = projectid;
                 act.durations = task.duration;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 act.ismilestone = ismilestone;
+=======
+                act.ismilestone = task.ismilestone;
+>>>>>>> Stashed changes
 =======
                 act.ismilestone = task.ismilestone;
 >>>>>>> Stashed changes
@@ -1938,7 +1987,11 @@ namespace Cybereum.Controllers
 
                     //Activity
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                     gremlinScript = "g.V().has('activity','projectid','" + project["id"] + "').order().by('startdate',incr).order().by('enddate',incr).project('id','activityname','startdate','enddate','durations','predecessors','linktype','progress').by(id()).by(values('activityname')).by(values('startdate')).by(values('enddate')).by(values('durations')).by(values('predecessors').fold()).by(values('linktype')).by(values('progress'))";
+=======
+                    gremlinScript = "g.V().has('activity','projectid','" + project["id"] + "').order().by('startdate',incr).order().by('enddate',incr).project('id','activityname','startdate','enddate','durations','predecessors','linktype','progress','ismilestone').by(id()).by(values('activityname')).by(values('startdate')).by(values('enddate')).by(values('durations')).by(values('predecessors').fold()).by(values('linktype')).by(values('progress')).by(values('ismilestone'))";
+>>>>>>> Stashed changes
 =======
                     gremlinScript = "g.V().has('activity','projectid','" + project["id"] + "').order().by('startdate',incr).order().by('enddate',incr).project('id','activityname','startdate','enddate','durations','predecessors','linktype','progress','ismilestone').by(id()).by(values('activityname')).by(values('startdate')).by(values('enddate')).by(values('durations')).by(values('predecessors').fold()).by(values('linktype')).by(values('progress')).by(values('ismilestone'))";
 >>>>>>> Stashed changes
@@ -1965,6 +2018,10 @@ namespace Cybereum.Controllers
                         ganttchart.Progress = Convert.ToDecimal(Convert.ToDecimal(itemactivity.progress) / 100);
                         ganttchart.Type = "Activity";
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+                        ganttchart.ismilestone = itemactivity.ismilestone;
+>>>>>>> Stashed changes
 =======
                         ganttchart.ismilestone = itemactivity.ismilestone;
 >>>>>>> Stashed changes
@@ -2126,7 +2183,12 @@ namespace Cybereum.Controllers
                             taskid = t.taskid,
                             user_id = t.user_id,
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                             color = t.color
+=======
+                            color = t.color,
+                            ismilestone = t.ismilestone
+>>>>>>> Stashed changes
 =======
                             color = t.color,
                             ismilestone = t.ismilestone
@@ -2213,7 +2275,11 @@ namespace Cybereum.Controllers
             //try
             //{                
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             Boolean ismilestone = false;
+=======
+            //Boolean ismilestone = false;
+>>>>>>> Stashed changes
 =======
             //Boolean ismilestone = false;
 >>>>>>> Stashed changes
@@ -2230,7 +2296,11 @@ namespace Cybereum.Controllers
                 act.projectid = projectid;
                 act.durations = task.duration;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                 act.ismilestone = ismilestone;
+=======
+                act.ismilestone = task.ismilestone;
+>>>>>>> Stashed changes
 =======
                 act.ismilestone = task.ismilestone;
 >>>>>>> Stashed changes
@@ -2427,7 +2497,11 @@ namespace Cybereum.Controllers
         public void XMLImport()
         {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             var postedFile = Request.Files[0];            
+=======
+            var postedFile = Request.Files[0];
+>>>>>>> Stashed changes
 =======
             var postedFile = Request.Files[0];
 >>>>>>> Stashed changes

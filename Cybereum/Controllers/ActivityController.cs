@@ -399,6 +399,7 @@ namespace Cybereum.Controllers
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
                 //**********Checking for task start and end date*************
                 var enddate = Getstartactivitydate(tbl_activity.projectid, tbl_activity.startdate);
@@ -413,6 +414,8 @@ namespace Cybereum.Controllers
                 }
                 //**********End*********
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
                 if (tbl_activity.activityname != ConfigurationManager.AppSettings["StartActivity"].ToString())
@@ -431,6 +434,9 @@ namespace Cybereum.Controllers
                     //**********End*********
                 }
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -511,12 +517,15 @@ namespace Cybereum.Controllers
 
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                     result = IGUtilities.ExecuteGremlinScript(gremlinScript);
                     foreach (var result2 in result)
                     {
                         tbl_activity.id = Convert.ToString(result2["id"]);
                     }
 
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======
@@ -558,8 +567,11 @@ namespace Cybereum.Controllers
                                             $".property('ismilestone', '{tbl_activity.ismilestone}')" + a +
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
                                             //$".property('createdby', '{Convert.ToInt32(tbl_activity.createdby)}')" +
                                             //$".property('createdusername', '')" +
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======
