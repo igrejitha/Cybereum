@@ -17,71 +17,6 @@
     }
 
     .nav-pills.light .nav-link.active, .nav-pills.light .show > .nav-link {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-        /*background: #00233c !important;*/
-        color: #00233c !important;
-        background-color: #fff;
-        border: 1px solid #ddd;
-        border-bottom-color: transparent;
-    }
-</style>
-
-<div class="row">
-    <div class="col-xl-12 col-lg-12">
-        <div class="card">
-            <div class="card-body">
-                @using (Html.BeginForm("AddEditProject", "Project", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
-                    @Html.AntiForgeryToken()
-
-                    <span class="text-danger" style="align-items:center;">
-                        @ViewBag.Message
-                        @Html.HiddenFor(model => model.projectid)
-                        @Html.HiddenFor(model => model.createdon)
-                        @Html.HiddenFor(model => model.createdby)
-                    </span>
-
-                    <ul class="nav nav-pills mb-4 light">
-                        <li class="nav-item">
-                            <a href="#navpills-1" class="nav-link active" data-toggle="tab" aria-expanded="false">Project Details</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#navpills-2" class="nav-link" data-toggle="tab" aria-expanded="false">Project Members</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content">
-                        <div id="navpills-1" class="tab-pane active">
-                            <div class="row">
-                                <div class="col-md-12">
-
-                                    <div class="basic-form">
-
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                @Html.LabelFor(model => model.projectname, "Project Name", htmlAttributes: new { @class = "" })
-                                                @*<div class="col-md-10">*@
-                                                @Html.EditorFor(model => model.projectname, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                                                @Html.ValidationMessageFor(model => model.projectname, "", new { @class = "text-danger" })
-                                                @*</div>*@
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                @Html.LabelFor(model => model.startdate, "Start Date", htmlAttributes: new { @class = "" })
-                                                @Html.TextBoxFor(model => model.startdate, new { @type = "date", @class = "form-control datepicker", @Value = Model.startdate.ToString("yyyy-MM-dd") })
-                                                @Html.ValidationMessageFor(model => model.startdate, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                @Html.LabelFor(model => model.enddate, "End Date", htmlAttributes: new { @class = "" })
-                                                @Html.TextBoxFor(model => model.enddate, new { @type = "date", @class = "form-control datepicker", @Value = Model.enddate.ToString("yyyy-MM-dd") })
-                                                @Html.ValidationMessageFor(model => model.enddate, "", new { @class = "text-danger" })
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                @Html.LabelFor(model => model.projectstatus, "Project Status", htmlAttributes: new { @class = "" })
-                                                @Html.DropDownList("projectstatus", new List<SelectListItem>
-=======
         background: #00233c !important;
         /*color: #00233c !important;
         background-color: #fff;
@@ -89,24 +24,6 @@
         border-bottom-color: transparent;*/
     }
 </style>
-=======
-        background: #00233c !important;
-        /*color: #00233c !important;
-        background-color: #fff;
-        border: 1px solid #ddd;
-        border-bottom-color: transparent;*/
-    }
-</style>
->>>>>>> Stashed changes
-=======
-        background: #00233c !important;
-        /*color: #00233c !important;
-        background-color: #fff;
-        border: 1px solid #ddd;
-        border-bottom-color: transparent;*/
-    }
-</style>
->>>>>>> Stashed changes
 <div class="main-content">
     <div class="page-content">
         <div class="container-fluid">
@@ -144,7 +61,7 @@
                                                         <div class="form-group col-md-6">
                                                             @Html.LabelFor(model => model.projectname, "Project Name", htmlAttributes: new { @class = "" })
                                                             @*<div class="col-md-10">*@
-                                                            @Html.EditorFor(model => model.projectname, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                                                            @Html.EditorFor(model => model.projectname, new { htmlAttributes = new { @class = "form-control", autocomplete = "off",@maxlength=100 } })
                                                             @Html.ValidationMessageFor(model => model.projectname, "", new { @class = "text-danger" })
                                                             @*</div>*@
                                                         </div>
@@ -163,150 +80,12 @@
                                                         <div class="form-group col-md-6">
                                                             @Html.LabelFor(model => model.projectstatus, "Project Status", htmlAttributes: new { @class = "" })
                                                             @Html.DropDownList("projectstatus", new List<SelectListItem>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-                                                    {
-                                                    new SelectListItem{ Text="Open", Value = "Open" },
-=======
                                                     {
                                                     new SelectListItem{ Text="Planning", Value = "Planning" },
->>>>>>> Stashed changes
-=======
-                                                    {
-                                                    new SelectListItem{ Text="Planning", Value = "Planning" },
->>>>>>> Stashed changes
                                                     new SelectListItem{ Text="In Progress", Value = "In Progress" },
                                                     new SelectListItem{ Text="Completed", Value = "Completed" },
                                                     new SelectListItem{ Text="Cancelled", Value = "Cancelled" }
                                                     }, htmlAttributes: new { @class = "form-control" })
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                                                @Html.ValidationMessageFor(model => model.projectstatus, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    @Html.LabelFor(model => model.projecttype, "Project Type", htmlAttributes: new { @class = "" })
-                                                    @Html.DropDownList("projecttype", new List<SelectListItem>
-                                                        {
-                                                        new SelectListItem{ Text="Nuclear Power Station", Value = "Nuclear Power Station" },
-                                                        new SelectListItem{ Text="Solar Power Station", Value = "Solar Power Station" },
-                                                        new SelectListItem{ Text="Wind Power Station", Value = "Wind Power Station" },
-                                                        new SelectListItem{ Text="Hydro Power Station", Value = "Hydro Power Station" },
-                                                        new SelectListItem{ Text="Thermal Power Station", Value = "Thermal Power Station" }
-                                                        }, htmlAttributes: new { @class = "form-control" })
-                                                    @Html.ValidationMessageFor(model => model.projecttype, "", new { @class = "text-danger" })
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div id="navpills-2" class="tab-pane">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    @*<div class="form-row">
-
-                                        <div class="col-md-6">*@
-                                    <div class="form-group">
-                                        @Html.Label("Project Members", htmlAttributes: new { @class = "" })
-                                        <div class="container need" style="margin-top: 0 !important;">
-                                                <div class="row">
-                                                    <div class="col ">
-                                                        <select id="multiselect_dropdown_styles" class="form-control multi-form" name="projectmembers" multiple multiselect-search="true" multiselect-select-all="true" multiselect-max-items="100">
-                                                            @if (ViewBag.projectmembers != null)
-                                                            {
-                                                                foreach (var item in ViewBag.projectmembers)
-                                                                {
-                                                                    if (item.Text != null)
-                                                                    {
-                                                                        if (item.Selected == true)
-                                                                        {
-                                                                            <option id="@item.Value" value="@item.Value" selected="selected">
-                                                                                @item.Text
-                                                                            </option>
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <option id="@item.Value" value="@item.Value">
-                                                                                @item.Text
-                                                                            </option>
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        @*@Html.DropDownList("projectmembersSelect", ViewBag.projectmembersSelect as SelectList, htmlAttributes: new { @class = "form-control" })*@
-                                        @*<p></p>
-                                        <div class="form-row">
-                                            <div class="col-md-6">                                                
-                                                <input type="text" id="MemberName" class="form-control" />
-                                                <input type="hidden" id="hdnmember">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <input type="button" value="Add" onclick="addRow()" class="btn btn" style="background-color: #0D2136; color: white;" />
-                                            </div>
-                                            @Html.HiddenFor(model => Model.members, new { id = "hdnmembersList" })
-                                        </div>*@
-                                    </div>
-                                    @*<table id="dataTable" class="display" style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th>Id</th>
-                                                <th>Name</th>
-                                                <th>Delete</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @if (ViewBag.projectmembersNew != null)
-                                            {
-                                                foreach (var item in ViewBag.projectmembersNew)
-                                                {
-                                                    if (item.Text != null)
-                                                    {
-                                                        if (item.Selected == true)
-                                                        {
-                                                            <tr>
-                                                                <td>@item.Value</td>
-                                                                <td>@item.Text</td>
-                                                                <td><input type="button" value="Remove" onclick="removeRow(this)" class="btn btn" style="background-color: #0D2136; color: white;" /></td>
-                                                            </tr>
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        </tbody>
-                                    </table>*@
-
-                                </div>
-
-
-                                @*</div>
-
-
-                                    </div>*@
-                            </div>
-                        </div>
-
-
-                        <div class="row" style="padding-top: 30px;">
-                            <div class="col-6">
-                                <a href="@Url.Action("List", "Project")"><h4>Back To List</h4></a>
-                            </div>
-                            <div class="col-6">
-                                <input type="submit" name="btnSubmit" value="Save" class="btn btn" style="background-color: #0D2136; color: white;" />
-                            </div>
-=======
                                                             @Html.ValidationMessageFor(model => model.projectstatus, "", new { @class = "text-danger" })
                                                         </div>
                                                     </div>
@@ -316,114 +95,7 @@
                                                                 @Html.LabelFor(model => model.projecttype, "Project Type", htmlAttributes: new { @class = "" })
                                                                 @Html.DropDownList("projecttype", new List<SelectListItem>
                                                     {
-                                                   //new SelectListItem{ Text="Nuclear Power Station", Value = "Nuclear Power Station" },
-                                                   //new SelectListItem{ Text="Solar Power Station", Value = "Solar Power Station" },
-                                                   //new SelectListItem{ Text="Wind Power Station", Value = "Wind Power Station" },
-                                                   //new SelectListItem{ Text="Hydro Power Station", Value = "Hydro Power Station" },
-                                                   //new SelectListItem{ Text="Thermal Power Station", Value = "Thermal Power Station" }
-                                                   new SelectListItem{ Text="Nuclear storage", Value = "Nuclear storage" },
-                                                    new SelectListItem{ Text="Olympic Games", Value = "Olympic Games" },
-                                                    new SelectListItem{ Text="Nuclear power PWR", Value = "Nuclear power PWR" },
-                                                    new SelectListItem{ Text="Nuclear power BWR", Value = "Nuclear power BWR" },
-                                                    new SelectListItem{ Text="Nuclear power PHWR", Value = "Nuclear power PHWR" },
-                                                    new SelectListItem{ Text="Hydroelectric dams", Value = "Hydroelectric dams" },
-                                                    new SelectListItem{ Text="Flood control", Value = "Flood control" },
-                                                    new SelectListItem{ Text="Transportation", Value = "Transportation" },
-                                                    new SelectListItem{ Text="Utilities", Value = "Utilities" },
-                                                    new SelectListItem{ Text="IT", Value = "IT" },
-                                                    new SelectListItem{ Text="Nonhydroelectric dams", Value = "Nonhydroelectric dams" },
-                                                    new SelectListItem{ Text="Buildings", Value = "Buildings" },
-                                                    new SelectListItem{ Text="Aerospace", Value = "Aerospace" },
-                                                    new SelectListItem{ Text="Defense", Value = "Defense" },
-                                                    new SelectListItem{ Text="Bus rapid transit", Value = "Bus rapid transit" },
-                                                    new SelectListItem{ Text="Rail", Value = "Rail" },
-                                                    new SelectListItem{ Text="Airports", Value = "Airports" },
-                                                    new SelectListItem{ Text="Tunnels", Value = "Tunnels" },
-                                                    new SelectListItem{ Text="Oil and Gas", Value = "Oil and Gas" },
-                                                    new SelectListItem{ Text="Offshore Oil and Gas", Value = "Offshore Oil and Gas" },
-                                                    new SelectListItem{ Text="Ports", Value = "Ports" },
-                                                    new SelectListItem{ Text="Hospitals, health", Value = "Hospitals, health" },
-                                                    new SelectListItem{ Text="Mining", Value = "Mining" },
-                                                    new SelectListItem{ Text="Bridges", Value = "Bridges" },
-                                                    new SelectListItem{ Text="Water", Value = "Water" },
-                                                    new SelectListItem{ Text="Fossil thermal power", Value = "Fossil thermal power" },
-                                                    new SelectListItem{ Text="Roads", Value = "Roads" },
-                                                    new SelectListItem{ Text="Pipelines", Value = "Pipelines" },
-                                                    new SelectListItem{ Text="Wind power", Value = "Wind power" },
-                                                    new SelectListItem{ Text="Offshore Wind", Value = "Offshore Wind" },
-                                                    new SelectListItem{ Text="Energy transmission", Value = "Energy transmission" },
-                                                    new SelectListItem{ Text="Solar power", Value = "Solar power" },
-                                                    new SelectListItem{ Text="Metro", Value = "Metro" },
-                                                    new SelectListItem{ Text="Other", Value = "Other" }
-                                               }, htmlAttributes: new { @class = "form-control" })
-                                                                @Html.ValidationMessageFor(model => model.projecttype, "", new { @class = "text-danger" })
-=======
-                                                            @Html.ValidationMessageFor(model => model.projectstatus, "", new { @class = "text-danger" })
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-row">
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                @Html.LabelFor(model => model.projecttype, "Project Type", htmlAttributes: new { @class = "" })
-                                                                @Html.DropDownList("projecttype", new List<SelectListItem>
-                                                    {
-                                                   //new SelectListItem{ Text="Nuclear Power Station", Value = "Nuclear Power Station" },
-                                                   //new SelectListItem{ Text="Solar Power Station", Value = "Solar Power Station" },
-                                                   //new SelectListItem{ Text="Wind Power Station", Value = "Wind Power Station" },
-                                                   //new SelectListItem{ Text="Hydro Power Station", Value = "Hydro Power Station" },
-                                                   //new SelectListItem{ Text="Thermal Power Station", Value = "Thermal Power Station" }
-                                                   new SelectListItem{ Text="Nuclear storage", Value = "Nuclear storage" },
-                                                    new SelectListItem{ Text="Olympic Games", Value = "Olympic Games" },
-                                                    new SelectListItem{ Text="Nuclear power PWR", Value = "Nuclear power PWR" },
-                                                    new SelectListItem{ Text="Nuclear power BWR", Value = "Nuclear power BWR" },
-                                                    new SelectListItem{ Text="Nuclear power PHWR", Value = "Nuclear power PHWR" },
-                                                    new SelectListItem{ Text="Hydroelectric dams", Value = "Hydroelectric dams" },
-                                                    new SelectListItem{ Text="Flood control", Value = "Flood control" },
-                                                    new SelectListItem{ Text="Transportation", Value = "Transportation" },
-                                                    new SelectListItem{ Text="Utilities", Value = "Utilities" },
-                                                    new SelectListItem{ Text="IT", Value = "IT" },
-                                                    new SelectListItem{ Text="Nonhydroelectric dams", Value = "Nonhydroelectric dams" },
-                                                    new SelectListItem{ Text="Buildings", Value = "Buildings" },
-                                                    new SelectListItem{ Text="Aerospace", Value = "Aerospace" },
-                                                    new SelectListItem{ Text="Defense", Value = "Defense" },
-                                                    new SelectListItem{ Text="Bus rapid transit", Value = "Bus rapid transit" },
-                                                    new SelectListItem{ Text="Rail", Value = "Rail" },
-                                                    new SelectListItem{ Text="Airports", Value = "Airports" },
-                                                    new SelectListItem{ Text="Tunnels", Value = "Tunnels" },
-                                                    new SelectListItem{ Text="Oil and Gas", Value = "Oil and Gas" },
-                                                    new SelectListItem{ Text="Offshore Oil and Gas", Value = "Offshore Oil and Gas" },
-                                                    new SelectListItem{ Text="Ports", Value = "Ports" },
-                                                    new SelectListItem{ Text="Hospitals, health", Value = "Hospitals, health" },
-                                                    new SelectListItem{ Text="Mining", Value = "Mining" },
-                                                    new SelectListItem{ Text="Bridges", Value = "Bridges" },
-                                                    new SelectListItem{ Text="Water", Value = "Water" },
-                                                    new SelectListItem{ Text="Fossil thermal power", Value = "Fossil thermal power" },
-                                                    new SelectListItem{ Text="Roads", Value = "Roads" },
-                                                    new SelectListItem{ Text="Pipelines", Value = "Pipelines" },
-                                                    new SelectListItem{ Text="Wind power", Value = "Wind power" },
-                                                    new SelectListItem{ Text="Offshore Wind", Value = "Offshore Wind" },
-                                                    new SelectListItem{ Text="Energy transmission", Value = "Energy transmission" },
-                                                    new SelectListItem{ Text="Solar power", Value = "Solar power" },
-                                                    new SelectListItem{ Text="Metro", Value = "Metro" },
-                                                    new SelectListItem{ Text="Other", Value = "Other" }
-                                               }, htmlAttributes: new { @class = "form-control" })
-                                                                @Html.ValidationMessageFor(model => model.projecttype, "", new { @class = "text-danger" })
-=======
-                                                            @Html.ValidationMessageFor(model => model.projectstatus, "", new { @class = "text-danger" })
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-row">
-                                                        <div class="col-md-6">
-                                                            <div class="form-group">
-                                                                @Html.LabelFor(model => model.projecttype, "Project Type", htmlAttributes: new { @class = "" })
-                                                                @Html.DropDownList("projecttype", new List<SelectListItem>
-                                                    {
-                                                   //new SelectListItem{ Text="Nuclear Power Station", Value = "Nuclear Power Station" },
-                                                   //new SelectListItem{ Text="Solar Power Station", Value = "Solar Power Station" },
-                                                   //new SelectListItem{ Text="Wind Power Station", Value = "Wind Power Station" },
-                                                   //new SelectListItem{ Text="Hydro Power Station", Value = "Hydro Power Station" },
-                                                   //new SelectListItem{ Text="Thermal Power Station", Value = "Thermal Power Station" }
-                                                   new SelectListItem{ Text="Nuclear storage", Value = "Nuclear storage" },
+                                                    new SelectListItem{ Text="Nuclear storage", Value = "Nuclear storage" },
                                                     new SelectListItem{ Text="Olympic Games", Value = "Olympic Games" },
                                                     new SelectListItem{ Text="Nuclear power PWR", Value = "Nuclear power PWR" },
                                                     new SelectListItem{ Text="Nuclear power BWR", Value = "Nuclear power BWR" },
@@ -483,115 +155,7 @@
                                                 @Html.HiddenFor(model => model.projectmanager)
                                             }
                                             <div class="col-md-12">
-                                                <div class="form-group">
-                                                    @Html.Label("Project Members", htmlAttributes: new { @class = "" })
-                                                    <div class="container need" style="margin-top: 0 !important;">
-                                                        <div class="row">
-                                                            <div class="col ">
-                                                                <select id="multiselect_dropdown_styles" class="form-control multi-form" name="projectmembers" multiple multiselect-search="true" multiselect-select-all="true" multiselect-max-items="100">
-                                                                    @if (ViewBag.projectmembers != null)
-                                                                    {
-                                                                        foreach (var item in ViewBag.projectmembers)
-                                                                        {
-                                                                            if (item.Text != null)
-                                                                            {
-                                                                                if (item.Selected == true)
-                                                                                {
-                                                                                    <option id="@item.Value" value="@item.Value" selected="selected">
-                                                                                        @item.Text
-                                                                                    </option>
-                                                                                }
-                                                                                else
-                                                                                {
-                                                                                    <option id="@item.Value" value="@item.Value">
-                                                                                        @item.Text
-                                                                                    </option>
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                </select>
->>>>>>> Stashed changes
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-<<<<<<< Updated upstream
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="navpills-2" class="tab-pane">
-                                        <div class="row">
-                                            @if (Convert.ToInt32(Session["RoleId"]) == 4)
-                                            {
-                                                <div class="col-md-12">
-                                                    @Html.LabelFor(model => model.projectmanager, "Project Manager", htmlAttributes: new { @class = "" })
-                                                    @Html.DropDownList("projectmanager", null, htmlAttributes: new { @class = "form-control" })
-                                                    @Html.ValidationMessageFor(model => model.projectmanager, "", new { @class = "text-danger" })
-                                                </div>
-                                            }
-                                            else
-                                            {
-                                                @Html.HiddenFor(model => model.projectmanager)
-                                            }
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    @Html.Label("Project Members", htmlAttributes: new { @class = "" })
-                                                    <div class="container need" style="margin-top: 0 !important;">
-                                                        <div class="row">
-                                                            <div class="col ">
-                                                                <select id="multiselect_dropdown_styles" class="form-control multi-form" name="projectmembers" multiple multiselect-search="true" multiselect-select-all="true" multiselect-max-items="100">
-                                                                    @if (ViewBag.projectmembers != null)
-                                                                    {
-                                                                        foreach (var item in ViewBag.projectmembers)
-                                                                        {
-                                                                            if (item.Text != null)
-                                                                            {
-                                                                                if (item.Selected == true)
-                                                                                {
-                                                                                    <option id="@item.Value" value="@item.Value" selected="selected">
-                                                                                        @item.Text
-                                                                                    </option>
-                                                                                }
-                                                                                else
-                                                                                {
-                                                                                    <option id="@item.Value" value="@item.Value">
-                                                                                        @item.Text
-                                                                                    </option>
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                </select>
->>>>>>> Stashed changes
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-<<<<<<< Updated upstream
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="navpills-2" class="tab-pane">
-                                        <div class="row">
-                                            @if (Convert.ToInt32(Session["RoleId"]) == 4)
-                                            {
-                                                <div class="col-md-12">
-                                                    @Html.LabelFor(model => model.projectmanager, "Project Manager", htmlAttributes: new { @class = "" })
-                                                    @Html.DropDownList("projectmanager", null, htmlAttributes: new { @class = "form-control" })
-                                                    @Html.ValidationMessageFor(model => model.projectmanager, "", new { @class = "text-danger" })
-                                                </div>
-                                            }
-                                            else
-                                            {
-                                                @Html.HiddenFor(model => model.projectmanager)
-                                            }
-                                            <div class="col-md-12">
-                                                <div class="form-group">
+                                                @*<div class="form-group">*@
                                                     @Html.Label("Project Members", htmlAttributes: new { @class = "" })
                                                     <div class="container need" style="margin-top: 0 !important;">
                                                         <div class="row">
@@ -621,54 +185,8 @@
                                                                 </select>
                                                             </div>
                                                         </div>
-                                                    </div>
->>>>>>> Stashed changes
-
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-                                                    @*@Html.DropDownList("projectmembersSelect", ViewBag.projectmembersSelect as SelectList, htmlAttributes: new { @class = "form-control" })*@
-                                                    @*<p></p>
-                                                        <div class="form-row">
-                                                            <div class="col-md-6">
-                                                                <input type="text" id="MemberName" class="form-control" />
-                                                                <input type="hidden" id="hdnmember">
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <input type="button" value="Add" onclick="addRow()" class="btn btn" style="background-color: #0D2136; color: white;" />
-                                                            </div>
-                                                            @Html.HiddenFor(model => Model.members, new { id = "hdnmembersList" })
-                                                        </div>*@
-                                                </div>
-                                                @*<table id="dataTable" class="display" style="width:100%">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Id</th>
-                                                                <th>Name</th>
-                                                                <th>Delete</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            @if (ViewBag.projectmembersNew != null)
-                                                            {
-                                                                foreach (var item in ViewBag.projectmembersNew)
-                                                                {
-                                                                    if (item.Text != null)
-                                                                    {
-                                                                        if (item.Selected == true)
-                                                                        {
-                                                                            <tr>
-                                                                                <td>@item.Value</td>
-                                                                                <td>@item.Text</td>
-                                                                                <td><input type="button" value="Remove" onclick="removeRow(this)" class="btn btn" style="background-color: #0D2136; color: white;" /></td>
-                                                                            </tr>
-                                                                        }
-                                                                    }
-                                                                }
-                                                            }
-                                                        </tbody>
-                                                    </table>*@
+                                                    </div>                                                    
+                                                @*</div>*@                                                
                                             </div>
                                         </div>
                                     </div>
@@ -689,24 +207,8 @@
 
                             }
                         </div>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-
-
-                    </div>
-
-                }
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
                     </div>
                 </div>
->>>>>>> Stashed changes
-            </div>
-            </div>
             </div>
             </div>
         </div>
@@ -715,231 +217,9 @@
 
             <script src="~/vendor/select2/js/select2.full.min.js"></script>
             <script src="~/js/multiselect-dropdown.js"></script>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-
-<<<<<<< Updated upstream
-<script src="~/vendor/select2/js/select2.full.min.js"></script>
-<script src="~/js/multiselect-dropdown.js"></script>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
-
-
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-
-
-<script>
-
-    $(document).ready(function () {
-
-        $("#MemberName").autocomplete({
-
-            source: function (request, response) {
-                debugger;
-                $.ajax({
-                    url: "/Project/Getprojectmember",
-                    type: "POST",
-                    dataType: "json",
-                    data: { term: request.term },
-                    success: function (data) {
-                        debugger;
-                        //response($.map(data, function (item) {
-                        //    $("#hdnmember").val(item.Value);
-                        //    return { label: item.Text, value: item.Text };
-                        //}))
-                        var array = $.map(data, function (m) {
-                            return {
-                                label: m.Text,
-                                value: m.Value
-                            };
-                        });
-                        response(array);
-                    }
-                })
-            },
-            select: function (e, i) {
-                debugger;
-                //$("#hdnmember").val(i.item.value);
-                //$("#hdnmember").val(i.item ? i.item.value : 0);
-                $("#MemberName").val(i.item.label); // display the selected text
-                $("#hdnmember").val(i.item.value); // save selected id to hidden input
-                return false;
-            }
-        });
-
-
-        var tbody = $("#dataTable tbody");
-        if (tbody.children().length != 0) {
-            debugger;
-            var arr = [];
-            $('#dataTable tbody tr').each(function (index) {
-                var Name = $(this).find('td:eq(0)').text();
-                arr.push(Name);
-            });
-            $('#hdnmembersList').val(arr);
-        }
-    });
-
-</script>
-
-<script type="text/javascript">
-    //$(function () {
-    //    debugger;
-    //        $("#projecttype").select2();
-    //    });
-    $('#projecttype').on('change', function () {
-        // set reference to select elements
-        var projecttype = $('#projecttype');
-
-        // check if user has made a selection on both dropdowns
-        if (projecttype.prop('selectedIndex') > 0) {
-            // remove active class from current active div element
-            $('.result.active').removeClass('active');
-
-            // get all result divs, and filter for matching data attributes
-            $('.result').filter('[data-projecttype="' + projecttype.val() + '"]').addClass('active');
-        }
-    });
-
-    $('.btnNext').click(function () {
-        debugger;
-        $('.nav-tabs > .active').next('li').find('a').trigger('click');
-    });
-
-    $('.btnPrevious').click(function () {
-        debugger;
-        $('.nav-tabs > .active').prev('li').find('a').trigger('click');
-    });
-
-    $(document).ready(function () {
-        $("#projectmembers").autocomplete({
-            source: function (request, response) {
-                $.ajax({
-                    url: "/Project/Getprojectmember",
-                    type: "POST",
-                    dataType: "json",
-                    data: { Prefix: request.term },
-                    success: function (data) {
-                        response($.map(data, function (item) {
-                            return { label: item.Name, value: item.Name };
-                        }))
-
-                    }
-                })
-            },
-            messages: {
-                noResults: "", results: ""
-            }
-        });
-    })
-</script>
-
-<SCRIPT language="javascript">
-
-    function addRow() {
-        //var table = document.getElementById(tableID);
-        //var rowCount = table.rows.length;
-        //table.row.add([
-        //    rowCount,
-        //     $("#projectmembers").val()
-        //    ]).draw(false);
-        //var row = table.insertRow(rowCount);
-
-        debugger;
-
-        //Get the reference of the Table's TBODY element.
-        var tBody = $("#dataTable > TBODY")[0];
-
-        table = document.getElementById("dataTable");
-        tr = table.getElementsByTagName("tr");
-        var rows = table.rows;
-
-        debugger;
-        for (var i = 1; i < rows.length; i++) {
-            var cols = rows[i].cells;
-            if (cols[0].innerText == $('#hdnmember').val()) {
-                return;
-            }
-
-        }
-
-        //Add Row.
-        var row = tBody.insertRow(-1);
-
-        //Add Id cell.
-        var cell = $(row.insertCell(-1));
-        //cell.html($('#projectmembersSelect').val());
-        cell.html($('#hdnmember').val());        
-
-        //Add Name cell.
-        cell = $(row.insertCell(-1));
-        //cell.html($('#projectmembersSelect :selected').text());
-        cell.html($('#MemberName').val());
-
-        //Add Button cell.
-        cell = $(row.insertCell(-1));
-        var btnRemove = $("<input />");
-        btnRemove.attr("type", "button");
-        btnRemove.attr("class", "btn btn");
-        btnRemove.attr("style", "background-color: #0D2136; color: white;");
-        btnRemove.attr("onclick", "removeRow(this);");
-        btnRemove.val("Remove");
-        cell.append(btnRemove);
-
-        var tbody = $("#dataTable tbody");
-        if (tbody.children().length != 0) {
-            debugger;
-            var arr = [];
-            $('#dataTable tbody tr').each(function (index) {
-                var Name = $(this).find('td:eq(0)').text();
-                arr.push(Name);
-            });
-            $('#hdnmembersList').val(arr);
-        }
-    }
-
-    function removeRow(button) {
-        try {
-            debugger;
-            //Determine the reference of the Row using the Button.
-            var row = $(button).closest("TR");
-            var name = $("TD", row).eq(1).html();
-            if (confirm("Do you want to delete: " + name)) {
-                //Get the reference of the Table.
-                var table = $("#dataTable")[0];
-
-                //Delete the Table row using it's Index.
-                table.deleteRow(row[0].rowIndex);
-            }
-        }
-        catch (e) {
-            alert(e);
-        }
-    }
-</SCRIPT>
-
-<script type="text/javascript">
-    $(document).ajaxSend(function () {
-        //$("#overlay").fadeIn(300);
-    });
-=======
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
->>>>>>> Stashed changes
-=======
 
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
->>>>>>> Stashed changes
-=======
-
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
->>>>>>> Stashed changes
 
 
 
@@ -1117,31 +397,6 @@
                         $('#hdnmembersList').val(arr);
                     }
                 }
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-
-<<<<<<< Updated upstream
-        $(function () {
-            $("#enddate").on('change', function () {
-                debugger;
-                var date = $("#enddate").val();
-                var startdate = $("#startdate").val();
-                if (date != "") {
-                    if (date < startdate) {
-                        alert('End date must be greater than Start date');
-                        $(this).val('');
-=======
-                function removeRow(button) {
-                    try {
-                        debugger;
-                        //Determine the reference of the Row using the Button.
-                        var row = $(button).closest("TR");
-                        var name = $("TD", row).eq(1).html();
-                        if (confirm("Do you want to delete: " + name)) {
-                            //Get the reference of the Table.
-                            var table = $("#dataTable")[0];
-
-=======
 
                 function removeRow(button) {
                     try {
@@ -1153,33 +408,12 @@
                             //Get the reference of the Table.
                             var table = $("#dataTable")[0];
 
->>>>>>> Stashed changes
-=======
-
-                function removeRow(button) {
-                    try {
-                        debugger;
-                        //Determine the reference of the Row using the Button.
-                        var row = $(button).closest("TR");
-                        var name = $("TD", row).eq(1).html();
-                        if (confirm("Do you want to delete: " + name)) {
-                            //Get the reference of the Table.
-                            var table = $("#dataTable")[0];
-
->>>>>>> Stashed changes
                             //Delete the Table row using it's Index.
                             table.deleteRow(row[0].rowIndex);
                         }
                     }
                     catch (e) {
                         alert(e);
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
                     }
                 }
             </SCRIPT>

@@ -1,87 +1,3 @@
-<<<<<<< Updated upstream
-﻿@model Cybereum.Models.tbl_user
-
-@{
-    ViewBag.Title = "Edit User";
-}
-
-<div class="row">
-    <div class="col-xl-12 col-lg-12">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Edit User</h4>
-            </div>
-            <div class="card-body">
-                <div class="basic-form">
-                    @using (Html.BeginForm())
-                    {
-                        @Html.AntiForgeryToken()
-
-                        @*<div class="form-horizontal">*@
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        @Html.HiddenFor(model => model.userid)
-                        @Html.HiddenFor(model => model.emailverification)
-                        @Html.HiddenFor(model => model.otp)
-                        @Html.HiddenFor(model => model.createddate)
-                        @Html.HiddenFor(model => model.activationcode)
-                        @Html.HiddenFor(model => model.isactive)
-
-
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                @Html.LabelFor(model => model.firstname, "First Name", htmlAttributes: new { @class = "" })
-                                @Html.EditorFor(model => model.firstname, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.firstname, "", new { @class = "text-danger" })
-
-                            </div>
-                            <div class="form-group col-md-6">
-                                @Html.LabelFor(model => model.lastname, "LastName", htmlAttributes: new { @class = "" })
-                                @Html.EditorFor(model => model.lastname, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.lastname, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                @Html.LabelFor(model => model.emailid, "Email", htmlAttributes: new { @class = "" })
-                                @Html.EditorFor(model => model.emailid, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.emailid, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="form-group col-md-6">
-                                @Html.LabelFor(model => model.roleid, "Role", htmlAttributes: new { @class = "" })
-                                @Html.DropDownList("roleid", null, htmlAttributes: new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.roleid, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                @Html.LabelFor(model => model.password, "Password", htmlAttributes: new { @class = "" })
-                                @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", placeholder = "Password", @type = "Password" } })
-                                @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
-                            </div>
-
-                            <div class="form-group col-md-6">
-                                @Html.LabelFor(model => model.organization, "Organization", htmlAttributes: new { @class = "" })
-                                @Html.EditorFor(model => model.organization, new { htmlAttributes = new { @class = "form-control" } })
-                                @Html.ValidationMessageFor(model => model.organization, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="row" style="padding-top: 30px;">
-                            <div class="col-6">
-                                <a href="@Url.Action("ApprovedUsers", "User")"><h4>Back To List</h4></a>
-
-                            </div>
-                            <div class="col-6">
-                                <button type="button" class="btn btn" style="background-color: #0D2136; color: white;" data-dismiss="modal" onclick="history.go(-1); return false;">Close</button>
-                                <input type="submit" name="btnSubmit" value="Save" class="btn btn" style="background-color: #0D2136; color: white;" />
-                            </div>
-                        </div>
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-=======
 ﻿@model Cybereum.Models.tbl_user
 
 @{
@@ -93,41 +9,18 @@
     <div class="page-content">
         <div class="container-fluid">
             <div class="form-horizontal">
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                <h4 class="card-title">Edit User</h4>
-=======
                 <h4 class="card-title">User Details</h4>
->>>>>>> Stashed changes
-=======
-                <h4 class="card-title">User Details</h4>
->>>>>>> Stashed changes
             </div>
 
             <div class="row">
                 <div class="col-xl-12 col-lg-12">
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                    <div class="card">                        
-=======
                     <div class="card">
->>>>>>> Stashed changes
-=======
-                    <div class="card">
->>>>>>> Stashed changes
                         <div class="card-body">
                             <div class="basic-form">
                                 @using (Html.BeginForm())
                                 {
                                     @Html.AntiForgeryToken()
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                                    @*<div class="form-horizontal">*@
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
                                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                     @Html.HiddenFor(model => model.userid)
                                     @Html.HiddenFor(model => model.emailverification)
@@ -139,126 +32,50 @@
 
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                                            @Html.LabelFor(model => model.firstname, "First Name", htmlAttributes: new { @class = "" })
-                                            @Html.EditorFor(model => model.firstname, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.firstname, "", new { @class = "text-danger" })
-
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            @Html.LabelFor(model => model.lastname, "LastName", htmlAttributes: new { @class = "" })
-                                            @Html.EditorFor(model => model.lastname, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.lastname, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            @Html.LabelFor(model => model.emailid, "Email", htmlAttributes: new { @class = "" })
-                                            @Html.EditorFor(model => model.emailid, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.emailid, "", new { @class = "text-danger" })
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            @Html.LabelFor(model => model.roleid, "Role", htmlAttributes: new { @class = "" })
-                                            @Html.DropDownList("roleid", null, htmlAttributes: new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(model => model.roleid, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            @Html.LabelFor(model => model.password, "Password", htmlAttributes: new { @class = "" })
-                                            @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", placeholder = "Password", @type = "Password" } })
-                                            @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
-                                        </div>
-
-                                        <div class="form-group col-md-6">
-                                            @Html.LabelFor(model => model.organization, "Organization", htmlAttributes: new { @class = "" })
-                                            @Html.EditorFor(model => model.organization, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.organization, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="row" style="padding-top: 30px;">
-                                        <div class="col-6">
-                                            <a href="@Url.Action("ApprovedUsers", "User")"><h4>Back To List</h4></a>
-
-                                        </div>
-                                        <div class="col-6">
-                                            <button type="button" class="btn btn" style="background-color: #0D2136; color: white;" data-dismiss="modal" onclick="history.go(-1); return false;">Close</button>
-                                            @*<input type="submit" name="btnSubmit" value="Save" class="btn btn" style="background-color: #0D2136; color: white;" />*@
-                                        </div>
-                                    </div>
-                                }
-=======
                                             @Html.LabelFor(model => model.firstname, "First Name: ", htmlAttributes: new { @class = "" })
+                                        </div>
+                                        <div class="form-group col-md-6">
                                             @Html.DisplayFor(model => model.firstname)
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             @Html.LabelFor(model => model.lastname, "Last Name: ", htmlAttributes: new { @class = "" })
+                                        </div>
+                                        <div class="form-group col-md-6">
                                             @Html.DisplayFor(model => model.lastname)
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             @Html.LabelFor(model => model.emailid, "Email: ", htmlAttributes: new { @class = "" })
+                                        </div>
+                                        <div class="form-group col-md-6">
                                             @Html.DisplayFor(model => model.emailid)
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             @Html.LabelFor(model => model.roleid, "Role: ", htmlAttributes: new { @class = "" })
+                                        </div>
+                                        <div class="form-group col-md-6">
                                             @Html.DisplayFor(model => model.tbl_userrole.rolename)
                                         </div>
                                     </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                @Html.LabelFor(model => model.organization, "Organization: ", htmlAttributes: new { @class = "" })
-                                                @Html.DisplayFor(model => model.organization)
-                                            </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            @Html.LabelFor(model => model.organization, "Organization: ", htmlAttributes: new { @class = "" })
                                         </div>
+                                        <div class="form-group col-md-6">
+                                            @Html.DisplayFor(model => model.organization)
+                                        </div>
+                                    </div>
                                         <div class="row" style="padding-top: 30px;">
                                             <div class="col-6">
-                                                <a href="@Url.Action("ApprovedUsers", "User")"><h4>Back</h4></a>
+                                                <a href="@Url.Action("ApprovedUsers", "User")"><h4>Back to List</h4></a>
                                             </div>
 
                                         </div>
-=======
-                                            @Html.LabelFor(model => model.firstname, "First Name: ", htmlAttributes: new { @class = "" })
-                                            @Html.DisplayFor(model => model.firstname)
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            @Html.LabelFor(model => model.lastname, "Last Name: ", htmlAttributes: new { @class = "" })
-                                            @Html.DisplayFor(model => model.lastname)
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            @Html.LabelFor(model => model.emailid, "Email: ", htmlAttributes: new { @class = "" })
-                                            @Html.DisplayFor(model => model.emailid)
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            @Html.LabelFor(model => model.roleid, "Role: ", htmlAttributes: new { @class = "" })
-                                            @Html.DisplayFor(model => model.tbl_userrole.rolename)
-                                        </div>
-                                    </div>
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                @Html.LabelFor(model => model.organization, "Organization: ", htmlAttributes: new { @class = "" })
-                                                @Html.DisplayFor(model => model.organization)
-                                            </div>
-                                        </div>
-                                        <div class="row" style="padding-top: 30px;">
-                                            <div class="col-6">
-                                                <a href="@Url.Action("ApprovedUsers", "User")"><h4>Back</h4></a>
-                                            </div>
-
-                                        </div>
->>>>>>> Stashed changes
                                 }
                                 @*<dl class="dl-horizontal">
                                         <dt>
@@ -302,10 +119,6 @@
                                         </dd>
 
                                     </dl>*@
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
                             </div>
                         </div>
                     </div>
@@ -313,13 +126,4 @@
             </div>
         </div>
     </div>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 </div>
->>>>>>> Stashed changes
-=======
-</div>
->>>>>>> Stashed changes
-=======
-</div>
->>>>>>> Stashed changes

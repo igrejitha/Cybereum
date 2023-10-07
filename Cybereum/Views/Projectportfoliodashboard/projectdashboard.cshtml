@@ -1,4 +1,16 @@
-﻿@{
+﻿$.ajax({
+            type: 'GET',
+            url: "/Projectportfoliodashboard/GettaskcompletionData?projectid=@ViewBag.Projectid",
+            dataType: 'json',
+            async: false,
+            contentType: "application/json; charset=utf-8",            
+            cache: false,
+            success: function (data) {                
+                    $('#ddlIssueType').val = data;
+            },
+            error: function () {                
+            }
+        });@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -38,15 +50,8 @@
                                     </span>
                                 </div>
                             </div>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                            <h4 class="m-0 align-self-center">153</h4>
-=======
-                            <h4 class="m-0 align-self-center">@ViewBag.TotalParticipant</h4>
->>>>>>> Stashed changes
-=======
-                            <h4 class="m-0 align-self-center">@ViewBag.TotalParticipant</h4>
->>>>>>> Stashed changes
+                            <h4 class="m-0 align-self-center">@*@ViewBag.TotalParticipant*@
+                            <label id="lbltotalparticipant"></label></h4>
                         </div>
                     </div>
                 </div>
@@ -64,15 +69,7 @@
                                     </span>
                                 </div>
                             </div>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                            <h4 class="m-0 align-self-center">14</h4>
-=======
                             <h4 class="m-0 align-self-center">@ViewBag.TotalMilestone</h4>
->>>>>>> Stashed changes
-=======
-                            <h4 class="m-0 align-self-center">@ViewBag.TotalMilestone</h4>
->>>>>>> Stashed changes
                         </div>
                     </div>
                 </div>
@@ -90,15 +87,7 @@
                                     </span>
                                 </div>
                             </div>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                            <h4 class="m-0 align-self-center">787</h4>
-=======
                             <h4 class="m-0 align-self-center">@ViewBag.TotalActivity</h4>
->>>>>>> Stashed changes
-=======
-                            <h4 class="m-0 align-self-center">@ViewBag.TotalActivity</h4>
->>>>>>> Stashed changes
                         </div>
                     </div>
                 </div>
@@ -116,15 +105,7 @@
                                     </span>
                                 </div>
                             </div>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                            <h4 class="m-0 align-self-center">207</h4>
-=======
-                            <h4 class="m-0 align-self-center">0</h4>
->>>>>>> Stashed changes
-=======
-                            <h4 class="m-0 align-self-center">0</h4>
->>>>>>> Stashed changes
+                            <h4 class="m-0 align-self-center">@ViewBag.ActiveMembers</h4>
                         </div>
                     </div>
                 </div>
@@ -141,15 +122,7 @@
                                     </span>
                                 </div>
                             </div>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                            <h4 class="m-0 align-self-center">2</h4>
-=======
                             <h4 class="m-0 align-self-center">@ViewBag.TotalMilestoneacheived</h4>
->>>>>>> Stashed changes
-=======
-                            <h4 class="m-0 align-self-center">@ViewBag.TotalMilestoneacheived</h4>
->>>>>>> Stashed changes
                         </div>
                     </div>
                 </div>
@@ -166,15 +139,7 @@
                                     </span>
                                 </div>
                             </div>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                            <h4 class="m-0 align-self-center">2</h4>
-=======
-                            <h4 class="m-0 align-self-center">0</h4>
->>>>>>> Stashed changes
-=======
-                            <h4 class="m-0 align-self-center">0</h4>
->>>>>>> Stashed changes
+                            <h4 class="m-0 align-self-center">@ViewBag.TotalMilestonedelayed</h4>
                         </div>
                     </div>
                 </div>
@@ -191,15 +156,7 @@
                                     </span>
                                 </div>
                             </div>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                            <h4 class="m-0 align-self-center">2</h4>
-=======
                             <h4 class="m-0 align-self-center">0</h4>
->>>>>>> Stashed changes
-=======
-                            <h4 class="m-0 align-self-center">0</h4>
->>>>>>> Stashed changes
                         </div>
                     </div>
                 </div>
@@ -216,15 +173,7 @@
                                     </span>
                                 </div>
                             </div>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                            <h4 class="m-0 align-self-center">2</h4>
-=======
                             <h4 class="m-0 align-self-center">@ViewBag.TotalActivityCompleted</h4>
->>>>>>> Stashed changes
-=======
-                            <h4 class="m-0 align-self-center">@ViewBag.TotalActivityCompleted</h4>
->>>>>>> Stashed changes
                         </div>
                     </div>
                 </div>
@@ -241,15 +190,7 @@
                                     </span>
                                 </div>
                             </div>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                            <h4 class="m-0 align-self-center">12</h4>
-=======
-                            <h4 class="m-0 align-self-center">0</h4>
->>>>>>> Stashed changes
-=======
-                            <h4 class="m-0 align-self-center">0</h4>
->>>>>>> Stashed changes
+                            <h4 class="m-0 align-self-center">@ViewBag.TotalActivitydelayed</h4>
                         </div>
                     </div>
                 </div>
@@ -266,7 +207,7 @@
                                     </span>
                                 </div>
                             </div>
-                            <h4 class="m-0 align-self-center">Sep 05, 2023</h4>
+                            <h4 class="m-0 align-self-center">@ViewBag.Projectenddate</h4>
                         </div>
                     </div>
                 </div>
@@ -787,11 +728,6 @@
 
 </div> <!-- container-fluid -->
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
-=======
->>>>>>> Stashed changes
 <!-- Task completion Status-->
 @Scripts.Render("~/bundles/jquery")
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
@@ -812,10 +748,20 @@
             error: function () {                
             }
         });
+
+        $.ajax({
+            type: 'GET',
+            url: "/Projectportfoliodashboard/getparticipant?projectid=@ViewBag.Projectid",
+            dataType: 'json',
+            async: false,
+            contentType: "application/json; charset=utf-8",
+            cache: false,
+            success: function (data) {                
+                $('#lbltotalparticipant').text(data);                
+            },
+            error: function () {
+                $('#lbltotalparticipant').text("0");
+            }
+        });
     });    
-<<<<<<< Updated upstream
 </script>
->>>>>>> Stashed changes
-=======
-</script>
->>>>>>> Stashed changes

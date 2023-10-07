@@ -1,0 +1,77 @@
+﻿@using Cybereum.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+}
+
+<div class="row no-gutters">
+    <div class="col-xl-12">
+        <div class="auth-form">
+            <h3 class="text-center mb-4">Login</h3>
+
+            <span class="text-danger" style="align-items:center;">
+                @ViewBag.Message
+            </span>
+
+            @using (Html.BeginForm("AdminLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "loginForm" }))
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        @Html.AntiForgeryToken()
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group mb-4">
+                            <label class="mb-1"><strong>Email ID</strong></label>
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "hello@example.com", @autofocus = "autofocus", @maxlength = 100 })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group mb-4">
+                            <label class="mb-1"><strong>Password</strong></label>
+                            @Html.PasswordFor(m => m.password, new { @class = "form-control", @placeholder = "Password", @maxlength = 50 })
+                            <i class="toggle-password fa fa-fw fa-eye-slash"></i>
+                            @Html.ValidationMessageFor(m => m.password, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="mt-5 mb-0">
+                            <a class="superbtn log-btn ml-2" onclick="loginForm.submit();"><button type="submit" style="display:none;"></button>Login</a>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="new-account mt-3">
+                <p>
+                    @Html.ActionLink("Forgot Password?", "AdminForgotPassword", null, new { @class = "text-primary", @style = "color:#0D2136;" })
+                </p>
+                <p>
+                    Don't have an account?
+                    @Html.ActionLink("Register", "Register", null, new { @class = "text-primary", @style = "color:#0D2136;" })
+                </p>
+                <p>
+                    (or)
+                </p>
+            </div>
+            @Html.Partial("_LoginPartial")
+        </div>
+    </div>
+</div>
+@Scripts.Render("~/bundles/jquery")
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".toggle-password").click(function () {
+            $(this).toggleClass("fa-eye fa-eye-slash");
+            input = $(this).parent().find("input");
+            if (input.attr("type") == "password") {
+                input.attr("type", "text");
+            } else {
+                input.attr("type", "password");
+            }
+        });
+
+        $(function () {
+            debugger;
+            var msg = '@TempData["SuccessMessage"]';
+            if (msg.length) {
+                alert(msg);
+            }
+        });
+    });
+</script>

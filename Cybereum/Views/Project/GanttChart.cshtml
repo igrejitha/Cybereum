@@ -1,27 +1,10 @@
 ﻿@{
     ViewBag.Title = "GanttChart";
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<script src="~/Scripts/dhtmlxgantt/dhtmlxgantt.js" type="text/javascript" charset="utf-8"></script>
-<link rel="stylesheet" href="~/Content/dhtmlxgantt/dhtmlxgantt.css" type="text/css" />
-=======
 
 <script src="~/codebase/dhtmlxgantt.js?v=8.0.4"></script>
 <link rel="stylesheet" href="~/codebase/dhtmlxgantt.css?v=8.0.4">
->>>>>>> Stashed changes
-=======
-
-<script src="~/codebase/dhtmlxgantt.js?v=8.0.4"></script>
-<link rel="stylesheet" href="~/codebase/dhtmlxgantt.css?v=8.0.4">
->>>>>>> Stashed changes
-=======
-
-<script src="~/codebase/dhtmlxgantt.js?v=8.0.4"></script>
-<link rel="stylesheet" href="~/codebase/dhtmlxgantt.css?v=8.0.4">
->>>>>>> Stashed changes
 <h2><img src="~/images/cyber/Blue_Logo.png" alt="" width="3%"> GanttChart</h2>
 
 <style type="text/css">
@@ -54,17 +37,6 @@
         display: none !important;
     }
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    .hide-link-point .gantt_link_control {
-        display: none;
-    }
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
     .nested_task .gantt_add {
         display: none !important;
     }
@@ -88,43 +60,43 @@
     .circle_task .gantt_task_progress_drag {
         display: none;
     }
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+
+    .gantt_grid_scale, .gantt_task_scale, .gantt_task_vscroll, .gantt_grid, .gantt_grid_scale, .gantt_grid_head_cell, .gantt_grid_data, .gantt_row.odd, .gantt_row, .gantt_row.gantt_row_task, .gantt_row.gantt_row_project, .gantt_row.gantt_row_milestone, gantt_cell.gantt_cell_tree, .gantt_tree_indent, .gantt_tree_icon.gantt_close, .gantt_tree_icon.gantt_open, .gantt_tree_content, gantt_cell, .gantt_tree_content, .gantt_task_scale, .gantt_scale_line, .gantt_scale_cell, .gantt_task_cell, .gantt_data_area {
+        background-color: #08375e;
+        color: #a6a6a6;
+    }
+
+        .gantt_grid_data .gantt_row.odd:hover, .gantt_grid_data .gantt_row:hover {
+            background-color: #08375e;
+        }
 </style>
 <div id="divLoader" style="display:none;">
     <img id="loading-image" src="~/images/Spinner.gif" alt="Loader" />
 </div>
-@*<button type="button" onclick="window.location.reload()">Refresh Me</button>*@
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<div id="ganttContainer" style="width: 100%; height: 90%;"></div>
-@*@Scripts.Render("~/bundles/jquery")*@
-<script>
-    (function () {
-        // add month scale        
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-<div id="ganttContainer" style="width: 100%; height: 100vh;"></div>
-@*@Scripts.Render("~/bundles/jquery")*@
+<div class="main-content">
+
+    <div class="page-content">
+        <div class="container-fluid">
+            @*<div id="ganttContainer" style="width: 100%; height: 100vh;"></div>*@
+            <div class="row">
+                <div class="col-12 px-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="header-title mb-4">Gantt Chart</h4>
+                            <div style="height: 450px;background: #08375e ;" id="ganttContainer"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Gantt Chart -->
 <script>
     (function () {
         // add month scale
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
         var projectid = "@ViewBag.projectid";
         gantt.config.scale_unit = "month";
         gantt.config.date_scale = "%F, %Y";
@@ -138,23 +110,6 @@
             { unit: "day", step: 1, date: "%d-%D" }
         ];
         gantt.config.scale_height = 50;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-        // configure milestone description
-        gantt.templates.rightside_text = function (start, end, task) {
-            if (task.type == gantt.config.types.milestone) {
-                return task.text;
-            }
-            return "";
-        };
-        // add section to type selection: task, project or milestone
-        gantt.config.lightbox.sections = [
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
         //// configure milestone description
         //gantt.templates.rightside_text = function (start, end, task) {
         //    if (task.type == gantt.config.types.milestone) {
@@ -179,6 +134,9 @@
         //  //{ key: '1', label: "Ozzy Osbourne" },
         //  //{ key: '2', label: "Bonnie Tyler" },
         //  //{ key: '3', label: "Gene Pitney" },
+        ];
+        var ismilestone = [
+          { key: 1, label: "Is Milestone?" }
         ];
         gantt.ajax.get("/Project/FillProjectMember?id=" + projectid, function (r) {
             var xml = r.xmlDoc.response;
@@ -207,40 +165,47 @@
             }
         }
 
-        gantt.locale.labels.section_description = "Owner";
+        gantt.form_blocks.checkbox.set_value = function (node, value, ev) {
+            debugger;
+            node.firstChild.checked = value || "";
+            if (ev.type == "Activity" || ev.parent == 0) {
+                var style = ev.some_property ? "" : "block";
+                node.style.display = style; // editor area
+                node.previousSibling.style.display = style; //section header
+                node.checked = !!value;
+                gantt.resizeLightbox(); //correct size of lightbox
+            }
+            else {
+                var style = ev.some_property ? "" : "none";
+                node.style.display = style; // editor area
+                node.previousSibling.style.display = style; //section header
+                gantt.resizeLightbox(); //correct size of lightbox
+            }
+        }
+
+        //gantt.form_blocks.checkbox.get_value = function (node, ev) {
+        //    debugger;
+        //    if (ev.type == "Activity" || ev.parent == 0) {
+        //        ev.checked = node.querySelector("[name='check1']").checked;
+        //    }
+        //}
 
         // add section to type selection: task, project or milestone
         gantt.config.lightbox.sections = [
             // Owners section, will map to owner_id
             { name: "users", height: 22, map_to: "user_id", type: "select", options: users },
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
             { name: "description", height: 70, map_to: "text", type: "textarea", focus: true },
             //{ name: "type", type: "typeselect", map_to: "type" },
-            { name: "time", height: 72, type: "duration", map_to: "auto" }
-        ];
-<<<<<<< Updated upstream
-        //var formatter = gantt.ext.formatters.durationFormatter({
-        //    enter: "day",
-        //    store: "day",
-        //    format: "auto"
-        //});
-=======
-
->>>>>>> Stashed changes
-=======
-=======
->>>>>>> Stashed changes
-            { name: "description", height: 70, map_to: "text", type: "textarea", focus: true },
-            //{ name: "type", type: "typeselect", map_to: "type" },            
-            { name: "time", height: 72, type: "duration", map_to: "auto" }
+            { name: "time", height: 30, type: "duration", map_to: "auto" },
+            { name: "ismilestone", height: 30, map_to: "ismilestone", type: "checkbox" }
+            //{
+            //    name: "ismilestone", type: "checkbox", map_to: "render", options: [
+            //{ key: "ismilestone", label: "" }
+            //    ]
+            //},
+        //{name: "split", type:"checkbox", map_to: "render", options:opts}
         ];
 
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
         const formatter = gantt.ext.formatters.linkFormatter({
             //default values
             durationFormatter: gantt.ext.formatters.durationFormatter(),
@@ -276,65 +241,30 @@
             return "";
         };
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-        gantt.templates.task_class = function (start, end, task) {            
-            if (task.type=="Activity") return ''
-            else return "hide-link-point";
-        };
-=======
-        //gantt.templates.task_class = function (start, end, task) {
-        //    if (task.type == "Activity") return ''
-        //    else return "hide-link-point";
-        //};
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-
         gantt.attachEvent("onBeforeLinkAdd", function (id, link) {
             if (!allow_link) return false;
             return true;
         });
 
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
         var allow_link = true;
         gantt.attachEvent("onMouseMove", function (id, e) {
             if (e.target.className == "gantt_task_content") allow_link = false;
             else allow_link = true;
         });
 
+        gantt.attachEvent("onLightboxDelete", function (id) {
+            debugger;
+            const task = gantt.getTask(id);
+            if (task.type == 'Activity') {
+                if (task.text == 'Start Activity' || task.text == 'End Activity') {
+                    alert("Cannot delete this task");
+                    return false;
+                }
+            }
+            return true;
+        })
         gantt.config.columns = [
-<<<<<<< Updated upstream
-            { name: "text", label: "Name", tree: true, width: 200, resize: true },
-            { name: "taskid", label: "Id", width: 80, align: "center", resize: true },
-            { name: "duration", label: "Duration", width: 80, align: "center", resize: true },
-            { name: "start_date", label: "Start", width: 80, align: "center", resize: true },
-            { name: "end_date", label: "Finish", width: 80, align: "center", resize: true },
-                {
-                    name: "predecessors", label: "Predecessors", width: 80, align: "left",
-                    editor: editors.predecessors, resize: true, template: function (task) {                        
-                        var links = task.$target;
-                        var labels = [];
-                        for (var i = 0; i < links.length; i++) {
-                            debugger;
-                            var link = gantt.getLink(links[i]);
-                            //var sourceTask = gantt.getTask(link.source);
-                            //if (sourceTask != null && sourceTask.sort_order != null) {
-                            //    var taskPredecessors = (sourceTask.sort_order);
-                            labels.push(formatter.format(link));
-                            //}
-=======
-=======
-        gantt.config.columns = [
->>>>>>> Stashed changes
-=======
-        gantt.config.columns = [
->>>>>>> Stashed changes
             { name: "wbs", label: "#", width: 40, align: "center", template: gantt.getWBSCode },
             { name: "text", label: "Name", tree: true, width: 200, resize: true },
             { name: "taskid", label: "id", width: 80, align: "center", resize: true },
@@ -356,13 +286,6 @@
                         for (var i = 0; i < links.length; i++) {
                             var link = gantt.getLink(links[i]);
                             labels.push(formatter.format(link));
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
                         }
                         return labels.join(", ")
                     }
@@ -372,53 +295,21 @@
         gantt.templates.task_end_date = function (date) {
             return gantt.templates.task_date(new Date(date.valueOf() - 1));
         };
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-        
-        gantt.config.xml_date = "%Y-%m-%d %H:%i:%s"; // format of dates in XML
-
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 
         gantt.templates.progress_text = function (start, end, task) {
             return `<span style='text-align:left; padding-left: 5px;'>${Math.round(task.progress * 100)}%</span>`;
         };
 
         gantt.config.xml_date = "%Y-%m-%d %H:%i:%s"; // format of dates in XML
-        //gantt.config.auto_types = true;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
         gantt.config.duration_unit = "day";
         gantt.config.work_time = true;
         gantt.config.skip_off_time = true;
         gantt.config.fit_tasks = true;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-=======
         gantt.locale.labels.section_users = "Owner";
+        gantt.locale.labels.section_ismilestone = "Is Milestone?";
         gantt.config.show_progress = true;
         gantt.config.show_loading = true;
->>>>>>> Stashed changes
-=======
-        gantt.locale.labels.section_users = "Owner";
-        gantt.config.show_progress = true;
-        gantt.config.show_loading = true;
->>>>>>> Stashed changes
-=======
-        gantt.locale.labels.section_users = "Owner";
-        gantt.config.show_progress = true;
-        gantt.config.show_loading = true;
->>>>>>> Stashed changes
+        gantt.config.readonly = true
         gantt.init("ganttContainer"); // initialize gantt
         gantt.config.open_tree_initially = true;
         gantt.plugins({
@@ -427,166 +318,34 @@
         });
         gantt.config.highlight_critical_path = true;
         gantt.config.auto_scheduling = true;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-        router = function (entity, action, data, id) {            
-=======
         gantt.autoSchedule();
         router = function (entity, action, data, id) {
->>>>>>> Stashed changes
-=======
-        gantt.autoSchedule();
-        router = function (entity, action, data, id) {
->>>>>>> Stashed changes
-=======
-        gantt.autoSchedule();
-        router = function (entity, action, data, id) {
->>>>>>> Stashed changes
             return new gantt.Promise(function (resolve, reject) {
                 gantt.load("/Project/GetchartData?projectid=" + projectid, "json");
             });
         }
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-        
-        gantt.load("/Project/GetchartData?projectid=" + projectid, "json");
-
-        gantt.attachEvent("onLightboxSave", function (id, item) {
-            debugger;
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 
         gantt.load("/Project/GetchartData?projectid=" + projectid, "json");
 
         gantt.attachEvent("onLightboxSave", function (id, item) {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
             if (!item.text) {
                 gantt.message({ type: "error", text: "Enter task description!" });
                 return false;
             }
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-            //if (!item.user) {
-            //    gantt.message({ type: "error", text: "Choose a worker for this task!" });
-            //    return false;
-            //}
             return true;
         });
 
-=======
-            return true;
-        });
-
-        //gantt.attachEvent("onBeforeTaskDrag", function (id, mode, e) {
-        //    debugger;
-        //    if (gantt.getGlobalTaskIndex(id) % 2 == 0) {
-        //        return false;      //denies dragging if the global task index is odd
-        //    }
-        //    return true;           //allows dragging if the global task index is even
-        //});
-
-        //gantt.attachEvent("onBeforeTaskDisplay", (id, task) => {
-        //    debugger;
-        //    if (gantt.hasChild(task.id) && task.parent == "0") {
-        //        task.progress.style.display = "none";
-        //        return false;
-        //    }
-        //    task.progress.style.display = "block";
-        //    return true;
-        //});
         gantt.templates.task_class = function (start, end, task) {
-            debugger;
             if (gantt.hasChild(task.id)) {
-                //var children = gantt.getChildren(task.id);
-                //var child_progress = 0;
-                //for (var i = 0; i < children.length; i++) {
-                //    var child = gantt.getTask(children[i])
-                //    child_progress += (child.progress * 100);
-                //}                    
-                //if (child_progress == 0) {
-                //    return "hide_progress_drag"
-                //}
-=======
-=======
->>>>>>> Stashed changes
-            return true;
-        });
-                
-        gantt.templates.task_class = function (start, end, task) {
-            debugger;
-            if (gantt.hasChild(task.id)) {                
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
                 if (task.type == "Activity") return 'hide_progress_drag'
                 else return "circle_task";
             }
             else {
                 if (task.type == "SubTask" || task.type == "Task") return 'hide-link-point'
-                else return "circle_task";
+                else return "";
             };
         };
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
 
-        //function parent_progress(id) {
-        //    debugger;            
-        //    gantt.eachParent(function (task) {
-        //        var children = gantt.getChildren(task.id);
-        //        var child_progress = 0;
-        //        for (var i = 0; i < children.length; i++) {
-        //            var child = gantt.getTask(children[i])
-        //            child_progress += (child.progress * 100);
-        //        }
-        //        debugger;
-        //        task.progress = child_progress / children.length / 100;
-        //        //gantt.updateTask(task.id);
-        //    }, id)            
-        //    gantt.render();
-        //}
-
-        //gantt.attachEvent("onAfterTaskUpdate", function (id, item) {            
-        //    if (item.parent == 0) {
-        //        return;
-        //    }
-
-        //    var parentTask = gantt.getTask(item.parent); //console.log(parent.id);return;
-
-        //    var childs = gantt.getChildren(parentTask.id);
-        //    var totProgress = 0;
-
-        //    var tempTask;
-        //    for (i = 0; i < childs.length; i++) { //console.log(childs[i]);
-        //        tempTask = gantt.getTask(childs[i]);
-        //        totProgress += parseFloat(tempTask.progress);
-        //    }
-        //    //console.log(totProgress);
-
-        //    parentTask.progress = (totProgress / childs.length).toFixed(2);
-        //    debugger;
-        //    //gantt.updateTask(parentTask.id);            
-        //});
-
->>>>>>> Stashed changes
-=======
-                
->>>>>>> Stashed changes
-=======
-                
->>>>>>> Stashed changes
         gantt.attachEvent("onAfterLinkAdd", function (id, item) {
             window.location.reload();
         });
@@ -599,38 +358,14 @@
         gantt.attachEvent("onAfterTaskDelete", function (id, item) {
             window.location.reload();
         });
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
         gantt.attachEvent("onAfterTaskUpdate", function (id, item) {
-<<<<<<< Updated upstream
-=======
-            //parent_progress(id);
->>>>>>> Stashed changes
-=======
-        gantt.attachEvent("onAfterTaskUpdate", function (id, item) {            
->>>>>>> Stashed changes
-=======
-        gantt.attachEvent("onAfterTaskUpdate", function (id, item) {            
->>>>>>> Stashed changes
             window.location.reload();
         });
         var dp = gantt.createDataProcessor(function (entity, action, data, id, taskid) {
             switch (entity) {
                 case "task":
                     switch (action) {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                        case "create":                            
-=======
                         case "create":
->>>>>>> Stashed changes
-=======
-                        case "create":
->>>>>>> Stashed changes
-=======
-                        case "create":
->>>>>>> Stashed changes
                             return gantt.ajax.post({
                                 headers: {
                                     "Content-Type": "application/json"
@@ -638,31 +373,10 @@
                                 url: "/Project/CreateTask",
                                 data: JSON.stringify(data),
                                 callback: function (response) {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                                    debugger;
-                                    //alert(response.responseText);
-                                }
-                            });                            
-                            break;
-                        case "update":                            
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
                                 }
                             });
                             break;
                         case "update":
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
                             return gantt.ajax.post({
                                 headers: {
                                     "Content-Type": "application/json"
@@ -670,42 +384,23 @@
                                 url: "/Project/UpdateTask",
                                 data: JSON.stringify(data),
                                 callback: function (response) {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                                    debugger;
-                                    //alert(response.responseText);
-                                }                                
-                            });
-                            gantt.message({ type: "error", text: result });                                                        
-                            break;
-                        case "delete":                            
-                            return gantt.ajax.del(
-                                  server + "/" + entity + "/" + id
-                            );                            
-                            break;                    }
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
                                 }
                             });
                             gantt.message({ type: "error", text: result });
                             break;
                         case "delete":
-                            return gantt.ajax.del(
-                                  server + "/" + entity + "/" + id
-                            );
+                            return gantt.ajax.post({
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                url: "/Project/DeleteChartTask",
+                                data: JSON.stringify(data),
+                                callback: function (response) {
+                                }
+                            });
+                            gantt.message({ type: "error", text: result });
                             break;
                     }
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
                 case "link":
                     switch (action) {
                         case "create":
@@ -716,28 +411,8 @@
                                 url: "/Project/CreateLink",
                                 data: JSON.stringify(data),
                                 callback: function (response) {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                                    debugger;
-                                    //alert(response.responseText);
-                                }
-                            });                            
-=======
-                                    //alert(response.responseText);
                                 }
                             });
->>>>>>> Stashed changes
-=======
-                                    //alert(response.responseText);
-                                }
-                            });
->>>>>>> Stashed changes
-=======
-                                    //alert(response.responseText);
-                                }
-                            });
->>>>>>> Stashed changes
                             break;
                         case "update":
                             return gantt.ajax.post(
@@ -750,28 +425,8 @@
                                 url: "/Project/DeleteLink",
                                 data: { id: id },
                                 callback: function (response) {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                                    debugger;
-                                    //alert(response.responseText);
-                                }
-                            });                            
-=======
-                                    //alert(response.responseText);
                                 }
                             });
->>>>>>> Stashed changes
-=======
-                                    //alert(response.responseText);
-                                }
-                            });
->>>>>>> Stashed changes
-=======
-                                    //alert(response.responseText);
-                                }
-                            });
->>>>>>> Stashed changes
                             break;
                     }
             }

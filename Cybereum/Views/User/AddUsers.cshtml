@@ -1,147 +1,4 @@
-<<<<<<< Updated upstream
-﻿@model Cybereum.Models.tbl_user
-
-@{
-    ViewBag.Title = "Add/Edit User";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-@*<script src="~/Scripts/jquery-2.1.1.min.js"></script>
-
-    <link rel="stylesheet" href="~/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="~/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">*@
-<style type="text/css">
-    .error {
-        color: red;
-        display: none;
-    }
-</style>
-
-<div class="row">
-    <div class="col-xl-12 col-lg-12">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Add/Edit User</h4>
-            </div>
-            <div class="card-body">
-                <div class="basic-form">
-
-                    @using (Html.BeginForm("AddUsers", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                    {
-                        @Html.AntiForgeryToken()
-
-                        <span class="text-danger" style="align-items:center;">
-                            @ViewBag.Message
-                            @Html.HiddenFor(model => model.userid, htmlAttributes: new { @class = "control-label col-md-2" })
-                            @Html.HiddenFor(model => model.emailverification)
-                            @Html.HiddenFor(model => model.otp)
-                            @Html.HiddenFor(model => model.createddate)
-                            @Html.HiddenFor(model => model.activationcode)
-                            @Html.HiddenFor(model => model.isactive)
-                            @Html.HiddenFor(model => model.roleid)
-                            @Html.HiddenFor(model => model.pmuserid)
-                        </span>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                @Html.LabelFor(model => model.emailid, "E-mail ID", htmlAttributes: new { @class = "" })
-
-                                @Html.EditorFor(model => model.emailid, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                                @Html.ValidationMessageFor(model => model.emailid, "", new { @class = "text-danger" })
-
-                            </div>
-                            <div class="form-group col-md-6">
-                                @Html.LabelFor(model => model.password, "Password", htmlAttributes: new { @class = "" })
-
-                                @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", placeholder = "Password", @type = "Password" } })
-                                @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
-
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                @Html.LabelFor(model => model.firstname, "First Name", htmlAttributes: new { @class = "" })
-
-                                @Html.EditorFor(model => model.firstname, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                                @Html.ValidationMessageFor(model => model.firstname, "", new { @class = "text-danger" })
-
-                            </div>
-                            <div class="form-group col-md-6">
-                                @Html.LabelFor(model => model.lastname, "Last Name", htmlAttributes: new { @class = "" })
-
-                                @Html.EditorFor(model => model.lastname, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                                @Html.ValidationMessageFor(model => model.lastname, "", new { @class = "text-danger" })
-
-                            </div>
-                        </div>
-
-                            <div class="form-row">
-                                @*<div class="form-group col-md-6">
-                                        @Html.LabelFor(model => model.roleid, "Role", htmlAttributes: new { @class = "control-label col-md-2" })
-                                        <div class="col-md-10">
-                                            @Html.DropDownList("roleid", null, htmlAttributes: new { @class = "form-control" })
-                                            @Html.ValidationMessageFor(model => model.roleid, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>*@
-                                <div class="form-group col-md-6">
-                                    @Html.LabelFor(model => model.organization, "Organization", htmlAttributes: new { @class = "" })
-
-                                    @Html.EditorFor(model => model.organization, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.organization, "", new { @class = "text-danger" })
-
-                                </div>
-                            </div>                            
-                            <div class="row" style="padding-top: 30px;">
-                                <div class="col-6">
-                                    @*<a href="@Url.Action("ApprovedUsers", "User")"><h4>Back To List</h4></a>*@
-                                    <h4>
-                                        @Html.ActionLink("Back to List", "Index", new
-                               {
-                                   // routeValues
-                                   milestoneid = ViewBag.milestoneid
-                               })
-                                    </h4>
-                                </div>
-                                <div class="col-6">
-                                    @*<button type="button" class="btn btn" style="background-color: #0D2136; color: white;" data-dismiss="modal" onclick="history.go(-1); return false;">Close</button>*@
-                                    <input type="submit" name="btnSubmit" value="Save" class="btn btn" style="background-color: #0D2136; color: white;" />
-                                </div>
-
-                            </div>
-                    }
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-@Scripts.Render("~/bundles/jquery")
-<script type="text/javascript">
-    $(document).ajaxSend(function () {
-        //$("#overlay").fadeIn(300);
-    });
-
-
-    $(document).ready(function () {
-        debugger;
-        //FillLevelOne();
-
-        $("#btnSubmit").click(function () {
-            return true;
-        });
-
-        function onSubmit() {
-
-        }
-
-        // register event on form, not submit button
-        $('#subscribeForm').submit(onSubmit)
-
-
-
-    });
-</script>
-=======
-﻿@model Cybereum.Models.tbl_user
+﻿@model Cybereum.Models.tblloginMetadata
 
 @{
     ViewBag.Title = "Add/Edit User";
@@ -153,6 +10,13 @@
         color: red;
         display: none;
     }
+
+    .toggle-password {
+    float: right;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-top: -25px;
+}
 </style>
 <div class="main-content">
 
@@ -164,89 +28,6 @@
             <div class="row">
                 <div class="col-xl-12 col-lg-12">
                     <div class="card">
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                        
-                        <div class="card-body">
-                            <div class="basic-form">
-
-                                @using (Html.BeginForm("AddUsers", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                                {
-                                    @Html.AntiForgeryToken()
-
-                                    <span class="text-danger" style="align-items:center;">
-                                        @ViewBag.Message
-                                        @Html.HiddenFor(model => model.userid, htmlAttributes: new { @class = "control-label col-md-2" })
-                                        @Html.HiddenFor(model => model.emailverification)
-                                        @Html.HiddenFor(model => model.otp)
-                                        @Html.HiddenFor(model => model.createddate)
-                                        @Html.HiddenFor(model => model.activationcode)
-                                        @Html.HiddenFor(model => model.isactive)
-                                        @*@Html.HiddenFor(model => model.roleid)*@
-                                        @Html.HiddenFor(model => model.pmuserid)
-                                        @Html.HiddenFor(model => model.organization)
-                                    </span>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            @Html.LabelFor(model => model.emailid, "E-mail ID", htmlAttributes: new { @class = "" })
-
-                                            @Html.EditorFor(model => model.emailid, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                                            @Html.ValidationMessageFor(model => model.emailid, "", new { @class = "text-danger" })                                            
-
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            @Html.LabelFor(model => model.password, "Password", htmlAttributes: new { @class = "" })
-
-                                            @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", placeholder = "Password", @type = "Password" } })
-                                            @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
-
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            @Html.LabelFor(model => model.firstname, "First Name", htmlAttributes: new { @class = "" })
-
-                                            @Html.EditorFor(model => model.firstname, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                                            @Html.ValidationMessageFor(model => model.firstname, "", new { @class = "text-danger" })
-
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            @Html.LabelFor(model => model.lastname, "Last Name", htmlAttributes: new { @class = "" })
-
-                                            @Html.EditorFor(model => model.lastname, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                                            @Html.ValidationMessageFor(model => model.lastname, "", new { @class = "text-danger" })
-
-                                        </div>
-                                    </div>
-
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            @Html.LabelFor(model => model.roleid, "Role", htmlAttributes: new { @class = "control-label col-md-2" })
-                                            <div class="col-md-10">
-                                                @Html.DropDownList("roleid", null, htmlAttributes: new { @class = "form-control" })
-                                                @Html.ValidationMessageFor(model => model.roleid, "", new { @class = "text-danger" })
-                                            </div>
-                                        </div>
-                                        @*<div class="form-group col-md-6">
-                                                @Html.LabelFor(model => model.organization, "Organization", htmlAttributes: new { @class = "" })
-
-                                                @Html.EditorFor(model => model.organization, new { htmlAttributes = new { @class = "form-control" } })
-                                                @Html.ValidationMessageFor(model => model.organization, "", new { @class = "text-danger" })
-
-                                            </div>*@
-                                    </div>
-                                    <div class="row" style="padding-top: 30px;">
-                                        <div class="col-6">
-                                            <h4>
-                                                @Html.ActionLink("Back to List", "Index")
-                                            </h4>
-                                        </div>
-                                        <div class="col-6">
-                                            @*<button type="button" class="btn btn" style="background-color: #0D2136; color: white;" data-dismiss="modal" onclick="history.go(-1); return false;">Close</button>*@
-                                            <input type="submit" name="btnSubmit" value="Save" class="btn btn" style="background-color: #0D2136; color: white;" />
-                                        </div>
-
-=======
 
                         <div class="card-body">
                             <div class="basic-form">
@@ -271,79 +52,31 @@
                                         <div class="form-group col-md-6">
                                             @Html.LabelFor(model => model.firstname, "First Name", htmlAttributes: new { @class = "" })
 
-                                            @Html.EditorFor(model => model.firstname, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                                            @Html.EditorFor(model => model.firstname, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", @maxlength = 100 } })
                                             @Html.ValidationMessageFor(model => model.firstname, "", new { @class = "text-danger" })
 
                                         </div>
                                         <div class="form-group col-md-6">
                                             @Html.LabelFor(model => model.lastname, "Last Name", htmlAttributes: new { @class = "" })
 
-                                            @Html.EditorFor(model => model.lastname, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                                            @Html.EditorFor(model => model.lastname, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", @maxlength = 100 } })
                                             @Html.ValidationMessageFor(model => model.lastname, "", new { @class = "text-danger" })
 
                                         </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            @Html.LabelFor(model => model.emailid, "E-mail ID", htmlAttributes: new { @class = "" })
+                                            @Html.LabelFor(model => model.emailid, "Email ID", htmlAttributes: new { @class = "" })
 
-                                            @Html.EditorFor(model => model.emailid, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                                            @Html.EditorFor(model => model.emailid, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", @maxlength = 100 } })
                                             @Html.ValidationMessageFor(model => model.emailid, "", new { @class = "text-danger" })
 
                                         </div>
                                         <div class="form-group col-md-6">
                                             @Html.LabelFor(model => model.password, "Password", htmlAttributes: new { @class = "" })
 
-=======
-
-                        <div class="card-body">
-                            <div class="basic-form">
-
-                                @using (Html.BeginForm("AddUsers", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                                {
-                                    @Html.AntiForgeryToken()
-
-                                    <span class="text-danger" style="align-items:center;">
-                                        @ViewBag.Message
-                                        @Html.HiddenFor(model => model.userid, htmlAttributes: new { @class = "control-label col-md-2" })
-                                        @Html.HiddenFor(model => model.emailverification)
-                                        @Html.HiddenFor(model => model.otp)
-                                        @Html.HiddenFor(model => model.createddate)
-                                        @Html.HiddenFor(model => model.activationcode)
-                                        @Html.HiddenFor(model => model.isactive)
-                                        @*@Html.HiddenFor(model => model.roleid)*@
-                                        @Html.HiddenFor(model => model.pmuserid)
-                                        @Html.HiddenFor(model => model.organization)
-                                    </span>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            @Html.LabelFor(model => model.firstname, "First Name", htmlAttributes: new { @class = "" })
-
-                                            @Html.EditorFor(model => model.firstname, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                                            @Html.ValidationMessageFor(model => model.firstname, "", new { @class = "text-danger" })
-
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            @Html.LabelFor(model => model.lastname, "Last Name", htmlAttributes: new { @class = "" })
-
-                                            @Html.EditorFor(model => model.lastname, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                                            @Html.ValidationMessageFor(model => model.lastname, "", new { @class = "text-danger" })
-
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            @Html.LabelFor(model => model.emailid, "E-mail ID", htmlAttributes: new { @class = "" })
-
-                                            @Html.EditorFor(model => model.emailid, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
-                                            @Html.ValidationMessageFor(model => model.emailid, "", new { @class = "text-danger" })
-
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            @Html.LabelFor(model => model.password, "Password", htmlAttributes: new { @class = "" })
-
->>>>>>> Stashed changes
-                                            @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", placeholder = "Password", @type = "Password" } })
+                                            @Html.EditorFor(model => model.password, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", placeholder = "Password", @maxlength = 50 } })
+                                            <i class="toggle-password fa fa-fw fa-eye-slash"></i>
                                             @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
 
                                         </div>
@@ -376,10 +109,6 @@
                                             <input type="submit" name="btnSubmit" value="Save" class="btn btn" style="background-color: #0D2136; color: white;" />
                                         </div>
 
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
                                     </div>
                                 }
                             </div>
@@ -387,42 +116,38 @@
                     </div>
                 </div>
             </div>
-            </div>
         </div>
     </div>
-<<<<<<< Updated upstream
-            @Scripts.Render("~/bundles/jquery")
-            <script type="text/javascript">
-                $(document).ajaxSend(function () {
-                    //$("#overlay").fadeIn(300);
-                });
-=======
 </div>
 @Scripts.Render("~/bundles/jquery")
 <script type="text/javascript">
     $(document).ajaxSend(function () {
         //$("#overlay").fadeIn(300);
     });
->>>>>>> Stashed changes
 
 
-                $(document).ready(function () {
-                    debugger;
-                    //FillLevelOne();
-
-                    $("#btnSubmit").click(function () {
-                        return true;
-                    });
-
-                    function onSubmit() {
-
-                    }
-
-                    // register event on form, not submit button
-                    $('#subscribeForm').submit(onSubmit)
+    $(document).ready(function () {
+        
+        $("#btnSubmit").click(function () {
+            return true;
+        });
 
 
+        $(".toggle-password").click(function () {
+            debugger;
+            $(this).toggleClass("fa-eye fa-eye-slash");
+            input = $(this).parent().find("input");
+            if (input.attr("type") == "password") {
+                input.attr("type", "text");
+            } else {
+                input.attr("type", "password");
+            }
+        });
 
-                });
-            </script>
->>>>>>> Stashed changes
+        // register event on form, not submit button
+        $('#subscribeForm').submit(onSubmit)
+        
+    });
+
+    
+</script>

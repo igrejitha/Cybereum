@@ -75,6 +75,7 @@
                                         <th>Start Date</th>
                                         <th>End Date</th>
                                         <th>Assigned To</th>
+                                        <th>Progress %</th>
                                         <th>Edit</th>
                                     </tr>
                                 </thead>
@@ -161,6 +162,7 @@
                     }
                 },
                 { 'data': 'assignedusername', 'name': 'Assigned To' },
+                { 'data': 'progress', 'name': 'Progress %' },
                 {
                     "render": function (data, type, full, meta) {
                         //return '<button class="btn btn" style="background-color: #0D2136; color: white;" onclick=getSubTask("' + full.subtaskid + '"); >Edit</button>';
@@ -169,7 +171,12 @@
                             return '<a><button class="btn btn-outline-primary btn-sm waves-effect waves-light" disabled="disabled" onclick=getSubTask("' + full.subtaskid + '"); >Edit</button></a>';
                         }
                         else {
-                            return '<a><button class="btn btn-outline-primary btn-sm waves-effect waves-light" onclick=getSubTask("' + full.subtaskid + '"); >Edit</button></a>';
+                            if (full.taskstatus == 2) {
+                                return '<a><button class="btn btn-outline-primary btn-sm waves-effect waves-light" disabled="disabled" onclick=getSubTask("' + full.subtaskid + '"); >Edit</button></a>';
+                            }
+                            else {
+                                return '<a><button class="btn btn-outline-primary btn-sm waves-effect waves-light" onclick=getSubTask("' + full.subtaskid + '"); >Edit</button></a>';
+                            }
                         }
                     }
                 }

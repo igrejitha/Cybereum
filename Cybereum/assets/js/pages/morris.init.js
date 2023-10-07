@@ -71,22 +71,6 @@ $(function () {
         lineWidth: 2,
         labels: ["Series A", "Series B"],
       }),
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    $("#morris-donut-example").length &&
-      Morris.Donut({
-        element: "morris-donut-example",
-        resize: !0,
-        colors: ["#0e9f80", "#d8a93b", "#cf523d"],
-        data: [
-          { label: "Completed", value: 50 },
-          { label: "In-progress", value: 30 },
-          { label: "Not started", value: 20 },
-        ],
-      }),
-=======
-=======
->>>>>>> Stashed changes
     //$("#morris-donut-example").length &&
     //  Morris.Donut({
     //    element: "morris-donut-example",
@@ -98,10 +82,6 @@ $(function () {
     //      //{ label: "Not started", value: 20 },
     //    ],
     //  }),
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
     $("#morris-stacked-example").length &&
       Morris.Bar({
         element: "morris-stacked-example",

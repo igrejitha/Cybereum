@@ -37,55 +37,9 @@
                                     <tbody></tbody>
                                 </table>
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<div class="form-horizontal">
-    <h4>Project List</h4>
-    <hr />
-</div>
-@if (Convert.ToInt32(Session["RoleId"]) == 2)
-{
-    <p><button type="button" class="btn btn" style='background-color: #0D2136; color: white;' onclick="location.href='@Url.Action("AddEditProject", "Project")'">Add New</button></p>
-}
-
-<div class="row">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table id="tblProject" class="display min-w850">
-                        <thead>
-                            <tr>
-                                <th>Project Name</th>
-                                <th>Start Date</th>
-                                <th>End Date</th>
-                                <th>Project Manager</th>
-                                <th>Created On</th>
-                                <th>Hash ID</th>
-                                <th>Edit</th>
-                                @*<th>Activity</th>*@
-                                <th>GANTT Chart</th>                                
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-
-=======
                             </div>
                         </div>
                     </div>
->>>>>>> Stashed changes
-=======
-                            </div>
-                        </div>
-                    </div>
->>>>>>> Stashed changes
-=======
-                            </div>
-                        </div>
-                    </div>
->>>>>>> Stashed changes
                 </div>
             </div>
             </div>
@@ -101,29 +55,7 @@
                 }
             </style>
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-@Scripts.Render("~/bundles/jquery")
-<style>
-    .expand-column {
-    max-width: 70px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;    
-}
-</style>
-
-<script type="text/javascript">
-=======
             <script type="text/javascript">
->>>>>>> Stashed changes
-=======
-            <script type="text/javascript">
->>>>>>> Stashed changes
-=======
-            <script type="text/javascript">
->>>>>>> Stashed changes
     $(document).ajaxSend(function () {
         //$("#overlay").fadeIn(300);
     });
@@ -204,24 +136,8 @@
                     }
                 },
                 {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                    'data': 'hashcode', 'name': 'Hash ID','class':'expand-column',
-                    render: function (data, type, row) {
-                        debugger;
-=======
                     'data': 'hashcode', 'name': 'Hash ID', 'class': 'expand-column',
                     render: function (data, type, row) {
->>>>>>> Stashed changes
-=======
-                    'data': 'hashcode', 'name': 'Hash ID', 'class': 'expand-column',
-                    render: function (data, type, row) {
->>>>>>> Stashed changes
-=======
-                    'data': 'hashcode', 'name': 'Hash ID', 'class': 'expand-column',
-                    render: function (data, type, row) {
->>>>>>> Stashed changes
                         return '<span data-toggle="tooltip" title="' + data + '">' + data + "</span>";
                         //return '<span data-toggle="tooltip" title="' + data + '">' + data.length == 0 ? data : data.substr(0, 10) + '…' + '</span>';
                         //var trimdata = data.length > 10 ? data.substr(0, 10) + '…': data;
@@ -264,27 +180,9 @@
             },
         });
     });
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    
-    function getProject(id) {
-        location.href = '@Url.Action("AddEditrecord", "Project", new { id = "id" })'.replace('id', id);        
-=======
 
     function getProject(id) {
         location.href = '@Url.Action("AddEditrecord", "Project", new { id = "id" })'.replace('id', id);
->>>>>>> Stashed changes
-=======
-
-    function getProject(id) {
-        location.href = '@Url.Action("AddEditrecord", "Project", new { id = "id" })'.replace('id', id);
->>>>>>> Stashed changes
-=======
-
-    function getProject(id) {
-        location.href = '@Url.Action("AddEditrecord", "Project", new { id = "id" })'.replace('id', id);
->>>>>>> Stashed changes
     }
 
     function GetMilestone(projectid) {

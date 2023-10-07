@@ -22,15 +22,6 @@ namespace Cybereum.Controllers
         {
             ViewBag.projectid = projectid;
             Session["ProjectId"] = ViewBag.projectid;
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-            return View();
-        }
-        public ActionResult projectdashboard()
-        {
-=======
-=======
->>>>>>> Stashed changes
             ViewBag.Keyinternal = getkeyinternal(projectid);
             return View();
         }
@@ -38,36 +29,23 @@ namespace Cybereum.Controllers
         {
             ViewBag.projectid = projectid;
             Session["ProjectId"] = ViewBag.projectid;
-            ViewBag.TotalParticipant = getparticipant(projectid);
+            //ViewBag.TotalParticipant = getparticipant(projectid);
             ViewBag.TotalMilestone = getTotalMilestone(projectid, true);
             ViewBag.TotalActivity = getTotalMilestone(projectid, false);
             ViewBag.TotalMilestoneacheived = getTotalMilestoneacheived(projectid, true);
             ViewBag.TotalActivityCompleted = getTotalMilestoneacheived(projectid, false);
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+            ViewBag.TotalMilestonedelayed = getTotalMilestonedelayed(projectid, true);
+            ViewBag.TotalActivitydelayed = getTotalMilestonedelayed(projectid, false);
+            ViewBag.Projectenddate = getprojectenddate(projectid);
+            ViewBag.ActiveMembers = GetActiveMembers(projectid);
             return View();
         }
         public ActionResult index(string projectid)
         {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-            ViewBag.projectid = projectid;
-            Session["ProjectId"] = ViewBag.projectid;
-            ViewBag.Keyinternal = getkeyinternal(projectid);
-            ViewBag.Taskcompletion = GettaskcompletionData(projectid);
-=======
-=======
->>>>>>> Stashed changes
             ViewBag.Projectid = projectid;
             Session["ProjectId"] = ViewBag.Projectid;
             ViewBag.Keyinternal = getkeyinternal(projectid);
             //ViewBag.Taskcompletion = GettaskcompletionData(projectid);
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
             return View();
         }
         public ActionResult ProjectOverview()
@@ -102,22 +80,12 @@ namespace Cybereum.Controllers
 
         }
 
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-        public string GettaskcompletionData(string projectid)
-        {
-            try
-            {
-                var gremlinScript = $"g.V().has('activity','projectid','{projectid}').project('id').by(values('id'))";
-=======
-=======
->>>>>>> Stashed changes
         public string getparticipant(string projectid)
         {
             try
             {
                 var gremlinScript = $"g.V().has('project','id','{projectid}').project('projectmembers').by(values('projectmembers').fold())";
-                var data = IGUtilities.ExecuteGremlinScript(gremlinScript);
+                //var data = IGUtilities.ExecuteGremlinScript(gremlinScript);
                 int membercount = 0;
                 var results = IGUtilities.ExecuteGremlinScript(gremlinScript);
                 string pList = JsonConvert.SerializeObject(results);
@@ -154,10 +122,10 @@ namespace Cybereum.Controllers
                 int activitycount = data.Count();
                 foreach (var item in data)
                 {
-                    var projectmembers =(int) item;
+                    var projectmembers = (int)item;
                     activitycount = projectmembers.ToInt();
                 }
-                
+
                 return activitycount.ToString();
             }
             catch (Exception ex)
@@ -197,44 +165,115 @@ namespace Cybereum.Controllers
             }
         }
 
+        public string getTotalMilestonedelayed(string projectid, bool ismilestone)
+        {
+            try
+            {
+                string gremlinScript = "";
+                string date = DateTime.Now.ToString("yyyy-MM-dd");
+                if (ismilestone == true)
+                {
+                    gremlinScript = $"g.V().has('activity','projectid','{projectid}').has('activity','ismilestone','{ismilestone}').not(has('activity','activitystatus','2')).has('activity', 'enddate', lt('{ date }')).count()";
+                }
+                else
+                {
+                    gremlinScript = $"g.V().has('activity','projectid','{projectid}').not(has('activity','activitystatus','2')).has('activity', 'enddate', lt('{ date }')).count()";
+                }
+                var data = IGUtilities.ExecuteGremlinScript(gremlinScript);
+                int activitycount = data.Count();
+                foreach (var item in data)
+                {
+                    var projectmembers = (int)item;
+                    activitycount = projectmembers.ToInt();
+                }
+
+                return activitycount.ToString();
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                return null;
+            }
+        }
+
+        public string getprojectenddate(string projectid)
+        {
+            try
+            {
+                string gremlinScript = $"g.V().has('project','id','{projectid}').project('enddate').by(values('enddate'))";
+                var results = IGUtilities.ExecuteGremlinScript(gremlinScript);
+                string pList = JsonConvert.SerializeObject(results);
+                List<Project> projectlist = JsonConvert.DeserializeObject<List<Project>>(pList);
+                string enddate = string.Empty;
+                foreach (var item in projectlist)
+                {
+                    DateTime date = item.enddate;
+                    enddate = date.ToString("MMM dd, yyyy");
+                }
+
+                return enddate;
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex);
+                return null;
+            }
+        }
+
+        public string GetActiveMembers(string projectid)
+        {
+            try
+            {
+                var gremlinScript = $"g.V().has('activity','projectid','{projectid}').project('id').by(id())";
+                var activitydata = IGUtilities.ExecuteGremlinScript(gremlinScript);
+                List<tblactivemembers> tasklist = new List<tblactivemembers>();
+                foreach (var result in activitydata)
+                {
+                    //task users
+                    gremlinScript = $"g.V().has('task','activityid','{result["id"]}').project('taskid','assignedto').by(id()).by(values('assignedto'))";
+                    var res = IGUtilities.ExecuteGremlinScript(gremlinScript);
+                    string pList = JsonConvert.SerializeObject(res);
+                    List<ProjectTask> list = JsonConvert.DeserializeObject<List<ProjectTask>>(pList);
+                    foreach (var item in list)
+                    {
+                        tblactivemembers task = new tblactivemembers();
+                        task.userid = Convert.ToInt16(item.assignedto.ToString());
+                        tasklist.Add(task);
+
+                        //Subtask users
+                        gremlinScript = $"g.V().has('subtask','taskid','{item.taskid}').project('assignedto').by(values('assignedto'))";
+                        var ressubtask = IGUtilities.ExecuteGremlinScript(gremlinScript);
+                        pList = JsonConvert.SerializeObject(ressubtask);
+                        List<ProjectSubTask> listsubtask = JsonConvert.DeserializeObject<List<ProjectSubTask>>(pList);
+                        foreach (var itemsubtask in listsubtask)
+                        {
+                            tblactivemembers subtask = new tblactivemembers();
+                            subtask.userid = Convert.ToInt16(itemsubtask.assignedto.ToString());
+                            tasklist.Add(subtask);
+                        }
+                    }
+                }
+                var count = tasklist.Select(x=>x.userid).Distinct().Count();
+                count++;
+                return count.ToString();
+            }
+            catch (Exception ex)
+            {
+                // Info     
+                Console.Write(ex);
+                return null;
+            }
+        }
+
         public JsonResult GettaskcompletionData(string projectid)
         {
             try
             {
                 var gremlinScript = $"g.V().has('activity','projectid','{projectid}').project('id').by(id())";
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
                 var activitydata = IGUtilities.ExecuteGremlinScript(gremlinScript);
                 List<tbltaskcompletion> taskcompletionlist = new List<tbltaskcompletion>();
                 foreach (var result in activitydata)
                 {
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                    gremlinScript = $"g.V().has('task','activityid','{result["id"]}').project('taskstatus').by(values('taskstatus'))";
-                    var res = IGUtilities.ExecuteGremlinScript(gremlinScript);
-                    foreach (var item in res)
-                    {
-                        if (item.Count > 0)
-                        {                            
-                            tbltaskcompletion task = new tbltaskcompletion();
-                            if (Convert.ToInt16(item["taskstatus"]) == (int)TaskSubTaskStatus.ToDo)
-                            {
-                                task.status = TaskSubTaskStatus.ToDo.ToString();
-                            }
-                            else if (Convert.ToInt16(item["taskstatus"]) == (int)TaskSubTaskStatus.Inprogress)
-                            {
-                                task.status = TaskSubTaskStatus.Inprogress.ToString();
-                            }
-                            else if (Convert.ToInt16(item["taskstatus"]) == (int)TaskSubTaskStatus.Completed)
-                            {
-                                task.status = TaskSubTaskStatus.Completed.ToString();
-                            }
-                            task.taskcount = 1;
-=======
-=======
->>>>>>> Stashed changes
                     foreach (var enumValue in Enum.GetValues(typeof(TaskSubTaskStatus)))
                     {
                         int taskstatus = (int)enumValue;
@@ -245,42 +284,15 @@ namespace Cybereum.Controllers
                             tbltaskcompletion task = new tbltaskcompletion();
                             task.label = enumValue.ToString();
                             task.value = (int)item;
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
                             taskcompletionlist.Add(task);
                         }
                     }
                 }
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                var numberGroups = taskcompletionlist.GroupBy(n => n.status).Select(c => new { Key = c.Key, total = c.Count() });
-=======
                 var numberGroups = taskcompletionlist.GroupBy(t => t.label).Select(t => new { Key = t.Key, total = t.Sum(u => u.value) }).ToList();
->>>>>>> Stashed changes
-=======
-                var numberGroups = taskcompletionlist.GroupBy(t => t.label).Select(t => new { Key = t.Key, total = t.Sum(u => u.value) }).ToList();
->>>>>>> Stashed changes
                 taskcompletionlist = new List<tbltaskcompletion>();
                 foreach (var grp in numberGroups)
                 {
                     tbltaskcompletion task = new tbltaskcompletion();
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                    task.status = grp.Key;
-                    task.taskcount = grp.total;
-                    taskcompletionlist.Add(task);
-                }
-
-                //return taskcompletionlist;                
-                string pList = JsonConvert.SerializeObject(taskcompletionlist);
-                return pList;
-                //List<tbltaskcompletion> list = JsonConvert.DeserializeObject<List<tbltaskcompletion>>(pList);
-                //return new JsonResult { Data = list, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-=======
-=======
->>>>>>> Stashed changes
                     task.label = grp.Key;
                     task.value = grp.total;
                     taskcompletionlist.Add(task);
@@ -288,10 +300,6 @@ namespace Cybereum.Controllers
 
                 string pList = JsonConvert.SerializeObject(taskcompletionlist);
                 return new JsonResult { Data = pList, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
             }
             catch (Exception ex)
             {
